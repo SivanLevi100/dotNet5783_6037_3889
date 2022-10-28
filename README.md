@@ -3,4 +3,4 @@ Helo1234567
 מיני פרויקט במערכת חלונות
 Sivan Yael
 
-hi my name is Yael
+hi my name is Yaell
