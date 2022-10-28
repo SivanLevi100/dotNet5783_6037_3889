@@ -4,5 +4,7 @@ Helo1234567
 Sivan Yael
 Helo my name is Sivan Levi
 hi my name is Yaell
+
+bye
 helo
 hi my name is Yael
