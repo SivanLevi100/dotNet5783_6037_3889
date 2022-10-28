@@ -5,4 +5,4 @@ Sivan Yael
 Helo my name is Sivan Levi
 hi my name is Yaell
 
-hi my name is Yael
+bye
