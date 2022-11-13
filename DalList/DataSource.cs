@@ -7,11 +7,18 @@ namespace Dal;
 
 internal static class DataSource
 {
-    public static readonly int randomaly = 0;
-
+    public static readonly int randomaly = 0;//לחזור לזה
+    //public static Random ran = new Random();
     internal static  Product[] productArray = new Product[50];
     internal static Order[]  orderArray = new Order[100];
     internal static OrderItem[] orderItemArray = new OrderItem[200];
+
+    private static int index = 0;
+    public static int Index { get => index++; }
+
+
+
+
 
     static DataSource()
     {
@@ -23,16 +30,19 @@ internal static class DataSource
         for (int i = 0; i < 10; i++)
         {
             productArray[i] = new Product();
+
         }
         productArray[0].Category = "מקררים ומקפיאים";
         productArray[0].Name = " SHARP מקרר ";
         productArray[0].Price =9000 ;
         productArray[0].InStock = 5;
 
+
         productArray[1].Category = "מקררים ומקפיאים";
         productArray[1].Name = " FUJICOM מקפיא";
         productArray[1].Price = 1000;
         productArray[1].InStock = 7;
+
 
         productArray[2].Category = "מוצרי חשמל למטבח";
         productArray[2].Name = "Blomberg תנור משולב ";
@@ -83,6 +93,10 @@ internal static class DataSource
         for (int i = 0; i < 20; i++)
         {
             orderArray[i] = new Order();
+            productArray[i].Id = DataSource.Index;
+            orderArray[i].OrderDate = DateTime.Now; //DateTime.MinValue;
+            orderArray[i].ShipDate = DateTime.Now; //DateTime.MinValue;
+            orderArray[i].DeliveryDate = DateTime.Now;//DateTime.MinValue;
         }
         for (int i = 0; i < 20; i++)
         {
@@ -127,8 +141,9 @@ internal static class DataSource
         private static int orderLastId = 0; //מספר מזהה אחרון
         private static int orderItemLastId = 0; //מספר מזהה אחרון
 
-        //להוסיף get
-
+        // get
+        public static int OrderLastId { get => orderLastId++; }
+        public static int OrderItemLastId { get => orderItemLastId++; }
 
 
 

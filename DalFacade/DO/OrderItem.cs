@@ -19,7 +19,7 @@ public struct OrderItem
     /// <summary>
     /// Order ID number 
     /// </summary>
-    public string OrderId { get; set; }
+    public int OrderId { get; set; }
     /// <summary>
     /// Price of Item
     /// </summary>
