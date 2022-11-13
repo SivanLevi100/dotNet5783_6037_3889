@@ -52,6 +52,8 @@ public class DalProduct
         return newProductArray;
     }
 
+    //
+
     public void deleteProduct(int idProduct1)
     {
         int indexOfProduct = 0;
