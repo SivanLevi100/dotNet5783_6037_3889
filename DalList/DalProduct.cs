@@ -5,13 +5,19 @@ namespace Dal;
 
 public class DalProduct
 {
-    public int addProducts(Product product1)
+    /// <summary>
+    /// An add object method that receives a product object and returns the ID number of the added product
+    /// </summary>
+    /// <param name="product1"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static int addProducts(Product product1)
     {
        for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
         {
             if(DataSource.productArray[i].Id==product1.Id)
             {
-                //throw new Exception("no place in arr to add");
+                throw new Exception("no place in arr to add");
             }
           
         }
@@ -26,7 +32,13 @@ public class DalProduct
         return product1.Id;
     }
 
-    public  Product getProduct(int idProduct1)
+    /// <summary>
+    /// A request/call method of a single object that receives a product ID number and returns the appropriate product
+    /// </summary>
+    /// <param name="idProduct1"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static Product getProduct(int idProduct1)
     {
        //bool flag = false;
       //  Product p=new Product();
@@ -42,7 +54,11 @@ public class DalProduct
         throw new Exception("the product id is not exist in array");
     }
 
-    public Product[] getArrayOfProduct()
+    /// <summary>
+    /// Request/read method of the list of all objects of a product
+    /// </summary>
+    /// <returns></returns>
+    public static Product[] getArrayOfProduct()
     {
         Product[] newProductArray = new Product[DataSource.Config.ProductFreeIndex];
         for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
@@ -52,9 +68,12 @@ public class DalProduct
         return newProductArray;
     }
 
-    //
 
-    public void deleteProduct(int idProduct1)
+    /// <summary>
+    /// A method to delete a product object that receives a product ID number
+    /// </summary>
+    /// <param name="idProduct1"></param>
+    public static void deleteProduct(int idProduct1)
     {
         int indexOfProduct = 0;
         for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
@@ -66,12 +85,19 @@ public class DalProduct
 
                 /////////////מחיקה
             }
+            //להזיז את האוביקטים אחרורה ואת האחרון למחוק ע"י דריבה באוביקט חדש ולהקטין את המצביע לסוף המערך ב1
+
+
         }
 
 
     }
 
-    public void updateProduct(Product product1)
+    /// <summary>
+    /// An object update method that will receive a new product
+    /// </summary>
+    /// <param name="product1"></param>
+    public static void updateProduct(Product product1)
     {
 
         for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
@@ -85,6 +111,8 @@ public class DalProduct
                 DataSource.productArray[i].InStock = product1.InStock;
             }
         }
+        throw new Exception("the product id is not exist in array");
+
     }
 
 

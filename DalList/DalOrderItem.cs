@@ -6,7 +6,12 @@ namespace Dal;
 
 public class DalOrderItem
 {
-    public int addOrderItems(OrderItem orderItem1)
+    /// <summary>
+    /// An add object method that receives an object of an order item and returns the ID number of the added order item
+    /// </summary>
+    /// <param name="orderItem1"></param>
+    /// <returns></returns>
+    public static int addOrderItems(OrderItem orderItem1)
     {
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
         {
@@ -27,7 +32,13 @@ public class DalOrderItem
         return orderItem1.Id;
     }
 
-    public OrderItem getOrderItem(int idOrderItem1)
+    /// <summary>
+    /// A request/call method of a single object that receives an order item ID number and returns the appropriate order item
+    /// </summary>
+    /// <param name="idOrderItem1"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static OrderItem getOrderItem(int idOrderItem1)
     {
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
         {
@@ -41,8 +52,11 @@ public class DalOrderItem
         throw new Exception("the orderItem id is not exist in array");
     }
 
-
-    public OrderItem[] getArrayOfOrderItem()
+    /// <summary>
+    /// A request/read method of the list of all order item objects
+    /// </summary>
+    /// <returns></returns>
+    public static OrderItem[] getArrayOfOrderItem()
     {
         OrderItem[] neworderItemArray = new OrderItem[DataSource.Config.OrderItemFreeIndex];
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
@@ -52,8 +66,11 @@ public class DalOrderItem
         return neworderItemArray;
     }
 
-
-    public void deleteOrderItem(int idOrderItem1)
+    /// <summary>
+    /// A method to delete an order items object that receives an order item ID number
+    /// </summary>
+    /// <param name="idOrderItem1"></param>
+    public static void deleteOrderItem(int idOrderItem1)
     {
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
         {
@@ -67,7 +84,11 @@ public class DalOrderItem
         }
     }
 
-    public void updateOredrItem(OrderItem orderItem1)
+    /// <summary>
+    /// An object update method that will receive a new order item
+    /// </summary>
+    /// <param name="orderItem1"></param>
+    public static void updateOredrItem(OrderItem orderItem1)
     {
 
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
@@ -82,8 +103,15 @@ public class DalOrderItem
             }
         }
     }
-
-    public OrderItem getOrderItemofTwoId(int idOrderItem1, int idOrderItem2)
+    /// <summary>
+    /// Request/call method based on two identifiers (ID) - product ID and order ID,
+    /// the method returns the object of an item in the corresponding order
+    /// </summary>
+    /// <param name="idOrderItem1"></param>
+    /// <param name="idOrderItem2"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static OrderItem getOrderItemofTwoId(int idOrderItem1, int idOrderItem2)
     {
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
         {
@@ -99,8 +127,13 @@ public class DalOrderItem
 
     }
 
-    //מתודת בקשה\קריאה של רשימת\מערך פרטי הזמנה ע"פ מספר מזהה של הזמנה
-    public OrderItem[] getArrayOfOrderItemOfOrder(Order idorder1)
+    /// <summary>
+    /// Method of request/reading of a list/array of order details according to the ID number of an order
+    /// </summary>
+    /// <param name="idorder1"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static OrderItem[] getArrayOfOrderItemOfOrder(Order idorder1)
     {
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
         {

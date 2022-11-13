@@ -5,7 +5,12 @@ namespace Dal;
 
 public class DalOrder
 {
-    public int addOrders(Order order1)
+    /// <summary>
+    /// An add object method that accepts an order object and returns the ID number of the added order
+    /// </summary>
+    /// <param name="order1"></param>
+    /// <returns></returns>
+    public static int addOrders(Order order1)
     {
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
         {
@@ -28,8 +33,13 @@ public class DalOrder
         return order1.Id;
     }
 
-
-    public Order getOrder(int idOrder1)
+    /// <summary>
+    /// A request/call method of a single object that receives an order ID number and returns the appropriate order
+    /// </summary>
+    /// <param name="idOrder1"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public static Order getOrder(int idOrder1)
     {
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
         {
@@ -44,8 +54,11 @@ public class DalOrder
     }
 
 
-
-    public Order[] getArrayOfOrder()
+    /// <summary>
+    /// Request/read method of the list of all objects of an order
+    /// </summary>
+    /// <returns></returns>
+    public static Order[] getArrayOfOrder()
     {
         Order[] neworderArray=new Order[DataSource.Config.OrderFreeIndex];
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
@@ -56,8 +69,11 @@ public class DalOrder
 
     }
 
-
-    public void deleteOrder(int idOrder1)
+    /// <summary>
+    /// A method to delete an order object that receives an order ID number
+    /// </summary>
+    /// <param name="idOrder1"></param>
+    public static void deleteOrder(int idOrder1)
     {
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
         {
@@ -70,7 +86,11 @@ public class DalOrder
 
         }
     }
-    public void updateOrder(Order order1)
+    /// <summary>
+    /// An object update method that will receive a new order
+    /// </summary>
+    /// <param name="order1"></param>
+    public static void updateOrder(Order order1)
     {
 
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
