@@ -77,18 +77,25 @@ public class DalOrderItem
 
             if (DataSource.orderItemArray[i].Id == idOrderItem1)
             {
-                /////////////מחיקה
-
+                for (int j = i; j < DataSource.Config.OrderItemFreeIndex - 1; j++)
+                {
+                    DataSource.orderItemArray[j] = DataSource.orderItemArray[j + 1];
+                }
+                DataSource.Config.OrderItemFreeIndex--;
+                break;
             }
-
         }
+        throw new Exception("The orderItem is not exist in the array");
+
     }
 
-    /// <summary>
-    /// An object update method that will receive a new order item
-    /// </summary>
-    /// <param name="orderItem1"></param>
-    public static void updateOredrItem(OrderItem orderItem1)
+
+
+/// <summary>
+/// An object update method that will receive a new order item
+/// </summary>
+/// <param name="orderItem1"></param>
+public static void updateOredrItem(OrderItem orderItem1)
     {
 
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)

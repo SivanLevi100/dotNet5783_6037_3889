@@ -2,5 +2,7 @@
 
 namespace DO;
 
-public struct
-   
+public struct Enums
+{
+
+}

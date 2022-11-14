@@ -31,8 +31,8 @@ internal static class DataSource
         internal static int ProductFreeIndex = 0; //אינדקסים) של האלמנט הפנוי הראשון
         internal static int OrderFreeIndex = 0;
         internal static int OrderItemFreeIndex = 0;
-        private static int orderLastId = 0; //מספר מזהה אחרון
-        private static int orderItemLastId = 0; //מספר מזהה אחרון
+        private static int orderLastId = 100000; //מספר מזהה אחרון
+        private static int orderItemLastId = 100000; //מספר מזהה אחרון
 
         // get
         public static int OrderLastId { get => orderLastId++; }
@@ -50,17 +50,6 @@ internal static class DataSource
         for (int i = 0; i < 10; i++)
         {
             productArray[i] = new Product();
-            //x = rand.Next(100000,1000000);
-            //for(int j=0; j < Config.ProductFreeIndex; j++)
-            //{
-            //    if (x == DataSource.productArray[j].Id)
-            //    {
-            //        i--;
-            //        break;
-                    
-            //    }
-
-            //}
         }
 
         x = rand.Next(100000, 1000000);
@@ -133,26 +122,46 @@ internal static class DataSource
     private static void addOrder()
     {
         Random random = new Random();
+        TimeSpan time;
         for (int i = 0; i < 20; i++)
         {
             orderArray[i] = new Order();
             orderArray[i].Id =Config.OrderLastId;//המספר הרץ עולה בזימון הפונקציה ממחלקת config
-            orderArray[i].OrderDate = DateTime.MinValue;  //DateTime.Now;
-            orderArray[i].ShipDate = DateTime.MinValue;  //DateTime.Now;
-            orderArray[i].DeliveryDate = DateTime.MinValue; //DateTime.Now;
+           // orderArray[i].OrderDate = DateTime.MinValue;
+            //orderArray[i].ShipDate = DateTime.MinValue;  
+            //orderArray[i].DeliveryDate = DateTime.MinValue;
+            orderArray[i].CustomerName = "Customer_" + (char)i;
+            orderArray[i].CustomerAdress = (char)(i + 3) +"in jerusalem" ;
+            orderArray[i].CustomerEmail = (char)i * 3 + "@gmail.com";
             Config.OrderFreeIndex++;// מעלים ב1 את המקום הפנוי הבא המערך
+            orderArray[i].OrderDate = DateTime.Now.AddDays(random.Next(-1000,-1));
+            if(i<=15)
+            {
+                do
+                {
+                    orderArray[i].ShipDate = DateTime.Now.AddDays(random.Next(-1000, -1));
+                    time = orderArray[i].ShipDate - orderArray[i].OrderDate;
+                }
+                while (time.TotalDays < 0);
+            }
+            else
+            {
+                orderArray[i].ShipDate = DateTime.MinValue;
+            }
+            if(i<=10)
+            {
+                do
+                {
+                    orderArray[i].DeliveryDate= DateTime.Now.AddDays(random.Next(-1000, -1));
+                    time = orderArray[i].DeliveryDate - orderArray[i].ShipDate;
+
+                }
+                while(time.TotalDays < 0);
+            }
+            else
+                orderArray[i].DeliveryDate= DateTime.MinValue;
         }
-        //orderArray[0].CustomerName="Sivan "
-        //orderArray[0].CustomerAdress=""
-        //orderArray[0].CustomerEmail=""
-
-        //orderArray[1].CustomerName = ""
-        //orderArray[1].CustomerAdress = ""
-        //orderArray[1].CustomerEmail = ""
-
-            //עד 19 כי צריך 20 הזמנות
-
-
+        ///80  60 אחוז
     }
 
     /// <summary>
@@ -174,7 +183,6 @@ internal static class DataSource
         for (int i = 0; i < /*40*/10; i++)
         {
             orderItemArray[i].Price = productArray[i].Price;
-
         }
 
     }

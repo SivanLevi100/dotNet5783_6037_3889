@@ -19,7 +19,9 @@ public class DalProduct
             {
                 throw new Exception("no place in arr to add");
             }
-          
+            //ArgumentException
+
+
         }
         DataSource.productArray[DataSource.Config.ProductFreeIndex++] = new Product()
         {
@@ -75,22 +77,20 @@ public class DalProduct
     /// <param name="idProduct1"></param>
     public static void deleteProduct(int idProduct1)
     {
-        int indexOfProduct = 0;
         for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
         {
 
             if (DataSource.productArray[i].Id == idProduct1)
             {
-                indexOfProduct = i;
-
-                /////////////מחיקה
+                for(int j=i;j< DataSource.Config.ProductFreeIndex - 1;j++)
+                {
+                    DataSource.productArray[j]= DataSource.productArray[j+1];
+                }
+                DataSource.Config.ProductFreeIndex--;
+                break;
             }
-            //להזיז את האוביקטים אחרורה ואת האחרון למחוק ע"י דריבה באוביקט חדש ולהקטין את המצביע לסוף המערך ב1
-
-
         }
-
-
+        throw new Exception("The product is not exist in the array");
     }
 
     /// <summary>

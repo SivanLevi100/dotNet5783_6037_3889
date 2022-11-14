@@ -80,17 +80,25 @@ public class DalOrder
 
             if (DataSource.orderArray[i].Id == idOrder1)
             {
-                /////////////מחיקה
-
+                for (int j = i; j < DataSource.Config.OrderFreeIndex - 1; j++)
+                {
+                    DataSource.orderArray[j] = DataSource.orderArray[j + 1];
+                }
+                DataSource.Config.OrderFreeIndex--;
+                break;
             }
-
         }
+        throw new Exception("The order is not exist in the array");
+
     }
-    /// <summary>
-    /// An object update method that will receive a new order
-    /// </summary>
-    /// <param name="order1"></param>
-    public static void updateOrder(Order order1)
+
+
+
+/// <summary>
+/// An object update method that will receive a new order
+/// </summary>
+/// <param name="order1"></param>
+public static void updateOrder(Order order1)
     {
 
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
