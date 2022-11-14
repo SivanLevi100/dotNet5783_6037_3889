@@ -47,7 +47,7 @@ class Program
     /// </summary>
     public static void SubMenuProduct()
     {
-        Product myProduct = new Product();
+        Product myProduct;
         int myIdOfProduct;
         //Product[] productsArray = new Product[50];
         //char ch;
@@ -56,31 +56,39 @@ class Program
             c - The option to view the list of products
             d - Option to update object data
             e - Option to delete an object from a product list");
-        char ch;
-        ch = (char)Console.Read();
-
-        //ch= Console.Read();
+        int ch;
+        ch= Console.Read();
         while (ch!=0)
         {
             switch (ch)
             {
-                case '1':
+                case 'a':
+                    Console.WriteLine("please enter: id, name, category, price, inStock");
+                    myIdOfProduct = int.Parse(Console.ReadLine());
+                   // myIdOfProduct = Int32.Parse(Console.ReadLine());
+                    string? name = Console.ReadLine();
+                    Category category = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? "Unavailable");
+                    double price = Double.Parse(Console.ReadLine());
+                    int instock = Int32.Parse(Console.ReadLine());
+
+                    myProduct = new Product
+                    {
+                        //Id = myIdOfProduct,
+                        Price = price,
+                        Name = name ?? "Unknown",
+                        Category = category,
+                        InStock = instock
+                    };
                     try
                     {
-                        Console.WriteLine("please enter: name, category, price, inStock");
-                        myProduct.Id = Console.Read();
-                        myProduct.Name = Console.ReadLine();
-                        myProduct.Category = Console.ReadLine();
-                        myProduct.Price = Console.Read();
-                        myProduct.InStock = Console.Read();
                         myIdOfProduct = DalProduct.addProducts(myProduct);
                     }
-                    catch (Exception str)
+                    catch (FormatException str)
                     {
                         Console.WriteLine(str);
                     }
                     break;
-                case '2':
+                case 'b':
                     Console.WriteLine("please enter: Id of product");
                     myIdOfProduct = Console.Read();
                     try
@@ -93,38 +101,58 @@ class Program
                         Console.WriteLine(str);
                     }
                     break;
-                case '3':
+                case 'c':
                     Product[] productsArray = new Product[50];//////////////////////////
 
                     productsArray = DalProduct.getArrayOfProduct();
                     foreach (Product product1 in productsArray)
                     { Console.WriteLine(productsArray); };
                     break;
-                case '4':
-                    Console.WriteLine("please enter: name, category, price, inStock");
-                    myProduct.Id = Console.Read();//כי זה מוגרל
-                    myProduct.Name = Console.ReadLine();
-                    myProduct.Category = Console.ReadLine();
-                    myProduct.Price = Console.Read();
-                    myProduct.InStock = Console.Read();
+                case 'd':
+                    Console.WriteLine("please enter: id, name, category, price, inStock");
+                    myIdOfProduct = int.Parse(Console.ReadLine());
+                    string? name1 = Console.ReadLine();
+                    Category category1 = (Category)Enum.Parse(typeof(Category), Console.ReadLine()?? "Unavailable");
+                    double price1 = Double.Parse(Console.ReadLine() ?? "0.0");
+                    int instock1 = Int32.Parse(Console.ReadLine() ?? "0");
+
+                    myProduct = new Product
+                    {
+                        Id = myIdOfProduct,
+                        Price = price1,
+                        Name = name1 ?? "Unknown",
+                        Category = category1,
+                        InStock = instock1
+                    };
+
                     try
                     {
                         DalProduct.updateProduct(myProduct);
                         Console.WriteLine(myProduct);
                         Product newProduct = new Product();                     //קולט ערכים חדשים
                         Console.WriteLine("Enter new Product");
-                        // newProduct.Id=Console.Read();//כי זה מוגרל
-                        newProduct.Name = Console.ReadLine();
-                        newProduct.Category = Console.ReadLine();
-                        newProduct.Price = Console.Read();
-                        newProduct.InStock = Console.Read();
+
+                        //myIdOfProduct = int.Parse(Console.ReadLine());
+                        //string? name = Console.ReadLine();
+                        //Category category = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? "Unavailable");
+                        //double price = Double.Parse(Console.ReadLine() ?? "0.0");
+                        //int instock = Int32.Parse(Console.ReadLine() ?? "0");
+
+                        //myProduct = new Product
+                        //{
+                        //    Id = myIdOfProduct,
+                        //    Price = price,
+                        //    Name = name ?? "Unknown",
+                        //    Category = category,
+                        //    InStock = instock
+                        //};
                     }
                     catch (Exception str)
                     {
                         Console.WriteLine(str);
                     }
                     break;
-                case '5':
+                case 'e':
                     Console.WriteLine("please enter: Id of product");
                     myIdOfProduct = Console.Read();
                     try
@@ -139,6 +167,8 @@ class Program
                 default:
                     break;
             }
+            //int.TryParse(Console.ReadLine(), out ch);
+            ch = Console.Read();
 
         }
     }
@@ -148,28 +178,38 @@ class Program
     /// </summary>
     public static void SubMenuOrder()
     {
-        Order myOrder=new Order();
+        Order myOrder;
         Order[] orderArray = new Order[100];
         int idOrder=0;
-        char ch;
+        //char ch;
         Console.WriteLine(@"a - Option to add an object to an order list
             b - Object display option by ID 
             c - The option to view the list of orders
             d - Option to update object data
             e - Option to delete an object from an order list");
-        ch = (char)Console.Read();
+        // ch = (char)Console.Read();
+        int ch;
+        ch = Console.Read();
         while (ch != 0)
         {
             switch (ch)
             {
                 case 'a':
+                    Console.WriteLine("please enter: Id, CustomerName, CustomerAdress, CustomerEmail");
+                    idOrder = int.Parse(Console.ReadLine());
+                    string? customerName1 = Console.ReadLine();
+                    string? CustomerEmail = Console.ReadLine();
+                    string? CustomerAdress = Console.ReadLine();
+
+                    myOrder = new Order
+                    {
+                        Id = idOrder,
+                        CustomerName = customerName1,
+                        CustomerAdress = CustomerAdress,
+                        CustomerEmail = CustomerEmail,
+                    };
                     try
                     {
-                        Console.WriteLine("please enter: Id, CustomerName, CustomerAdress, CustomerEmail");
-                        //myOrder.Id = Console.Read(); //כי זה רץ אוטומטי
-                        myOrder.CustomerName = Console.ReadLine();
-                        myOrder.CustomerAdress = Console.ReadLine();
-                        myOrder.CustomerEmail = Console.ReadLine();
                         idOrder = DalOrder.addOrders(myOrder);
                     }
                     catch (Exception str)
@@ -197,20 +237,25 @@ class Program
                     break;
                 case 'd':
                     Console.WriteLine("please enter: Id, CustomerName, CustomerAdress, CustomerEmail");
-                    //myOrder.Id = Console.Read();//כי זה רץ אוטומטי
-                    myOrder.CustomerName = Console.ReadLine();
-                    myOrder.CustomerAdress = Console.ReadLine();
-                    myOrder.CustomerEmail = Console.ReadLine();
+                    idOrder = int.Parse(Console.ReadLine());
+                    string? customerName2 = Console.ReadLine();
+                    string? CustomerEmail2 = Console.ReadLine();
+                    string? CustomerAdress2 = Console.ReadLine();
+
+                    myOrder = new Order
+                    {
+                        Id = idOrder,
+                        CustomerName = customerName2,
+                        CustomerAdress = CustomerAdress2,
+                        CustomerEmail = CustomerEmail2,
+                    };
                     try
                     {
                         DalOrder.updateOrder(myOrder);
                         Console.WriteLine(myOrder);
-                        Order newOrder = new Order();                     //קולט ערכים חדשים
-                        Console.WriteLine("Enter new Order");
-                        //newOrder.Id = Console.Read();//כי זה רץ אוטומטי
-                        newOrder.CustomerName = Console.ReadLine();
-                        newOrder.CustomerAdress = Console.ReadLine();
-                        newOrder.CustomerEmail = Console.ReadLine();
+                        //Order newOrder = new Order();                     //קולט ערכים חדשים
+                       // Console.WriteLine("Enter new Order");
+                       
                     }
                     catch (Exception str)
                     {
@@ -230,6 +275,8 @@ class Program
                     }
                     break;
             }
+            ch = Console.Read();
+
         }
 
 
@@ -241,11 +288,11 @@ class Program
     public static void SubMenuOrderItem()
     {
         Order myOrder=new Order();  
-        OrderItem myOrderItem = new OrderItem();
+        OrderItem myOrderItem ;
         OrderItem[] orderItemArray = new OrderItem[200];
         int idOrderItem = 0;
         int idOrderItem1=0, idOrderItem2=0;
-        char ch;
+        //char ch;
         Console.WriteLine(@"a - Option to add an object to an orderItem list
             b - Object display option by ID 
             c - The option to view the list of orderItems
@@ -253,20 +300,32 @@ class Program
             e - Option to delete an object from an orderItem list
             f - Object display option according to product ID and order ID
             g - The option to display the list of an entity according to the ID number of the order ");
-        ch = (char)Console.Read();
+        // ch = (char)Console.Read();
+        int ch;
+        ch = Console.Read();
+
         while (ch != 0)
         {
             switch (ch)
             {
                 case 'a':
+                    Console.WriteLine("please enter: Id, ProductId, OrderId, Price,Amount");
+                    idOrderItem = int.Parse(Console.ReadLine());
+                    int productId = int.Parse(Console.ReadLine());
+                    int orderId = int.Parse(Console.ReadLine());
+                    double price = double.Parse(Console.ReadLine());
+                    int amount = int.Parse(Console.ReadLine());
+
+                    myOrderItem = new OrderItem
+                    {
+                        Id = idOrderItem,
+                        ProductId = productId,
+                        OrderId = orderId,
+                        Price = price,
+                        Amount = amount,
+                    };
                     try
                     {
-                        Console.WriteLine("please enter: Id, ProductId, OrderId, Price,Amount");
-                        //myOrderItem.Id = Console.Read();
-                        myOrderItem.ProductId = Console.Read();
-                        myOrderItem.OrderId = Console.Read();
-                        myOrderItem.Price = Console.Read();
-                        //myOrderItem.Amount = Console.Read();
                         idOrderItem = DalOrderItem.addOrderItems(myOrderItem);
                     }
                     catch (Exception str)
@@ -294,23 +353,28 @@ class Program
                     break;
                 case 'd':
                     Console.WriteLine("please enter: Id, ProductId, OrderId, Price,Amount");
-                    myOrderItem.Id = Console.Read();
-                    myOrderItem.ProductId = Console.Read();
-                    myOrderItem.OrderId = Console.Read();
-                    myOrderItem.Price = Console.Read();
-                    myOrderItem.Amount = Console.Read();
+                    idOrderItem = int.Parse(Console.ReadLine());
+                    int productId1 = int.Parse(Console.ReadLine());
+                    int orderId1 = int.Parse(Console.ReadLine());
+                    double price1 = double.Parse(Console.ReadLine());
+                    int amount1 = int.Parse(Console.ReadLine());
+
+                    myOrderItem = new OrderItem
+                    {
+                        Id = idOrderItem,
+                        ProductId = productId1,
+                        OrderId = orderId1,
+                        Price = price1,
+                        Amount = amount1,
+                    };
 
                     try
                     {
                         DalOrderItem.updateOredrItem(myOrderItem);
                         Console.WriteLine(myOrderItem);
-                        OrderItem newOrderItem = new OrderItem();   //קולט ערכים חדשים
-                        Console.WriteLine("Enter new OrderItem");
-                        newOrderItem.Id = Console.Read();
-                        newOrderItem.ProductId = Console.Read();
-                        newOrderItem.OrderId = Console.Read();
-                        newOrderItem.Price = Console.Read();
-                        newOrderItem.Amount = Console.Read();
+                        //OrderItem newOrderItem = new OrderItem();   //קולט ערכים חדשים
+                        //Console.WriteLine("Enter new OrderItem");
+                        
                     }
                     catch (Exception str)
                     {
@@ -349,6 +413,8 @@ class Program
                     { Console.WriteLine(orderItemArray); };
                     break;
             }
+            ch = Console.Read();
+
 
         }
     }

@@ -54,62 +54,62 @@ internal static class DataSource
 
         x = rand.Next(100000, 1000000);
         productArray[0].Id = x;
-        productArray[0].Category = "מקררים ומקפיאים";
-        productArray[0].Name = " SHARP מקרר ";
+        productArray[0].Category = Category.Refrigerator;
+        productArray[0].Name = " SHARP refrigerator ";
         productArray[0].Price =9000 ;
         productArray[0].InStock = 5;
 
         productArray[1].Id = x+1;
-        productArray[1].Category = "מקררים ומקפיאים";
-        productArray[1].Name = " FUJICOM מקפיא";
+        productArray[1].Category = Category.Refrigerator;
+        productArray[1].Name = " FUJICOM freezer";
         productArray[1].Price = 1000;
         productArray[1].InStock = 7;
 
         productArray[2].Id = x+2;
-        productArray[2].Category = "מוצרי חשמל למטבח";
-        productArray[2].Name = "Blomberg תנור משולב ";
+        productArray[2].Category = Category.Kitchen;
+        productArray[2].Name = "Blomberg oven ";
         productArray[2].Price = 2500;
         productArray[2].InStock = 0;
 
         productArray[3].Id = x+3;
-        productArray[3].Category = "מוצרי חשמל למטבח";
-        productArray[3].Name = " kenwoon מיקסר ";
+        productArray[3].Category = Category.Kitchen;
+        productArray[3].Name = " kenwoon mixer ";
         productArray[3].Price = 2000;
         productArray[3].InStock = 2;
 
         productArray[4].Id = x+4;
-        productArray[4].Category = "טלוויזיות ומחשבים";
-        productArray[4].Name = " Samsung טלוויזיה בגודל 75 אינץ ";
+        productArray[4].Category = Category.Computer;
+        productArray[4].Name = " Samsung TV 75 ";
         productArray[4].Price = 3800;
         productArray[4].InStock = 8;
 
         productArray[5].Id = x+5;
-        productArray[5].Category = "טלוויזיות ומחשבים";
-        productArray[5].Name = " hp מחשב נייד מסך מגע  ";
+        productArray[5].Category = Category.Computer; 
+        productArray[5].Name = " hp Computer Touch  ";
         productArray[5].Price = 3200;
         productArray[5].InStock = 0;
 
         productArray[6].Id = x+6;
-        productArray[6].Category = "מכונות כביסה וייבוש";
-        productArray[6].Name = "Electra מכונת כביסה";
+        productArray[6].Category = Category.Cleaning;
+        productArray[6].Name = "Electra Washing  machine";
         productArray[6].Price =1200 ;
         productArray[6].InStock = 4;
 
         productArray[7].Id = x + 7;
-        productArray[7].Category = "מכונות כביסה וייבוש";
-        productArray[7].Name = "Bosch מייבש כביסה";
+        productArray[7].Category = Category.Cleaning;
+        productArray[7].Name = "Bosch Dryer";
         productArray[7].Price = 2000;
         productArray[7].InStock = 7;
 
         productArray[8].Id = x + 8;
-        productArray[8].Category = "מזגנים";
-        productArray[8].Name = "TADIRAN - ALPHA PRO מזגן ";
+        productArray[8].Category = Category.Cooling;
+        productArray[8].Name = "TADIRAN - ALPHA PRO Air-Conditioner ";
         productArray[8].Price = 4100;
         productArray[8].InStock = 3;
 
         productArray[9].Id = x + 9;
-        productArray[9].Category = "מזגנים";
-        productArray[9].Name = "TORNADO - Q30X WIFI מזגן ";
+        productArray[9].Category = Category.Cooling;
+        productArray[9].Name = "TORNADO - Q30X WIFI Air-Conditioner ";
         productArray[9].Price = 3900;
         productArray[9].InStock = 10;
 

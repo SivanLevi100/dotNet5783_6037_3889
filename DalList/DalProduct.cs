@@ -17,20 +17,15 @@ public class DalProduct
         {
             if(DataSource.productArray[i].Id==product1.Id)
             {
-                throw new Exception("no place in arr to add");
+                throw new FormatException /*Exception*/("no place in arr to add");
+                
             }
             //ArgumentException
 
 
         }
-        DataSource.productArray[DataSource.Config.ProductFreeIndex++] = new Product()
-        {
-            Id = product1.Id,
-            Name = product1.Name,
-            Category = product1.Category,
-            Price = product1.Price,
-            InStock = product1.InStock
-        };
+        DataSource.productArray[DataSource.Config.ProductFreeIndex++] = product1;
+        
         return product1.Id;
     }
 
@@ -62,12 +57,13 @@ public class DalProduct
     /// <returns></returns>
     public static Product[] getArrayOfProduct()
     {
-        Product[] newProductArray = new Product[DataSource.Config.ProductFreeIndex];
-        for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
-        {
-            newProductArray[i] = DataSource.productArray[i];
-        }
-        return newProductArray;
+        //Product[] newProductArray = new Product[DataSource.Config.ProductFreeIndex];
+        //for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
+        //{
+        //    newProductArray[i] = DataSource.productArray[i];
+        //}
+        //return newProductArray;
+        return DataSource.productArray.ToArray();
     }
 
 
