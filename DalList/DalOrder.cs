@@ -10,7 +10,7 @@ public class DalOrder
     /// </summary>
     /// <param name="order1"></param>
     /// <returns></returns>
-    public static int addOrders(Order order1)
+    public int addOrders(Order order1)
     {
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
         {
@@ -20,16 +20,7 @@ public class DalOrder
             }
 
         }
-        DataSource.orderArray[DataSource.Config.OrderFreeIndex++] = new Order()
-        {
-            Id = DataSource.Config.OrderLastId,
-            CustomerName= order1.CustomerName,
-            CustomerEmail= order1.CustomerEmail,
-            CustomerAdress= order1.CustomerAdress,
-            OrderDate= order1.OrderDate,
-            ShipDate= order1.ShipDate,
-            DeliveryDate= order1.DeliveryDate,
-        };
+        DataSource.orderArray[DataSource.Config.OrderFreeIndex++] = order1;
         return order1.Id;
     }
 
@@ -39,7 +30,7 @@ public class DalOrder
     /// <param name="idOrder1"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static Order getOrder(int idOrder1)
+    public Order getOrder(int idOrder1)
     {
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
         {
@@ -60,12 +51,13 @@ public class DalOrder
     /// <returns></returns>
     public static Order[] getArrayOfOrder()
     {
-        Order[] neworderArray=new Order[DataSource.Config.OrderFreeIndex];
-        for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
-        {
-            neworderArray[i] = new Order();
-        }
-        return neworderArray;
+        /* Order[] neworderArray=new Order[DataSource.Config.OrderFreeIndex];
+         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
+         {
+             neworderArray[i] = new Order();
+         }
+         return neworderArray;*/
+        return DataSource.orderArray.ToArray();
 
     }
 
@@ -73,7 +65,7 @@ public class DalOrder
     /// A method to delete an order object that receives an order ID number
     /// </summary>
     /// <param name="idOrder1"></param>
-    public static void deleteOrder(int idOrder1)
+    public void deleteOrder(int idOrder1)
     {
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
         {
@@ -94,11 +86,11 @@ public class DalOrder
 
 
 
-/// <summary>
-/// An object update method that will receive a new order
-/// </summary>
-/// <param name="order1"></param>
-public static void updateOrder(Order order1)
+    /// <summary>
+    /// An object update method that will receive a new order
+    /// </summary>
+    /// <param name="order1"></param>
+    public void updateOrder(Order order1)
     {
 
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
@@ -106,12 +98,12 @@ public static void updateOrder(Order order1)
             if (DataSource.orderArray[i].Id == order1.Id)
             {
                 DataSource.orderArray[i].Id = order1.Id;
-                DataSource.orderArray[i].CustomerName= order1.CustomerName;
-                DataSource.orderArray[i].CustomerEmail= order1.CustomerEmail;
-                DataSource.orderArray[i].CustomerAdress= order1.CustomerAdress;
-                DataSource.orderArray[i].OrderDate= order1.OrderDate;
-                DataSource.orderArray[i].ShipDate= order1.ShipDate;
-                DataSource.orderArray[i].DeliveryDate= order1.DeliveryDate;
+                DataSource.orderArray[i].CustomerName = order1.CustomerName;
+                DataSource.orderArray[i].CustomerEmail = order1.CustomerEmail;
+                DataSource.orderArray[i].CustomerAdress = order1.CustomerAdress;
+                DataSource.orderArray[i].OrderDate = order1.OrderDate;
+                DataSource.orderArray[i].ShipDate = order1.ShipDate;
+                DataSource.orderArray[i].DeliveryDate = order1.DeliveryDate;
 
             }
         }

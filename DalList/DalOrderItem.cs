@@ -21,14 +21,7 @@ public class DalOrderItem
             }
 
         }
-        DataSource.orderItemArray[DataSource.Config.OrderItemFreeIndex++] = new OrderItem()
-        {
-           Id = DataSource.Config.OrderItemLastId,
-           ProductId =orderItem1.ProductId,
-           OrderId=orderItem1.OrderId,
-           Price = orderItem1.Price,
-           Amount = orderItem1.Amount,
-        };
+        DataSource.orderItemArray[DataSource.Config.OrderItemFreeIndex++] = orderItem1;
         return orderItem1.Id;
     }
 
@@ -58,12 +51,13 @@ public class DalOrderItem
     /// <returns></returns>
     public static OrderItem[] getArrayOfOrderItem()
     {
-        OrderItem[] neworderItemArray = new OrderItem[DataSource.Config.OrderItemFreeIndex];
+        /*OrderItem[] neworderItemArray = new OrderItem[DataSource.Config.OrderItemFreeIndex];
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
         {
             neworderItemArray[i] = getOrderItem(i);
         }
-        return neworderItemArray;
+        return neworderItemArray;*/
+        return DataSource.orderItemArray.ToArray();
     }
 
     /// <summary>

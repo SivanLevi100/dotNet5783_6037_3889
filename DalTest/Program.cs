@@ -3,43 +3,60 @@
 
 using Dal;
 using DO;
-using System.Drawing;
-using System.Security.Cryptography.X509Certificates;
 
 class Program
 {
-    private DalProduct product = new DalProduct();
-    private DalOrder order = new DalOrder();
-    private DalOrderItem orderItem = new DalOrderItem();
+    static DalProduct dalProduct = new DalProduct();
+    static DalOrderItem dalOrderItem = new DalOrderItem();
+    static DalOrder dalOrder = new DalOrder();
 
     static void Main(string[] args)
     {
-        //int choose;
-        char choose;
-        Console.WriteLine(@"0 - Exit
+        int choose;
+        //char choose;
+        Console.WriteLine(@"
+         0 - Exit
          1 - Product testing   
          2 - Order check
          3 - Checking an item in an order ");
-        Console.WriteLine(@"Enter your choice");
-        choose = (char)Console.Read();
-        switch(choose)
+        //Console.WriteLine(@"Enter your choice");
+        int.TryParse(Console.ReadLine(), out choose);
+        while (choose != 0)
         {
-            case '0':
-                return;
-            case '1':
-                SubMenuProduct();
-                break;
-            case '2':
-                SubMenuOrder();
-                break;
-            case '3':
-                SubMenuOrderItem();
-                break;
-            // default:
-            default:
-                break;
+            try
+            {
+                switch (choose)
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        SubMenuProduct();
+                        break;
+                    case 2:
+                        SubMenuOrder();
+                        break;
+                    case 3:
+                        SubMenuOrderItem();
+                        break;
+                    // default:
+                    default:
+                        break;
+                }
+
+            }
+            catch (Exception str)
+            {
+                Console.WriteLine(str.Message);
+            }
+            Console.WriteLine(@"
+             0 - Exit
+             1 - Product testing   
+             2 - Order check
+             3 - Checking an item in an order ");
+            Console.WriteLine(@"Enter your choice");
+            int.TryParse(Console.ReadLine(), out choose);
+
         }
-        choose = (char)Console.Read();
     }
 
     /// <summary>
@@ -48,129 +65,115 @@ class Program
     public static void SubMenuProduct()
     {
         Product myProduct;
-        int myIdOfProduct;
+        int id;
         //Product[] productsArray = new Product[50];
         //char ch;
-        Console.WriteLine(@"a - Option to add an object to a product list
-            b - Object display option by ID 
-            c - The option to view the list of products
-            d - Option to update object data
-            e - Option to delete an object from a product list");
-        int ch;
-        ch= Console.Read();
-        while (ch!=0)
+        string menu = "\ta - Option to add an object to a product list\n";
+        menu += "\tb - Object display option by ID\n";
+        menu += "\tc - The option to view the list of products\n";
+        menu += "\td - Option to update object data\n";
+        menu += "\te - Option to delete an object from a product list";
+
+        char ch= 'a';
+        bool flag;
+ 
+        while (ch != 'x')
         {
+            Console.WriteLine(menu);
+            flag = Char.TryParse(Console.ReadLine(), out ch);
             switch (ch)
             {
                 case 'a':
-                    Console.WriteLine("please enter: id, name, category, price, inStock");
-                    myIdOfProduct = int.Parse(Console.ReadLine());
-                   // myIdOfProduct = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("please enter: id");
+                    id = int.Parse(Console.ReadLine() ?? "0");
+                    Console.WriteLine("please enter: name");
                     string? name = Console.ReadLine();
+                    Console.WriteLine("please enter: category");
                     Category category = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? "Unavailable");
-                    double price = Double.Parse(Console.ReadLine());
-                    int instock = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("please enter: price");
+                    double price = Double.Parse(Console.ReadLine() ?? "0");
+                    Console.WriteLine("please enter: inStock");
+                    int instock = Int32.Parse(Console.ReadLine() ?? "0");
 
                     myProduct = new Product
                     {
-                        //Id = myIdOfProduct,
+                        Id = id,
                         Price = price,
                         Name = name ?? "Unknown",
                         Category = category,
                         InStock = instock
                     };
-                    try
-                    {
-                        myIdOfProduct = DalProduct.addProducts(myProduct);
-                    }
-                    catch (FormatException str)
-                    {
-                        Console.WriteLine(str);
-                    }
+                    id = dalProduct.addProducts(myProduct);
                     break;
                 case 'b':
                     Console.WriteLine("please enter: Id of product");
-                    myIdOfProduct = Console.Read();
-                    try
-                    {
-                        myProduct = DalProduct.getProduct(myIdOfProduct);
-                        Console.WriteLine(myProduct);
-                    }
-                    catch (Exception str)
-                    {
-                        Console.WriteLine(str);
-                    }
+                    id = Int32.Parse(Console.ReadLine() ?? "0");
+                    //myProduct = DalProduct.getProduct(myIdOfProduct);
+                    myProduct = dalProduct.getProduct(id);
+                    Console.WriteLine(myProduct);
                     break;
                 case 'c':
-                    Product[] productsArray = new Product[50];//////////////////////////
+                    //Product[] productsArray = new Product[50];//////////////////////////
 
-                    productsArray = DalProduct.getArrayOfProduct();
-                    foreach (Product product1 in productsArray)
-                    { Console.WriteLine(productsArray); };
+                    //productsArray = DalProduct.getArrayOfProduct();
+                    //foreach (Product product1 in productsArray)
+                    //{ Console.WriteLine(productsArray); };
+
+                    foreach (Product item in dalProduct.getArrayOfProduct())
+                    { 
+                        Console.WriteLine(item); 
+                    };
+
+
                     break;
                 case 'd':
                     Console.WriteLine("please enter: id, name, category, price, inStock");
-                    myIdOfProduct = int.Parse(Console.ReadLine());
+                    id = int.Parse(Console.ReadLine());
                     string? name1 = Console.ReadLine();
-                    Category category1 = (Category)Enum.Parse(typeof(Category), Console.ReadLine()?? "Unavailable");
+                    Category category1 = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? "Unavailable");
                     double price1 = Double.Parse(Console.ReadLine() ?? "0.0");
                     int instock1 = Int32.Parse(Console.ReadLine() ?? "0");
 
                     myProduct = new Product
                     {
-                        Id = myIdOfProduct,
+                        Id = id,
                         Price = price1,
                         Name = name1 ?? "Unknown",
                         Category = category1,
                         InStock = instock1
                     };
+                    dalProduct.updateProduct(myProduct);
+                    //  DalProduct.updateProduct(myProduct);
+                    Console.WriteLine(myProduct);
+                    Product newProduct = new Product();                     //קולט ערכים חדשים
+                    Console.WriteLine("Enter new Product");
 
-                    try
-                    {
-                        DalProduct.updateProduct(myProduct);
-                        Console.WriteLine(myProduct);
-                        Product newProduct = new Product();                     //קולט ערכים חדשים
-                        Console.WriteLine("Enter new Product");
+                    //myIdOfProduct = int.Parse(Console.ReadLine());
+                    //string? name = Console.ReadLine();
+                    //Category category = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? "Unavailable");
+                    //double price = Double.Parse(Console.ReadLine() ?? "0.0");
+                    //int instock = Int32.Parse(Console.ReadLine() ?? "0");
 
-                        //myIdOfProduct = int.Parse(Console.ReadLine());
-                        //string? name = Console.ReadLine();
-                        //Category category = (Category)Enum.Parse(typeof(Category), Console.ReadLine() ?? "Unavailable");
-                        //double price = Double.Parse(Console.ReadLine() ?? "0.0");
-                        //int instock = Int32.Parse(Console.ReadLine() ?? "0");
-
-                        //myProduct = new Product
-                        //{
-                        //    Id = myIdOfProduct,
-                        //    Price = price,
-                        //    Name = name ?? "Unknown",
-                        //    Category = category,
-                        //    InStock = instock
-                        //};
-                    }
-                    catch (Exception str)
-                    {
-                        Console.WriteLine(str);
-                    }
+                    //myProduct = new Product
+                    //{
+                    //    Id = myIdOfProduct,
+                    //    Price = price,
+                    //    Name = name ?? "Unknown",
+                    //    Category = category,
+                    //    InStock = instock
+                    //};
                     break;
                 case 'e':
                     Console.WriteLine("please enter: Id of product");
-                    myIdOfProduct = Console.Read();
-                    try
-                    {
-                        DalProduct.deleteProduct(myIdOfProduct);
-                    }
-                    catch (Exception str)
-                    {
-                        Console.WriteLine(str);
-                    }
+                    Int32.TryParse(Console.ReadLine(),out id);
+                    //DalProduct.deleteProduct(myIdOfProduct);
+                    dalProduct.deleteProduct(id);
                     break;
                 default:
+                    ch = 'x';
                     break;
             }
-            //int.TryParse(Console.ReadLine(), out ch);
-            ch = Console.Read();
-
-        }
+         }
     }
 
     /// <summary>
@@ -180,7 +183,7 @@ class Program
     {
         Order myOrder;
         Order[] orderArray = new Order[100];
-        int idOrder=0;
+        int idOrder = 0;
         //char ch;
         Console.WriteLine(@"a - Option to add an object to an order list
             b - Object display option by ID 
@@ -210,7 +213,7 @@ class Program
                     };
                     try
                     {
-                        idOrder = DalOrder.addOrders(myOrder);
+                        idOrder = dalOrder.addOrders(myOrder);
                     }
                     catch (Exception str)
                     {
@@ -222,7 +225,7 @@ class Program
                     idOrder = Console.Read();
                     try
                     {
-                        myOrder = DalOrder.getOrder(idOrder);
+                        myOrder = dalOrder.getOrder(idOrder);
                         Console.WriteLine(myOrder);
                     }
                     catch (Exception str)
@@ -251,11 +254,11 @@ class Program
                     };
                     try
                     {
-                        DalOrder.updateOrder(myOrder);
+                        dalOrder.updateOrder(myOrder);
                         Console.WriteLine(myOrder);
                         //Order newOrder = new Order();                     //קולט ערכים חדשים
-                       // Console.WriteLine("Enter new Order");
-                       
+                        // Console.WriteLine("Enter new Order");
+
                     }
                     catch (Exception str)
                     {
@@ -267,7 +270,7 @@ class Program
                     idOrder = Console.Read();
                     try
                     {
-                        DalOrder.deleteOrder(idOrder);
+                        dalOrder.deleteOrder(idOrder);
                     }
                     catch (Exception str)
                     {
@@ -287,11 +290,11 @@ class Program
     /// </summary>
     public static void SubMenuOrderItem()
     {
-        Order myOrder=new Order();  
-        OrderItem myOrderItem ;
+        Order myOrder = new Order();
+        OrderItem myOrderItem;
         OrderItem[] orderItemArray = new OrderItem[200];
         int idOrderItem = 0;
-        int idOrderItem1=0, idOrderItem2=0;
+        int idOrderItem1 = 0, idOrderItem2 = 0;
         //char ch;
         Console.WriteLine(@"a - Option to add an object to an orderItem list
             b - Object display option by ID 
@@ -374,7 +377,7 @@ class Program
                         Console.WriteLine(myOrderItem);
                         //OrderItem newOrderItem = new OrderItem();   //קולט ערכים חדשים
                         //Console.WriteLine("Enter new OrderItem");
-                        
+
                     }
                     catch (Exception str)
                     {

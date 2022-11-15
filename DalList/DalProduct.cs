@@ -11,21 +11,21 @@ public class DalProduct
     /// <param name="product1"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static int addProducts(Product product1)
+    public int addProducts(Product product1)
     {
-       for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
+        for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
         {
-            if(DataSource.productArray[i].Id==product1.Id)
+            if (DataSource.productArray[i].Id == product1.Id)
             {
                 throw new FormatException /*Exception*/("no place in arr to add");
-                
+
             }
             //ArgumentException
 
 
         }
         DataSource.productArray[DataSource.Config.ProductFreeIndex++] = product1;
-        
+
         return product1.Id;
     }
 
@@ -35,11 +35,11 @@ public class DalProduct
     /// <param name="idProduct1"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static Product getProduct(int idProduct1)
+    public Product getProduct(int idProduct1)
     {
-       //bool flag = false;
-      //  Product p=new Product();
-        for (int i=0; i < DataSource.Config.ProductFreeIndex; i++)
+        //bool flag = false;
+        //  Product p=new Product();
+        for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
         {
 
             if (DataSource.productArray[i].Id == idProduct1)
@@ -47,7 +47,7 @@ public class DalProduct
                 return DataSource.productArray[i];
 
             }
-        }  
+        }
         throw new Exception("the product id is not exist in array");
     }
 
@@ -55,7 +55,7 @@ public class DalProduct
     /// Request/read method of the list of all objects of a product
     /// </summary>
     /// <returns></returns>
-    public static Product[] getArrayOfProduct()
+    public Product[] getArrayOfProduct()
     {
         //Product[] newProductArray = new Product[DataSource.Config.ProductFreeIndex];
         //for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
@@ -71,16 +71,16 @@ public class DalProduct
     /// A method to delete a product object that receives a product ID number
     /// </summary>
     /// <param name="idProduct1"></param>
-    public static void deleteProduct(int idProduct1)
+    public void deleteProduct(int idProduct1)
     {
         for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
         {
 
             if (DataSource.productArray[i].Id == idProduct1)
             {
-                for(int j=i;j< DataSource.Config.ProductFreeIndex - 1;j++)
+                for (int j = i; j < DataSource.Config.ProductFreeIndex - 1; j++)
                 {
-                    DataSource.productArray[j]= DataSource.productArray[j+1];
+                    DataSource.productArray[j] = DataSource.productArray[j + 1];
                 }
                 DataSource.Config.ProductFreeIndex--;
                 break;
@@ -93,16 +93,16 @@ public class DalProduct
     /// An object update method that will receive a new product
     /// </summary>
     /// <param name="product1"></param>
-    public static void updateProduct(Product product1)
+    public void updateProduct(Product product1)
     {
 
         for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
         {
-            if(DataSource.productArray[i].Id== product1.Id)
+            if (DataSource.productArray[i].Id == product1.Id)
             {
                 DataSource.productArray[i].Id = product1.Id;
                 DataSource.productArray[i].Name = product1.Name;
-                DataSource.productArray[i].Category= product1.Category;
+                DataSource.productArray[i].Category = product1.Category;
                 DataSource.productArray[i].Price = product1.Price;
                 DataSource.productArray[i].InStock = product1.InStock;
             }

@@ -5,9 +5,15 @@ using System.Security.Cryptography;
 
 namespace Dal;
 
-internal static class DataSource
+internal sealed class DataSource
 {
     public static readonly Random randomaly = new();//*//
+    private static readonly DataSource _instance;
+    public static DataSource Instance
+    {
+        get { return _instance; }
+    }
+
     internal static  Product[] productArray = new Product[50];
     internal static Order[]  orderArray = new Order[100];
     internal static OrderItem[] orderItemArray = new OrderItem[200];
@@ -20,9 +26,12 @@ internal static class DataSource
     /// </summary>
     static DataSource()
     {
+      _instance = new DataSource();
+    }
+    private DataSource()
+    {
         s_Initialize();
     }
-
     /// <summary>
     /// Internal class config
     /// </summary>
