@@ -63,7 +63,10 @@ public class DalProduct
         //    newProductArray[i] = DataSource.productArray[i];
         //}
         //return newProductArray;
+        
         return DataSource.productArray.ToArray();
+
+        //return Array.FindAll(DataSource.productArray, p => p.Id != 0);
     }
 
 

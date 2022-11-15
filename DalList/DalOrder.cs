@@ -49,7 +49,7 @@ public class DalOrder
     /// Request/read method of the list of all objects of an order
     /// </summary>
     /// <returns></returns>
-    public static Order[] getArrayOfOrder()
+    public Order[] getArrayOfOrder()
     {
         /* Order[] neworderArray=new Order[DataSource.Config.OrderFreeIndex];
          for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)

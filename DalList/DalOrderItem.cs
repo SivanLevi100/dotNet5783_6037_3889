@@ -11,7 +11,7 @@ public class DalOrderItem
     /// </summary>
     /// <param name="orderItem1"></param>
     /// <returns></returns>
-    public static int addOrderItems(OrderItem orderItem1)
+    public int addOrderItems(OrderItem orderItem1)
     {
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
         {
@@ -31,7 +31,7 @@ public class DalOrderItem
     /// <param name="idOrderItem1"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static OrderItem getOrderItem(int idOrderItem1)
+    public OrderItem getOrderItem(int idOrderItem1)
     {
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
         {
@@ -49,7 +49,7 @@ public class DalOrderItem
     /// A request/read method of the list of all order item objects
     /// </summary>
     /// <returns></returns>
-    public static OrderItem[] getArrayOfOrderItem()
+    public OrderItem[] getArrayOfOrderItem()
     {
         /*OrderItem[] neworderItemArray = new OrderItem[DataSource.Config.OrderItemFreeIndex];
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
@@ -64,7 +64,7 @@ public class DalOrderItem
     /// A method to delete an order items object that receives an order item ID number
     /// </summary>
     /// <param name="idOrderItem1"></param>
-    public static void deleteOrderItem(int idOrderItem1)
+    public void deleteOrderItem(int idOrderItem1)
     {
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
         {
@@ -89,7 +89,7 @@ public class DalOrderItem
 /// An object update method that will receive a new order item
 /// </summary>
 /// <param name="orderItem1"></param>
-public static void updateOredrItem(OrderItem orderItem1)
+public void updateOredrItem(OrderItem orderItem1)
     {
 
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
@@ -112,7 +112,7 @@ public static void updateOredrItem(OrderItem orderItem1)
     /// <param name="idOrderItem2"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static OrderItem getOrderItemofTwoId(int idOrderItem1, int idOrderItem2)
+    public OrderItem getOrderItemofTwoId(int idOrderItem1, int idOrderItem2)
     {
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
         {
@@ -134,16 +134,17 @@ public static void updateOredrItem(OrderItem orderItem1)
     /// <param name="idorder1"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static OrderItem[] getArrayOfOrderItemOfOrder(Order idorder1)
+    public OrderItem[] getArrayOfOrderItemOfOrder(/*Order*/ int idorder1)
     {
         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
         {
-            if (DataSource.orderArray[i].Id == idorder1.Id)
+            if (DataSource.orderArray[i].Id == idorder1/*idorder1.Id*/)
                 return DataSource.orderItemArray;
         }
         throw new Exception("the order is not exist in array");
 
-
+        //להחזיר עותק של המערך
+        //  return DataSource.orderItemArray.ToArray();
 
 
         //OrderItem[] neworderItemArray = new OrderItem[DataSource.Config.OrderItemFreeIndex];
