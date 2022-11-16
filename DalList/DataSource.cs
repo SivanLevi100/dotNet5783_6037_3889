@@ -59,6 +59,7 @@ internal sealed class DataSource
         for (int i = 0; i < 10; i++)
         {
             productArray[i] = new Product();
+            //Config.ProductFreeIndex++;
         }
 
         x = rand.Next(100000, 1000000);

@@ -71,15 +71,16 @@ public class DalOrderItem
 
             if (DataSource.orderItemArray[i].Id == idOrderItem1)
             {
-                for (int j = i; j < DataSource.Config.OrderItemFreeIndex - 1; j++)
+                for (int j = i; j <= DataSource.Config.OrderItemFreeIndex - 1; j++)
                 {
                     DataSource.orderItemArray[j] = DataSource.orderItemArray[j + 1];
                 }
                 DataSource.Config.OrderItemFreeIndex--;
                 break;
             }
+            else
+                throw new Exception("The orderItem is not exist in the array");
         }
-        throw new Exception("The orderItem is not exist in the array");
 
     }
 
@@ -96,12 +97,17 @@ public void updateOredrItem(OrderItem orderItem1)
         {
             if (DataSource.orderItemArray[i].Id == orderItem1.Id)
             {
-                DataSource.orderItemArray[i].Id = orderItem1.Id;
-                DataSource.orderItemArray[i].ProductId=orderItem1.ProductId;
-                DataSource.orderItemArray[i].OrderId=orderItem1.OrderId;
-                DataSource.orderItemArray[i].Price=orderItem1.Price;
-                DataSource.orderItemArray[i].Amount = orderItem1.Amount;
+                DataSource.orderItemArray[i] = orderItem1;
+
+                //DataSource.orderItemArray[i].Id = orderItem1.Id;
+                //DataSource.orderItemArray[i].ProductId=orderItem1.ProductId;
+                //DataSource.orderItemArray[i].OrderId=orderItem1.OrderId;
+                //DataSource.orderItemArray[i].Price=orderItem1.Price;
+                //DataSource.orderItemArray[i].Amount = orderItem1.Amount;
             }
+            else
+                throw new Exception("the orderItem id is not exist in array");
+
         }
     }
     /// <summary>

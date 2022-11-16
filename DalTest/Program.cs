@@ -94,7 +94,7 @@ class Program
                             InStock = instock
                         };
                         id = dalProduct.addProducts(myProduct);
-                        Console.WriteLine(id);
+                        Console.WriteLine($@"id number of the added product {id}");
                         break;
                     case 'b':
                         Console.WriteLine("please enter: Id of product");
@@ -195,7 +195,7 @@ class Program
                             CustomerEmail = CustomerEmail ?? "Unknown",
                         };
                         idOrder = dalOrder.addOrders(myOrder);
-                        Console.WriteLine(idOrder);
+                        Console.WriteLine($@"id number of the added order {idOrder}");
                         break;
                     case 'b':
                         Console.WriteLine("please enter: Id of order");
@@ -303,7 +303,8 @@ class Program
                             Amount = amount,
                         };
                         idOrderItem = dalOrderItem.addOrderItems(myOrderItem);
-                        Console.WriteLine(idOrderItem);
+                        Console.WriteLine($@"id number of the added orderItem {idOrderItem}");
+
                         break;
                     case 'b':
                         Console.WriteLine("please enter: Id of orderItem");

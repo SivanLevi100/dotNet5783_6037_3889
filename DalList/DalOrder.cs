@@ -72,15 +72,16 @@ public class DalOrder
 
             if (DataSource.orderArray[i].Id == idOrder1)
             {
-                for (int j = i; j < DataSource.Config.OrderFreeIndex - 1; j++)
+                for (int j = i; j <= DataSource.Config.OrderFreeIndex - 1; j++)
                 {
                     DataSource.orderArray[j] = DataSource.orderArray[j + 1];
                 }
                 DataSource.Config.OrderFreeIndex--;
                 break;
             }
+            else
+                throw new Exception("The order is not exist in the array");
         }
-        throw new Exception("The order is not exist in the array");
 
     }
 
@@ -97,15 +98,20 @@ public class DalOrder
         {
             if (DataSource.orderArray[i].Id == order1.Id)
             {
-                DataSource.orderArray[i].Id = order1.Id;
-                DataSource.orderArray[i].CustomerName = order1.CustomerName;
-                DataSource.orderArray[i].CustomerEmail = order1.CustomerEmail;
-                DataSource.orderArray[i].CustomerAdress = order1.CustomerAdress;
-                DataSource.orderArray[i].OrderDate = order1.OrderDate;
-                DataSource.orderArray[i].ShipDate = order1.ShipDate;
-                DataSource.orderArray[i].DeliveryDate = order1.DeliveryDate;
+                DataSource.orderArray[i] = order1;
+
+                //DataSource.orderArray[i].Id = order1.Id;
+                //DataSource.orderArray[i].CustomerName = order1.CustomerName;
+                //DataSource.orderArray[i].CustomerEmail = order1.CustomerEmail;
+                //DataSource.orderArray[i].CustomerAdress = order1.CustomerAdress;
+                //DataSource.orderArray[i].OrderDate = order1.OrderDate;
+                //DataSource.orderArray[i].ShipDate = order1.ShipDate;
+                //DataSource.orderArray[i].DeliveryDate = order1.DeliveryDate;
 
             }
+            else
+                throw new Exception("the order id is not exist in array");
+
         }
     }
 

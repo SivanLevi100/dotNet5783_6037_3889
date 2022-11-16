@@ -20,11 +20,12 @@ public class DalProduct
                 throw new FormatException /*Exception*/("no place in arr to add");
 
             }
-            //ArgumentException
-
 
         }
         DataSource.productArray[DataSource.Config.ProductFreeIndex++] = product1;
+
+       // DataSource.productArray[++DataSource.Config.ProductFreeIndex] = product1;
+
 
         return product1.Id;
     }
@@ -81,15 +82,17 @@ public class DalProduct
 
             if (DataSource.productArray[i].Id == idProduct1)
             {
-                for (int j = i; j < DataSource.Config.ProductFreeIndex - 1; j++)
+                for (int j = i; j <= DataSource.Config.ProductFreeIndex - 1; j++)
                 {
                     DataSource.productArray[j] = DataSource.productArray[j + 1];
                 }
                 DataSource.Config.ProductFreeIndex--;
                 break;
             }
+            else
+                throw new Exception("The product is not exist in the array");
+
         }
-        throw new Exception("The product is not exist in the array");
     }
 
     /// <summary>
@@ -103,14 +106,18 @@ public class DalProduct
         {
             if (DataSource.productArray[i].Id == product1.Id)
             {
-                DataSource.productArray[i].Id = product1.Id;
-                DataSource.productArray[i].Name = product1.Name;
-                DataSource.productArray[i].Category = product1.Category;
-                DataSource.productArray[i].Price = product1.Price;
-                DataSource.productArray[i].InStock = product1.InStock;
+                DataSource.productArray[i] = product1;
+
+                //DataSource.productArray[i].Id = product1.Id;
+                //DataSource.productArray[i].Name = product1.Name;
+                //DataSource.productArray[i].Category = product1.Category;
+                //DataSource.productArray[i].Price = product1.Price;
+                //DataSource.productArray[i].InStock = product1.InStock;
             }
+            else
+                throw new Exception("the product id is not exist in array");
+
         }
-        throw new Exception("the product id is not exist in array");
 
     }
 
