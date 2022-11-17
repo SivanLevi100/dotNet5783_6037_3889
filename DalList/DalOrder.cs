@@ -16,7 +16,7 @@ public class DalOrder
         {
             if (DataSource.orderArray[i].Id == order1.Id)
             {
-                //throw new Exception("no place in arr to add");
+                throw new Exception("no place in arr to add");
             }
 
         }
@@ -51,12 +51,6 @@ public class DalOrder
     /// <returns></returns>
     public Order[] getArrayOfOrder()
     {
-        /* Order[] neworderArray=new Order[DataSource.Config.OrderFreeIndex];
-         for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
-         {
-             neworderArray[i] = new Order();
-         }
-         return neworderArray;*/
         return DataSource.orderArray.ToArray();
 
     }
@@ -99,15 +93,6 @@ public class DalOrder
             if (DataSource.orderArray[i].Id == order1.Id)
             {
                 DataSource.orderArray[i] = order1;
-
-                //DataSource.orderArray[i].Id = order1.Id;
-                //DataSource.orderArray[i].CustomerName = order1.CustomerName;
-                //DataSource.orderArray[i].CustomerEmail = order1.CustomerEmail;
-                //DataSource.orderArray[i].CustomerAdress = order1.CustomerAdress;
-                //DataSource.orderArray[i].OrderDate = order1.OrderDate;
-                //DataSource.orderArray[i].ShipDate = order1.ShipDate;
-                //DataSource.orderArray[i].DeliveryDate = order1.DeliveryDate;
-
             }
             else
                 throw new Exception("the order id is not exist in array");

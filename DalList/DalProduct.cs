@@ -38,8 +38,6 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public Product getProduct(int idProduct1)
     {
-        //bool flag = false;
-        //  Product p=new Product();
         for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
         {
 
@@ -58,13 +56,6 @@ public class DalProduct
     /// <returns></returns>
     public Product[] getArrayOfProduct()
     {
-        //Product[] newProductArray = new Product[DataSource.Config.ProductFreeIndex];
-        //for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
-        //{
-        //    newProductArray[i] = DataSource.productArray[i];
-        //}
-        //return newProductArray;
-        
         return DataSource.productArray.ToArray();
 
         //return Array.FindAll(DataSource.productArray, p => p.Id != 0);
@@ -108,11 +99,6 @@ public class DalProduct
             {
                 DataSource.productArray[i] = product1;
 
-                //DataSource.productArray[i].Id = product1.Id;
-                //DataSource.productArray[i].Name = product1.Name;
-                //DataSource.productArray[i].Category = product1.Category;
-                //DataSource.productArray[i].Price = product1.Price;
-                //DataSource.productArray[i].InStock = product1.InStock;
             }
             else
                 throw new Exception("the product id is not exist in array");

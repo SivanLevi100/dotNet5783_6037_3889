@@ -13,12 +13,8 @@ class Program
     static void Main(string[] args)
     {
         int choose;
-        Console.WriteLine(@"
-         0 - Exit
-         1 - Product testing   
-         2 - Order check
-         3 - Checking an item in an order ");
-        //Console.WriteLine(@"Enter your choice");
+        Console.WriteLine(" 0 - Exit \n 1 - Product testing \n 2 - Order check \n 3 - Checking an item in an order \n ");
+        Console.WriteLine(@"Enter your choice");
         int.TryParse(Console.ReadLine(), out choose);
         while (choose != 0)
         {
@@ -38,11 +34,7 @@ class Program
                 default:
                     break;
             }
-            Console.WriteLine(@"
-             0 - Exit
-             1 - Product testing   
-             2 - Order check
-             3 - Checking an item in an order ");
+            Console.WriteLine(" 0 - Exit \n 1 - Product testing \n 2 - Order check \n 3 - Checking an item in an order \n ");
             Console.WriteLine(@"Enter your choice");
             int.TryParse(Console.ReadLine(), out choose);
 
@@ -233,9 +225,6 @@ class Program
                             CustomerEmail = CustomerEmail2 ?? "Unknown",
                         };
                         dalOrder.updateOrder(myOrder);
-                        Console.WriteLine(myOrder);
-                        //Order newOrder = new Order();                     //קולט ערכים חדשים
-                        // Console.WriteLine("Enter new Order");
                         break;
                     case 'e':
                         Console.WriteLine("please enter: Id of order");
@@ -261,16 +250,17 @@ class Program
     /// </summary>
     public static void SubMenuOrderItem()
     {
-       // Order myOrder = new Order();
         OrderItem myOrderItem;
-       // OrderItem[] orderItemArray = new OrderItem[200];
         int idOrderItem = 0;
         int idOrderItem1 = 0, idOrderItem2 = 0;
         string menu = "\ta - Option to add an object to a orderItem list\n";
         menu += "\tb - Object display option by ID\n";
         menu += "\tc - The option to view the list of orderItems\n";
         menu += "\td - Option to update object data\n";
-        menu += "\te - Option to delete an object from a orderItem list";
+        menu += "\te - Option to delete an object from a orderItem list\n";
+        menu += "\tf - Request method based on two identifiers (ID) - product ID and order ID\n";
+        menu += "\tg - Method of requesting an array of order details by order ID number";
+
         char ch = 'a';
         bool flag;
 
@@ -360,6 +350,7 @@ class Program
                         Console.WriteLine(myOrderItem);
                         break;
                     case 'g':
+                        Console.WriteLine("please enter: Id of order");
                         int id = int.Parse(Console.ReadLine() ?? "0");
                         foreach (OrderItem item in dalOrderItem.getArrayOfOrderItemOfOrder(id))
                         {

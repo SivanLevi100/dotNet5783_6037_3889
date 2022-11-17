@@ -36,8 +36,12 @@ public struct Order
     /// <summary>
     /// Date of delivery
     /// </summary>
-    public DateTime DeliveryDate { get; set; } 
+    public DateTime DeliveryDate { get; set; }
 
+    /// <summary>
+    /// Printing method
+    /// </summary>
+    /// <returns></returns>
     public override string ToString() => $@"
     Order Id: {Id}
     Customer Name: {CustomerName}

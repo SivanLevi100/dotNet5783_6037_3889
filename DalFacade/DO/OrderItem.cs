@@ -27,8 +27,12 @@ public struct OrderItem
     /// <summary>
     /// Amount of Items
     /// </summary>
-    public int Amount { get; set; } 
+    public int Amount { get; set; }
 
+    /// <summary>
+    /// Printing method
+    /// </summary>
+    /// <returns></returns>
     public override string ToString() => $@"
     Order Item Id: {Id}
     Product Id - {ProductId}

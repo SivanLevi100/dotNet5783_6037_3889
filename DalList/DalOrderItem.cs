@@ -17,7 +17,7 @@ public class DalOrderItem
         {
             if (DataSource.orderItemArray[i].Id == orderItem1.Id)
             {
-                //throw new Exception("no place in arr to add");
+                throw new Exception("no place in arr to add");
             }
 
         }
@@ -51,12 +51,6 @@ public class DalOrderItem
     /// <returns></returns>
     public OrderItem[] getArrayOfOrderItem()
     {
-        /*OrderItem[] neworderItemArray = new OrderItem[DataSource.Config.OrderItemFreeIndex];
-        for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
-        {
-            neworderItemArray[i] = getOrderItem(i);
-        }
-        return neworderItemArray;*/
         return DataSource.orderItemArray.ToArray();
     }
 
@@ -98,12 +92,6 @@ public void updateOredrItem(OrderItem orderItem1)
             if (DataSource.orderItemArray[i].Id == orderItem1.Id)
             {
                 DataSource.orderItemArray[i] = orderItem1;
-
-                //DataSource.orderItemArray[i].Id = orderItem1.Id;
-                //DataSource.orderItemArray[i].ProductId=orderItem1.ProductId;
-                //DataSource.orderItemArray[i].OrderId=orderItem1.OrderId;
-                //DataSource.orderItemArray[i].Price=orderItem1.Price;
-                //DataSource.orderItemArray[i].Amount = orderItem1.Amount;
             }
             else
                 throw new Exception("the orderItem id is not exist in array");
@@ -130,7 +118,7 @@ public void updateOredrItem(OrderItem orderItem1)
 
         }
 
-        throw new Exception("the orderItem id is not exist in array");
+        throw new Exception("the orderItem is not exist in array");
 
     }
 
@@ -140,27 +128,19 @@ public void updateOredrItem(OrderItem orderItem1)
     /// <param name="idorder1"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public OrderItem[] getArrayOfOrderItemOfOrder(/*Order*/ int idorder1)
+    public OrderItem[] getArrayOfOrderItemOfOrder(int myOrderId)
     {
-        for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
+
+        for (int i = 0;i< DataSource.Config.OrderItemFreeIndex;i++)
         {
-            if (DataSource.orderArray[i].Id == idorder1/*idorder1.Id*/)
+            if (DataSource.orderItemArray[i].OrderId== myOrderId)
                 return DataSource.orderItemArray;
+
         }
-        throw new Exception("the order is not exist in array");
-
-        //להחזיר עותק של המערך
-        //  return DataSource.orderItemArray.ToArray();
-
-
-        //OrderItem[] neworderItemArray = new OrderItem[DataSource.Config.OrderItemFreeIndex];
-        //for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
-        //{
-        //    neworderItemArray[i] = getOrderItem(i);
-        //}
-        //return neworderItemArray;
-
+        throw new Exception("the order is not exist in array");     
     }
-    ////////////////////////////////////////////////////////////////////////////
+
+
+
 
 }

@@ -1,5 +1,6 @@
 ﻿
 using DO;
+using System;
 using System.Collections;
 using System.Security.Cryptography;
 
@@ -7,7 +8,7 @@ namespace Dal;
 
 internal sealed class DataSource
 {
-    public static readonly Random randomaly = new();//*//
+    public static readonly Random randomaly = new();
     private static readonly DataSource _instance;
     public static DataSource Instance
     {
@@ -17,9 +18,6 @@ internal sealed class DataSource
     internal static  Product[] productArray = new Product[50];
     internal static Order[]  orderArray = new Order[100];
     internal static OrderItem[] orderItemArray = new OrderItem[200];
-
-    //private static int index = 0;
-    //public static int Index { get => index++; }
 
     /// <summary>
     /// constructor
@@ -37,13 +35,12 @@ internal sealed class DataSource
     /// </summary>
     internal static class Config
     {
-        internal static int ProductFreeIndex = 0; //אינדקסים) של האלמנט הפנוי הראשון
-        internal static int OrderFreeIndex = 0;
-        internal static int OrderItemFreeIndex = 0;
-        private static int orderLastId = 100000; //מספר מזהה אחרון
-        private static int orderItemLastId = 100000; //מספר מזהה אחרון
+        internal static int ProductFreeIndex = 0;    //Indexes of the first free element
+        internal static int OrderFreeIndex = 0;      //Indexes of the first free element
+        internal static int OrderItemFreeIndex = 0;  //Indexes of the first free element
+        private static int orderLastId = 100000;     //Last ID number
+        private static int orderItemLastId = 100000; //Last ID number
 
-        // get
         public static int OrderLastId { get => orderLastId++; }
         public static int OrderItemLastId { get => orderItemLastId++; }
 
@@ -136,14 +133,11 @@ internal sealed class DataSource
         for (int i = 0; i < 20; i++)
         {
             orderArray[i] = new Order();
-            orderArray[i].Id =Config.OrderLastId;//המספר הרץ עולה בזימון הפונקציה ממחלקת config
-           // orderArray[i].OrderDate = DateTime.MinValue;
-            //orderArray[i].ShipDate = DateTime.MinValue;  
-            //orderArray[i].DeliveryDate = DateTime.MinValue;
+            orderArray[i].Id =Config.OrderLastId;//The running number increases when calling the function from the config class
             orderArray[i].CustomerName = "Customer_" + (char)i;
             orderArray[i].CustomerAdress = (char)(i + 3) +"in jerusalem" ;
             orderArray[i].CustomerEmail = (char)i * 3 + "@gmail.com";
-            Config.OrderFreeIndex++;// מעלים ב1 את המקום הפנוי הבא המערך
+            Config.OrderFreeIndex++;//Increase by 1 the next free place in the array
             orderArray[i].OrderDate = DateTime.Now.AddDays(random.Next(-1000,-1));
             if(i<=15)
             {
@@ -171,7 +165,6 @@ internal sealed class DataSource
             else
                 orderArray[i].DeliveryDate= DateTime.MinValue;
         }
-        ///80  60 אחוז
     }
 
     /// <summary>
@@ -183,11 +176,11 @@ internal sealed class DataSource
         for (int i = 0; i < 40; i++)
         {
             orderItemArray[i] = new OrderItem();
-            orderItemArray[i].Id = Config.OrderItemLastId;//המספר הרץ עולה בזימון הפונקציה ממחלקת config
+            orderItemArray[i].Id = Config.OrderItemLastId;//The running number increases when calling the function from the config class
             orderItemArray[i].ProductId = rand.Next(); //randomaly.Next();
             orderItemArray[i].OrderId = rand.Next(); //randomaly.Next();
             orderItemArray[i].Amount = i * 3 + 1;
-            Config.OrderItemFreeIndex++;//מעלים ב1 את המקום הפנוי הבא המערך
+            Config.OrderItemFreeIndex++;//Increase by 1 the next free place in the array
         }
 
         for (int i = 0; i < /*40*/10; i++)

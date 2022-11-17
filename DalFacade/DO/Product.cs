@@ -27,6 +27,10 @@ public struct Product
     /// </summary>
     public int InStock { get; set; }
 
+    /// <summary>
+    /// Printing method
+    /// </summary>
+    /// <returns></returns>
     public override string ToString() => $@"
     Product Id: {Id}
     Name: {Name}
