@@ -60,31 +60,29 @@ public class DalOrderItem
     /// <param name="idOrderItem1"></param>
     public void deleteOrderItem(int idOrderItem1)
     {
-        for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
+        for (int i = 0; i < DataSource.orderItemArray.Length; i++)
         {
 
             if (DataSource.orderItemArray[i].Id == idOrderItem1)
             {
-                for (int j = i; j <= DataSource.Config.OrderItemFreeIndex - 1; j++)
+                for (int j = i; j < DataSource.orderItemArray.Length - 1; j++)
                 {
                     DataSource.orderItemArray[j] = DataSource.orderItemArray[j + 1];
                 }
                 DataSource.Config.OrderItemFreeIndex--;
-                break;
+                return;
             }
-            else
-                throw new Exception("The orderItem is not exist in the array");
         }
-
+        throw new Exception("The orderItem is not exist in the array");
     }
 
 
 
-/// <summary>
-/// An object update method that will receive a new order item
-/// </summary>
-/// <param name="orderItem1"></param>
-public void updateOredrItem(OrderItem orderItem1)
+    /// <summary>
+    /// An object update method that will receive a new order item
+    /// </summary>
+    /// <param name="orderItem1"></param>
+    public void updateOredrItem(OrderItem orderItem1)
     {
 
         for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
@@ -92,12 +90,13 @@ public void updateOredrItem(OrderItem orderItem1)
             if (DataSource.orderItemArray[i].Id == orderItem1.Id)
             {
                 DataSource.orderItemArray[i] = orderItem1;
+                return;
             }
-            else
-                throw new Exception("the orderItem id is not exist in array");
-
         }
+        throw new Exception("the orderItem id is not exist in array");
     }
+
+
     /// <summary>
     /// Request/call method based on two identifiers (ID) - product ID and order ID,
     /// the method returns the object of an item in the corresponding order

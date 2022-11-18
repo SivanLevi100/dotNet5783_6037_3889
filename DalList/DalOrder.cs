@@ -61,22 +61,20 @@ public class DalOrder
     /// <param name="idOrder1"></param>
     public void deleteOrder(int idOrder1)
     {
-        for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
+        for (int i = 0; i < DataSource.orderArray.Length; i++)
         {
 
             if (DataSource.orderArray[i].Id == idOrder1)
             {
-                for (int j = i; j <= DataSource.Config.OrderFreeIndex - 1; j++)
+                for (int j = i; j < DataSource.orderArray.Length - 1; j++)
                 {
                     DataSource.orderArray[j] = DataSource.orderArray[j + 1];
                 }
                 DataSource.Config.OrderFreeIndex--;
-                break;
+                return;
             }
-            else
-                throw new Exception("The order is not exist in the array");
         }
-
+        throw new Exception("The order is not exist in the array");
     }
 
 
@@ -93,11 +91,10 @@ public class DalOrder
             if (DataSource.orderArray[i].Id == order1.Id)
             {
                 DataSource.orderArray[i] = order1;
+                return;
             }
-            else
-                throw new Exception("the order id is not exist in array");
-
         }
+        throw new Exception("the order id is not exist in array");
     }
 
 

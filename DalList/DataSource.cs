@@ -35,7 +35,7 @@ internal sealed class DataSource
     /// </summary>
     internal static class Config
     {
-        internal static int ProductFreeIndex = 0;    //Indexes of the first free element
+        internal static int ProductFreeIndex =0;    //Indexes of the first free element
         internal static int OrderFreeIndex = 0;      //Indexes of the first free element
         internal static int OrderItemFreeIndex = 0;  //Indexes of the first free element
         private static int orderLastId = 100000;     //Last ID number
@@ -56,7 +56,7 @@ internal sealed class DataSource
         for (int i = 0; i < 10; i++)
         {
             productArray[i] = new Product();
-            //Config.ProductFreeIndex++;
+            Config.ProductFreeIndex++;
         }
 
         x = rand.Next(100000, 1000000);

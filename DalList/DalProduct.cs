@@ -68,22 +68,21 @@ public class DalProduct
     /// <param name="idProduct1"></param>
     public void deleteProduct(int idProduct1)
     {
-        for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
+        for (int i = 0; i < DataSource.productArray.Length; i++)
         {
-
             if (DataSource.productArray[i].Id == idProduct1)
             {
-                for (int j = i; j <= DataSource.Config.ProductFreeIndex - 1; j++)
+                for (int j = i; j < DataSource.productArray.Length - 1; j++)
                 {
                     DataSource.productArray[j] = DataSource.productArray[j + 1];
                 }
                 DataSource.Config.ProductFreeIndex--;
-                break;
+                return;
             }
-            else
-                throw new Exception("The product is not exist in the array");
-
         }
+
+        throw new Exception("The product is not exist in the array");
+
     }
 
     /// <summary>
@@ -98,13 +97,10 @@ public class DalProduct
             if (DataSource.productArray[i].Id == product1.Id)
             {
                 DataSource.productArray[i] = product1;
-
+                return;
             }
-            else
-                throw new Exception("the product id is not exist in array");
-
         }
-
+         throw new Exception("the product id is not exist in array");
     }
 
 
