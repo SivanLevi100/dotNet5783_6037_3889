@@ -13,21 +13,27 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public int addProducts(Product product1)
     {
-        for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
+        if (DataSource.productList.id == product1.Id)
         {
-            if (DataSource.productArray[i].Id == product1.Id)
-            {
-                throw new FormatException /*Exception*/("no place in arr to add");
-
-            }
+            throw new DuplicateIdExceptions ("no place in arr to add");
 
         }
-        DataSource.productArray[DataSource.Config.ProductFreeIndex++] = product1;
-
-       // DataSource.productArray[++DataSource.Config.ProductFreeIndex] = product1;
-
+        DataSource.productList.Add(product1);
 
         return product1.Id;
+
+
+        //for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
+        //{
+        //    if (DataSource.productArray[i].Id == product1.Id)
+        //    {
+        //        throw new FormatException /*Exception*/("no place in arr to add");
+
+        //    }
+
+        //}
+        //DataSource.productArray[DataSource.Config.ProductFreeIndex++] = product1;
+
     }
 
     /// <summary>
@@ -38,6 +44,7 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public Product getProduct(int idProduct1)
     {
+        DataSource.productList.
         for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
         {
 
