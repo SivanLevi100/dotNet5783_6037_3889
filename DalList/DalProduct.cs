@@ -1,4 +1,5 @@
 ﻿
+using DalApi;
 using DO;
 
 namespace Dal;
@@ -10,30 +11,15 @@ public class DalProduct
     /// </summary>
     /// <param name="product1"></param>
     /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DuplicateIdExceptions"></exception>
     public int addProducts(Product product1)
     {
-        if (DataSource.productList.id == product1.Id)
+        if (DataSource.productList.Exists(x => x.Id== product1.Id))
         {
-            throw new DuplicateIdExceptions ("no place in arr to add");
-
+            throw new DuplicateIdExceptions ("no place in List to add");
         }
         DataSource.productList.Add(product1);
-
         return product1.Id;
-
-
-        //for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
-        //{
-        //    if (DataSource.productArray[i].Id == product1.Id)
-        //    {
-        //        throw new FormatException /*Exception*/("no place in arr to add");
-
-        //    }
-
-        //}
-        //DataSource.productArray[DataSource.Config.ProductFreeIndex++] = product1;
-
     }
 
     /// <summary>
@@ -41,29 +27,21 @@ public class DalProduct
     /// </summary>
     /// <param name="idProduct1"></param>
     /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="NotFoundExceptions"></exception>
     public Product getProduct(int idProduct1)
     {
-        DataSource.productList.
-        for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
-        {
-
-            if (DataSource.productArray[i].Id == idProduct1)
-            {
-                return DataSource.productArray[i];
-
-            }
-        }
-        throw new Exception("the product id is not exist in array");
+        if (DataSource.productList.Exists(x => x.Id== idProduct1))
+            return DataSource.productList.Find(x => x.Id== idProduct1);
+        throw new NotFoundExceptions("the product id is not exist in List");
     }
 
     /// <summary>
     /// Request/read method of the list of all objects of a product
     /// </summary>
     /// <returns></returns>
-    public Product[] getArrayOfProduct()
+    public IEnumerable<Product> /*List<Product>*/ getArrayOfProduct()
     {
-        return DataSource.productArray.ToArray();
+        return DataSource.productList.ToList();
 
         //return Array.FindAll(DataSource.productArray, p => p.Id != 0);
     }
@@ -75,21 +53,13 @@ public class DalProduct
     /// <param name="idProduct1"></param>
     public void deleteProduct(int idProduct1)
     {
-        for (int i = 0; i < DataSource.productArray.Length; i++)
+        if (DataSource.productList.Exists(x => x.Id == idProduct1))
         {
-            if (DataSource.productArray[i].Id == idProduct1)
-            {
-                for (int j = i; j < DataSource.productArray.Length - 1; j++)
-                {
-                    DataSource.productArray[j] = DataSource.productArray[j + 1];
-                }
-                DataSource.Config.ProductFreeIndex--;
-                return;
-            }
+            Product productDelete = DataSource.productList.Find(x => x.Id == idProduct1);
+            DataSource.productList.Remove(productDelete);
+            return;
         }
-
-        throw new Exception("The product is not exist in the array");
-
+        throw new NotFoundExceptions("The product is not exist in the List");
     }
 
     /// <summary>
@@ -98,16 +68,25 @@ public class DalProduct
     /// <param name="product1"></param>
     public void updateProduct(Product product1)
     {
-
-        for (int i = 0; i < DataSource.Config.ProductFreeIndex; i++)
+        if (DataSource.productList.Exists(x => x.Id == product1.Id))
         {
-            if (DataSource.productArray[i].Id == product1.Id)
-            {
-                DataSource.productArray[i] = product1;
-                return;
-            }
+            int j = DataSource.productList.IndexOf(DataSource.productList.Find(x => x.Id == product1.Id));
+            DataSource.productList[j] = product1;
+            return;
         }
-         throw new Exception("the product id is not exist in array");
+        throw new NotFoundExceptions("the product id is not exist in List");
+
+        //for (int i = 0; i < DataSource.productList.Count(); i++)
+        //{
+        //    if (DataSource.productList.Exists(x => x.Id == product1.Id))
+        //    {
+        //        int j = DataSource.productList.IndexOf(DataSource.productList.Find(x => x.Id == product1.Id));
+        //        DataSource.productList[j] = product1;
+        //        return;
+        //    }
+        //}
+        //throw new NotFoundExceptions("the product id is not exist in array");
+
     }
 
 

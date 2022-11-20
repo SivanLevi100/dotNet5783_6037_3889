@@ -1,6 +1,9 @@
 ﻿
+using DalApi;
 using DO;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -13,15 +16,11 @@ public class DalOrderItem
     /// <returns></returns>
     public int addOrderItems(OrderItem orderItem1)
     {
-        for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
+        if (DataSource.orderItemList.Exists(x => x.Id == orderItem1.Id))
         {
-            if (DataSource.orderItemArray[i].Id == orderItem1.Id)
-            {
-                throw new Exception("no place in arr to add");
-            }
-
+            throw new DuplicateIdExceptions("no place in List to add");
         }
-        DataSource.orderItemArray[DataSource.Config.OrderItemFreeIndex++] = orderItem1;
+        DataSource.orderItemList.Add(orderItem1);
         return orderItem1.Id;
     }
 
@@ -30,28 +29,22 @@ public class DalOrderItem
     /// </summary>
     /// <param name="idOrderItem1"></param>
     /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="NotFoundExceptions"></exception>
     public OrderItem getOrderItem(int idOrderItem1)
     {
-        for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
-        {
-
-            if (DataSource.orderItemArray[i].Id == idOrderItem1)
-            {
-                return DataSource.orderItemArray[i];
-
-            }
-        }
-        throw new Exception("the orderItem id is not exist in array");
+        if (DataSource.orderItemList.Exists(x => x.Id == idOrderItem1))
+            return DataSource.orderItemList.Find(x => x.Id == idOrderItem1);
+        throw new NotFoundExceptions("the orderItem id is not exist in List");
     }
 
     /// <summary>
     /// A request/read method of the list of all order item objects
     /// </summary>
     /// <returns></returns>
-    public OrderItem[] getArrayOfOrderItem()
+    public IEnumerable<OrderItem> /*List<OrderItem>*/ getArrayOfOrderItem()
     {
-        return DataSource.orderItemArray.ToArray();
+        return DataSource.orderItemList.ToList();
+
     }
 
     /// <summary>
@@ -60,20 +53,13 @@ public class DalOrderItem
     /// <param name="idOrderItem1"></param>
     public void deleteOrderItem(int idOrderItem1)
     {
-        for (int i = 0; i < DataSource.orderItemArray.Length; i++)
+        if (DataSource.orderItemList.Exists(x => x.Id == idOrderItem1))
         {
-
-            if (DataSource.orderItemArray[i].Id == idOrderItem1)
-            {
-                for (int j = i; j < DataSource.orderItemArray.Length - 1; j++)
-                {
-                    DataSource.orderItemArray[j] = DataSource.orderItemArray[j + 1];
-                }
-                DataSource.Config.OrderItemFreeIndex--;
-                return;
-            }
+            OrderItem orderItemDelete = DataSource.orderItemList.Find(x => x.Id == idOrderItem1);
+            DataSource.orderItemList.Remove(orderItemDelete);
+            return;
         }
-        throw new Exception("The orderItem is not exist in the array");
+        throw new NotFoundExceptions("The orderItem is not exist in the List");
     }
 
 
@@ -84,16 +70,13 @@ public class DalOrderItem
     /// <param name="orderItem1"></param>
     public void updateOredrItem(OrderItem orderItem1)
     {
-
-        for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
+        if (DataSource.orderItemList.Exists(x => x.Id == orderItem1.Id))
         {
-            if (DataSource.orderItemArray[i].Id == orderItem1.Id)
-            {
-                DataSource.orderItemArray[i] = orderItem1;
-                return;
-            }
+            int j = DataSource.orderItemList.IndexOf(DataSource.orderItemList.Find(x => x.Id == orderItem1.Id));
+            DataSource.orderItemList[j] = orderItem1;
+            return;
         }
-        throw new Exception("the orderItem id is not exist in array");
+        throw new NotFoundExceptions("the orderItem id is not exist in List");
     }
 
 
@@ -104,42 +87,28 @@ public class DalOrderItem
     /// <param name="idOrderItem1"></param>
     /// <param name="idOrderItem2"></param>
     /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="NotFoundExceptions"></exception>
     public OrderItem getOrderItemofTwoId(int idOrderItem1, int idOrderItem2)
     {
-        for (int i = 0; i < DataSource.Config.OrderItemFreeIndex; i++)
-        {
-            if ((DataSource.orderItemArray[i].OrderId == idOrderItem1) && (DataSource.orderItemArray[i].ProductId == idOrderItem2))
-            {
-                return DataSource.orderItemArray[i];
-
-            }
-
-        }
-
-        throw new Exception("the orderItem is not exist in array");
-
+        if (DataSource.orderItemList.Exists(x => x.OrderId == idOrderItem1 && x.ProductId == idOrderItem2))
+            return DataSource.orderItemList.Find(x => x.OrderId == idOrderItem1 && x.ProductId == idOrderItem2);
+        throw new NotFoundExceptions("the orderItem id is not exist in List");
     }
 
     /// <summary>
     /// Method of request/reading of a list/array of order details according to the ID number of an order
     /// </summary>
-    /// <param name="idorder1"></param>
+    /// <param name="myOrderId"></param>
     /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    public OrderItem[] getArrayOfOrderItemOfOrder(int myOrderId)
+    /// <exception cref="NotFoundExceptions"></exception>
+    public IEnumerable<OrderItem>/*List<OrderItem>*/ getArrayOfOrderItemOfOrder(int myOrderId)
     {
-
-        for (int i = 0;i< DataSource.Config.OrderItemFreeIndex;i++)
+        if(DataSource.orderItemList.Exists(x => x.OrderId == myOrderId))
         {
-            if (DataSource.orderItemArray[i].OrderId== myOrderId)
-                return DataSource.orderItemArray;
-
+            return DataSource.orderItemList.FindAll(x => x.OrderId == myOrderId).ToList();
         }
-        throw new Exception("the order is not exist in array");     
+        throw new Exception("the order is not exist in List");
     }
-
-
 
 
 }

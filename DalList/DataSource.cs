@@ -76,51 +76,113 @@ internal sealed class DataSource
         string[] cities = { "Tel Aviv", "Jerusalem", "Haifa", "Ashdod", "Lod", "Beni Brak", "Ramat Gan", "Holon" };
         Random random = new Random();
         TimeSpan time;
+        DateTime ShipDate11= DateTime.Now.AddDays(random.Next(-1000, -1));
+        DateTime DeliveryDate11= DateTime.Now.AddDays(random.Next(-1000, -1));
         for (int i = 0; i < 20; i++)
         {
-
-            orderList.Add(new Order()
-            {
-                Id = Config.OrderLastId,
-                CustomerName= "Customer_" + (char)i,
-                CustomerAdress= cities[random.Next(cities.Length)],
-                CustomerEmail= (char)i * 3 + "@gmail.com",
-                OrderDate= DateTime.Now.AddDays(random.Next(-1000, -1))
-            }) ;
-
-            //orderArray[i] = new Order();
-            //orderArray[i].Id =Config.OrderLastId;//The running number increases when calling the function from the config class
-            //orderArray[i].CustomerName = "Customer_" + (char)i;
-            //orderArray[i].CustomerAdress = (char)(i + 3) +"in jerusalem" ;
-            //orderArray[i].CustomerEmail = (char)i * 3 + "@gmail.com";
-            //Config.OrderFreeIndex++;//Increase by 1 the next free place in the array
-            //orderArray[i].OrderDate = DateTime.Now.AddDays(random.Next(-1000,-1));
-            if(i<=15)
+            if (i<=15)
             {
                 do
                 {
-                    orderArray[i].ShipDate = DateTime.Now.AddDays(random.Next(-1000, -1));
-                    time = orderArray[i].ShipDate - orderArray[i].OrderDate;
+                    orderList.Add(new Order()
+                    {
+                        Id = Config.OrderLastId,
+                        CustomerName = "Customer_" + (char)i,
+                        CustomerAdress = cities[random.Next(cities.Length)],
+                        CustomerEmail = (char)i * 3 + "@gmail.com",
+                        OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1)),
+                        ShipDate = ShipDate11
+
+                    });
+                    time = orderList[i].ShipDate - orderList[i].OrderDate;
                 }
                 while (time.TotalDays < 0);
             }
             else
             {
-                orderArray[i].ShipDate = DateTime.MinValue;
+                orderList.Add(new Order()
+                {
+                    Id = Config.OrderLastId,
+                    CustomerName = "Customer_" + (char)i,
+                    CustomerAdress = cities[random.Next(cities.Length)],
+                    CustomerEmail = (char)i * 3 + "@gmail.com",
+                    OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1)),
+                    ShipDate = DateTime.MinValue
+
+                });
             }
-            if(i<=10)
+            if (i <= 10)
             {
                 do
                 {
-                    orderArray[i].DeliveryDate= DateTime.Now.AddDays(random.Next(-1000, -1));
-                    time = orderArray[i].DeliveryDate - orderArray[i].ShipDate;
+                    orderList.Add(new Order()
+                    {
+                        Id = Config.OrderLastId,
+                        CustomerName = "Customer_" + (char)i,
+                        CustomerAdress = cities[random.Next(cities.Length)],
+                        CustomerEmail = (char)i * 3 + "@gmail.com",
+                        OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1)),
+                        DeliveryDate = DeliveryDate11
+
+                    });
+                    time = orderList[i].DeliveryDate - orderList[i].ShipDate;
 
                 }
-                while(time.TotalDays < 0);
+                while (time.TotalDays < 0);
             }
             else
-                orderArray[i].DeliveryDate= DateTime.MinValue;
+            {
+                orderList.Add(new Order()
+                {
+                    Id = Config.OrderLastId,
+                    CustomerName = "Customer_" + (char)i,
+                    CustomerAdress = cities[random.Next(cities.Length)],
+                    CustomerEmail = (char)i * 3 + "@gmail.com",
+                    OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1)),
+                    DeliveryDate = DateTime.MinValue
+
+                });
+            }
         }
+
+        //for (int i = 0; i < 20; i++)
+        //{
+
+        //    orderList.Add(new Order()
+        //    {
+        //        Id = Config.OrderLastId,
+        //        CustomerName = "Customer_" + (char)i,
+        //        CustomerAdress = cities[random.Next(cities.Length)],
+        //        CustomerEmail = (char)i * 3 + "@gmail.com",
+        //        OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1))
+        //    });
+
+        //    if (i <= 15)
+        //    {
+        //        do
+        //        {
+        //            orderList[i].ShipDate = DateTime.Now.AddDays(random.Next(-1000, -1));
+        //            time = orderList[i].ShipDate - orderList[i].OrderDate;
+        //        }
+        //        while (time.TotalDays < 0);
+        //    }
+        //    else
+        //    {
+        //        orderList[i].ShipDate = DateTime.MinValue;
+        //    }
+        //    if (i <= 10)
+        //    {
+        //        do
+        //        {
+        //            orderList[i].DeliveryDate = DateTime.Now.AddDays(random.Next(-1000, -1));
+        //            time = orderList[i].DeliveryDate - orderList[i].ShipDate;
+
+        //        }
+        //        while (time.TotalDays < 0);
+        //    }
+        //    else
+        //        orderList[i].DeliveryDate = DateTime.MinValue;
+        //}
     }
 
     /// <summary>

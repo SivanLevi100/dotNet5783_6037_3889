@@ -1,4 +1,5 @@
 ﻿
+using DalApi;
 using DO;
 
 namespace Dal;
@@ -12,15 +13,11 @@ public class DalOrder
     /// <returns></returns>
     public int addOrders(Order order1)
     {
-        for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
+        if (DataSource.orderList.Exists(x => x.Id == order1.Id))
         {
-            if (DataSource.orderArray[i].Id == order1.Id)
-            {
-                throw new Exception("no place in arr to add");
-            }
-
+            throw new DuplicateIdExceptions("no place in List to add");
         }
-        DataSource.orderArray[DataSource.Config.OrderFreeIndex++] = order1;
+        DataSource.orderList.Add(order1);
         return order1.Id;
     }
 
@@ -29,19 +26,12 @@ public class DalOrder
     /// </summary>
     /// <param name="idOrder1"></param>
     /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="NotFoundExceptions"></exception>
     public Order getOrder(int idOrder1)
     {
-        for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
-        {
-
-            if (DataSource.orderArray[i].Id == idOrder1)
-            {
-                return DataSource.orderArray[i];
-
-            }
-        }
-        throw new Exception("the order id is not exist in array");
+        if (DataSource.orderList.Exists(x => x.Id == idOrder1))
+            return DataSource.orderList.Find(x => x.Id == idOrder1);
+        throw new NotFoundExceptions("the order id is not exist in List");
     }
 
 
@@ -49,9 +39,9 @@ public class DalOrder
     /// Request/read method of the list of all objects of an order
     /// </summary>
     /// <returns></returns>
-    public Order[] getArrayOfOrder()
+    public IEnumerable<Order> /*List<Order>*/ getArrayOfOrder()
     {
-        return DataSource.orderArray.ToArray();
+        return DataSource.orderList.ToList();
 
     }
 
@@ -61,20 +51,13 @@ public class DalOrder
     /// <param name="idOrder1"></param>
     public void deleteOrder(int idOrder1)
     {
-        for (int i = 0; i < DataSource.orderArray.Length; i++)
+        if (DataSource.orderList.Exists(x => x.Id == idOrder1))
         {
-
-            if (DataSource.orderArray[i].Id == idOrder1)
-            {
-                for (int j = i; j < DataSource.orderArray.Length - 1; j++)
-                {
-                    DataSource.orderArray[j] = DataSource.orderArray[j + 1];
-                }
-                DataSource.Config.OrderFreeIndex--;
-                return;
-            }
+            Order orderDelete = DataSource.orderList.Find(x => x.Id == idOrder1);
+            DataSource.orderList.Remove(orderDelete);
+            return;
         }
-        throw new Exception("The order is not exist in the array");
+        throw new NotFoundExceptions("The order is not exist in the List");
     }
 
 
@@ -85,16 +68,24 @@ public class DalOrder
     /// <param name="order1"></param>
     public void updateOrder(Order order1)
     {
-
-        for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
+        if (DataSource.orderList.Exists(x => x.Id == order1.Id))
         {
-            if (DataSource.orderArray[i].Id == order1.Id)
-            {
-                DataSource.orderArray[i] = order1;
-                return;
-            }
+            int j = DataSource.orderList.IndexOf(DataSource.orderList.Find(x => x.Id == order1.Id));
+            DataSource.orderList[j] = order1;
+            return;
         }
-        throw new Exception("the order id is not exist in array");
+        throw new NotFoundExceptions("the order id is not exist in List");
+
+
+        //for (int i = 0; i < DataSource.Config.OrderFreeIndex; i++)
+        //{
+        //    if (DataSource.orderArray[i].Id == order1.Id)
+        //    {
+        //        DataSource.orderArray[i] = order1;
+        //        return;
+        //    }
+        //}
+        //throw new Exception("the order id is not exist in array");
     }
 
 
