@@ -4,14 +4,14 @@ using DO;
 
 namespace Dal;
 
-public class DalOrder
+internal class DalOrder:IOrder
 {
     /// <summary>
     /// An add object method that accepts an order object and returns the ID number of the added order
     /// </summary>
     /// <param name="order1"></param>
     /// <returns></returns>
-    public int addOrders(Order order1)
+    public int Add(Order order1)
     {
         if (DataSource.orderList.Exists(x => x.Id == order1.Id))
         {
@@ -27,7 +27,7 @@ public class DalOrder
     /// <param name="idOrder1"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public Order getOrder(int idOrder1)
+    public Order Get(int idOrder1)
     {
         if (DataSource.orderList.Exists(x => x.Id == idOrder1))
             return DataSource.orderList.Find(x => x.Id == idOrder1);
@@ -39,7 +39,7 @@ public class DalOrder
     /// Request/read method of the list of all objects of an order
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order> /*List<Order>*/ getArrayOfOrder()
+    public IEnumerable<Order> GetList()
     {
         return DataSource.orderList.ToList();
 
@@ -49,7 +49,7 @@ public class DalOrder
     /// A method to delete an order object that receives an order ID number
     /// </summary>
     /// <param name="idOrder1"></param>
-    public void deleteOrder(int idOrder1)
+    public void Delete(int idOrder1)
     {
         if (DataSource.orderList.Exists(x => x.Id == idOrder1))
         {
@@ -66,7 +66,7 @@ public class DalOrder
     /// An object update method that will receive a new order
     /// </summary>
     /// <param name="order1"></param>
-    public void updateOrder(Order order1)
+    public void Update(Order order1)
     {
         if (DataSource.orderList.Exists(x => x.Id == order1.Id))
         {

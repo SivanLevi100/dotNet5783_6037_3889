@@ -1,14 +1,15 @@
 ﻿//// See https://aka.ms/new-console-template for more information
 //Console.WriteLine("Hello, World!");
 
+using DalApi;
+
 using Dal;
 using DO;
+//namespace DalApi;
 
 class Program
 {
-    static DalProduct dalProduct = new DalProduct();
-    static DalOrderItem dalOrderItem = new DalOrderItem();
-    static DalOrder dalOrder = new DalOrder();
+    static IDal dal = new DalList();
 
     static void Main(string[] args)
     {
@@ -85,17 +86,17 @@ class Program
                             Category = category,
                             InStock = instock
                         };
-                        id = dalProduct.addProducts(myProduct);
+                        id = dal.Product.Add(myProduct);
                         Console.WriteLine($@"id number of the added product {id}");
                         break;
                     case 'b':
                         Console.WriteLine("please enter: Id of product");
                         id = Int32.Parse(Console.ReadLine() ?? "0");
-                        myProduct = dalProduct.getProduct(id);
+                        myProduct = dal.Product.Get(id);
                         Console.WriteLine(myProduct);
                         break;
                     case 'c':
-                        foreach (Product item in dalProduct.getArrayOfProduct())
+                        foreach (Product item in dal.Product.GetList())
                         {
                             Console.WriteLine(item);
                         };
@@ -103,7 +104,7 @@ class Program
                     case 'd':
                         Console.WriteLine("please enter: id");
                         id = int.Parse(Console.ReadLine() ?? "0");
-                        myProduct = dalProduct.getProduct(id); 
+                        myProduct = dal.Product.Get(id); 
                         Console.WriteLine(myProduct);
 
                         Console.WriteLine("Enter new values ​​to update the object"); 
@@ -126,12 +127,12 @@ class Program
                             Category = category1,
                             InStock = instock1
                         };
-                        dalProduct.updateProduct(myProduct);
+                        dal.Product.Update(myProduct);
                         break;
                     case 'e':
                         Console.WriteLine("please enter: Id of product");
                         Int32.TryParse(Console.ReadLine(), out id);
-                        dalProduct.deleteProduct(id);
+                        dal.Product.Delete(id);
                         break;
                     default:
                         ch = 'x';
@@ -186,17 +187,17 @@ class Program
                             CustomerAdress = CustomerAdress ?? "Unknown",
                             CustomerEmail = CustomerEmail ?? "Unknown",
                         };
-                        idOrder = dalOrder.addOrders(myOrder);
+                        idOrder = dal.Order.Add(myOrder);
                         Console.WriteLine($@"id number of the added order {idOrder}");
                         break;
                     case 'b':
                         Console.WriteLine("please enter: Id of order");
                         idOrder = Int32.Parse(Console.ReadLine() ?? "0");
-                        myOrder = dalOrder.getOrder(idOrder);
+                        myOrder = dal.Order.Get(idOrder);
                         Console.WriteLine(myOrder);
                         break;
                     case 'c':
-                        foreach (Order item in dalOrder.getArrayOfOrder())
+                        foreach (Order item in dal.Order.GetList())
                         {
                             Console.WriteLine(item);
                         };
@@ -204,7 +205,7 @@ class Program
                     case 'd':
                         Console.WriteLine("please enter: Id");
                         idOrder = int.Parse(Console.ReadLine() ?? "0");
-                        myOrder = dalOrder.getOrder(idOrder);
+                        myOrder = dal.Order.Get(idOrder);
                         Console.WriteLine(myOrder);
 
                         Console.WriteLine("Enter new values ​​to update the object");
@@ -224,12 +225,12 @@ class Program
                             CustomerAdress = CustomerAdress2 ?? "Unknown",
                             CustomerEmail = CustomerEmail2 ?? "Unknown",
                         };
-                        dalOrder.updateOrder(myOrder);
+                        dal.Order.Update(myOrder);
                         break;
                     case 'e':
                         Console.WriteLine("please enter: Id of order");
                         Int32.TryParse(Console.ReadLine(), out idOrder);
-                        dalOrder.deleteOrder(idOrder);
+                        dal.Order.Delete(idOrder);
                         break;
                     default:
                         ch = 'x';
@@ -292,18 +293,18 @@ class Program
                             Price = price,
                             Amount = amount,
                         };
-                        idOrderItem = dalOrderItem.addOrderItems(myOrderItem);
+                        idOrderItem = dal.OrderItem.Add(myOrderItem);
                         Console.WriteLine($@"id number of the added orderItem {idOrderItem}");
 
                         break;
                     case 'b':
                         Console.WriteLine("please enter: Id of orderItem");
                         idOrderItem = int.Parse(Console.ReadLine() ?? "0");
-                        myOrderItem = dalOrderItem.getOrderItem(idOrderItem);
+                        myOrderItem = dal.OrderItem.Get(idOrderItem);
                         Console.WriteLine(myOrderItem);
                         break;
                     case 'c':
-                        foreach (OrderItem item in dalOrderItem.getArrayOfOrderItem())
+                        foreach (OrderItem item in dal.OrderItem.GetList())
                         {
                             Console.WriteLine(item);
                         };
@@ -311,7 +312,7 @@ class Program
                     case 'd':
                         Console.WriteLine("please enter: Id");
                         idOrderItem = int.Parse(Console.ReadLine() ?? "0");
-                        myOrderItem = dalOrderItem.getOrderItem(idOrderItem);
+                        myOrderItem = dal.OrderItem.Get(idOrderItem);
                         Console.WriteLine(myOrderItem);
 
                         Console.WriteLine("Enter new values ​​to update the object");
@@ -334,25 +335,25 @@ class Program
                             Price = price1,
                             Amount = amount1,
                         };
-                        dalOrderItem.updateOredrItem(myOrderItem);
+                        dal.OrderItem.Update(myOrderItem);
                         break;
                     case 'e':
                         Console.WriteLine("please enter: Id of orderItem");
                         idOrderItem = int.Parse(Console.ReadLine() ?? "0");
-                        dalOrderItem.deleteOrderItem(idOrderItem);
+                        dal.OrderItem.Delete(idOrderItem);
                         break;
                     case 'f':
                         Console.WriteLine("please enter: Id of order");
                         idOrderItem1 = int.Parse(Console.ReadLine() ?? "0");
                         Console.WriteLine("please enter: Id of product");
                         idOrderItem2 = int.Parse(Console.ReadLine() ?? "0");
-                        myOrderItem = dalOrderItem.getOrderItemofTwoId(idOrderItem1, idOrderItem2);
+                        myOrderItem = dal.OrderItem.GetOrderItemofTwoId(idOrderItem1, idOrderItem2);
                         Console.WriteLine(myOrderItem);
                         break;
                     case 'g':
                         Console.WriteLine("please enter: Id of order");
                         int id = int.Parse(Console.ReadLine() ?? "0");
-                        foreach (OrderItem item in dalOrderItem.getArrayOfOrderItemOfOrder(id))
+                        foreach (OrderItem item in dal.OrderItem.GetListOfOrderItemOfOrder(id))
                         {
                             Console.WriteLine(item);
                         };

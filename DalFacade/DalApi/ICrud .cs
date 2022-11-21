@@ -9,10 +9,10 @@ namespace DalApi;
 
 public interface ICrud<T> where T : struct
 {
-    T Add(T entity);
-    T Get(T entity);
-    T Delete(T entity);
-    T Update(T entity);
-    IEnumerable<T> GetArray();
+    int Add(T entity);
+    T Get(int entity);
+    void Delete(int entity);
+    void Update(T entity);
+    IEnumerable<T> GetList();
 
 }

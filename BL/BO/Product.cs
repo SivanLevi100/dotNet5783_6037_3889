@@ -1,10 +1,13 @@
-﻿
+﻿using DO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DO;
-/// <summary>
-/// struct of Product
-/// </summary>
-public struct Product
+namespace BO;
+
+public class Product
 {
     /// <summary>
     /// Product ID number
@@ -40,4 +43,3 @@ public struct Product
 
 
 }
-

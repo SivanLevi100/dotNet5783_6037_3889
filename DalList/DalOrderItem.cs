@@ -1,20 +1,20 @@
 ﻿
 using DalApi;
 using DO;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
+//using System.Collections.Generic;
+//using System.Diagnostics;
+//using System.Runtime.CompilerServices;
 
 namespace Dal;
 
-public class DalOrderItem
+internal class DalOrderItem:IOrderItem
 {
     /// <summary>
     /// An add object method that receives an object of an order item and returns the ID number of the added order item
     /// </summary>
     /// <param name="orderItem1"></param>
     /// <returns></returns>
-    public int addOrderItems(OrderItem orderItem1)
+    public int Add(OrderItem orderItem1)
     {
         if (DataSource.orderItemList.Exists(x => x.Id == orderItem1.Id))
         {
@@ -30,7 +30,7 @@ public class DalOrderItem
     /// <param name="idOrderItem1"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public OrderItem getOrderItem(int idOrderItem1)
+    public OrderItem Get(int idOrderItem1)
     {
         if (DataSource.orderItemList.Exists(x => x.Id == idOrderItem1))
             return DataSource.orderItemList.Find(x => x.Id == idOrderItem1);
@@ -41,7 +41,7 @@ public class DalOrderItem
     /// A request/read method of the list of all order item objects
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderItem> /*List<OrderItem>*/ getArrayOfOrderItem()
+    public IEnumerable<OrderItem> GetList()
     {
         return DataSource.orderItemList.ToList();
 
@@ -51,7 +51,7 @@ public class DalOrderItem
     /// A method to delete an order items object that receives an order item ID number
     /// </summary>
     /// <param name="idOrderItem1"></param>
-    public void deleteOrderItem(int idOrderItem1)
+    public void Delete(int idOrderItem1)
     {
         if (DataSource.orderItemList.Exists(x => x.Id == idOrderItem1))
         {
@@ -68,7 +68,7 @@ public class DalOrderItem
     /// An object update method that will receive a new order item
     /// </summary>
     /// <param name="orderItem1"></param>
-    public void updateOredrItem(OrderItem orderItem1)
+    public void Update(OrderItem orderItem1)
     {
         if (DataSource.orderItemList.Exists(x => x.Id == orderItem1.Id))
         {
@@ -88,7 +88,7 @@ public class DalOrderItem
     /// <param name="idOrderItem2"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public OrderItem getOrderItemofTwoId(int idOrderItem1, int idOrderItem2)
+    public OrderItem GetOrderItemofTwoId(int idOrderItem1, int idOrderItem2)
     {
         if (DataSource.orderItemList.Exists(x => x.OrderId == idOrderItem1 && x.ProductId == idOrderItem2))
             return DataSource.orderItemList.Find(x => x.OrderId == idOrderItem1 && x.ProductId == idOrderItem2);
@@ -101,7 +101,7 @@ public class DalOrderItem
     /// <param name="myOrderId"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public IEnumerable<OrderItem>/*List<OrderItem>*/ getArrayOfOrderItemOfOrder(int myOrderId)
+    public IEnumerable<OrderItem> GetListOfOrderItemOfOrder(int myOrderId)
     {
         if(DataSource.orderItemList.Exists(x => x.OrderId == myOrderId))
         {

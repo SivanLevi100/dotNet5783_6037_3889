@@ -4,7 +4,8 @@ using DO;
 
 namespace Dal;
 
-public class DalProduct
+
+internal class DalProduct:IProduct
 {
     /// <summary>
     /// An add object method that receives a product object and returns the ID number of the added product
@@ -12,7 +13,7 @@ public class DalProduct
     /// <param name="product1"></param>
     /// <returns></returns>
     /// <exception cref="DuplicateIdExceptions"></exception>
-    public int addProducts(Product product1)
+    public int Add(Product product1)
     {
         if (DataSource.productList.Exists(x => x.Id== product1.Id))
         {
@@ -28,7 +29,7 @@ public class DalProduct
     /// <param name="idProduct1"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public Product getProduct(int idProduct1)
+    public Product Get(int idProduct1)
     {
         if (DataSource.productList.Exists(x => x.Id== idProduct1))
             return DataSource.productList.Find(x => x.Id== idProduct1);
@@ -39,7 +40,7 @@ public class DalProduct
     /// Request/read method of the list of all objects of a product
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product> /*List<Product>*/ getArrayOfProduct()
+    public IEnumerable<Product> GetList()
     {
         return DataSource.productList.ToList();
 
@@ -51,7 +52,7 @@ public class DalProduct
     /// A method to delete a product object that receives a product ID number
     /// </summary>
     /// <param name="idProduct1"></param>
-    public void deleteProduct(int idProduct1)
+    public void Delete(int idProduct1)
     {
         if (DataSource.productList.Exists(x => x.Id == idProduct1))
         {
@@ -66,7 +67,7 @@ public class DalProduct
     /// An object update method that will receive a new product
     /// </summary>
     /// <param name="product1"></param>
-    public void updateProduct(Product product1)
+    public void Update(Product product1)
     {
         if (DataSource.productList.Exists(x => x.Id == product1.Id))
         {

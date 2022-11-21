@@ -4,6 +4,6 @@ namespace DalApi;
 
 public interface IOrderItem: ICrud<OrderItem>
 {
-    OrderItem GetOrderItemofTwoId();
-    OrderItem[] GetArrayOfOrderItemOfOrder();
+    OrderItem GetOrderItemofTwoId(int id1,int id2);
+    IEnumerable<OrderItem> GetListOfOrderItemOfOrder(int id);
 }

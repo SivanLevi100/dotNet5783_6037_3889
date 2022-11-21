@@ -1,13 +1,12 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-using System.Diagnostics;
-using System.Xml.Linq;
+namespace BO;
 
-namespace DO;
-/// <summary>
-/// struct of Order
-/// </summary>
-public struct Order
+public class Order
 {
     /// <summary>
     /// Order ID number
@@ -53,5 +52,3 @@ public struct Order
 
 
 }
-
-
