@@ -1,15 +1,15 @@
-﻿using DO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using DO;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
+using BO;
 namespace BlApi;
 
 public interface IProduct
 {
-    //להוסיף מתודות
     public IEnumerable<Product> GetProductList();
     public Product GetProductDetailsManager();
     public Product GetProductDetailsBuyer();

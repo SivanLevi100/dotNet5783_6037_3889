@@ -9,44 +9,16 @@ namespace BO;
 
 public class Order
 {
-    /// <summary>
-    /// Order ID number
-    /// </summary>
     public int Id { get; set; }
-    /// <summary>
-    /// Name of Customer
-    /// </summary>
     public string? CustomerName { get; set; }
-    /// <summary>
-    ///  Email of Customer
-    /// </summary>
     public string? CustomerEmail { get; set; }
-    /// <summary>
-    ///  Adress of Customer
-    /// </summary>
     public string? CustomerAdress { get; set; }
-    /// <summary>
-    ///  Date of Order
-    /// </summary>
     public DateTime? OrderDate { get; set; }
-    /// <summary>
-    /// date of shipment 
-    /// </summary>
     public DateTime? ShipDate { get; set; }
-    /// <summary>
-    /// Date of delivery
-    /// </summary>
     public DateTime? DeliveryDate { get; set; }
-
-    /// <summary>
-    /// Printing method
-    /// </summary>
-    /// <returns></returns>
-    /// 
-    public  OrderStatus Status { get; set; }
+    public  OrderStatus? Status { get; set; }
     public IEnumerable<OrderItem?>? OrdersItemsList { get; set; }
     public double TotalPrice { get; set; }
-
 
 
     public override string ToString() => $@"

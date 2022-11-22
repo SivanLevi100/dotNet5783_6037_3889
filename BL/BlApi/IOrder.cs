@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DO;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+using BO;
 namespace BlApi;
 
 public interface IOrder
@@ -15,6 +15,5 @@ public interface IOrder
     public OrderTracking Tracking(int id);
 
 
-    //להוסיף מתודות
 
 }
