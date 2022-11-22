@@ -19,15 +19,24 @@ public class OrderItem
     /// <summary>
     /// Order ID number 
     /// </summary>
-    public int OrderId { get; set; }
+   
+    public string? NameProduct { get; set; }
+
     /// <summary>
     /// Price of Item
     /// </summary>
     public double Price { get; set; }
+
     /// <summary>
     /// Amount of Items
     /// </summary>
-    public int Amount { get; set; }
+    public int AmountInOrder { get; set; }
+
+    public double TotalPriceOfItem { get; set; }
+
+
+    
+    
 
     /// <summary>
     /// Printing method
@@ -36,9 +45,10 @@ public class OrderItem
     public override string ToString() => $@"
     Order Item Id: {Id}
     Product Id - {ProductId}
-    Order Id - {OrderId}
+    Name of Product  - {NameProduct}
     Price: {Price}
-    Amount: {Amount}";
+    Amount: {AmountInOrder}
+    Total Price Of Item: {TotalPriceOfItem}";
 
 
 
