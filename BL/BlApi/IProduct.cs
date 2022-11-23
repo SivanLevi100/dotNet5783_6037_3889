@@ -10,8 +10,8 @@ namespace BlApi;
 
 public interface IProduct
 {
-    public IEnumerable<Product> GetProductList();
-    public Product GetProductDetailsManager();
+    public IEnumerable<BO.ProductForList> GetProductList();
+    public Product GetProductDetailsManager(int id);
     public Product GetProductDetailsBuyer();
     public void Add(Product product1);
     public void Delete(int id);
