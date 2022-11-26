@@ -12,8 +12,8 @@ public interface IProduct
 {
     public IEnumerable<BO.ProductForList> GetProductList();
     public Product GetProductDetailsManager(int id);
-    public Product GetProductDetailsBuyer();
-    public void Add(Product product1);
+    public BO.ProductItem GetProductDetailsBuyer(int id, BO.Cart cart);
+    public void Add(BO.Product product1);
     public void Delete(int id);
     public void Update(Product product1);
 

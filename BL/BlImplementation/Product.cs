@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,6 @@ namespace BlImplementation;
 internal class Product:IProduct
 {
     private IDal Dal = new DalList();
-
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {
@@ -52,33 +52,57 @@ internal class Product:IProduct
     public BO.Product GetProductDetailsManager(int id)
     {
 
-        if(id > 0)
+        if (id > 0)
         {
-
-            BO.Product product = new BO.Product();
-            product.Id = Dal.Product.Get(id).Id;
-            product.Name = Dal.Product.Get(id).Name;
-            product.Category = (BO.Category)Dal.Product.Get(id).Category;
-            product.Price = Dal.Product.Get(id).Price;
-
-            return product;
+            DO.Product productOfDo= Dal.Product.Get(id);
+            BO.Product product = new BO.Product
+            {
+                Id = productOfDo.Id,
+                Name = productOfDo.Name,
+                Category = (BO.Category)productOfDo.Category,
+                Price = productOfDo.Price,
+                InStock = productOfDo.InStock,
+            };
+          return product;
 
         }
-        if (id < 0)
-        {
+        else
             throw new NotExiestsExceptions("The Product is not Exiests");
-        }
-
-
-
     }
-    public BO.Product GetProductDetailsBuyer()
+
+
+    public BO.ProductItem GetProductDetailsBuyer(int id, BO.Cart cart)
     {
+        if (id > 0)
+        {
+            try
+            {
+                DO.Product productOfDo = Dal.Product.Get(id);
+                BO.ProductItem productItem = new BO.ProductItem
+                {
+                    IdProduct = productOfDo.Id,
+                    Name = productOfDo.Name,
+                    Category = (BO.Category)productOfDo.Category,
+                    IsAvailable = (productOfDo.InStock > 0) ? true : false,
+                    AmountInCart = //
 
+                };
+                return productItem;
+            }
+            catch (NotFoundExceptions s)
+            {
+                Console.WriteLine(s);
+            }
+        }
+        else
+            throw new NotExiestsExceptions("The Product is not Exiests");
     }
-    public void Add(Product product1)
+
+
+    public void Add(BO.Product product1)
     {
         //Dal.Product.GetList();
+
     }
     public void Delete(int id)
     {
