@@ -15,7 +15,7 @@ public interface IProduct
     public BO.ProductItem GetProductDetailsBuyer(int id, BO.Cart cart);
     public void Add(BO.Product product1);
     public void Delete(int id);
-    public void Update(Product product1);
+    public void Update(BO.Product product1);
 
 
 }

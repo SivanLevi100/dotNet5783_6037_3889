@@ -32,4 +32,29 @@ public class NotExiestsExceptions : Exception
     }
 
 
+
+}
+
+// נתון לא תקין
+public class IncorrectDataExceptions : Exception
+{
+    public IncorrectDataExceptions()
+    {
+
+    }
+    public IncorrectDataExceptions(string? message) : base(message)
+    {
+
+    }
+    public IncorrectDataExceptions(string? message, Exception? innerException) : base(message, innerException)
+    {
+
+    }
+    public IncorrectDataExceptions(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+
+    }
+
+
+
 }

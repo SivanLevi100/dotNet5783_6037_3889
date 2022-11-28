@@ -9,13 +9,15 @@ using System.Threading.Tasks;
 
 using BlApi;
 using BO;
+//using BO;
 using Dal;
 using DalApi;
 using DO;
+//using DO;
 
 namespace BlImplementation;
 
-internal class Product:IProduct
+internal class Product : IProduct
 {
     private IDal Dal = new DalList();
 
@@ -51,65 +53,187 @@ internal class Product:IProduct
     }
     public BO.Product GetProductDetailsManager(int id)
     {
-
-        if (id > 0)
+        try
         {
-            DO.Product productOfDo= Dal.Product.Get(id);
-            BO.Product product = new BO.Product
+            if (id > 0)
             {
-                Id = productOfDo.Id,
-                Name = productOfDo.Name,
-                Category = (BO.Category)productOfDo.Category,
-                Price = productOfDo.Price,
-                InStock = productOfDo.InStock,
-            };
-          return product;
+                DO.Product productOfDo = Dal.Product.Get(id);
+                BO.Product product = new BO.Product
+                {
+                    Id = productOfDo.Id,
+                    Name = productOfDo.Name,
+                    Category = (BO.Category)productOfDo.Category,
+                    Price = productOfDo.Price,
+                    InStock = productOfDo.InStock,
+                };
+                return product;
+            }
+            else
+                throw new NotExiestsExceptions("Product request failed");
 
         }
-        else
-            throw new NotExiestsExceptions("The Product is not Exiests");
+        catch (NotFoundExceptions str)
+        {
+            throw new IncorrectDataExceptions("Product request failed", str);
+            //Console.WriteLine(str);  //מוצר לא קיים בשכבת נתונים 
+        }
+
+
+        //if (id > 0)
+        //{
+        //    DO.Product productOfDo = Dal.Product.Get(id);
+        //    BO.Product product = new BO.Product
+        //    {
+        //        Id = productOfDo.Id,
+        //        Name = productOfDo.Name,
+        //        Category = (BO.Category)productOfDo.Category,
+        //        Price = productOfDo.Price,
+        //        InStock = productOfDo.InStock,
+        //    };
+        //    return product;
+        //}
+        //else
+        //    throw new NotExiestsExceptions("Product request failed");
+
+        //להוסיף try catch
     }
 
 
     public BO.ProductItem GetProductDetailsBuyer(int id, BO.Cart cart)
     {
-        if (id > 0)
+        try
         {
-            try
+            if (id > 0)
             {
-                DO.Product productOfDo = Dal.Product.Get(id);
+                DO.Product productOfDO = Dal.Product.Get(id);
                 BO.ProductItem productItem = new BO.ProductItem
                 {
-                    IdProduct = productOfDo.Id,
-                    Name = productOfDo.Name,
-                    Category = (BO.Category)productOfDo.Category,
-                    IsAvailable = (productOfDo.InStock > 0) ? true : false,
-                    AmountInCart = //
+                    IdProduct = productOfDO.Id,
+                    Name = productOfDO.Name,
+                    Category = (BO.Category)productOfDO.Category,
+                    IsAvailable = (productOfDO.InStock > 0) ? true : false,
+                    AmountInCart = //productOfDo.InStock /*cart.OrdersItemsList.Count()*/ ///////////////////////
 
                 };
                 return productItem;
             }
-            catch (NotFoundExceptions s)
-            {
-                Console.WriteLine(s);
-            }
+            else
+                throw new NotExiestsExceptions("Product request failed");
+
         }
-        else
-            throw new NotExiestsExceptions("The Product is not Exiests");
+        catch (NotFoundExceptions s)
+        {
+            throw new IncorrectDataExceptions("Product request failed", s);
+
+            //  Console.WriteLine(s);  //מוצר לא קיים בשכבת נתונים 
+        }
+
+        //if (id > 0)
+        //{
+        //    try
+        //    {
+        //        DO.Product productOfDO = Dal.Product.Get(id);
+        //        BO.ProductItem productItem = new BO.ProductItem
+        //        {
+        //            IdProduct = productOfDO.Id,
+        //            Name = productOfDO.Name,
+        //            Category = (BO.Category)productOfDO.Category,
+        //            IsAvailable = (productOfDO.InStock > 0) ? true : false,
+        //            AmountInCart = //productOfDo.InStock /*cart.OrdersItemsList.Count()*/ ///////////////////////
+
+        //        };
+        //        return productItem;
+        //    }
+        //    catch (/*NotExiestsExceptions*/NotFoundExceptions s)
+        //    {
+        //        Console.WriteLine(s);  //מוצר לא קיים בשכבת נתונים 
+        //    }
+
+        //}
+        //else
+        //    throw new NotExiestsExceptions("Product request failed");
     }
 
 
     public void Add(BO.Product product1)
     {
-        //Dal.Product.GetList();
+        if (product1.Id > 0 && product1.Name != null && product1.Price > 0 && product1.InStock >= 0)
+        {
+            try
+            {
+                DO.Product productOfDO = new DO.Product
+                {
+                    Id = product1.Id,
+                    Name = product1.Name,
+                    Price = product1.Price,
+                    InStock = product1.InStock,
+                    Category = (DO.Category)product1.Category,
+                };
+                Dal.Product.Add(productOfDO);
+            }
+            catch (NotFoundExceptions str)
+            {
+                //Console.WriteLine(str);   //כפילות מזהה מוצר בשכבת נתונים 
+                throw new IncorrectDataExceptions("Failed to add product", str);
 
+            }
+        }
+        else
+            throw new IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
     }
     public void Delete(int id)
     {
+        try
+        {
+            foreach (DO.Order order in Dal.Order.GetList())
+            {
+                foreach (DO.OrderItem orderItem in Dal.OrderItem.GetListOfOrderItemOfOrder(id))
+                {
+                    if (id != orderItem.Id)
+                    {
+                        Dal.Product.Delete(id);
+                    }
+                    else
+                        throw new NotExiestsExceptions("This product appears on orders");
+                }
+            }
+        }
+        catch (NotFoundExceptions str)
+        {
+            throw new NotExiestsExceptions("No such product exists at all", str);
+        }
 
     }
-    public void Update(Product product1)
+
+
+    public void Update(BO.Product product1)
     {
 
+        if (product1.Id > 0 && product1.Name != null && product1.Price > 0 && product1.InStock >= 0)
+        {
+            try
+            {
+                DO.Product productOfDO = new DO.Product
+                {
+                    Id = product1.Id,
+                    Name = product1.Name,
+                    Price = product1.Price,
+                    InStock = product1.InStock,
+                    Category = (DO.Category)product1.Category,
+                };
+                Dal.Product.Update(productOfDO);
+
+            }
+            catch (NotFoundExceptions str)
+            {
+                Console.WriteLine(str);
+                //throw new NotExiestsExceptions("Product update failed", str);
+            }
+
+        }
+        else
+            throw new IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
     }
 }
+
+
