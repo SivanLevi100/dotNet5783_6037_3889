@@ -2,101 +2,183 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using BlApi;
-using BO;
 using Dal;
 using DalApi;
-using DO;
+using Microsoft.VisualBasic;
 
 namespace BlImplementation;
 
-internal class Cart:ICart
+internal class Cart: BlApi.ICart
 {
     private IDal Dal = new DalList();
 
     public BO.Cart AddProduct(BO.Cart cart1, int id)
     {
-        //try { } להוסיף
-        DO.Product product = Dal.Product.Get(id);
-        foreach (BO.OrderItem orderItem in cart1.OrdersItemsList)
-        {
-            if (orderItem.Id != product.Id) //אם מוצר לא קיים בסל קניות
-            {
-                if (product.Id == id && product.InStock >= 0) //תבדוק האם המוצר קיים ויש במלאי
-                {
-                    BO.OrderItem newOrderItem = new BO.OrderItem
-                    {
-                        ProductId = product.Id,
-                        NameProduct = product.Name,
-                        Price = product.Price,
-                        AmountInOrder = 1,
-                        TotalPriceOfItem = product.Price
+        if (id <= 0) 
+            throw new BO.IncorrectDataExceptions("Product Id is not positive number");
+        if (cart1 == null) 
+            throw new BO.NotExiestsExceptions("Missing cart object");
 
-                    };
-                    cart1.OrdersItemsList.Append(newOrderItem); //מוסיף ערך לסוף הרצף
-                    cart1.TotalPrice = cart1.TotalPrice + product.Price;
-                }
-                else
-                    throw new NotExiestsExceptions("The product does not exist or is out of stock", str);
-            }
-            else               //אם המוצר כבר מופיע בסל קניות
+        DO.Product doProduct;
+        try    //נבדוק האם המוצר קיים
+        {
+            doProduct = Dal.Product.Get(id);
+        }
+        catch (DO.NotFoundExceptions str)
+        {
+            throw new BO.NotExiestsExceptions("Product request failed", str);
+
+        }
+        if (cart1.OrdersItemsList.Exists(orderItem => orderItem.ProductId != doProduct.Id)) //אם מוצר לא קיים בסל קניות
+        {
+            if (doProduct.Id == id && doProduct.InStock >= 0) //תבדוק האם המוצר קיים ויש במלאי
             {
-                if (product.InStock >= 0)
+                BO.OrderItem newOrderItem = new BO.OrderItem
+                {
+                    Id = 0,
+                    ProductId = doProduct.Id,
+                    NameProduct = doProduct.Name,
+                    Price = doProduct.Price,
+                    AmountInOrder = 1,
+                    TotalPriceOfItem = doProduct.Price
+
+                };
+                cart1.OrdersItemsList.Append(newOrderItem); //מוסיף ערך לסוף הרצף
+                cart1.TotalPrice = cart1.TotalPrice + newOrderItem.TotalPriceOfItem;
+            }
+            else
+                throw new BO.NotExiestsExceptions("The product does not exist or is out of stock");
+        }
+        else  //אם המוצר כבר מופיע בסל קניות
+        {   
+            foreach (BO.OrderItem orderItem in cart1.OrdersItemsList)
+            {
+                if(orderItem.ProductId == doProduct.Id && doProduct.InStock >= 0) //אם זה המוצר והכמות גדולה מ0 
                 {
                     orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
-                    orderItem.TotalPriceOfItem= product.Price;
-                    cart1.TotalPrice = cart1.TotalPrice + product.Price;
-                    ////
+                    orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
+                    cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+                    break;
                 }
             }
-
         }
         return cart1;
     }
+
     public BO.Cart UpdateAmountOfProduct(BO.Cart cart1, int id, int newAmount)
     {
-        DO.Product product = Dal.Product.Get(id);
-        foreach (BO.OrderItem orderItem in cart1.OrdersItemsList)
+        DO.Product doProduct;
+        try    //נבדוק האם המוצר קיים
         {
-            if (orderItem.ProductId == id && newAmount > orderItem.AmountInOrder)
-            {
-                if (orderItem.Id == id)
-                {
-                    if (product.InStock >= 0)
-                    {
-                        orderItem.AmountInOrder = newAmount/*orderItem.AmountInOrder + 1*/;
-                        orderItem.TotalPriceOfItem = product.Price;
-                        cart1.TotalPrice = cart1.TotalPrice + newAmount * product.Price;
-
-                    }
-                }
-            }
-            if (orderItem.ProductId == id && newAmount < orderItem.AmountInOrder)
-            {
-                orderItem.AmountInOrder = newAmount;
-                orderItem.TotalPriceOfItem = product.Price;
-                cart1.TotalPrice = cart1.TotalPrice + newAmount * product.Price;
-            }
-            if (orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0)
-            {
-                // cart1.OrdersItemsList.Where(orderItem => orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0);
-                cart1.OrdersItemsList.ToList().Remove(orderItem);                  //  תִּמְחַק את הפריט
-                cart1.TotalPrice = cart1.TotalPrice - product.Price;
-
-            }
+            doProduct = Dal.Product.Get(id);
+        }
+        catch (DO.NotFoundExceptions str)
+        {
+            throw new BO.NotExiestsExceptions("Product request failed", str);
 
         }
-        //cart1.OrdersItemsList.Where(orderItem1 => orderItem1.ProductId == id && newAmount + orderItem1.AmountInOrder == 0);
-        //cart1.TotalPrice = cart1.TotalPrice - product.Price;
-
+        //DO.Product product = Dal.Product.Get(id);
+        foreach (BO.OrderItem orderItem in cart1.OrdersItemsList)
+        {
+            if (orderItem.ProductId == id && newAmount > orderItem.AmountInOrder) //אם הכמות גדלה
+            {
+                if (doProduct.InStock >= 0)//אם יש מוצר במלאי
+                {
+                    orderItem.AmountInOrder = newAmount;
+                    orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
+                    cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+                }
+            }
+            if (orderItem.ProductId == id && newAmount < orderItem.AmountInOrder) //אם הכמות קטנה
+            {
+                orderItem.AmountInOrder = newAmount;
+                orderItem.TotalPriceOfItem = doProduct.Price * newAmount;
+                cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+            }
+            if (orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0) //אם הכמות נהייתה 0
+            {
+                // cart1.OrdersItemsList.Where(orderItem => orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0);
+                cart1.TotalPrice = cart1.TotalPrice - orderItem.TotalPriceOfItem;
+                cart1.OrdersItemsList.ToList().Remove(orderItem);
+            }
+        }
         return cart1;   
         //להוסיף חריגות
     }
 
-    public void Confirm(BO.Cart cart1, string CustomerName, string CustomerEmail, string CustomerAdress)
+    public void Confirm(BO.Cart cart1)
     {
+        if (cart1.CustomerName == " " && cart1.CustomerAdress == " ")
+            throw new BO.IncorrectDataExceptions("Buyer's name and address are blank");
+        //string email = cart1.CustomerEmail;
+        if (cart1.CustomerEmail  )//כתובת אימיל לא חוקית
+        {
+            throw new BO.IncorrectDataExceptions("Email address in invalid format");
+        }
+        foreach (BO.OrderItem orderItem in cart1.OrdersItemsList) //כל המוצרים קיימים, כמויות חיוביות, יש מספיק במלאי
+        {
+            DO.Product p = Dal.Product.Get(orderItem.ProductId);
+            if(Dal.Product.GetList().Contains(p) == false)//מוצר לא קיים
+                throw new BO.NotExiestsExceptions("The product does not exist");
+            if (orderItem.AmountInOrder <= 0) //כמות שלילית
+                throw new BO.IncorrectDataExceptions("Invalid item quantity");
+            if(orderItem.AmountInOrder > Dal.Product.Get(orderItem.ProductId).InStock) //אין מספיק במלאי
+                throw new BO.IncorrectDataExceptions("This product is out of stock");
+        }
+        DO.Order doOrder = new DO.Order
+        {
+            CustomerName = cart1.CustomerName,
+            CustomerAdress = cart1.CustomerAdress,
+            CustomerEmail = cart1.CustomerEmail,
+            DeliveryDate = null,
+            OrderDate = DateTime.Now,
+            ShipDate = null
+        };
+        try
+        {
+            Dal.Order.Add(doOrder);  //הוספת הזמנה לשכבת הנתונים
+        }
+        catch(DO.DuplicateIdExceptions str)
+        {
+            throw new BO.NotExiestsExceptions("Failed to add order to data tier", str);
+        }
+        int numberOrder = Dal.Order.GetList().Last().Id;
+        foreach(BO.OrderItem boOrderItem in cart1.OrdersItemsList)//בניית אוביקטים של פריט הזמנה והוספתם לשכבת הנתונים
+        {
+            DO.OrderItem doOrderItem = new DO.OrderItem
+            {
+                //Id = 0,
+                OrderId = numberOrder,
+                ProductId = boOrderItem.ProductId,
+                Price = boOrderItem.Price,
+                Amount = boOrderItem.AmountInOrder
+            };
+            try
+            {
+                Dal.OrderItem.Add(doOrderItem);
+            }
+            catch (DO.DuplicateIdExceptions str)
+            {
+                throw new BO.NotExiestsExceptions("Failed to add orderItem to data tier", str);
+            }
+        }
+        foreach (BO.OrderItem boOrderItem in cart1.OrdersItemsList)//אישור ההזמנה
+        {
+            try
+            {
+                DO.Product product = Dal.Product.Get(boOrderItem.ProductId); //בקשת מוצר משכבת הנתונים
+                product.InStock= product.InStock - boOrderItem.AmountInOrder; //עדכון המלאי
+                Dal.Product.Update(product); //עדכון מוצר 
+            }
+            catch (DO.DuplicateIdExceptions str)
+            {
+                throw new BO.NotExiestsExceptions("Failed to request data layer products and updates", str);
+            }
+        }
 
     }
 

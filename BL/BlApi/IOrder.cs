@@ -8,12 +8,39 @@ namespace BlApi;
 
 public interface IOrder
 {
-    public IEnumerable<Order> GetOrderList();
-    public Order GetProductDetails(int id);
-    public Order UpdateDelivery(Order order1);
-    public Order UpdateShipping(Order order1);
-    public OrderTracking Tracking(int id);
+    /// <summary>
+    /// Order list request (admin screen)
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.Order> GetOrderList();
 
+    /// <summary>
+    /// Order details request (for manager screen and buyer screen)
+    /// </summary>
+    /// <param name="idOrder"></param>
+    /// <returns></returns>
+    public BO.Order GetProductDetails(int idOrder);
+
+    /// <summary>
+    /// Order Shipping Update (Manager Order Management Screen)
+    /// </summary>
+    /// <param name="idOrder"></param>
+    /// <returns></returns>
+    public BO.Order UpdateDelivery(int idOrder);
+
+    /// <summary>
+    /// Order Delivery Update (Admin Order Management Screen)
+    /// </summary>
+    /// <param name="idOrder"></param>
+    /// <returns></returns>
+    public BO.Order UpdateShipping(int idOrder);
+
+    /// <summary>
+    /// Order Tracking (Manager Order Management Screen)
+    /// </summary>
+    /// <param name="idOrder"></param>
+    /// <returns></returns>
+    public BO.OrderTracking Tracking(int idOrder);
 
 
 }

@@ -8,16 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BlApi;
-using BO;
-//using BO;
 using Dal;
 using DalApi;
-using DO;
-//using DO;
 
 namespace BlImplementation;
 
-internal class Product : IProduct
+internal class Product : BlApi.IProduct
 {
     private IDal Dal = new DalList();
 
@@ -69,13 +65,12 @@ internal class Product : IProduct
                 return product;
             }
             else
-                throw new NotExiestsExceptions("Product request failed");
+                throw new BO.NotExiestsExceptions("Product request failed");
 
         }
-        catch (NotFoundExceptions str)
+        catch (DO.NotFoundExceptions str)
         {
-            throw new IncorrectDataExceptions("Product request failed", str);
-            //Console.WriteLine(str);  //מוצר לא קיים בשכבת נתונים 
+            throw new BO.IncorrectDataExceptions("Product request failed", str);
         }
 
 
@@ -112,18 +107,18 @@ internal class Product : IProduct
                     Name = productOfDO.Name,
                     Category = (BO.Category)productOfDO.Category,
                     IsAvailable = (productOfDO.InStock > 0) ? true : false,
-                    AmountInCart = //productOfDo.InStock /*cart.OrdersItemsList.Count()*/ ///////////////////////
-
+                    AmountInCart = cart.OrdersItemsList.Count() + 1 //productOfDo.InStock /*cart.OrdersItemsList.Count()*/ ///////////////////////
+                    //AmountInCart = cart.OrdersItemsList.Exists(productItem => productItem.ProductId == productOfDO.Id).Count();
                 };
                 return productItem;
             }
             else
-                throw new NotExiestsExceptions("Product request failed");
+                throw new BO.NotExiestsExceptions("Product request failed");
 
         }
-        catch (NotFoundExceptions s)
+        catch (DO.NotFoundExceptions s)
         {
-            throw new IncorrectDataExceptions("Product request failed", s);
+            throw new BO.IncorrectDataExceptions("Product request failed", s);
 
             //  Console.WriteLine(s);  //מוצר לא קיים בשכבת נתונים 
         }
@@ -171,15 +166,15 @@ internal class Product : IProduct
                 };
                 Dal.Product.Add(productOfDO);
             }
-            catch (NotFoundExceptions str)
+            catch (DO.NotFoundExceptions str)
             {
                 //Console.WriteLine(str);   //כפילות מזהה מוצר בשכבת נתונים 
-                throw new IncorrectDataExceptions("Failed to add product", str);
+                throw new BO.IncorrectDataExceptions("Failed to add product", str);
 
             }
         }
         else
-            throw new IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
+            throw new BO.IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
     }
     public void Delete(int id)
     {
@@ -194,13 +189,13 @@ internal class Product : IProduct
                         Dal.Product.Delete(id);
                     }
                     else
-                        throw new NotExiestsExceptions("This product appears on orders");
+                        throw new BO.NotExiestsExceptions("This product appears on orders");
                 }
             }
         }
-        catch (NotFoundExceptions str)
+        catch (DO.NotFoundExceptions str)
         {
-            throw new NotExiestsExceptions("No such product exists at all", str);
+            throw new BO.NotExiestsExceptions("No such product exists at all", str);
         }
 
     }
@@ -224,15 +219,17 @@ internal class Product : IProduct
                 Dal.Product.Update(productOfDO);
 
             }
-            catch (NotFoundExceptions str)
+            catch (DO.NotFoundExceptions str)
             {
-                Console.WriteLine(str);
+                throw new BO.IncorrectDataExceptions("The product data received is incorrect",str);//חוסר תקינות הנתונים שהתקבלו כפרמטר
+
+                //Console.WriteLine(str);
                 //throw new NotExiestsExceptions("Product update failed", str);
             }
 
         }
         else
-            throw new IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
+            throw new BO.IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
     }
 }
 
