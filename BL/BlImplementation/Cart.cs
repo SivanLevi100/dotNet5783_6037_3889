@@ -8,6 +8,7 @@ using BlApi;
 using BO;
 using Dal;
 using DalApi;
+using DO;
 
 namespace BlImplementation;
 
@@ -25,7 +26,7 @@ internal class Cart:ICart
             {
                 if (product.Id == id && product.InStock >= 0) //תבדוק האם המוצר קיים ויש במלאי
                 {
-                    BO.OrderItem orderItem12 = new BO.OrderItem
+                    BO.OrderItem newOrderItem = new BO.OrderItem
                     {
                         ProductId = product.Id,
                         NameProduct = product.Name,
@@ -34,7 +35,7 @@ internal class Cart:ICart
                         TotalPriceOfItem = product.Price
 
                     };
-                    cart1.OrdersItemsList.Join(orderItem12); ////להוסיף לסל את המוצר
+                    cart1.OrdersItemsList.Append(newOrderItem); //מוסיף ערך לסוף הרצף
                     cart1.TotalPrice = cart1.TotalPrice + product.Price;
                 }
                 else
@@ -80,13 +81,16 @@ internal class Cart:ICart
             }
             if (orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0)
             {
-                //  תִּמְחַק את הפריט
-                cart1.OrdersItemsList.remove(orderItem);
+                // cart1.OrdersItemsList.Where(orderItem => orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0);
+                cart1.OrdersItemsList.ToList().Remove(orderItem);                  //  תִּמְחַק את הפריט
                 cart1.TotalPrice = cart1.TotalPrice - product.Price;
 
             }
 
         }
+        //cart1.OrdersItemsList.Where(orderItem1 => orderItem1.ProductId == id && newAmount + orderItem1.AmountInOrder == 0);
+        //cart1.TotalPrice = cart1.TotalPrice - product.Price;
+
         return cart1;   
         //להוסיף חריגות
     }
