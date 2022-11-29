@@ -48,7 +48,7 @@ internal class Cart:ICart
                     orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
                     orderItem.TotalPriceOfItem= product.Price;
                     cart1.TotalPrice = cart1.TotalPrice + product.Price;
-
+                    ////
                 }
             }
 
