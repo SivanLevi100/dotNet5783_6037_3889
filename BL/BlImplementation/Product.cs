@@ -180,18 +180,16 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            foreach (DO.Order order in Dal.Order.GetList())
+            foreach (DO.Order order in Dal.Order.GetList())//עוברים על כל ההזמנות
             {
-                foreach (DO.OrderItem orderItem in Dal.OrderItem.GetListOfOrderItemOfOrder(id))
+                if (Dal.OrderItem.GetListOfOrderItemOfOrder(id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
                 {
-                    if (id != orderItem.Id)
-                    {
-                        Dal.Product.Delete(id);
-                    }
-                    else
-                        throw new BO.NotExiestsExceptions("This product appears on orders");
+                    Dal.Product.Delete(id);
                 }
+                else
+                    throw new BO.NotExiestsExceptions("This product appears on orders");
             }
+
         }
         catch (DO.NotFoundExceptions str)
         {

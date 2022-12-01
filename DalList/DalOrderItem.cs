@@ -9,6 +9,8 @@ namespace Dal;
 
 internal class DalOrderItem:IOrderItem
 {
+    DataSource _dstaSource = DataSource.s_instance;
+
     /// <summary>
     /// An add object method that receives an object of an order item and returns the ID number of the added order item
     /// </summary>
@@ -16,11 +18,9 @@ internal class DalOrderItem:IOrderItem
     /// <returns></returns>
     public int Add(OrderItem orderItem1)
     {
-        if (DataSource.orderItemList.Exists(x => x.Id == orderItem1.Id))
-        {
+        if (_dstaSource.OrderItemList.Exists(x => x.Id == orderItem1.Id))
             throw new DuplicateIdExceptions("no place in List to add");
-        }
-        DataSource.orderItemList.Add(orderItem1);
+        _dstaSource.OrderItemList.Add(orderItem1);
         return orderItem1.Id;
     }
 
@@ -32,9 +32,13 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="NotFoundExceptions"></exception>
     public OrderItem Get(int idOrderItem1)
     {
-        if (DataSource.orderItemList.Exists(x => x.Id == idOrderItem1))
-            return DataSource.orderItemList.Find(x => x.Id == idOrderItem1);
-        throw new NotFoundExceptions("the orderItem id is not exist in List");
+
+        foreach (OrderItem orderItem in _dstaSource.OrderItemList)
+        {
+            if (orderItem.Id == idOrderItem1)
+                return orderItem;
+        }
+        throw new NotFoundExceptions("The orderItem id is not exist in List");
     }
 
     /// <summary>
@@ -43,8 +47,7 @@ internal class DalOrderItem:IOrderItem
     /// <returns></returns>
     public IEnumerable<OrderItem> GetList()
     {
-        return DataSource.orderItemList.ToList();
-
+        return _dstaSource.OrderItemList.ToList();
     }
 
     /// <summary>
@@ -53,11 +56,13 @@ internal class DalOrderItem:IOrderItem
     /// <param name="idOrderItem1"></param>
     public void Delete(int idOrderItem1)
     {
-        if (DataSource.orderItemList.Exists(x => x.Id == idOrderItem1))
+        foreach(OrderItem orderItem in _dstaSource.OrderItemList)
         {
-            OrderItem orderItemDelete = DataSource.orderItemList.Find(x => x.Id == idOrderItem1);
-            DataSource.orderItemList.Remove(orderItemDelete);
-            return;
+            if (idOrderItem1 == orderItem.Id)
+            {
+                _dstaSource.OrderItemList.Remove(orderItem);
+                return;
+            }
         }
         throw new NotFoundExceptions("The orderItem is not exist in the List");
     }
@@ -70,13 +75,14 @@ internal class DalOrderItem:IOrderItem
     /// <param name="orderItem1"></param>
     public void Update(OrderItem orderItem1)
     {
-        if (DataSource.orderItemList.Exists(x => x.Id == orderItem1.Id))
+        if (_dstaSource.OrderItemList.Exists(x => x.Id == orderItem1.Id))
         {
-            int j = DataSource.orderItemList.IndexOf(DataSource.orderItemList.Find(x => x.Id == orderItem1.Id));
-            DataSource.orderItemList[j] = orderItem1;
+            int j = _dstaSource.OrderItemList.IndexOf(_dstaSource.OrderItemList.Find(x => x.Id == orderItem1.Id));
+            _dstaSource.OrderItemList[j] = orderItem1;
             return;
         }
         throw new NotFoundExceptions("the orderItem id is not exist in List");
+
     }
 
 
@@ -90,9 +96,17 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="NotFoundExceptions"></exception>
     public OrderItem GetOrderItemofTwoId(int idOrderItem1, int idOrderItem2)
     {
-        if (DataSource.orderItemList.Exists(x => x.OrderId == idOrderItem1 && x.ProductId == idOrderItem2))
-            return DataSource.orderItemList.Find(x => x.OrderId == idOrderItem1 && x.ProductId == idOrderItem2);
-        throw new NotFoundExceptions("the orderItem id is not exist in List");
+        foreach (OrderItem orderItem in _dstaSource.OrderItemList)
+        {
+            if (orderItem.OrderId == idOrderItem1 &&orderItem.ProductId==idOrderItem2)
+                return orderItem;
+        }
+        throw new NotFoundExceptions("The orderItem id is not exist in List");
+
+
+        //if (DataSource.orderItemList.Exists(x => x.OrderId == idOrderItem1 && x.ProductId == idOrderItem2))
+        //    return DataSource.orderItemList.Find(x => x.OrderId == idOrderItem1 && x.ProductId == idOrderItem2);
+        //throw new NotFoundExceptions("the orderItem id is not exist in List");
     }
 
     /// <summary>
@@ -103,9 +117,10 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="NotFoundExceptions"></exception>
     public IEnumerable<OrderItem> GetListOfOrderItemOfOrder(int myOrderId)
     {
-        if(DataSource.orderItemList.Exists(x => x.OrderId == myOrderId))
+
+        if(_dstaSource.OrderItemList.Exists(x => x.OrderId == myOrderId))
         {
-            return DataSource.orderItemList.FindAll(x => x.OrderId == myOrderId).ToList();
+            return _dstaSource.OrderItemList.FindAll(x => x.OrderId == myOrderId).ToList();
         }
         throw new Exception("the order is not exist in List");
     }

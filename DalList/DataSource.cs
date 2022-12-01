@@ -2,34 +2,47 @@
 using DO;
 using System;
 using System.Collections;
+using System.Reflection;
 using System.Security.Cryptography;
 
 namespace Dal;
 
 internal sealed class DataSource
 {
-    public static readonly Random randomaly = new();
-    private static readonly DataSource _instance;
-    public static DataSource Instance
-    {
-        get { return _instance; }
-    }
+    internal static DataSource s_instance { get; }
+    private static readonly Random random = new Random(); //randomaly=random
+    static DataSource() => s_instance = new DataSource();
+    private DataSource() => s_Initialize();
 
-    internal static  List<Product> productList = new();
-    internal static List<Order>  orderList = new();
-    internal static List<OrderItem> orderItemList = new();
 
-    /// <summary>
-    /// constructor
-    /// </summary>
-    static DataSource()
-    {
-      _instance = new DataSource();
-    }
-    private DataSource()
-    {
-        s_Initialize();
-    }
+    internal List<Product> ProductList { get; } = new List<Product>();
+    internal List<Order> OrderList { get; } = new List<Order>();
+    internal List<OrderItem> OrderItemList { get; } = new List<OrderItem>();
+
+    //public static readonly Random randomaly = new();
+    //private static readonly DataSource _instance;
+    //public static DataSource Instance
+    //{
+    //    get { return _instance; }
+    //}
+
+    //internal static List<Product> productList = new();
+    //internal static List<Order> orderList = new();
+    //internal static List<OrderItem> orderItemList = new();
+
+    ///// <summary>
+    ///// constructor
+    ///// </summary>
+    //static DataSource()
+    //{
+    //  _instance = new DataSource();
+    //}
+    //private DataSource()
+    //{
+    //    s_Initialize();
+    //}
+
+
     /// <summary>
     /// Internal class config
     /// </summary>
@@ -49,14 +62,14 @@ internal sealed class DataSource
     /// <summary>
     /// A private method that will add objects to the array of products
     /// </summary>
-    private static void addProduct()
+    private void addProduct()
     {
         string[] names = { "SHARP refrigerator","FUJICOM freezer","Blomberg oven","kenwoon mixer", "Samsung TV 75","hp Computer Touch",
                 "Electra Washing  machine","Bosch Dryer","TADIRAN - ALPHA PRO Air-Conditioner","TORNADO - Q30X WIFI Air-Conditioner" };
         Random rand = new Random();
         for (int i = 0; i < 10; i++)
         {
-            productList.Add(new Product()
+            ProductList.Add(new Product()
             {
                 Id = rand.Next(100000, 1000000),
                 Name = names[rand.Next(names.Length)],
@@ -71,7 +84,7 @@ internal sealed class DataSource
     /// <summary>
     /// A private method that will add objects to the orders array
     /// </summary>
-    private static void addOrder()
+    private void addOrder()
     {
         string[] cities = { "Tel Aviv", "Jerusalem", "Haifa", "Ashdod", "Lod", "Beni Brak", "Ramat Gan", "Holon" };
         Random random = new Random();
@@ -84,7 +97,7 @@ internal sealed class DataSource
             {
                 do
                 {
-                    orderList.Add(new Order()
+                    OrderList.Add(new Order()
                     {
                         Id = Config.OrderLastId,
                         CustomerName = "Customer_" + (char)i,
@@ -94,13 +107,13 @@ internal sealed class DataSource
                         ShipDate = ShipDate11
 
                     });
-                    time = orderList[i].ShipDate - orderList[i].OrderDate;
+                    time = OrderList[i].ShipDate - OrderList[i].OrderDate;
                 }
                 while (time.TotalDays < 0);
             }
             else
             {
-                orderList.Add(new Order()
+                OrderList.Add(new Order()
                 {
                     Id = Config.OrderLastId,
                     CustomerName = "Customer_" + (char)i,
@@ -115,7 +128,7 @@ internal sealed class DataSource
             {
                 do
                 {
-                    orderList.Add(new Order()
+                    OrderList.Add(new Order()
                     {
                         Id = Config.OrderLastId,
                         CustomerName = "Customer_" + (char)i,
@@ -125,14 +138,14 @@ internal sealed class DataSource
                         DeliveryDate = DeliveryDate11
 
                     });
-                    time = orderList[i].DeliveryDate - orderList[i].ShipDate;
+                    time = OrderList[i].DeliveryDate - OrderList[i].ShipDate;
 
                 }
                 while (time.TotalDays < 0);
             }
             else
             {
-                orderList.Add(new Order()
+                OrderList.Add(new Order()
                 {
                     Id = Config.OrderLastId,
                     CustomerName = "Customer_" + (char)i,
@@ -188,30 +201,32 @@ internal sealed class DataSource
     /// <summary>
     /// A private method that will add objects to an array of order details
     /// </summary>
-    private static void addOrderItem()
+    private void addOrderItem()
     {
         Random rand = new Random();
         for (int i = 0; i < 40; i++)
         {
-
-            orderItemList.Add(new OrderItem()
+            OrderItem orderItem = new OrderItem();
+            orderItem.Id = Config.OrderItemLastId;
+            orderItem. ProductId = rand.Next();
+            orderItem.OrderId = rand.Next();
+            orderItem.Amount = rand.Next(1, 5);
+            foreach(Product product in ProductList)
             {
-                Id= Config.OrderItemLastId,
-                ProductId= rand.Next(),
-                OrderId= rand.Next(),
-                Amount= i * 3 + 1,
-                Price= ///////////
-
-
-            });
+                if(product.Id == orderItem.ProductId)
+                {
+                    orderItem.Price = product.Price * orderItem.Amount;
+                    break;
+                }
+            }
+            OrderItemList.Add(orderItem);
         }
-
     }
 
     /// <summary>
     /// The s_Initialize method will schedule the method of adding objects to the entity arrays
     /// </summary>
-    private static void s_Initialize()
+    private void s_Initialize()
     {
         addProduct();
         addOrder();

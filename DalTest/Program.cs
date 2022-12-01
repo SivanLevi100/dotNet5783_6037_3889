@@ -96,7 +96,7 @@ class Program
                         Console.WriteLine(myProduct);
                         break;
                     case 'c':
-                        foreach (Product item in dal.Product.GetList())
+                        foreach (Product item in dal.Product.GetList()/*.AsEnumerable()*/)
                         {
                             Console.WriteLine(item);
                         };

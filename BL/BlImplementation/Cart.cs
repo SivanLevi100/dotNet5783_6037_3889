@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -112,13 +113,12 @@ internal class Cart: BlApi.ICart
 
     public void Confirm(BO.Cart cart1)
     {
-        if (cart1.CustomerName == " " && cart1.CustomerAdress == " ")
+        if (string.IsNullOrWhiteSpace(cart1.CustomerName) && string.IsNullOrWhiteSpace(cart1.CustomerAdress)) //מחרוזת ריקה ולא חוקית
             throw new BO.IncorrectDataExceptions("Buyer's name and address are blank");
-        //string email = cart1.CustomerEmail;
-        if (cart1.CustomerEmail  )//כתובת אימיל לא חוקית
-        {
+
+        if (!new EmailAddressAttribute().IsValid(cart1.CustomerName))//כתובת אימיל לא חוקית
             throw new BO.IncorrectDataExceptions("Email address in invalid format");
-        }
+
         foreach (BO.OrderItem orderItem in cart1.OrdersItemsList) //כל המוצרים קיימים, כמויות חיוביות, יש מספיק במלאי
         {
             DO.Product p = Dal.Product.Get(orderItem.ProductId);
@@ -179,6 +179,7 @@ internal class Cart: BlApi.ICart
                 throw new BO.NotExiestsExceptions("Failed to request data layer products and updates", str);
             }
         }
+        cart1.OrdersItemsList.Clear(); //ריקון הסל כלומר מחקית רשימת פריטי הזמנה מהסל
 
     }
 
