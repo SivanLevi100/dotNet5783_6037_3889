@@ -12,8 +12,8 @@ using DO;
 
 namespace BlImplementation;
 
-internal class Order: BlApi.IOrder
-{ 
+internal class Order : BlApi.IOrder
+{
     private IDal Dal = new DalList();
 
     public IEnumerable<BO.OrderForList> GetOrderList()
@@ -22,10 +22,10 @@ internal class Order: BlApi.IOrder
         {
             OrderId = order.Id,
             CustomerName = order.CustomerName,
-            Status =BO.OrderStatus.Ordered ,
+            Status = BO.OrderStatus.Ordered,
             AmountItems = Dal.OrderItem.Get(order.Id).Amount,
             TotalPrice = (Dal.OrderItem.Get(order.Id).Amount) * (Dal.Product.Get(Dal.OrderItem.Get(order.Id).ProductId).Price)
-        }) ;
+        });
     }
     public BO.Order GetProductDetails(int idOrder)
     {
@@ -58,7 +58,7 @@ internal class Order: BlApi.IOrder
             else
                 throw new BO.NotExiestsExceptions("Order request failed");
         }
-        catch(NotFoundExceptions str)
+        catch (NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
@@ -74,14 +74,14 @@ internal class Order: BlApi.IOrder
     {
         if (idOrder <= 0)
             throw new BO.IncorrectDataExceptions("Order id is incorrect");
-       
-        bool flag =false;
+
+        bool flag = false;
         try
         {
             IEnumerable<DO.Order> orderListDo = Dal.Order.GetList();
             foreach (DO.Order order in orderListDo)
             {
-                if (order.Id == idOrder && order.ShipDate==DateTime.MinValue)//הזמנה קיימת (בשכבת נתונים) ועוד לא נשלחה
+                if (order.Id == idOrder && order.ShipDate == DateTime.MinValue)//הזמנה קיימת (בשכבת נתונים) ועוד לא נשלחה
                     flag = true;
             }
         }
@@ -110,15 +110,4 @@ internal class Order: BlApi.IOrder
     {
         throw new NotImplementedException();
     }
-
-
-    //public BO.Order UpdateShipping(int idOrder)
-    //{
-
-    //}
-    //public BO.OrderTracking Tracking(int idOrder)
-    //{
-
-    //}
-
 }
