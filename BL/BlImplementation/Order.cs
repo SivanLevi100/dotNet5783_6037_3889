@@ -110,4 +110,16 @@ internal class Order : BlApi.IOrder
     {
         throw new NotImplementedException();
     }
+
+    public BO.Order UpdateShipping(int idOrder)
+    {
+
+    }
+  
+    public BO.OrderTracking Tracking(int idOrder)
+    {
+
+    }
+
+
 }
