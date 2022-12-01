@@ -12,7 +12,7 @@ public interface IOrder
     /// Order list request (admin screen)
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.Order> GetOrderList();
+    public IEnumerable<BO.OrderForList> GetOrderList();
 
     /// <summary>
     /// Order details request (for manager screen and buyer screen)

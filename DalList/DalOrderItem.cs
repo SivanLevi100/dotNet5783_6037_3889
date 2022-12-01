@@ -122,7 +122,7 @@ internal class DalOrderItem:IOrderItem
         {
             return _dstaSource.OrderItemList.FindAll(x => x.OrderId == myOrderId).ToList();
         }
-        throw new Exception("the order is not exist in List");
+        throw new NotFoundExceptions("the order is not exist in List");
     }
 
 

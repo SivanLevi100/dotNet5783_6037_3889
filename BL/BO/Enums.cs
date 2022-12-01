@@ -19,9 +19,13 @@ public enum Category
 
 public enum OrderStatus
 {
-    Initiated,
+    //Initiated,
+    //Ordered,
+    //Paid,
+    //Shipped,
+    //Delivered
+
     Ordered,
-    Paid,
-    Shipped,
-    Delivered
+    shipped,
+    delivered
 }

@@ -40,7 +40,7 @@ internal class Cart: BlApi.ICart
             {
                 BO.OrderItem newOrderItem = new BO.OrderItem
                 {
-                    Id = 0,
+                    Id = 0, //////////////?
                     ProductId = doProduct.Id,
                     NameProduct = doProduct.Name,
                     Price = doProduct.Price,
@@ -93,6 +93,8 @@ internal class Cart: BlApi.ICart
                     orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
                     cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
                 }
+                else
+                    throw new BO.NotExiestsExceptions("The product is not in stock");
             }
             if (orderItem.ProductId == id && newAmount < orderItem.AmountInOrder) //אם הכמות קטנה
             {
@@ -103,12 +105,11 @@ internal class Cart: BlApi.ICart
             if (orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0) //אם הכמות נהייתה 0
             {
                 // cart1.OrdersItemsList.Where(orderItem => orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0);
-                cart1.TotalPrice = cart1.TotalPrice - orderItem.TotalPriceOfItem;
+                cart1.TotalPrice = cart1.TotalPrice - orderItem.TotalPriceOfItem; //עדכון מחיר סל
                 cart1.OrdersItemsList.ToList().Remove(orderItem);
             }
         }
         return cart1;   
-        //להוסיף חריגות
     }
 
     public void Confirm(BO.Cart cart1)
@@ -134,9 +135,9 @@ internal class Cart: BlApi.ICart
             CustomerName = cart1.CustomerName,
             CustomerAdress = cart1.CustomerAdress,
             CustomerEmail = cart1.CustomerEmail,
-            DeliveryDate = null,
+            DeliveryDate = DateTime.MinValue,
             OrderDate = DateTime.Now,
-            ShipDate = null
+            ShipDate = DateTime.MinValue
         };
         try
         {
