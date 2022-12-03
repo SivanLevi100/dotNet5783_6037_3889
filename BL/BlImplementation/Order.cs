@@ -65,12 +65,53 @@ internal class Order : BlApi.IOrder
 
     }
 
-    public OrderTracking Tracking(int idOrder)
+    //public OrderTracking Tracking(int idOrder)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    public BO.Order UpdateDelivery(int idOrder)//עדכון אספקת הזמנה
     {
-        throw new NotImplementedException();
+        if (idOrder <= 0)
+            throw new BO.IncorrectDataExceptions("Order id is incorrect");
+
+        bool flag = false;
+        try
+        {
+            IEnumerable<DO.Order> orderListDo = Dal.Order.GetList();
+            foreach (DO.Order order in orderListDo)
+            {
+                if (order.Id == idOrder && order.ShipDate != DateTime.MinValue && order.DeliveryDate == DateTime.MinValue)//תבדוק האם הזמנה קיימת (בשכבת נתונים), כבר נשלחה אך עוד לא סופקה
+                    flag = true;
+            }
+        }
+        catch (NotFoundExceptions str)
+        {
+            throw new BO.NotExiestsExceptions("Order request failed", str);
+        }
+
+        if (flag == true) //  ההזמנה קיימת, נשלחה ולא נמסרה
+        {
+            DO.Order orderDo = new DO.Order(); //יצירת אוביקט שכבת נתנונים מעודכן
+            orderDo.DeliveryDate = DateTime.Now;
+            Dal.Order.Update(orderDo); //עדכון בשכבת הנתונים
+            BO.Order order = new BO.Order
+            {
+                DeliveryDate = DateTime.Now,
+                Status = BO.OrderStatus.delivered,
+            };
+            return order;
+        }
+        else
+            throw new BO.NotExiestsExceptions("Order request failed");
     }
 
-    public BO.Order UpdateDelivery(int idOrder)
+    //public BO.Order UpdateShipping(int idOrder)
+    //{
+    //    throw new NotImplementedException();
+    //}
+
+    public BO.Order UpdateShipping(int idOrder)//עדכון שילוח הזמנה
     {
         if (idOrder <= 0)
             throw new BO.IncorrectDataExceptions("Order id is incorrect");
@@ -105,20 +146,40 @@ internal class Order : BlApi.IOrder
         else
             throw new BO.NotExiestsExceptions("Order request failed");
     }
-
-    public BO.Order UpdateShipping(int idOrder)
-    {
-        throw new NotImplementedException();
-    }
-
-    public BO.Order UpdateShipping(int idOrder)
-    {
-
-    }
   
-    public BO.OrderTracking Tracking(int idOrder)
+    public BO.OrderTracking Tracking(int idOrder)//מעקב הזמנה
     {
+        if (idOrder <= 0)
+            throw new BO.IncorrectDataExceptions("Order id is incorrect");
 
+        bool flag = false;
+        try
+        {
+            IEnumerable<DO.Order> orderListDo = Dal.Order.GetList();
+            foreach (DO.Order order in orderListDo)
+            {
+                if (order.Id == idOrder)//הזמנה קיימת (בשכבת נתונים)
+                    flag = true;
+            }
+        }
+        catch (NotFoundExceptions str)
+        {
+            throw new BO.NotExiestsExceptions("Order request failed", str);
+        }
+        if (flag == true) //ההזמנה קיימת ועוד לא נשלחה
+        {
+            DO.Order orderDo = new DO.Order(); //יצירת אוביקט שכבת נתנונים מעודכן
+            orderDo.ShipDate = DateTime.Now;
+            Dal.Order.Update(orderDo); //עדכון בשכבת הנתונים
+            BO.Order order = new BO.Order
+            {
+                ShipDate = DateTime.Now,
+                Status = BO.OrderStatus.shipped,
+            };
+            return order;
+        }
+        else
+            throw new BO.NotExiestsExceptions("Order request failed");
     }
 
 
