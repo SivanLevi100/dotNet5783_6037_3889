@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -152,35 +153,37 @@ internal class Order : BlApi.IOrder
         if (idOrder <= 0)
             throw new BO.IncorrectDataExceptions("Order id is incorrect");
 
-        bool flag = false;
+        DO.Order orderTracking = new DO.Order();
         try
         {
-            IEnumerable<DO.Order> orderListDo = Dal.Order.GetList();
-            foreach (DO.Order order in orderListDo)
-            {
-                if (order.Id == idOrder)//הזמנה קיימת (בשכבת נתונים)
-                    flag = true;
-            }
+            orderTracking = Dal.Order.Get(idOrder);
         }
         catch (NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
-        if (flag == true) //ההזמנה קיימת ועוד לא נשלחה
+        List<Tuple<DateTime, string>> track = new List<Tuple<DateTime, string>>();
+        OrderStatus status1= new OrderStatus();
+        if (orderTracking.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
         {
-            DO.Order orderDo = new DO.Order(); //יצירת אוביקט שכבת נתנונים מעודכן
-            orderDo.ShipDate = DateTime.Now;
-            Dal.Order.Update(orderDo); //עדכון בשכבת הנתונים
-            BO.Order order = new BO.Order
-            {
-                ShipDate = DateTime.Now,
-                Status = BO.OrderStatus.shipped,
-            };
-            return order;
+            track.Add(Tuple.Create(orderTracking.OrderDate, "The order has been created"));
+            status1 = OrderStatus.Ordered;
         }
-        else
-            throw new BO.NotExiestsExceptions("Order request failed");
+        if (orderTracking.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
+        {
+            track.Add(Tuple.Create(orderTracking.ShipDate, "The order has been sent"));
+            status1 = OrderStatus.shipped;
+        }
+        if (orderTracking.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
+        {
+            track.Add(Tuple.Create(orderTracking.DeliveryDate, "The order has been delivered"));
+            status1 = OrderStatus.delivered;
+        }
+        return new BO.OrderTracking 
+        {
+            OrderId = idOrder,
+            Status = status1,
+            Tracking = track,
+        };
     }
-
-
 }
