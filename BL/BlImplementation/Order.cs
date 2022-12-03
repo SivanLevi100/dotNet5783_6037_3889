@@ -179,7 +179,7 @@ internal class Order : BlApi.IOrder
             track.Add(Tuple.Create(orderTracking.DeliveryDate, "The order has been delivered"));
             status1 = OrderStatus.delivered;
         }
-        return new BO.OrderTracking 
+        return new BO.OrderTracking  
         {
             OrderId = idOrder,
             Status = status1,
