@@ -1,4 +1,5 @@
 ﻿
+using DalApi;
 using DO;
 using System;
 using System.Collections;
@@ -10,14 +11,14 @@ namespace Dal;
 internal sealed class DataSource
 {
     internal static DataSource s_instance { get; }
-    private static readonly Random random = new Random(); //randomaly=random
+    private static readonly Random random = new Random(); //randomaly random
     static DataSource() => s_instance = new DataSource();
     private DataSource() => s_Initialize();
 
 
-    internal List<Product> ProductList { get; } = new List<Product>();
-    internal List<Order> OrderList { get; } = new List<Order>();
-    internal List<OrderItem> OrderItemList { get; } = new List<OrderItem>();
+    internal  List<Product> ProductList { get; } = new List<Product>();
+    internal  List<Order> OrderList { get; } = new List<Order>();
+    internal  List<OrderItem> OrderItemList { get; } = new List<OrderItem>();
 
     //public static readonly Random randomaly = new();
     //private static readonly DataSource _instance;
@@ -51,6 +52,7 @@ internal sealed class DataSource
         //internal static int ProductFreeIndex =0;    //Indexes of the first free element
         //internal static int OrderFreeIndex = 0;      //Indexes of the first free element
         //internal static int OrderItemFreeIndex = 0;  //Indexes of the first free element
+
         private static int orderLastId = 100000;     //Last ID number
         private static int orderItemLastId = 100000; //Last ID number
 
@@ -66,16 +68,15 @@ internal sealed class DataSource
     {
         string[] names = { "SHARP refrigerator","FUJICOM freezer","Blomberg oven","kenwoon mixer", "Samsung TV 75","hp Computer Touch",
                 "Electra Washing  machine","Bosch Dryer","TADIRAN - ALPHA PRO Air-Conditioner","TORNADO - Q30X WIFI Air-Conditioner" };
-        Random rand = new Random();
         for (int i = 0; i < 10; i++)
         {
             ProductList.Add(new Product()
             {
-                Id = rand.Next(100000, 1000000),
-                Name = names[rand.Next(names.Length)],
-                Price = rand.Next(300),
-                Category = (Category)rand.Next(5),
-                InStock = rand.Next(80),
+                Id = random.Next(100000, 1000000),
+                Name = names[random.Next(names.Length)],
+                Price = random.Next(300),
+                Category = (Category)random.Next(5),
+                InStock = random.Next(80),
             });
         }
     }
@@ -87,7 +88,6 @@ internal sealed class DataSource
     private void addOrder()
     {
         string[] cities = { "Tel Aviv", "Jerusalem", "Haifa", "Ashdod", "Lod", "Beni Brak", "Ramat Gan", "Holon" };
-        Random random = new Random();
         TimeSpan time;
         DateTime ShipDate11= DateTime.Now.AddDays(random.Next(-1000, -1));
         DateTime DeliveryDate11= DateTime.Now.AddDays(random.Next(-1000, -1));
@@ -203,14 +203,13 @@ internal sealed class DataSource
     /// </summary>
     private void addOrderItem()
     {
-        Random rand = new Random();
         for (int i = 0; i < 40; i++)
         {
             OrderItem orderItem = new OrderItem();
             orderItem.Id = Config.OrderItemLastId;
-            orderItem. ProductId = rand.Next();
-            orderItem.OrderId = rand.Next();
-            orderItem.Amount = rand.Next(1, 5);
+            orderItem. ProductId = random.Next();
+            orderItem.OrderId = random.Next();
+            orderItem.Amount = random.Next(1, 5);
             foreach(Product product in ProductList)
             {
                 if(product.Id == orderItem.ProductId)

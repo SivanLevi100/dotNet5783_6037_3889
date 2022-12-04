@@ -7,7 +7,7 @@ using Dal;
 using DO;
 //namespace DalApi;
 
-class Program
+/*public*/ class Program
 {
     static IDal dal = new DalList();
 

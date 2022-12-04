@@ -34,13 +34,28 @@ internal class Order : BlApi.IOrder
         {
             if (idOrder > 0)
             {
+                OrderStatus status1 = new OrderStatus();
+                DO.Order orderDO = Dal.Order.Get(idOrder);
+                if (orderDO.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
+                {
+                    status1 = OrderStatus.Ordered;
+                }
+                if (orderDO.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
+                {
+                    status1 = OrderStatus.shipped;
+                }
+                if (orderDO.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
+                {
+                    status1 = OrderStatus.delivered;
+                }
+
                 double sumOfPrices = 0;
                 IEnumerable<DO.OrderItem> orderItemListDo = Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder);
                 foreach (DO.OrderItem orderItem in orderItemListDo)
                 {
                     sumOfPrices += orderItem.Price * orderItem.Amount;
                 }
-                DO.Order orderDO = Dal.Order.Get(idOrder);
+                //DO.Order orderDO = Dal.Order.Get(idOrder);
                 BO.Order order = new BO.Order
                 {
                     Id = orderDO.Id,
@@ -50,7 +65,7 @@ internal class Order : BlApi.IOrder
                     OrderDate = orderDO.OrderDate,
                     ShipDate = orderDO.ShipDate,
                     DeliveryDate = orderDO.DeliveryDate,
-                    Status = BO.OrderStatus.Ordered,
+                    Status = status1,
                     TotalPrice = sumOfPrices
 
                 };

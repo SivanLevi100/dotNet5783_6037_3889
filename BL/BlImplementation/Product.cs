@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BlApi;
+using BO;
 using Dal;
 using DalApi;
 
@@ -54,6 +55,7 @@ internal class Product : BlApi.IProduct
             if (id > 0)
             {
                 DO.Product productOfDo = Dal.Product.Get(id);
+               // DO.Product productOfDo = Dal?.Product.Get(id) ?? throw new BO.IncorrectDataExceptions("id not positive");
                 BO.Product product = new BO.Product
                 {
                     Id = productOfDo.Id,
