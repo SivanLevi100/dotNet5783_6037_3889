@@ -19,15 +19,30 @@ internal class Order : BlApi.IOrder
 
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
+        OrderStatus status1 = new OrderStatus();
+        foreach(DO.Order order in Dal.Order.GetList())
+        {
+            if (order.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
+                status1 = OrderStatus.Confirmed;
+            if (order.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
+                status1 = OrderStatus.shipped;
+            if (order.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
+                status1 = OrderStatus.delivered;
+
+        }
+
         return Dal.Order.GetList().Select(order => new BO.OrderForList
         {
             OrderId = order.Id,
             CustomerName = order.CustomerName,
-            Status = BO.OrderStatus.Ordered, /////////////?????
-            AmountItems = Dal.OrderItem.Get(order.Id).Amount,
-            TotalPrice = (Dal.OrderItem.Get(order.Id).Amount) * (Dal.Product.Get(Dal.OrderItem.Get(order.Id).ProductId).Price)
+            Status = status1,
+            AmountItems = Dal.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Amount), /*Dal.OrderItem.Get(order.Id).Amount*/
+           // TotalPrice = (Dal.OrderItem.Get(order.Id).Amount) * Dal.OrderItem.Get(order.Id).Price/*(Dal.Product.Get(Dal.OrderItem.Get(order.Id).ProductId).Price)*/
+            TotalPrice = Dal.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Price * orderItem.Amount)
+
         });
     }
+
     public BO.Order GetProductDetails(int idOrder)
     {
         try
@@ -37,7 +52,7 @@ internal class Order : BlApi.IOrder
                 OrderStatus status1 = new OrderStatus();
                 DO.Order orderDO = Dal.Order.Get(idOrder);
                 if (orderDO.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
-                    status1 = OrderStatus.Ordered;
+                    status1 = OrderStatus.Confirmed;
                 if (orderDO.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
                     status1 = OrderStatus.shipped;
                 if (orderDO.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
@@ -180,7 +195,7 @@ internal class Order : BlApi.IOrder
         if (orderTracking.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
         {
             track.Add(Tuple.Create(orderTracking.OrderDate, "The order has been created"));
-            status1 = OrderStatus.Ordered;
+            status1 = OrderStatus.Confirmed;
         }
         if (orderTracking.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
         {

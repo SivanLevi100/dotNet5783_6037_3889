@@ -25,7 +25,7 @@ public enum OrderStatus
     //Shipped,
     //Delivered
 
-    Ordered,
+    Confirmed,
     shipped,
     delivered
 }
