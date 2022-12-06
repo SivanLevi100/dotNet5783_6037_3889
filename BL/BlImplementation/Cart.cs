@@ -85,7 +85,7 @@ internal class Cart: BlApi.ICart
         //DO.Product product = Dal.Product.Get(id);
         foreach (BO.OrderItem orderItem in cart1.OrdersItemsList)
         {
-            if (orderItem.ProductId == id && newAmount > orderItem.AmountInOrder) //אם הכמות גדלה
+            if (orderItem?.ProductId == id && newAmount > orderItem.AmountInOrder) //אם הכמות גדלה
             {
                 if (doProduct.InStock >= 0)//אם יש מוצר במלאי
                 {
@@ -96,7 +96,7 @@ internal class Cart: BlApi.ICart
                 else
                     throw new BO.NotExiestsExceptions("The product is not in stock");
             }
-            if (orderItem.ProductId == id && newAmount < orderItem.AmountInOrder) //אם הכמות קטנה
+            if (orderItem?.ProductId == id && newAmount < orderItem.AmountInOrder) //אם הכמות קטנה
             {
                 orderItem.AmountInOrder = newAmount;
                 orderItem.TotalPriceOfItem = doProduct.Price * newAmount;
@@ -136,6 +136,7 @@ internal class Cart: BlApi.ICart
         }
         DO.Order doOrder = new DO.Order
         {
+            //Id= 0,/////////////////////////?
             CustomerName = cart1.CustomerName,
             CustomerAdress = cart1.CustomerAdress,
             CustomerEmail = cart1.CustomerEmail,

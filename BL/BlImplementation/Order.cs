@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,10 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BlApi;
-using BO;
 using Dal;
 using DalApi;
-using DO;
 
 namespace BlImplementation;
 
@@ -19,15 +18,15 @@ internal class Order : BlApi.IOrder
 
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
-        OrderStatus status1 = new OrderStatus();
+        BO.OrderStatus status1 = new BO.OrderStatus();
         foreach(DO.Order order in Dal.Order.GetList())
         {
             if (order.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
-                status1 = OrderStatus.Confirmed;
+                status1 = BO.OrderStatus.Confirmed;
             if (order.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
-                status1 = OrderStatus.shipped;
+                status1 = BO.OrderStatus.shipped;
             if (order.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
-                status1 = OrderStatus.delivered;
+                status1 = BO.OrderStatus.delivered;
 
         }
 
@@ -49,14 +48,14 @@ internal class Order : BlApi.IOrder
         {
             if (idOrder > 0)
             {
-                OrderStatus status1 = new OrderStatus();
+                BO.OrderStatus status1 = new BO.OrderStatus();
                 DO.Order orderDO = Dal.Order.Get(idOrder);
                 if (orderDO.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
-                    status1 = OrderStatus.Confirmed;
+                    status1 = BO.OrderStatus.Confirmed;
                 if (orderDO.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
-                    status1 = OrderStatus.shipped;
+                    status1 = BO.OrderStatus.shipped;
                 if (orderDO.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
-                    status1 = OrderStatus.delivered;
+                    status1 = BO.OrderStatus.delivered;
                 double sumOfPrices = 0;
                 IEnumerable<DO.OrderItem> orderItemListDo = Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder);
                 foreach (DO.OrderItem orderItem in orderItemListDo)
@@ -82,7 +81,7 @@ internal class Order : BlApi.IOrder
             else
                 throw new BO.NotExiestsExceptions("Order request failed");
         }
-        catch (NotFoundExceptions str)
+        catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
@@ -104,7 +103,7 @@ internal class Order : BlApi.IOrder
                     flag = true;
             }
         }
-        catch (NotFoundExceptions str)
+        catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
@@ -113,20 +112,31 @@ internal class Order : BlApi.IOrder
         {
             if (flag == true) //  ההזמנה קיימת, נשלחה ולא נמסרה
             {
-                DO.Order orderDo = new DO.Order(); //יצירת אוביקט שכבת נתנונים מעודכן
+
+                DO.Order orderDo = Dal.Order.Get(idOrder);
                 orderDo.DeliveryDate = DateTime.Now;
                 Dal.Order.Update(orderDo); //עדכון בשכבת הנתונים
-                BO.Order order = new BO.Order
+
+                BO.Order order = new BO.Order  //עדכון ביישות הלוגית
                 {
+                    Id= idOrder,
+                    CustomerName= orderDo.CustomerName,
+                    CustomerAdress= orderDo.CustomerAdress,
+                    CustomerEmail= orderDo.CustomerEmail,
+                    OrderDate= orderDo.OrderDate,
+                    ShipDate= orderDo.ShipDate,
                     DeliveryDate = DateTime.Now,
                     Status = BO.OrderStatus.delivered,
+                    OrdersItemsList = (List<BO.OrderItem?>)Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder),
+                    TotalPrice= Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder).Sum(orderItem=>orderItem.Price*orderItem.Amount)
+
                 };
                 return order;
             }
             else
                 throw new BO.NotExiestsExceptions("The Order request failed");
         }
-        catch (NotFoundExceptions str)
+        catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
@@ -148,7 +158,7 @@ internal class Order : BlApi.IOrder
                     flag = true;
             }
         }
-        catch (NotFoundExceptions str)
+        catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
@@ -156,13 +166,23 @@ internal class Order : BlApi.IOrder
         {
             if (flag == true) //ההזמנה קיימת ועוד לא נשלחה
             {
-                DO.Order orderDo = new DO.Order(); //יצירת אוביקט שכבת נתנונים מעודכן
+                DO.Order orderDo = Dal.Order.Get(idOrder);
                 orderDo.ShipDate = DateTime.Now;
                 Dal.Order.Update(orderDo); //עדכון בשכבת הנתונים
-                BO.Order order = new BO.Order
+
+                BO.Order order = new BO.Order  //עדכון ביישות הלוגית
                 {
+                    Id = idOrder,
+                    CustomerName = orderDo.CustomerName,
+                    CustomerAdress = orderDo.CustomerAdress,
+                    CustomerEmail = orderDo.CustomerEmail,
+                    OrderDate = orderDo.OrderDate,
                     ShipDate = DateTime.Now,
+                    DeliveryDate = orderDo.DeliveryDate,
                     Status = BO.OrderStatus.shipped,
+                    OrdersItemsList = (List<BO.OrderItem?>)Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder),
+                    TotalPrice = Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder).Sum(orderItem => orderItem.Price * orderItem.Amount)
+
                 };
                 return order;
             }
@@ -170,7 +190,7 @@ internal class Order : BlApi.IOrder
                 throw new BO.NotExiestsExceptions("Order request failed");
 
         }
-        catch (NotFoundExceptions str)
+        catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
@@ -186,26 +206,26 @@ internal class Order : BlApi.IOrder
         {
             orderTracking = Dal.Order.Get(idOrder);
         }
-        catch (NotFoundExceptions str)
+        catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
         List<Tuple<DateTime, string>> track = new List<Tuple<DateTime, string>>();
-        OrderStatus status1= new OrderStatus();
+        BO.OrderStatus status1= new BO.OrderStatus();
         if (orderTracking.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
         {
             track.Add(Tuple.Create(orderTracking.OrderDate, "The order has been created"));
-            status1 = OrderStatus.Confirmed;
+            status1 = BO.OrderStatus.Confirmed;
         }
         if (orderTracking.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
         {
             track.Add(Tuple.Create(orderTracking.ShipDate, "The order has been sent"));
-            status1 = OrderStatus.shipped;
+            status1 = BO.OrderStatus.shipped;
         }
         if (orderTracking.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
         {
             track.Add(Tuple.Create(orderTracking.DeliveryDate, "The order has been delivered"));
-            status1 = OrderStatus.delivered;
+            status1 = BO.OrderStatus.delivered;
         }
         return new BO.OrderTracking  
         {

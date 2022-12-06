@@ -1,12 +1,10 @@
-﻿//See https://aka.ms/new-console-template for more information
-//Console.WriteLine("Hello, World!");
-
+﻿
 using DalApi;
 
 using Dal;
 using DO;
 //namespace DalApi;
-
+//namespace Dal;
 public class Program
 {
     static IDal dal = new Dal.DalList();

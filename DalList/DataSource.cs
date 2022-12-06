@@ -17,11 +17,14 @@ internal sealed class DataSource
     private DataSource() => s_Initialize();
 
 
-    internal  List<Product> ProductList { get; } = new List<Product>();
+    internal  List<Product> ProductList { get; /*set;*/ } = new List<Product>();
     internal  List<Order> OrderList { get; } = new List<Order>();
     internal  List<OrderItem> OrderItemList { get; } = new List<OrderItem>();
 
-    //public static readonly Random randomaly = new();
+
+
+
+    //public static readonly Random random = new();
     //private static readonly DataSource _instance;
     //public static DataSource Instance
     //{
@@ -31,29 +34,30 @@ internal sealed class DataSource
     //internal static List<Product> productList = new();
     //internal static List<Order> orderList = new();
     //internal static List<OrderItem> orderItemList = new();
-
-    ///// <summary>
-    ///// constructor
-    ///// </summary>
     //static DataSource()
     //{
-    //  _instance = new DataSource();
+    //    _instance = new DataSource();
     //}
     //private DataSource()
     //{
     //    s_Initialize();
     //}
 
+    /// <summary>
+    /// The s_Initialize method will schedule the method of adding objects to the entity arrays
+    /// </summary>
+    private void s_Initialize()
+    {
+        addProducts();
+        addOrders();
+        addOrderItems();
+    }
 
     /// <summary>
     /// Internal class config
     /// </summary>
     internal static class Config
     {
-        //internal static int ProductFreeIndex =0;    //Indexes of the first free element
-        //internal static int OrderFreeIndex = 0;      //Indexes of the first free element
-        //internal static int OrderItemFreeIndex = 0;  //Indexes of the first free element
-
         private static int orderLastId = 100000;     //Last ID number
         private static int orderItemLastId = 100000; //Last ID number
 
@@ -65,7 +69,7 @@ internal sealed class DataSource
     /// <summary>
     /// A private method that will add objects to the array of products
     /// </summary>
-    private void addProduct()
+    private void addProducts()
     {
         string[] names = { "SHARP refrigerator","FUJICOM freezer","Blomberg oven","kenwoon mixer", "Samsung TV 75","hp Computer Touch",
                 "Electra Washing  machine","Bosch Dryer","TADIRAN - ALPHA PRO Air-Conditioner","TORNADO - Q30X WIFI Air-Conditioner" };
@@ -80,13 +84,14 @@ internal sealed class DataSource
                 InStock = random.Next(80),
             });
         }
+        //Console.WriteLine(ProductList.Count);
     }
         
 
     /// <summary>
     /// A private method that will add objects to the orders array
     /// </summary>
-    private void addOrder()
+    private void addOrders()
     {
         string[] cities = { "Tel Aviv", "Jerusalem", "Haifa", "Ashdod", "Lod", "Beni Brak", "Ramat Gan", "Holon" };
         TimeSpan time;
@@ -202,7 +207,7 @@ internal sealed class DataSource
     /// <summary>
     /// A private method that will add objects to an array of order details
     /// </summary>
-    private void addOrderItem()
+    private void addOrderItems()
     {
         for (int i = 0; i < 40; i++)
         {
@@ -223,15 +228,6 @@ internal sealed class DataSource
         }
     }
 
-    /// <summary>
-    /// The s_Initialize method will schedule the method of adding objects to the entity arrays
-    /// </summary>
-    private void s_Initialize()
-    {
-        addProduct();
-        addOrder();
-        addOrderItem();
-    }
-
+    
    
 }

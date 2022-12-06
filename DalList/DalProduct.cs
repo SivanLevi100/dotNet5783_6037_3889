@@ -21,6 +21,7 @@ internal class DalProduct:IProduct
             throw new DuplicateIdExceptions("No place in List to add");
         _dstaSource.ProductList.Add(product1);
         return product1.Id;
+
     }
 
     /// <summary>
