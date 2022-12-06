@@ -36,18 +36,16 @@ internal class Product : BlApi.IProduct
         //};
         //return p.AsEnumerable();
 
-
         return Dal.Product.GetList().Select(product => new BO.ProductForList
         {
-
             IdProduct = product.Id,
             Name = product.Name,
             Price = product.Price,
             Category = (BO.Category)product.Category
         });
-
-
     }
+
+
     public BO.Product GetProductDetailsManager(int id)
     {
         try
@@ -68,31 +66,11 @@ internal class Product : BlApi.IProduct
             }
             else
                 throw new BO.NotExiestsExceptions("Product request failed");
-
         }
         catch (DO.NotFoundExceptions str)
         {
             throw new BO.IncorrectDataExceptions("Product request failed", str);
         }
-
-
-        //if (id > 0)
-        //{
-        //    DO.Product productOfDo = Dal.Product.Get(id);
-        //    BO.Product product = new BO.Product
-        //    {
-        //        Id = productOfDo.Id,
-        //        Name = productOfDo.Name,
-        //        Category = (BO.Category)productOfDo.Category,
-        //        Price = productOfDo.Price,
-        //        InStock = productOfDo.InStock,
-        //    };
-        //    return product;
-        //}
-        //else
-        //    throw new NotExiestsExceptions("Product request failed");
-
-        //להוסיף try catch
     }
 
 
@@ -109,8 +87,8 @@ internal class Product : BlApi.IProduct
                     Name = productOfDO.Name,
                     Category = (BO.Category)productOfDO.Category,
                     IsAvailable = (productOfDO.InStock > 0) ? true : false,
-                    AmountInCart = cart.OrdersItemsList.Count() + 1 //productOfDo.InStock /*cart.OrdersItemsList.Count()*/ ///////////////////////
-                    //AmountInCart = cart.OrdersItemsList.Exists(productItem => productItem.ProductId == productOfDO.Id).Count();
+                    AmountInCart = cart.OrdersItemsList.FindAll(orderItem => orderItem.ProductId == id).Count(), 
+                    Price = productOfDO.Price
                 };
                 return productItem;
             }
@@ -118,43 +96,16 @@ internal class Product : BlApi.IProduct
                 throw new BO.NotExiestsExceptions("Product request failed");
 
         }
-        catch (DO.NotFoundExceptions s)
+        catch (DO.NotFoundExceptions str)
         {
-            throw new BO.IncorrectDataExceptions("Product request failed", s);
-
-            //  Console.WriteLine(s);  //מוצר לא קיים בשכבת נתונים 
+            throw new BO.IncorrectDataExceptions("Product request failed", str);
         }
-
-        //if (id > 0)
-        //{
-        //    try
-        //    {
-        //        DO.Product productOfDO = Dal.Product.Get(id);
-        //        BO.ProductItem productItem = new BO.ProductItem
-        //        {
-        //            IdProduct = productOfDO.Id,
-        //            Name = productOfDO.Name,
-        //            Category = (BO.Category)productOfDO.Category,
-        //            IsAvailable = (productOfDO.InStock > 0) ? true : false,
-        //            AmountInCart = //productOfDo.InStock /*cart.OrdersItemsList.Count()*/ ///////////////////////
-
-        //        };
-        //        return productItem;
-        //    }
-        //    catch (/*NotExiestsExceptions*/NotFoundExceptions s)
-        //    {
-        //        Console.WriteLine(s);  //מוצר לא קיים בשכבת נתונים 
-        //    }
-
-        //}
-        //else
-        //    throw new NotExiestsExceptions("Product request failed");
     }
 
 
     public void Add(BO.Product product1)
     {
-        if (product1.Id > 0 && product1.Name != null && product1.Price > 0 && product1.InStock >= 0)
+        if (product1.Id > 0 && !string.IsNullOrWhiteSpace(product1.Name) && product1.Price > 0 && product1.InStock >= 0)
         {
             try
             {
@@ -170,28 +121,27 @@ internal class Product : BlApi.IProduct
             }
             catch (DO.NotFoundExceptions str)
             {
-                //Console.WriteLine(str);   //כפילות מזהה מוצר בשכבת נתונים 
                 throw new BO.IncorrectDataExceptions("Failed to add product", str);
-
             }
         }
         else
             throw new BO.IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
     }
+
+
     public void Delete(int id)
     {
         try
         {
             foreach (DO.Order order in Dal.Order.GetList())//עוברים על כל ההזמנות
             {
-                if (Dal.OrderItem.GetListOfOrderItemOfOrder(id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
+                if (Dal.OrderItem.GetListOfOrderItemOfOrder(order.Id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
                 {
                     Dal.Product.Delete(id);
                 }
                 else
                     throw new BO.NotExiestsExceptions("This product appears on orders");
             }
-
         }
         catch (DO.NotFoundExceptions str)
         {
@@ -204,7 +154,7 @@ internal class Product : BlApi.IProduct
     public void Update(BO.Product product1)
     {
 
-        if (product1.Id > 0 && product1.Name != null && product1.Price > 0 && product1.InStock >= 0)
+        if (product1.Id > 0 && !string.IsNullOrWhiteSpace(product1.Name) && product1.Price > 0 && product1.InStock >= 0)
         {
             try
             {
@@ -214,23 +164,21 @@ internal class Product : BlApi.IProduct
                     Name = product1.Name,
                     Price = product1.Price,
                     InStock = product1.InStock,
-                    Category = (DO.Category)product1.Category,
+                    Category = (DO.Category)product1?.Category,
                 };
                 Dal.Product.Update(productOfDO);
 
             }
             catch (DO.NotFoundExceptions str)
             {
-                throw new BO.IncorrectDataExceptions("The product data received is incorrect",str);//חוסר תקינות הנתונים שהתקבלו כפרמטר
-
-                //Console.WriteLine(str);
-                //throw new NotExiestsExceptions("Product update failed", str);
+                throw new BO.IncorrectDataExceptions("Failed to update product", str);
             }
-
         }
         else
             throw new BO.IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
     }
+
+
 }
 
 

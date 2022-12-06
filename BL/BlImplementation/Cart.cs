@@ -104,9 +104,10 @@ internal class Cart: BlApi.ICart
             }
             if (orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0) //אם הכמות נהייתה 0
             {
-                // cart1.OrdersItemsList.Where(orderItem => orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0);
                 cart1.TotalPrice = cart1.TotalPrice - orderItem.TotalPriceOfItem; //עדכון מחיר סל
-                cart1.OrdersItemsList.ToList().Remove(orderItem);
+                cart1.OrdersItemsList.Remove(orderItem);
+
+                //cart1.OrdersItemsList/*.ToList()*/.Remove(orderItem);
             }
         }
         return cart1;   
@@ -120,10 +121,13 @@ internal class Cart: BlApi.ICart
         if (!new EmailAddressAttribute().IsValid(cart1.CustomerName))//כתובת אימיל לא חוקית
             throw new BO.IncorrectDataExceptions("Email address in invalid format");
 
+        //if (cart1.OrdersItemsList.Any(orderItem => orderItem.ProductId != Dal.Product.Get(orderItem.ProductId).Id))//מוצר לא קיים
+        //    throw new BO.NotExiestsExceptions("The product does not exist");
+
         foreach (BO.OrderItem orderItem in cart1.OrdersItemsList) //כל המוצרים קיימים, כמויות חיוביות, יש מספיק במלאי
         {
-            DO.Product p = Dal.Product.Get(orderItem.ProductId);
-            if(Dal.Product.GetList().Contains(p) == false)//מוצר לא קיים
+            DO.Product productOfDo = Dal.Product.Get(orderItem.ProductId);
+            if(Dal.Product.GetList().Contains(productOfDo) == false)//מוצר לא קיים
                 throw new BO.NotExiestsExceptions("The product does not exist");
             if (orderItem.AmountInOrder <= 0) //כמות שלילית
                 throw new BO.IncorrectDataExceptions("Invalid item quantity");
@@ -139,15 +143,15 @@ internal class Cart: BlApi.ICart
             OrderDate = DateTime.Now,
             ShipDate = DateTime.MinValue
         };
+        int numberOrder;
         try
         {
-            Dal.Order.Add(doOrder);  //הוספת הזמנה לשכבת הנתונים
+            numberOrder = Dal.Order.Add(doOrder);  //הוספת הזמנה לשכבת הנתונים
         }
         catch(DO.DuplicateIdExceptions str)
         {
             throw new BO.NotExiestsExceptions("Failed to add order to data tier", str);
         }
-        int numberOrder = Dal.Order.GetList().Last().Id;
         foreach(BO.OrderItem boOrderItem in cart1.OrdersItemsList)//בניית אוביקטים של פריט הזמנה והוספתם לשכבת הנתונים
         {
             DO.OrderItem doOrderItem = new DO.OrderItem
@@ -181,7 +185,6 @@ internal class Cart: BlApi.ICart
             }
         }
         cart1.OrdersItemsList.Clear(); //ריקון הסל כלומר מחקית רשימת פריטי הזמנה מהסל
-
     }
 
 

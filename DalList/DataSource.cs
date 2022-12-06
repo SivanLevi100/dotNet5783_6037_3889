@@ -1,11 +1,12 @@
 ﻿
-using DalApi;
-using DO;
-using System;
-using System.Collections;
-using System.Reflection;
-using System.Security.Cryptography;
+//using DalApi;
+//using DO;
+//using System;
+//using System.Collections;
+//using System.Reflection;
+//using System.Security.Cryptography;
 
+using DO;
 namespace Dal;
 
 internal sealed class DataSource

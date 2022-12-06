@@ -46,7 +46,12 @@ class Program  /*internal*/
         int id;
         BO.Product myProduct;
         BO.ProductItem myProductItem;
-        BO.Cart myCart = new BO.Cart();
+        BO.Cart myCart = new BO.Cart()
+        {
+            CustomerName = "David",
+            CustomerAdress = "Jerusalem",
+            CustomerEmail = "david@gmail.com"
+        };
         string menu = "\ta - The option to view the list of products\n";
         menu += "\tb - Object display option by ID (for manager screen)\n";
         menu += "\tc - Object display option by ID (for buyer's catalog screen)\n";
@@ -219,8 +224,12 @@ class Program  /*internal*/
 
     public static void SubMenuCart()
     {
-        ///איפה יוצרים את הסל והאם צריך לאתחל אותו
-        BO.Cart myCart = new BO.Cart();
+        BO.Cart myCart = new BO.Cart()
+        {
+            CustomerName = "David",
+            CustomerAdress = "Jerusalem",
+            CustomerEmail = "david@gmail.com"
+        };
         int id;
         int amount;
         string menu = "\ta - Option to add an object to the cart\n";
@@ -239,8 +248,6 @@ class Program  /*internal*/
                 switch (ch)
                 {
                     case 'a':
-                        //לקלוט סל??
-
                         Console.WriteLine("please enter: id");
                         id = int.Parse(Console.ReadLine() ?? "0");
                         myCart = bl.Cart.AddProduct(myCart, id);

@@ -18,7 +18,7 @@ public class Order
     public DateTime? DeliveryDate { get; set; }
     public  OrderStatus? Status { get; set; }
 
-    public /*IEnumerable<OrderItem?>?*/ List<OrderItem?>? OrdersItemsList { get; set; }
+    public List<OrderItem?>? OrdersItemsList { get; set; }
     public double TotalPrice { get; set; }
 
 

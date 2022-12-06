@@ -1,4 +1,4 @@
-﻿//// See https://aka.ms/new-console-template for more information
+﻿//See https://aka.ms/new-console-template for more information
 //Console.WriteLine("Hello, World!");
 
 using DalApi;
@@ -7,9 +7,9 @@ using Dal;
 using DO;
 //namespace DalApi;
 
-/*public*/ class Program
+public class Program
 {
-    static IDal dal = new DalList();
+    static IDal dal = new Dal.DalList();
 
     static void Main(string[] args)
     {

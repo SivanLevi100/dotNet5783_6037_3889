@@ -23,7 +23,7 @@ internal class Order : BlApi.IOrder
         {
             OrderId = order.Id,
             CustomerName = order.CustomerName,
-            Status = BO.OrderStatus.Ordered,
+            Status = BO.OrderStatus.Ordered, /////////////?????
             AmountItems = Dal.OrderItem.Get(order.Id).Amount,
             TotalPrice = (Dal.OrderItem.Get(order.Id).Amount) * (Dal.Product.Get(Dal.OrderItem.Get(order.Id).ProductId).Price)
         });
@@ -37,18 +37,11 @@ internal class Order : BlApi.IOrder
                 OrderStatus status1 = new OrderStatus();
                 DO.Order orderDO = Dal.Order.Get(idOrder);
                 if (orderDO.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
-                {
                     status1 = OrderStatus.Ordered;
-                }
                 if (orderDO.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
-                {
                     status1 = OrderStatus.shipped;
-                }
                 if (orderDO.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
-                {
                     status1 = OrderStatus.delivered;
-                }
-
                 double sumOfPrices = 0;
                 IEnumerable<DO.OrderItem> orderItemListDo = Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder);
                 foreach (DO.OrderItem orderItem in orderItemListDo)
@@ -81,11 +74,6 @@ internal class Order : BlApi.IOrder
 
     }
 
-    //public OrderTracking Tracking(int idOrder)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
     public BO.Order UpdateDelivery(int idOrder)//עדכון אספקת הזמנה
     {
         if (idOrder <= 0)
@@ -106,27 +94,30 @@ internal class Order : BlApi.IOrder
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
 
-        if (flag == true) //  ההזמנה קיימת, נשלחה ולא נמסרה
+        try
         {
-            DO.Order orderDo = new DO.Order(); //יצירת אוביקט שכבת נתנונים מעודכן
-            orderDo.DeliveryDate = DateTime.Now;
-            Dal.Order.Update(orderDo); //עדכון בשכבת הנתונים
-            BO.Order order = new BO.Order
+            if (flag == true) //  ההזמנה קיימת, נשלחה ולא נמסרה
             {
-                DeliveryDate = DateTime.Now,
-                Status = BO.OrderStatus.delivered,
-            };
-            return order;
+                DO.Order orderDo = new DO.Order(); //יצירת אוביקט שכבת נתנונים מעודכן
+                orderDo.DeliveryDate = DateTime.Now;
+                Dal.Order.Update(orderDo); //עדכון בשכבת הנתונים
+                BO.Order order = new BO.Order
+                {
+                    DeliveryDate = DateTime.Now,
+                    Status = BO.OrderStatus.delivered,
+                };
+                return order;
+            }
+            else
+                throw new BO.NotExiestsExceptions("The Order request failed");
         }
-        else
-            throw new BO.NotExiestsExceptions("Order request failed");
+        catch (NotFoundExceptions str)
+        {
+            throw new BO.NotExiestsExceptions("Order request failed", str);
+        }
     }
 
-    //public BO.Order UpdateShipping(int idOrder)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
+    
     public BO.Order UpdateShipping(int idOrder)//עדכון שילוח הזמנה
     {
         if (idOrder <= 0)
@@ -146,21 +137,28 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
-
-        if (flag == true) //ההזמנה קיימת ועוד לא נשלחה
+        try
         {
-            DO.Order orderDo = new DO.Order(); //יצירת אוביקט שכבת נתנונים מעודכן
-            orderDo.ShipDate = DateTime.Now;
-            Dal.Order.Update(orderDo); //עדכון בשכבת הנתונים
-            BO.Order order = new BO.Order
+            if (flag == true) //ההזמנה קיימת ועוד לא נשלחה
             {
-                ShipDate = DateTime.Now,
-                Status = BO.OrderStatus.shipped,
-            };
-            return order;
+                DO.Order orderDo = new DO.Order(); //יצירת אוביקט שכבת נתנונים מעודכן
+                orderDo.ShipDate = DateTime.Now;
+                Dal.Order.Update(orderDo); //עדכון בשכבת הנתונים
+                BO.Order order = new BO.Order
+                {
+                    ShipDate = DateTime.Now,
+                    Status = BO.OrderStatus.shipped,
+                };
+                return order;
+            }
+            else
+                throw new BO.NotExiestsExceptions("Order request failed");
+
         }
-        else
-            throw new BO.NotExiestsExceptions("Order request failed");
+        catch (NotFoundExceptions str)
+        {
+            throw new BO.NotExiestsExceptions("Order request failed", str);
+        }
     }
   
     public BO.OrderTracking Tracking(int idOrder)//מעקב הזמנה
@@ -202,7 +200,4 @@ internal class Order : BlApi.IOrder
         };
     }
 
-    //////
-    /////////************************
-    ///11111111111111111111111111111111
 }
