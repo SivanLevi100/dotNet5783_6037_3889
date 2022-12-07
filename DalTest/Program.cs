@@ -7,7 +7,7 @@ using DO;
 //namespace Dal;
 public class Program
 {
-    static IDal dal = new Dal.DalList();
+    /*static*/ // private  IDal dal = new Dal.DalList();
 
     static void Main(string[] args)
     {
@@ -15,6 +15,8 @@ public class Program
         Console.WriteLine(" 0 - Exit \n 1 - Product testing \n 2 - Order check \n 3 - Checking an item in an order \n ");
         Console.WriteLine(@"Enter your choice");
         int.TryParse(Console.ReadLine(), out choose);
+        
+       IDal dal = new DalList();
         while (choose != 0)
         {
             switch (choose)
@@ -22,13 +24,13 @@ public class Program
                 case 0:
                     return;
                 case 1:
-                    SubMenuProduct();
+                    SubMenuProduct(dal);
                     break;
                 case 2:
-                    SubMenuOrder();
+                    SubMenuOrder(dal);
                     break;
                 case 3:
-                    SubMenuOrderItem();
+                    SubMenuOrderItem(dal);
                     break;
                 default:
                     break;
@@ -43,7 +45,7 @@ public class Program
     /// <summary>
     /// method for each product sub-menu
     /// </summary>
-    public static void SubMenuProduct()
+    public static void SubMenuProduct(IDal dal)
     {
         Product myProduct;
         int id;
@@ -84,7 +86,7 @@ public class Program
                             Category = category,
                             InStock = instock
                         };
-                        id = dal.Product.Add(myProduct);
+                        id =dal.Product.Add(myProduct);
                         Console.WriteLine($@"id number of the added product {id}");
                         break;
                     case 'b':
@@ -94,7 +96,7 @@ public class Program
                         Console.WriteLine(myProduct);
                         break;
                     case 'c':
-                        foreach (Product item in dal.Product.GetList()/*.AsEnumerable()*/)
+                        foreach (Product item in dal.Product.GetList())
                         {
                             Console.WriteLine(item);
                         };
@@ -148,7 +150,7 @@ public class Program
     /// <summary>
     /// method for each order sub-menu
     /// </summary>
-    public static void SubMenuOrder()
+    public static void SubMenuOrder(IDal dal)
     {
         Order myOrder;
         int idOrder;
@@ -247,7 +249,7 @@ public class Program
     /// <summary>
     /// Method for sub-menu of each order items
     /// </summary>
-    public static void SubMenuOrderItem()
+    public static void SubMenuOrderItem(IDal dal)
     {
         OrderItem myOrderItem;
         int idOrderItem = 0;
