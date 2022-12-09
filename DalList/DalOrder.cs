@@ -6,8 +6,7 @@ namespace Dal;
 
 internal class DalOrder:IOrder
 {
-    DataSource _dstaSource = DataSource.s_instance;
-
+   DataSource _dstaSource1 = DataSource.s_instance;
 
     /// <summary>
     /// An add object method that accepts an order object and returns the ID number of the added order
@@ -16,9 +15,9 @@ internal class DalOrder:IOrder
     /// <returns></returns>
     public int Add(Order order1)
     {
-        if (_dstaSource.OrderList.Exists(x => x.Id == order1.Id))
+        if (_dstaSource1.OrderList.Exists(x => x.Id == order1.Id))
             throw new DuplicateIdExceptions("no place in List to add");
-        _dstaSource.OrderList.Add(order1);
+        _dstaSource1.OrderList.Add(order1);
         return order1.Id;
     }
 
@@ -30,7 +29,7 @@ internal class DalOrder:IOrder
     /// <exception cref="NotFoundExceptions"></exception>
     public Order Get(int idOrder1)
     {
-        foreach (Order order in _dstaSource.OrderList)
+        foreach (Order order in _dstaSource1.OrderList)
         {
             if (order.Id == idOrder1)
                 return order;
@@ -45,7 +44,7 @@ internal class DalOrder:IOrder
     /// <returns></returns>
     public IEnumerable<Order> GetList()
     {
-        return _dstaSource.OrderList.ToList();
+        return _dstaSource1.OrderList.ToList();
     }
 
     /// <summary>
@@ -54,11 +53,11 @@ internal class DalOrder:IOrder
     /// <param name="idOrder1"></param>
     public void Delete(int idOrder1)
     {
-        foreach (Order order in _dstaSource.OrderList)
+        foreach (Order order in _dstaSource1.OrderList)
         {
             if (idOrder1 == order.Id)
             {
-                _dstaSource.OrderList.Remove(order);
+                _dstaSource1.OrderList.Remove(order);
                 return;
             }
         }
@@ -73,10 +72,10 @@ internal class DalOrder:IOrder
     /// <param name="order1"></param>
     public void Update(Order order1)
     {
-        if (_dstaSource.OrderList.Exists(x => x.Id == order1.Id))
+        if (_dstaSource1.OrderList.Exists(x => x.Id == order1.Id))
         {
-            int j = _dstaSource.OrderList.IndexOf(_dstaSource.OrderList.Find(x => x.Id == order1.Id));
-            _dstaSource.OrderList[j] = order1;
+            int j = _dstaSource1.OrderList.IndexOf(_dstaSource1.OrderList.Find(x => x.Id == order1.Id));
+            _dstaSource1.OrderList[j] = order1;
             return;
         }
         throw new NotFoundExceptions("the order id is not exist in List");

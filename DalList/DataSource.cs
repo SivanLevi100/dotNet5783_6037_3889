@@ -12,15 +12,15 @@ namespace Dal;
 internal sealed class DataSource
 {
     internal static DataSource s_instance { get; }
-    private static readonly Random random = new Random(); //randomaly random
+
+    private static readonly Random random = new Random(); 
     static DataSource() => s_instance = new DataSource();
     private DataSource() => s_Initialize();
 
 
-    internal  List<Product> ProductList { get; /*set;*/ } = new List<Product>();
-    internal  List<Order> OrderList { get; } = new List<Order>();
-    internal  List<OrderItem> OrderItemList { get; } = new List<OrderItem>();
-
+    internal List<DO.Product> ProductList { get; } = new List<DO.Product>();
+    internal List<DO.Order> OrderList { get; } = new List<DO.Order>();
+    internal List<DO.OrderItem> OrderItemList { get; } = new List<DO.OrderItem>();
 
 
 
@@ -75,7 +75,7 @@ internal sealed class DataSource
                 "Electra Washing  machine","Bosch Dryer","TADIRAN - ALPHA PRO Air-Conditioner","TORNADO - Q30X WIFI Air-Conditioner" };
         for (int i = 0; i < 10; i++)
         {
-            ProductList.Add(new Product()
+            ProductList.Add(new DO.Product()
             {
                 Id = random.Next(100000, 1000000),
                 Name = names[random.Next(names.Length)],
@@ -84,9 +84,15 @@ internal sealed class DataSource
                 InStock = random.Next(80),
             });
         }
-        //Console.WriteLine(ProductList.Count);
+        //Console.WriteLine(ProductList.Count());
+
+        //foreach (var d in ProductList)
+        //{
+        //    Console.WriteLine(d);
+        //}
+
     }
-        
+
 
     /// <summary>
     /// A private method that will add objects to the orders array
@@ -202,6 +208,7 @@ internal sealed class DataSource
         //    else
         //        orderList[i].DeliveryDate = DateTime.MinValue;
         //}
+
     }
 
     /// <summary>
@@ -228,6 +235,6 @@ internal sealed class DataSource
         }
     }
 
-    
-   
+
+
 }

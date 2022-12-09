@@ -5,9 +5,9 @@ using DO;
 namespace Dal;
 
 
-internal class DalProduct:IProduct
+internal class DalProduct : IProduct
 {
-    DataSource _dstaSource = DataSource.s_instance;
+    DataSource ds = DataSource.s_instance;
 
     /// <summary>
     /// An add object method that receives a product object and returns the ID number of the added product
@@ -17,9 +17,11 @@ internal class DalProduct:IProduct
     /// <exception cref="DuplicateIdExceptions"></exception>
     public int Add(Product product1)
     {
-        if (_dstaSource.ProductList.Exists(x => x.Id == product1.Id))
+        //return 5;
+        //DataSource.s_instance.ProductList.Add(product1);       
+        if (ds.ProductList.Exists(x => x.Id == product1.Id))
             throw new DuplicateIdExceptions("No place in List to add");
-        _dstaSource.ProductList.Add(product1);
+        ds.ProductList.Add(product1);
         return product1.Id;
 
     }
@@ -32,15 +34,17 @@ internal class DalProduct:IProduct
     /// <exception cref="NotFoundExceptions"></exception>
     public Product Get(int idProduct1)
     {
-       foreach (Product product in _dstaSource.ProductList)
+        foreach (Product product in ds.ProductList)
         {
-            if(product.Id == idProduct1)
+            if (product.Id == idProduct1)
                 return product;
         }
         throw new NotFoundExceptions("The product id is not exist in List");
 
-        //if (DataSource.productList.Exists(x => x.Id== idProduct1))
-        //    return DataSource.productList.Find(x => x.Id== idProduct1);
+        /***************************/////////
+
+        //if (DataSource.productList.Exists(x => x.Id == idProduct1))
+        //    return DataSource.productList.Find(x => x.Id == idProduct1);
         //throw new NotFoundExceptions("the product id is not exist in List");
     }
 
@@ -48,11 +52,11 @@ internal class DalProduct:IProduct
     /// Request/read method of the list of all objects of a product
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product> GetList()
-    {
-        return _dstaSource.ProductList.ToList(); 
+   // public IEnumerable<DO.Product> GetList() => ds.ProductList;
 
-        //return Array.FindAll(DataSource.productArray, p => p.Id != 0);
+    public IEnumerable<DO.Product> GetList()
+    {
+        return ds.ProductList.AsEnumerable();
     }
 
 
@@ -62,11 +66,11 @@ internal class DalProduct:IProduct
     /// <param name="idProduct1"></param>
     public void Delete(int idProduct1)
     {
-        foreach(Product product in _dstaSource.ProductList)
+        foreach(Product product in ds.ProductList)
         {
             if(idProduct1 == product.Id)
             {
-                _dstaSource.ProductList.Remove(product);
+                ds.ProductList.Remove(product);
                 return;
             }
         }
@@ -89,10 +93,10 @@ internal class DalProduct:IProduct
     public void Update(Product product1)
     {
 
-        if (_dstaSource.ProductList.Exists(x => x.Id == product1.Id))
+        if (ds.ProductList.Exists(x => x.Id == product1.Id))
         {
-            int j = _dstaSource.ProductList.IndexOf(_dstaSource.ProductList.Find(x => x.Id == product1.Id));
-            _dstaSource.ProductList[j] = product1;
+            int j = ds.ProductList.IndexOf(ds.ProductList.Find(x => x.Id == product1.Id));
+            ds.ProductList[j] = product1;
             return;
         }
         throw new NotFoundExceptions("the product id is not exist in List");

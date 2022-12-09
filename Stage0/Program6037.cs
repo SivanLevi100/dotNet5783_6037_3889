@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-//Console.WriteLine("Hello, World!");
-
+﻿
 //using System;
 
 namespace Stage0
@@ -16,7 +14,7 @@ namespace Stage0
         static partial void Welcome3889();
         private static void Welcome6037()
         {
-            string sen2;
+            string? sen2;
             Console.Write("Enter your name: ");
             sen2 = Console.ReadLine();
             Console.Write("{0}, welcome to my first console application", sen2);
