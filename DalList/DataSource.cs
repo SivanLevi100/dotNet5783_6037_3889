@@ -16,7 +16,7 @@ internal sealed class DataSource
     internal List<DO.Order> OrderList { get; } = new();
     internal List<DO.OrderItem> OrderItemList { get; } = new();
 
-    internal static DataSource S_instance { get; } 
+    internal static DataSource S_instance { get; }
 
     private DataSource() => s_Initialize();
 
@@ -32,8 +32,8 @@ internal sealed class DataSource
     {
         addProducts();
         Console.WriteLine("lamalo");
-  //      addOrders();
-  //      addOrderItems();
+        addOrders();
+        //      addOrderItems();
     }
 
     /// <summary>
@@ -76,31 +76,32 @@ internal sealed class DataSource
     /// </summary>
     private void addOrders()
     {
+        Console.WriteLine("start  add orders");
         string[] cities = { "Tel Aviv", "Jerusalem", "Haifa", "Ashdod", "Lod", "Beni Brak", "Ramat Gan", "Holon" };
         TimeSpan time;
         DateTime ShipDate11 = DateTime.Now.AddDays(random.Next(-1000, -1));
         DateTime DeliveryDate11 = DateTime.Now.AddDays(random.Next(-1000, -1));
-        for (int i = 0; i < 20; i++)
+         for (int i = 0; i <= 15; i++)
         {
-            if (i <= 15)
+            do
             {
-                do
+                OrderList.Add(new Order
                 {
-                    OrderList.Add(new Order()
-                    {
-                        Id = Config.OrderLastId,
-                        CustomerName = "Customer_" + (char)i,
-                        CustomerAdress = cities[random.Next(cities.Length)],
-                        CustomerEmail = (char)i * 3 + "@gmail.com",
-                        OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1)),
-                        ShipDate = ShipDate11
+                    Id = Config.OrderLastId,
+                    CustomerName = "Customer_" + i,
+                    CustomerAdress = cities[random.Next(cities.Length)],
+                    CustomerEmail = "" + i * 3 + "@gmail.com",
+                    OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1)),
+                    ShipDate = ShipDate11
 
-                    });
-                    time = OrderList[i].ShipDate - OrderList[i].OrderDate;
-                }
-                while (time.TotalDays < 0);
+                });
+                time = OrderList[i].ShipDate - OrderList[i].OrderDate;
             }
-            else
+            while (time.TotalDays < 0);
+        }
+       Console.WriteLine("end of add orders");
+        for (int i = 0; i < 5; i++)
+        {
             {
                 OrderList.Add(new Order()
                 {
@@ -144,6 +145,10 @@ internal sealed class DataSource
                     DeliveryDate = DateTime.MinValue
 
                 });
+            }
+            foreach (var item in OrderList)
+            {
+                Console.WriteLine(item);
             }
         }
 
