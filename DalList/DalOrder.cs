@@ -6,7 +6,7 @@ namespace Dal;
 
 internal class DalOrder:IOrder
 {
-   DataSource _dstaSource1 = DataSource.s_instance;
+   DataSource _dstaSource1 = DataSource.S_instance;
 
     /// <summary>
     /// An add object method that accepts an order object and returns the ID number of the added order

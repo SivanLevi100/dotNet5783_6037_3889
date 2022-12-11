@@ -10,6 +10,10 @@ namespace Dal;
 
 sealed public class DalList : IDal
 {
+    private static IDal instance = new DalList();
+    public static IDal Instance { get { return instance; } }
+    private DalList() {}
+
     public IProduct Product => new DalProduct();
     public IOrder Order => new DalOrder();
     public IOrderItem OrderItem => new DalOrderItem();

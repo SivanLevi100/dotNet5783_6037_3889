@@ -11,17 +11,14 @@ namespace DalTest;
 
 public class Program
 {
-    //static /*private*/  IDal dal = new Dal.DalList();
+    static IDal dal = DalList.Instance;
 
-    public static IDal dal = new DalList();
+  
+   
     static void Main(string[] args)
     {
-        //foreach (Product item in dal.Product.GetList())
-        //{
-        //    Console.WriteLine(item);
-        //};
 
-        int choose;
+    int choose;
         Console.WriteLine(" 0 - Exit \n 1 - Product testing \n 2 - Order check \n 3 - Checking an item in an order \n ");
         Console.WriteLine(@"Enter your choice");
         int.TryParse(Console.ReadLine(), out choose);
@@ -56,6 +53,7 @@ public class Program
     /// </summary>
     public static void SubMenuProduct()
     {
+   
         Product myProduct;
         int id;
         string menu = "\ta - Option to add an object to a product list\n";
@@ -75,7 +73,13 @@ public class Program
             {
                 switch (ch)
                 {
-                    case 'a':
+                    case 'c':
+                        foreach (/*Product*/ var item in dal.Product.GetList())
+                        {
+                            Console.WriteLine(item);
+                        };
+                        break;
+                   case 'a':
                         Console.WriteLine("please enter: id");
                         id = int.Parse(Console.ReadLine() ?? "0");
                         Console.WriteLine("please enter: name");
@@ -103,12 +107,6 @@ public class Program
                         id = Int32.Parse(Console.ReadLine() ?? "0");
                         myProduct = dal.Product.Get(id);
                         Console.WriteLine(myProduct);
-                        break;
-                    case 'c':
-                        foreach (/*Product*/ var item in dal.Product.GetList())
-                        {
-                            Console.WriteLine(item);
-                        };
                         break;
                     case 'd':
                         Console.WriteLine("please enter: id");
@@ -161,6 +159,7 @@ public class Program
     /// </summary>
     public static void SubMenuOrder(/*IDal dal*/)
     {
+        IDal dal = DalList.Instance;
         Order myOrder;
         int idOrder;
         string menu = "\ta - Option to add an object to a order list\n";
@@ -260,6 +259,7 @@ public class Program
     /// </summary>
     public static void SubMenuOrderItem(/*IDal dal*/)
     {
+        IDal dal = DalList.Instance;
         OrderItem myOrderItem;
         int idOrderItem = 0;
         int idOrderItem1 = 0, idOrderItem2 = 0;

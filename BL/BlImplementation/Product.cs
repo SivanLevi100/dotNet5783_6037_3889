@@ -16,7 +16,7 @@ namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
 {
-    private IDal Dal = new DalList();
+    private IDal Dal = DalList.Instance;
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {

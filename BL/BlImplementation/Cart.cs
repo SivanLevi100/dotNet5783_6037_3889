@@ -15,7 +15,7 @@ namespace BlImplementation;
 
 internal class Cart: BlApi.ICart
 {
-    private IDal Dal = new DalList();
+    private IDal Dal = DalList.Instance;    
 
     public BO.Cart AddProduct(BO.Cart cart1, int id)
     {

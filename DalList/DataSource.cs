@@ -11,37 +11,19 @@ namespace Dal;
 
 internal sealed class DataSource
 {
-    internal static DataSource s_instance { get; }
+    static readonly Random random = new Random();
+    internal List<DO.Product> ProductList { get; } = new();
+    internal List<DO.Order> OrderList { get; } = new();
+    internal List<DO.OrderItem> OrderItemList { get; } = new();
 
-    private static readonly Random random = new Random(); 
-    static DataSource() => s_instance = new DataSource();
+    internal static DataSource S_instance { get; } 
+
     private DataSource() => s_Initialize();
 
-
-    internal List<DO.Product> ProductList { get; } = new List<DO.Product>();
-    internal List<DO.Order> OrderList { get; } = new List<DO.Order>();
-    internal List<DO.OrderItem> OrderItemList { get; } = new List<DO.OrderItem>();
+    static DataSource() => S_instance = new DataSource();
 
 
 
-    //public static readonly Random random = new();
-    //private static readonly DataSource _instance;
-    //public static DataSource Instance
-    //{
-    //    get { return _instance; }
-    //}
-
-    //internal static List<Product> productList = new();
-    //internal static List<Order> orderList = new();
-    //internal static List<OrderItem> orderItemList = new();
-    //static DataSource()
-    //{
-    //    _instance = new DataSource();
-    //}
-    //private DataSource()
-    //{
-    //    s_Initialize();
-    //}
 
     /// <summary>
     /// The s_Initialize method will schedule the method of adding objects to the entity arrays
@@ -49,8 +31,9 @@ internal sealed class DataSource
     private void s_Initialize()
     {
         addProducts();
-        addOrders();
-        addOrderItems();
+        Console.WriteLine("lamalo");
+  //      addOrders();
+  //      addOrderItems();
     }
 
     /// <summary>
@@ -84,13 +67,7 @@ internal sealed class DataSource
                 InStock = random.Next(80),
             });
         }
-        //Console.WriteLine(ProductList.Count());
-
-        //foreach (var d in ProductList)
-        //{
-        //    Console.WriteLine(d);
-        //}
-
+        Console.WriteLine("end of addProducts");
     }
 
 
@@ -101,11 +78,11 @@ internal sealed class DataSource
     {
         string[] cities = { "Tel Aviv", "Jerusalem", "Haifa", "Ashdod", "Lod", "Beni Brak", "Ramat Gan", "Holon" };
         TimeSpan time;
-        DateTime ShipDate11= DateTime.Now.AddDays(random.Next(-1000, -1));
-        DateTime DeliveryDate11= DateTime.Now.AddDays(random.Next(-1000, -1));
+        DateTime ShipDate11 = DateTime.Now.AddDays(random.Next(-1000, -1));
+        DateTime DeliveryDate11 = DateTime.Now.AddDays(random.Next(-1000, -1));
         for (int i = 0; i < 20; i++)
         {
-            if (i<=15)
+            if (i <= 15)
             {
                 do
                 {
@@ -220,12 +197,12 @@ internal sealed class DataSource
         {
             OrderItem orderItem = new OrderItem();
             orderItem.Id = Config.OrderItemLastId;
-            orderItem. ProductId = random.Next();
+            orderItem.ProductId = random.Next();
             orderItem.OrderId = random.Next();
             orderItem.Amount = random.Next(1, 5);
-            foreach(Product product in ProductList)
+            foreach (Product product in ProductList)
             {
-                if(product.Id == orderItem.ProductId)
+                if (product.Id == orderItem.ProductId)
                 {
                     orderItem.Price = product.Price * orderItem.Amount;
                     break;

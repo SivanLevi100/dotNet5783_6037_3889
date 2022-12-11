@@ -14,7 +14,7 @@ namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
 {
-    private IDal Dal = new DalList();
+    private IDal Dal = DalList.Instance;
 
     public IEnumerable<BO.OrderForList> GetOrderList()
     {

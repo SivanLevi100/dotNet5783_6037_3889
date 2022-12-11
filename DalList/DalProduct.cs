@@ -7,7 +7,7 @@ namespace Dal;
 
 internal class DalProduct : IProduct
 {
-    DataSource ds = DataSource.s_instance;
+    DataSource ds = DataSource.S_instance;
 
     /// <summary>
     /// An add object method that receives a product object and returns the ID number of the added product
@@ -56,7 +56,7 @@ internal class DalProduct : IProduct
 
     public IEnumerable<DO.Product> GetList()
     {
-        return ds.ProductList.AsEnumerable();
+        return ds.ProductList.ToList();
     }
 
 
