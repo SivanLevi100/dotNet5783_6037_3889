@@ -40,7 +40,7 @@ class Program  /*internal*/
         }
     }
 
-
+    ////////////////
     public static void SubMenuProduct()
     {
         int id;
