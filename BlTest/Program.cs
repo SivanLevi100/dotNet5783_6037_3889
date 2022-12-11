@@ -162,7 +162,7 @@ class Program  /*internal*/
         int id;
         BO.Order myOrder;
         BO.OrderTracking myOrderTracking;
-        string menu = "\ta - The option to view the list of products\n";
+        string menu = "\ta - The option to view the list of orders\n";
         menu += "\tb - Object display option by ID\n";
         menu += "\tc - Option to update delivery object data\n";
         menu += "\td - Option to update shipping object data\n";
@@ -258,7 +258,6 @@ class Program  /*internal*/
                         id = int.Parse(Console.ReadLine() ?? "0");
                         Console.WriteLine("please enter: new amount");
                         amount = int.Parse(Console.ReadLine() ?? "0");
-                        //לקלוט סל לעדכון
                         myCart = bl.Cart.UpdateAmountOfProduct(myCart, id, amount);
                         Console.WriteLine(myCart);//מדפיס סל מעודכן
                         break;

@@ -87,7 +87,7 @@ internal class Product : BlApi.IProduct
                     Name = productOfDO.Name,
                     Category = (BO.Category)productOfDO.Category,
                     IsAvailable = (productOfDO.InStock > 0) ? true : false,
-                    AmountInCart = cart.OrdersItemsList.FindAll(orderItem => orderItem.ProductId == id).Count(), 
+                    AmountInCart = cart.OrdersItemsList.FindAll(orderItem => orderItem?.ProductId == id).Count(), 
                     Price = productOfDO.Price
                 };
                 return productItem;

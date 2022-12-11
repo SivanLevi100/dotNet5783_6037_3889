@@ -31,9 +31,8 @@ internal sealed class DataSource
     private void s_Initialize()
     {
         addProducts();
-        Console.WriteLine("lamalo");
         addOrders();
-        //      addOrderItems();
+        addOrderItems();
     }
 
     /// <summary>
@@ -54,20 +53,17 @@ internal sealed class DataSource
     /// </summary>
     private void addProducts()
     {
-        string[] names = { "SHARP refrigerator","FUJICOM freezer","Blomberg oven","kenwoon mixer", "Samsung TV 75","hp Computer Touch",
-                "Electra Washing  machine","Bosch Dryer","TADIRAN - ALPHA PRO Air-Conditioner","TORNADO - Q30X WIFI Air-Conditioner" };
-        for (int i = 0; i < 10; i++)
-        {
-            ProductList.Add(new DO.Product()
-            {
-                Id = random.Next(100000, 1000000),
-                Name = names[random.Next(names.Length)],
-                Price = random.Next(300),
-                Category = (Category)random.Next(5),
-                InStock = random.Next(80),
-            });
-        }
-        Console.WriteLine("end of addProducts");
+        ProductList.Add(new Product() { Id = random.Next(100000, 1000000), Name = "SHARP refrigerator", Price = random.Next(300), Category = Category.Refrigerator, InStock = random.Next(80) });
+        ProductList.Add(new Product() { Id = random.Next(100000, 1000000), Name = "FUJICOM freezer", Price = random.Next(300), Category = Category.Refrigerator, InStock = random.Next(80) });
+        ProductList.Add(new Product() { Id = random.Next(100000, 1000000), Name = "Blomberg oven", Price = random.Next(300), Category = Category.Kitchen, InStock = random.Next(80) });
+        ProductList.Add(new Product() { Id = random.Next(100000, 1000000), Name = "kenwood mixer", Price = random.Next(300), Category = Category.Kitchen, InStock = random.Next(80) });
+        ProductList.Add(new Product() { Id = random.Next(100000, 1000000), Name = "Samsung TV 75", Price = random.Next(300), Category = Category.Computer, InStock = random.Next(80) });
+        ProductList.Add(new Product() { Id = random.Next(100000, 1000000), Name = "hp Computer Touch", Price = random.Next(300), Category = Category.Computer, InStock = random.Next(80) });
+        ProductList.Add(new Product() { Id = random.Next(100000, 1000000), Name = "Electra Washing  machine", Price = random.Next(300), Category = Category.Cooling, InStock = random.Next(80) });
+        ProductList.Add(new Product() { Id = random.Next(100000, 1000000), Name = "Bosch Dryer", Price = random.Next(300), Category = Category.Cooling, InStock = random.Next(80) });
+        ProductList.Add(new Product() { Id = random.Next(100000, 1000000), Name = "TADIRAN - ALPHA PRO Air-Conditioner", Price = random.Next(300), Category = Category.Cooling, InStock = random.Next(80) });
+        ProductList.Add(new Product() { Id = random.Next(100000, 1000000), Name = "TADIRAN - ALPHA PRO Air-Conditioner", Price = random.Next(300), Category = Category.Cooling, InStock = random.Next(80) });
+
     }
 
 
@@ -76,120 +72,54 @@ internal sealed class DataSource
     /// </summary>
     private void addOrders()
     {
-        Console.WriteLine("start  add orders");
-        string[] cities = { "Tel Aviv", "Jerusalem", "Haifa", "Ashdod", "Lod", "Beni Brak", "Ramat Gan", "Holon" };
-        TimeSpan time;
-        DateTime ShipDate11 = DateTime.Now.AddDays(random.Next(-1000, -1));
-        DateTime DeliveryDate11 = DateTime.Now.AddDays(random.Next(-1000, -1));
-         for (int i = 0; i <= 15; i++)
-        {
-            do
-            {
-                OrderList.Add(new Order
-                {
-                    Id = Config.OrderLastId,
-                    CustomerName = "Customer_" + i,
-                    CustomerAdress = cities[random.Next(cities.Length)],
-                    CustomerEmail = "" + i * 3 + "@gmail.com",
-                    OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1)),
-                    ShipDate = ShipDate11
+        string[] names = { "Sivan","Yael","David","Shani", "Shira","Itai",
+                "Tehila","Ido","Shalom","Miri","Avi","Moshe","Shimon"};
+        string[] cities = { "Tel Aviv", "Jerusalem", "Haifa", "Ashdod", "Lod", "Beni Brak", "Ramat Gan", "Holon","Ashkelon","Netivot","Hertzelia","Naharia" };
 
-                });
-                time = OrderList[i].ShipDate - OrderList[i].OrderDate;
-            }
-            while (time.TotalDays < 0);
+        for (int i = 0; i < 12; i++)//80% ShipDatev+ 60% DeliveryDate =12
+        {
+            var order = new Order()
+            {
+                Id= Config.OrderLastId,
+                CustomerName = "Customer_" + names[i],
+                CustomerEmail = names[i] + "@gmail.com",
+                CustomerAdress = "address_" + cities[i],
+                OrderDate = DateTime.Now - new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)),
+                ShipDate = DateTime.Now + new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L))
+            };
+            order.DeliveryDate = order.ShipDate + new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L));
+            OrderList.Add(order);
         }
-       Console.WriteLine("end of add orders");
-        for (int i = 0; i < 5; i++)
+        for (int i = 13; i < 17; i++)// only DeliveryDate = 4
         {
+            var order = new Order()
             {
-                OrderList.Add(new Order()
-                {
-                    Id = Config.OrderLastId,
-                    CustomerName = "Customer_" + (char)i,
-                    CustomerAdress = cities[random.Next(cities.Length)],
-                    CustomerEmail = (char)i * 3 + "@gmail.com",
-                    OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1)),
-                    ShipDate = DateTime.MinValue
+                Id = Config.OrderLastId,
+                CustomerName = " Coustumer_" + names[random.Next(names.Length)],
+                CustomerEmail = names[random.Next(names.Length)] + "@gmail.com",
+                CustomerAdress = "address_" + cities[random.Next(cities.Length)],
+                OrderDate = DateTime.Now - new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)),
+                ShipDate = DateTime.MinValue,
+                DeliveryDate = DateTime.Now + new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)),
+            };
 
-                });
-            }
-            if (i <= 10)
-            {
-                do
-                {
-                    OrderList.Add(new Order()
-                    {
-                        Id = Config.OrderLastId,
-                        CustomerName = "Customer_" + (char)i,
-                        CustomerAdress = cities[random.Next(cities.Length)],
-                        CustomerEmail = (char)i * 3 + "@gmail.com",
-                        OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1)),
-                        DeliveryDate = DeliveryDate11
-
-                    });
-                    time = OrderList[i].DeliveryDate - OrderList[i].ShipDate;
-
-                }
-                while (time.TotalDays < 0);
-            }
-            else
-            {
-                OrderList.Add(new Order()
-                {
-                    Id = Config.OrderLastId,
-                    CustomerName = "Customer_" + (char)i,
-                    CustomerAdress = cities[random.Next(cities.Length)],
-                    CustomerEmail = (char)i * 3 + "@gmail.com",
-                    OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1)),
-                    DeliveryDate = DateTime.MinValue
-
-                });
-            }
-            foreach (var item in OrderList)
-            {
-                Console.WriteLine(item);
-            }
+            OrderList.Add(order);
         }
 
-        //for (int i = 0; i < 20; i++)
-        //{
-
-        //    orderList.Add(new Order()
-        //    {
-        //        Id = Config.OrderLastId,
-        //        CustomerName = "Customer_" + (char)i,
-        //        CustomerAdress = cities[random.Next(cities.Length)],
-        //        CustomerEmail = (char)i * 3 + "@gmail.com",
-        //        OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1))
-        //    });
-
-        //    if (i <= 15)
-        //    {
-        //        do
-        //        {
-        //            orderList[i].ShipDate = DateTime.Now.AddDays(random.Next(-1000, -1));
-        //            time = orderList[i].ShipDate - orderList[i].OrderDate;
-        //        }
-        //        while (time.TotalDays < 0);
-        //    }
-        //    else
-        //    {
-        //        orderList[i].ShipDate = DateTime.MinValue;
-        //    }
-        //    if (i <= 10)
-        //    {
-        //        do
-        //        {
-        //            orderList[i].DeliveryDate = DateTime.Now.AddDays(random.Next(-1000, -1));
-        //            time = orderList[i].DeliveryDate - orderList[i].ShipDate;
-
-        //        }
-        //        while (time.TotalDays < 0);
-        //    }
-        //    else
-        //        orderList[i].DeliveryDate = DateTime.MinValue;
-        //}
+        for (int i = 17; i < 21; i++)// without DeliveryDate and ShipDate = 4
+        {
+            var order = new Order()
+            {
+                Id = Config.OrderLastId,
+                CustomerName = " Coustumer_" + names[random.Next(names.Length)],
+                CustomerEmail = names[random.Next(names.Length)] + "@gmail.com",
+                CustomerAdress = "address_" + cities[random.Next(cities.Length)],
+                OrderDate = DateTime.Now - new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)),
+                ShipDate = DateTime.MinValue,
+                DeliveryDate = DateTime.MinValue
+            };
+            OrderList.Add(order);
+        }
 
     }
 

@@ -34,7 +34,7 @@ internal class Cart: BlApi.ICart
             throw new BO.NotExiestsExceptions("Product request failed", str);
 
         }
-        if (cart1.OrdersItemsList.Exists(orderItem => orderItem.ProductId != doProduct.Id)) //אם מוצר לא קיים בסל קניות
+        if (cart1.OrdersItemsList.Exists(orderItem => orderItem?.ProductId != doProduct.Id)) //אם מוצר לא קיים בסל קניות
         {
             if (doProduct.Id == id && doProduct.InStock >= 0) //תבדוק האם המוצר קיים ויש במלאי
             {
@@ -83,7 +83,7 @@ internal class Cart: BlApi.ICart
 
         }
         //DO.Product product = Dal.Product.Get(id);
-        foreach (BO.OrderItem orderItem in cart1.OrdersItemsList)
+        foreach (BO.OrderItem orderItem in cart1?.OrdersItemsList)
         {
             if (orderItem?.ProductId == id && newAmount > orderItem.AmountInOrder) //אם הכמות גדלה
             {
@@ -115,16 +115,16 @@ internal class Cart: BlApi.ICart
 
     public void Confirm(BO.Cart cart1)
     {
-        if (string.IsNullOrWhiteSpace(cart1.CustomerName) && string.IsNullOrWhiteSpace(cart1.CustomerAdress)) //מחרוזת ריקה ולא חוקית
+        if (string.IsNullOrWhiteSpace(cart1?.CustomerName) && string.IsNullOrWhiteSpace(cart1?.CustomerAdress)) //מחרוזת ריקה ולא חוקית
             throw new BO.IncorrectDataExceptions("Buyer's name and address are blank");
 
-        if (!new EmailAddressAttribute().IsValid(cart1.CustomerName))//כתובת אימיל לא חוקית
+        if (!new EmailAddressAttribute().IsValid(cart1?.CustomerEmail))//כתובת אימיל לא חוקית
             throw new BO.IncorrectDataExceptions("Email address in invalid format");
 
         //if (cart1.OrdersItemsList.Any(orderItem => orderItem.ProductId != Dal.Product.Get(orderItem.ProductId).Id))//מוצר לא קיים
         //    throw new BO.NotExiestsExceptions("The product does not exist");
 
-        foreach (BO.OrderItem orderItem in cart1.OrdersItemsList) //כל המוצרים קיימים, כמויות חיוביות, יש מספיק במלאי
+        foreach (BO.OrderItem orderItem in cart1?.OrdersItemsList) //כל המוצרים קיימים, כמויות חיוביות, יש מספיק במלאי
         {
             DO.Product productOfDo = Dal.Product.Get(orderItem.ProductId);
             if(Dal.Product.GetList().Contains(productOfDo) == false)//מוצר לא קיים

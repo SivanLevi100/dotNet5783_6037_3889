@@ -118,7 +118,6 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="NotFoundExceptions"></exception>
     public IEnumerable<OrderItem> GetListOfOrderItemOfOrder(int myOrderId)
     {
-
         if(_dstaSource.OrderItemList.Exists(x => x.OrderId == myOrderId))
         {
             return _dstaSource.OrderItemList.FindAll(x => x.OrderId == myOrderId).ToList();
