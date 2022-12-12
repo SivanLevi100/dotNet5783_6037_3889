@@ -97,7 +97,7 @@ internal class Order : BlApi.IOrder
         //        ProductId = doOrderItem.ProductId,
         //        Price = doOrderItem.Price,
         //        AmountInOrder = doOrderItem.Amount,
-        //        TotalPriceOfItem=doOrderItem.Price * doOrderItem.Amount,
+        //        TotalPriceOfItem = doOrderItem.Price * doOrderItem.Amount,
         //    });
         //}
 
