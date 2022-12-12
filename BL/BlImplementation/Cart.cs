@@ -58,7 +58,7 @@ internal class Cart: BlApi.ICart
         {   
             foreach (BO.OrderItem orderItem in cart1.OrdersItemsList)
             {
-                if(orderItem.ProductId == doProduct.Id && doProduct.InStock >= 0) //אם זה המוצר והכמות גדולה מ0 
+                if(orderItem?.ProductId == doProduct.Id && doProduct.InStock >= 0) //אם זה המוצר והכמות גדולה מ0 
                 {
                     orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
                     orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;

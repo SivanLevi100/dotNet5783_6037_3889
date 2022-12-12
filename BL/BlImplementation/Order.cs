@@ -88,6 +88,20 @@ internal class Order : BlApi.IOrder
 
     public BO.Order UpdateDelivery(int idOrder)//עדכון אספקת הזמנה
     {
+        //List<BO.OrderItem?>? listBo = new List<BO.OrderItem?>();
+        //foreach (DO.OrderItem doOrderItem in Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder))
+        //{
+        //    listBo.Add(new BO.OrderItem()
+        //    {
+        //        Id = doOrderItem.Id,
+        //        ProductId = doOrderItem.ProductId,
+        //        Price = doOrderItem.Price,
+        //        AmountInOrder = doOrderItem.Amount,
+        //        TotalPriceOfItem=doOrderItem.Price * doOrderItem.Amount,
+        //    });
+        //}
+
+
         if (idOrder <= 0)
             throw new BO.IncorrectDataExceptions("Order id is incorrect");
 
@@ -125,7 +139,7 @@ internal class Order : BlApi.IOrder
                     ShipDate= orderDo.ShipDate,
                     DeliveryDate = DateTime.Now,
                     Status = BO.OrderStatus.delivered,
-                    OrdersItemsList = (List<BO.OrderItem?>?)Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder),////////זורק חריגת מערכת בגלל ההמרה
+                    OrdersItemsList = /*listBo*/ (List<BO.OrderItem?>?)Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder),
                     TotalPrice= Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder).Sum(orderItem=>orderItem.Price*orderItem.Amount)
 
                 };
@@ -139,6 +153,7 @@ internal class Order : BlApi.IOrder
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
     }
+
 
     
     public BO.Order UpdateShipping(int idOrder)//עדכון שילוח הזמנה

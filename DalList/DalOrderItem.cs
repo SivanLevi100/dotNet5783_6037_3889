@@ -118,13 +118,15 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="NotFoundExceptions"></exception>
     public IEnumerable<OrderItem> GetListOfOrderItemOfOrder(int myOrderId)
     {
-        if(_dstaSource.OrderItemList.Exists(x => x.OrderId == myOrderId))
-        {
-            return _dstaSource.OrderItemList.FindAll(x => x.OrderId == myOrderId).ToList();
-        }
-        //throw new NotFoundExceptions("the order is not exist in List **************");
-        else
-            return _dstaSource.OrderItemList.FindAll(x => x.OrderId != myOrderId).ToList();
+        //if(_dstaSource.OrderItemList.Exists(x => x.OrderId == myOrderId))
+        //{
+        //    return _dstaSource.OrderItemList.FindAll(x => x.OrderId == myOrderId).ToList();
+        //}
+        //throw new NotFoundExceptions("the order is not exist in List");
+
+        return _dstaSource.OrderItemList.FindAll(delegate (OrderItem orderItem) { return orderItem.OrderId == myOrderId; });
+        throw new NotFoundExceptions("the order is not exist in List");
+
     }
 
 
