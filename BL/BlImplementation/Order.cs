@@ -19,7 +19,7 @@ internal class Order : BlApi.IOrder
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
         BO.OrderStatus status1 = new BO.OrderStatus();
-        foreach(DO.Order order in Dal.Order.GetList())
+        foreach (DO.Order order in Dal.Order.GetList())
         {
             if (order.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
                 status1 = BO.OrderStatus.Confirmed;
@@ -29,20 +29,18 @@ internal class Order : BlApi.IOrder
                 status1 = BO.OrderStatus.delivered;
 
         }
-
         return Dal.Order.GetList().Select(order => new BO.OrderForList
         {
             OrderId = order.Id,
             CustomerName = order.CustomerName,
             Status = status1,
-            AmountItems = Dal.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Amount), /*Dal.OrderItem.Get(order.Id).Amount*/
-           // TotalPrice = (Dal.OrderItem.Get(order.Id).Amount) * Dal.OrderItem.Get(order.Id).Price/*(Dal.Product.Get(Dal.OrderItem.Get(order.Id).ProductId).Price)*/
-            TotalPrice = Dal.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Price * orderItem.Amount)
+            AmountItems = Dal?.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"), 
+            TotalPrice = Dal?.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Price * orderItem.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
 
         });
     }
 
-    public BO.Order GetProductDetails(int idOrder)
+    public BO.Order GetOrderDetails(int idOrder)
     {
         try
         {
@@ -50,9 +48,9 @@ internal class Order : BlApi.IOrder
             {
                 BO.OrderStatus status1 = new BO.OrderStatus();
                 DO.Order orderDO = Dal.Order.Get(idOrder);
-                if (orderDO.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
+                if (orderDO.OrderDate != DateTime.MinValue&& orderDO.ShipDate == DateTime.MinValue&& orderDO.DeliveryDate == DateTime.MinValue)//ההזמנה נוצרה
                     status1 = BO.OrderStatus.Confirmed;
-                if (orderDO.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
+                if (orderDO.ShipDate != DateTime.MinValue && orderDO.DeliveryDate == DateTime.MinValue)//ההזמנה נשלחה
                     status1 = BO.OrderStatus.shipped;
                 if (orderDO.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
                     status1 = BO.OrderStatus.delivered;
@@ -127,14 +125,14 @@ internal class Order : BlApi.IOrder
                     ShipDate= orderDo.ShipDate,
                     DeliveryDate = DateTime.Now,
                     Status = BO.OrderStatus.delivered,
-                    OrdersItemsList = (List<BO.OrderItem?>)Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder),
+                    OrdersItemsList = (List<BO.OrderItem?>?)Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder),////////זורק חריגת מערכת בגלל ההמרה
                     TotalPrice= Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder).Sum(orderItem=>orderItem.Price*orderItem.Amount)
 
                 };
                 return order;
             }
             else
-                throw new BO.NotExiestsExceptions("The Order request failed");
+                throw new BO.NotExiestsExceptions("The Order request faile");
         }
         catch (DO.NotFoundExceptions str)
         {

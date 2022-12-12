@@ -186,9 +186,9 @@ class Program  /*internal*/
                         };
                         break;
                     case 'b':
-                        Console.WriteLine("please enter: Id of product");
+                        Console.WriteLine("please enter: Id of order");
                         id = Int32.Parse(Console.ReadLine() ?? "0");
-                        myOrder = bl.Order.GetProductDetails(id);
+                        myOrder = bl.Order.GetOrderDetails(id);
                         Console.WriteLine(myOrder);
                         break;
                     case 'c':

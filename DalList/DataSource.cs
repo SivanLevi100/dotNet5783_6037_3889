@@ -76,7 +76,7 @@ internal sealed class DataSource
                 "Tehila","Ido","Shalom","Miri","Avi","Moshe","Shimon"};
         string[] cities = { "Tel Aviv", "Jerusalem", "Haifa", "Ashdod", "Lod", "Beni Brak", "Ramat Gan", "Holon","Ashkelon","Netivot","Hertzelia","Naharia" };
 
-        for (int i = 0; i < 12; i++)//80% ShipDatev+ 60% DeliveryDate =12
+        for (int i = 0; i < 12; i++)//80% ShipDatev+ 60% DeliveryDate = 12
         {
             var order = new Order()
             {
@@ -90,7 +90,7 @@ internal sealed class DataSource
             order.DeliveryDate = order.ShipDate + new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L));
             OrderList.Add(order);
         }
-        for (int i = 13; i < 17; i++)// only DeliveryDate = 4
+        for (int i = 13; i < 17; i++)// only ShipDate = 4
         {
             var order = new Order()
             {
@@ -99,8 +99,8 @@ internal sealed class DataSource
                 CustomerEmail = names[random.Next(names.Length)] + "@gmail.com",
                 CustomerAdress = "address_" + cities[random.Next(cities.Length)],
                 OrderDate = DateTime.Now - new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)),
-                ShipDate = DateTime.MinValue,
-                DeliveryDate = DateTime.Now + new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)),
+                ShipDate = DateTime.Now + new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)) ,
+                DeliveryDate = DateTime.MinValue,
             };
 
             OrderList.Add(order);

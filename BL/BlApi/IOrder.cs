@@ -19,7 +19,7 @@ public interface IOrder
     /// </summary>
     /// <param name="idOrder"></param>
     /// <returns></returns>
-    public BO.Order GetProductDetails(int idOrder);
+    public BO.Order GetOrderDetails(int idOrder);
 
     /// <summary>
     /// Order Shipping Update (Manager Order Management Screen)

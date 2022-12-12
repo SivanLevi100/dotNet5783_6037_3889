@@ -31,7 +31,7 @@ public class Order
     Ship Date: {ShipDate}
     Delivery Date: {DeliveryDate}
     status: {Status}
-    List of ordersItems: {OrdersItemsList}
+    List of ordersItems:{OrdersItemsList}
     Total Price: {TotalPrice}";
 
 

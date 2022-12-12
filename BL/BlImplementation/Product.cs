@@ -20,22 +20,6 @@ internal class Product : BlApi.IProduct
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {
-
-        //List<ProductForList> p = new List<ProductForList>();
-        //foreach (DO.Product product in Dal.Product.GetList())
-        //{
-        //    BO.ProductForList productForList = new BO.ProductForList
-        //    {
-
-        //        IdProduct = product.Id,
-        //        Name = product.Name,
-        //        Price = product.Price,
-        //        Category = (BO.Category)product.Category
-        //    };
-        //    p.Add(productForList);
-        //};
-        //return p.AsEnumerable();
-
         return Dal.Product.GetList().Select(product => new BO.ProductForList
         {
             IdProduct = product.Id,
@@ -53,7 +37,6 @@ internal class Product : BlApi.IProduct
             if (id > 0)
             {
                 DO.Product productOfDo = Dal.Product.Get(id);
-               // DO.Product productOfDo = Dal?.Product.Get(id) ?? throw new BO.IncorrectDataExceptions("id not positive");
                 BO.Product product = new BO.Product
                 {
                     Id = productOfDo.Id,
@@ -138,6 +121,7 @@ internal class Product : BlApi.IProduct
                 if (Dal.OrderItem.GetListOfOrderItemOfOrder(order.Id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
                 {
                     Dal.Product.Delete(id);
+                    return;
                 }
                 else
                     throw new BO.NotExiestsExceptions("This product appears on orders");
@@ -147,7 +131,6 @@ internal class Product : BlApi.IProduct
         {
             throw new BO.NotExiestsExceptions("No such product exists at all", str);
         }
-
     }
 
 
