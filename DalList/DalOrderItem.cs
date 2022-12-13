@@ -19,7 +19,7 @@ internal class DalOrderItem:IOrderItem
     /// <returns></returns>
     public int Add(OrderItem orderItem1)
     {
-        if (_dstaSource.OrderItemList.Exists(x => x.Id == orderItem1.Id))
+        if (_dstaSource.OrderItemList.Exists(x => x?.Id == orderItem1.Id))
             throw new DuplicateIdExceptions("no place in List to add");
         _dstaSource.OrderItemList.Add(orderItem1);
         return orderItem1.Id;
@@ -46,7 +46,7 @@ internal class DalOrderItem:IOrderItem
     /// A request/read method of the list of all order item objects
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderItem> GetList()
+    public IEnumerable<OrderItem?> GetList()
     {
         return _dstaSource.OrderItemList.ToList();
     }
@@ -76,9 +76,9 @@ internal class DalOrderItem:IOrderItem
     /// <param name="orderItem1"></param>
     public void Update(OrderItem orderItem1)
     {
-        if (_dstaSource.OrderItemList.Exists(x => x.Id == orderItem1.Id))
+        if (_dstaSource.OrderItemList.Exists(x => x?.Id == orderItem1.Id))
         {
-            int j = _dstaSource.OrderItemList.IndexOf(_dstaSource.OrderItemList.Find(x => x.Id == orderItem1.Id));
+            int j = _dstaSource.OrderItemList.IndexOf(_dstaSource.OrderItemList.Find(x => x?.Id == orderItem1.Id));
             _dstaSource.OrderItemList[j] = orderItem1;
             return;
         }
@@ -116,7 +116,7 @@ internal class DalOrderItem:IOrderItem
     /// <param name="myOrderId"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public IEnumerable<OrderItem> GetListOfOrderItemOfOrder(int myOrderId)
+    public IEnumerable<OrderItem?> GetListOfOrderItemOfOrder(int myOrderId)
     {
         //if(_dstaSource.OrderItemList.Exists(x => x.OrderId == myOrderId))
         //{
@@ -124,7 +124,7 @@ internal class DalOrderItem:IOrderItem
         //}
         //throw new NotFoundExceptions("the order is not exist in List");
 
-        return _dstaSource.OrderItemList.FindAll(delegate (OrderItem orderItem) { return orderItem.OrderId == myOrderId; });
+        return _dstaSource.OrderItemList.FindAll(delegate (OrderItem orderItem) { return orderItem?.OrderId == myOrderId; });
         throw new NotFoundExceptions("the order is not exist in List");
 
     }

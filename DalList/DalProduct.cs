@@ -19,7 +19,7 @@ internal class DalProduct : IProduct
     {
         //return 5;
         //DataSource.s_instance.ProductList.Add(product1);       
-        if (ds.ProductList.Exists(x => x.Id == product1.Id))
+        if (ds.ProductList.Exists(x => x?.Id == product1.Id))
             throw new DuplicateIdExceptions("No place in List to add");
         ds.ProductList.Add(product1);
         return product1.Id;
@@ -54,7 +54,7 @@ internal class DalProduct : IProduct
     /// <returns></returns>
    // public IEnumerable<DO.Product> GetList() => ds.ProductList;
 
-    public IEnumerable<DO.Product> GetList()
+    public IEnumerable<DO.Product?> GetList(Func<Product?, bool>? filter)
     {
         return ds.ProductList.ToList();
     }
@@ -93,9 +93,9 @@ internal class DalProduct : IProduct
     public void Update(Product product1)
     {
 
-        if (ds.ProductList.Exists(x => x.Id == product1.Id))
+        if (ds.ProductList.Exists(x => x?.Id == product1.Id))
         {
-            int j = ds.ProductList.IndexOf(ds.ProductList.Find(x => x.Id == product1.Id));
+            int j = ds.ProductList.IndexOf(ds.ProductList.Find(x => x?.Id == product1.Id));
             ds.ProductList[j] = product1;
             return;
         }

@@ -15,7 +15,7 @@ internal class DalOrder:IOrder
     /// <returns></returns>
     public int Add(Order order1)
     {
-        if (_dstaSource1.OrderList.Exists(x => x.Id == order1.Id))
+        if (_dstaSource1.OrderList.Exists(x => x?.Id == order1.Id))
             throw new DuplicateIdExceptions("no place in List to add");
         _dstaSource1.OrderList.Add(order1);
         return order1.Id;
@@ -42,7 +42,7 @@ internal class DalOrder:IOrder
     /// Request/read method of the list of all objects of an order
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order> GetList()
+    public IEnumerable<Order?> GetList()
     {
         return _dstaSource1.OrderList.ToList();
     }
@@ -72,9 +72,9 @@ internal class DalOrder:IOrder
     /// <param name="order1"></param>
     public void Update(Order order1)
     {
-        if (_dstaSource1.OrderList.Exists(x => x.Id == order1.Id))
+        if (_dstaSource1.OrderList.Exists(x => x?.Id == order1.Id))
         {
-            int j = _dstaSource1.OrderList.IndexOf(_dstaSource1.OrderList.Find(x => x.Id == order1.Id));
+            int j = _dstaSource1.OrderList.IndexOf(_dstaSource1.OrderList.Find(x => x?.Id == order1.Id));
             _dstaSource1.OrderList[j] = order1;
             return;
         }

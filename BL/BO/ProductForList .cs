@@ -11,7 +11,7 @@ public class ProductForList
     public int IdProduct { get; set; }
     public string? Name { get; set; }
     public double Price { get; set; }
-    public Category Category { get; set; }
+    public Category? Category { get; set; }
 
     public override string ToString() => $@"
     Product Id: {IdProduct}

@@ -12,9 +12,9 @@ namespace Dal;
 internal sealed class DataSource
 {
     static readonly Random random = new Random();
-    internal List<DO.Product> ProductList { get; } = new();
-    internal List<DO.Order> OrderList { get; } = new();
-    internal List<DO.OrderItem> OrderItemList { get; } = new();
+    internal List<DO.Product?> ProductList { get; } = new();
+    internal List<DO.Order?> OrderList { get; } = new();
+    internal List<DO.OrderItem?> OrderItemList { get; } = new();
 
     internal static DataSource S_instance { get; }
 
