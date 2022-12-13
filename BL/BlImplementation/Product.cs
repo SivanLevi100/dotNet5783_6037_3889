@@ -20,13 +20,24 @@ internal class Product : BlApi.IProduct
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {
-        return Dal.Product.GetAll().Select(product => new BO.ProductForList
+        //return Dal.Product.GetAll().Select(product => new BO.ProductForList
+        //{
+        //    IdProduct = product.Id,
+        //    Name = product.Name,
+        //    Price = product.Price,
+        //    Category = (BO.Category)product.Category
+        //});
+        var productList = Dal.Product.GetAll(item => item != null);
+        foreach (DO.Product item in productList)
         {
-            IdProduct = product.Id,
-            Name = product.Name,
-            Price = product.Price,
-            Category = (BO.Category)product.Category
-        });
+            yield return new BO.ProductForList  
+            {
+                IdProduct = item.Id,
+                Name = item.Name,
+                Price = item.Price,
+                Category = (BO.Category)item.Category
+            };
+        }
     }
 
 

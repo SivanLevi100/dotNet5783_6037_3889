@@ -29,16 +29,27 @@ internal class Order : BlApi.IOrder
                 status1 = BO.OrderStatus.delivered;
 
         }
-        var dalResult = Dal.Order.GetAll();
-        return dalResult.Select(order => new BO.OrderForList
+        var orderList = Dal.Order.GetAll( item => item != null);
+        foreach (DO.Order item in orderList)
         {
-            OrderId = order.Id,
-            CustomerName = order.CustomerName,
-            Status = status1,
-            AmountItems = Dal?.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"), 
-            TotalPrice = Dal?.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Price * orderItem.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
+            yield return new BO.OrderForList
+            {
+                OrderId = item.Id,
+                CustomerName = item.CustomerName,
+                Status = status1,
+                AmountItems = Dal?.OrderItem.GetListOrderItems(item.Id).Sum(orderItem => orderItem?.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"),
+                TotalPrice = Dal?.OrderItem.GetListOrderItems(item.Id).Sum(orderItem => orderItem?.Price * orderItem?.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
+            };
+        }
+        //return orderList.Select( order => new BO.OrderForList
+        //{
+        //    OrderId = order.Id,
+        //    CustomerName = order.CustomerName,
+        //    Status = status1,
+        //    AmountItems = Dal?.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"), 
+        //    TotalPrice = Dal?.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Price * orderItem.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
 
-        });
+        //});
     }
 
     public BO.Order GetOrderDetails(int idOrder)
