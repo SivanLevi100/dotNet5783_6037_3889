@@ -46,7 +46,7 @@ internal class DalOrderItem:IOrderItem
     /// A request/read method of the list of all order item objects
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderItem?> GetList()
+    public IEnumerable<OrderItem?> GetList(Func<OrderItem?, bool>? filter)
     {
         return _dstaSource.OrderItemList.ToList();
     }
