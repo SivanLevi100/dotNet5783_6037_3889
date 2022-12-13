@@ -7,7 +7,7 @@ using DO;
 
 namespace Dal;
 
-internal class DalOrderItem:IOrderItem
+internal class DalOrderItem : IOrderItem
 {
 
     DataSource _dstaSource = DataSource.S_instance;
@@ -28,15 +28,15 @@ internal class DalOrderItem:IOrderItem
     /// <summary>
     /// A request/call method of a single object that receives an order item ID number and returns the appropriate order item
     /// </summary>
-    /// <param name="idOrderItem1"></param>
+    /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public OrderItem Get(int idOrderItem1)
+    public OrderItem Get(int id)
     {
 
         foreach (OrderItem orderItem in _dstaSource.OrderItemList)
         {
-            if (orderItem.Id == idOrderItem1)
+            if (orderItem.Id == id)
                 return orderItem;
         }
         throw new NotFoundExceptions("The orderItem id is not exist in List");
@@ -46,10 +46,11 @@ internal class DalOrderItem:IOrderItem
     /// A request/read method of the list of all order item objects
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<OrderItem?> GetList(Func<OrderItem?, bool>? filter)
-    {
-        return _dstaSource.OrderItemList.ToList();
-    }
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter) =>
+        (filter == null ? _dstaSource.OrderItemList?.Select(item => item) 
+        : _dstaSource.OrderItemList?.Where(item => filter(item)) 
+        ?? throw new DoesNotExistException("Missing orderitem"))
+        ?? throw new DataCorruptionException("Missing ordritem list");
 
     /// <summary>
     /// A method to delete an order items object that receives an order item ID number
@@ -57,7 +58,7 @@ internal class DalOrderItem:IOrderItem
     /// <param name="idOrderItem1"></param>
     public void Delete(int idOrderItem1)
     {
-        foreach(OrderItem orderItem in _dstaSource.OrderItemList)
+        foreach (OrderItem orderItem in _dstaSource.OrderItemList)
         {
             if (idOrderItem1 == orderItem.Id)
             {
@@ -99,7 +100,7 @@ internal class DalOrderItem:IOrderItem
     {
         foreach (OrderItem orderItem in _dstaSource.OrderItemList)
         {
-            if (orderItem.OrderId == idOrderItem1 &&orderItem.ProductId==idOrderItem2)
+            if (orderItem.OrderId == idOrderItem1 && orderItem.ProductId == idOrderItem2)
                 return orderItem;
         }
         throw new NotFoundExceptions("The orderItem id is not exist in List");
@@ -116,7 +117,7 @@ internal class DalOrderItem:IOrderItem
     /// <param name="myOrderId"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public IEnumerable<OrderItem?> GetListOfOrderItemOfOrder(int myOrderId)
+    public IEnumerable<OrderItem?> GetListOrderItems(int myOrderId)
     {
         //if(_dstaSource.OrderItemList.Exists(x => x.OrderId == myOrderId))
         //{
@@ -124,9 +125,8 @@ internal class DalOrderItem:IOrderItem
         //}
         //throw new NotFoundExceptions("the order is not exist in List");
 
-        return _dstaSource.OrderItemList.FindAll(delegate (OrderItem orderItem) { return orderItem?.OrderId == myOrderId; });
-        throw new NotFoundExceptions("the order is not exist in List");
-
+        return  _dstaSource.OrderItemList.Where(elem => myOrderId == elem?.OrderId) 
+            ?? throw new NotFoundExceptions("the order is not exist in List");
     }
 
 

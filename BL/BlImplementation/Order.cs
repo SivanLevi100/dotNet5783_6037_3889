@@ -19,7 +19,7 @@ internal class Order : BlApi.IOrder
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
         BO.OrderStatus status1 = new BO.OrderStatus();
-        foreach (DO.Order order in Dal.Order.GetList())
+        foreach (DO.Order order in Dal.Order.GetAll())
         {
             if (order.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
                 status1 = BO.OrderStatus.Confirmed;
@@ -29,7 +29,8 @@ internal class Order : BlApi.IOrder
                 status1 = BO.OrderStatus.delivered;
 
         }
-        return Dal.Order.GetList().Select(order => new BO.OrderForList
+        var dalResult = Dal.Order.GetAll();
+        return dalResult.Select(order => new BO.OrderForList
         {
             OrderId = order.Id,
             CustomerName = order.CustomerName,
@@ -55,7 +56,7 @@ internal class Order : BlApi.IOrder
                 if (orderDO.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
                     status1 = BO.OrderStatus.delivered;
                 double sumOfPrices = 0;
-                IEnumerable<DO.OrderItem> orderItemListDo = Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder);
+                IEnumerable<DO.OrderItem> orderItemListDo = Dal.OrderItem.GetListOrderItems(idOrder);
                 foreach (DO.OrderItem orderItem in orderItemListDo)
                 {
                     sumOfPrices += orderItem.Price * orderItem.Amount;
@@ -108,7 +109,7 @@ internal class Order : BlApi.IOrder
         bool flag = false;
         try
         {
-            IEnumerable<DO.Order> orderListDo = Dal.Order.GetList();
+            IEnumerable<DO.Order> orderListDo = Dal.Order.GetAll();
             foreach (DO.Order order in orderListDo)
             {
                 if (order.Id == idOrder && order.ShipDate != DateTime.MinValue && order.DeliveryDate == DateTime.MinValue)//תבדוק האם הזמנה קיימת (בשכבת נתונים), כבר נשלחה אך עוד לא סופקה
@@ -139,8 +140,8 @@ internal class Order : BlApi.IOrder
                     ShipDate= orderDo.ShipDate,
                     DeliveryDate = DateTime.Now,
                     Status = BO.OrderStatus.delivered,
-                    OrdersItemsList = /*listBo*/ (List<BO.OrderItem?>?)Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder),
-                    TotalPrice= Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder).Sum(orderItem=>orderItem.Price*orderItem.Amount)
+                    OrdersItemsList = /*listBo*/ (List<BO.OrderItem?>?)Dal.OrderItem.GetListOrderItems(idOrder),
+                    TotalPrice= Dal.OrderItem.GetListOrderItems(idOrder).Sum(orderItem=>orderItem.Price*orderItem.Amount)
 
                 };
                 return order;
@@ -164,7 +165,7 @@ internal class Order : BlApi.IOrder
         bool flag = false;
         try
         {
-            IEnumerable<DO.Order> orderListDo = Dal.Order.GetList();
+            IEnumerable<DO.Order> orderListDo = Dal.Order.GetAll();
             foreach (DO.Order order in orderListDo)
             {
                 if (order.Id == idOrder && order.ShipDate == DateTime.MinValue)//הזמנה קיימת (בשכבת נתונים) ועוד לא נשלחה
@@ -193,8 +194,8 @@ internal class Order : BlApi.IOrder
                     ShipDate = DateTime.Now,
                     DeliveryDate = orderDo.DeliveryDate,
                     Status = BO.OrderStatus.shipped,
-                    OrdersItemsList = (List<BO.OrderItem?>)Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder),
-                    TotalPrice = Dal.OrderItem.GetListOfOrderItemOfOrder(idOrder).Sum(orderItem => orderItem.Price * orderItem.Amount)
+                    OrdersItemsList = (List<BO.OrderItem?>)Dal.OrderItem.GetListOrderItems(idOrder),
+                    TotalPrice = Dal.OrderItem.GetListOrderItems(idOrder).Sum(orderItem => orderItem.Price * orderItem.Amount)
 
                 };
                 return order;

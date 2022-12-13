@@ -54,7 +54,7 @@ internal class DalProduct : IProduct
     /// <returns></returns>
    // public IEnumerable<DO.Product> GetList() => ds.ProductList;
 
-    public IEnumerable<DO.Product?> GetList(Func<Product?, bool>? filter)
+    public IEnumerable<DO.Product?> GetAll(Func<Product?, bool>? filter)
     {
         return ds.ProductList.ToList();
     }

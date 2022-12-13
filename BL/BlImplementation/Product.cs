@@ -20,7 +20,7 @@ internal class Product : BlApi.IProduct
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {
-        return Dal.Product.GetList().Select(product => new BO.ProductForList
+        return Dal.Product.GetAll().Select(product => new BO.ProductForList
         {
             IdProduct = product.Id,
             Name = product.Name,
@@ -116,9 +116,9 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            foreach (DO.Order order in Dal.Order.GetList())//עוברים על כל ההזמנות
+            foreach (DO.Order order in Dal.Order.GetAll())//עוברים על כל ההזמנות
             {
-                if (Dal.OrderItem.GetListOfOrderItemOfOrder(order.Id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
+                if (Dal.OrderItem.GetListOrderItems(order.Id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
                 {
                     Dal.Product.Delete(id);
                     return;

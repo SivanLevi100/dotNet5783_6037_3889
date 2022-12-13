@@ -74,7 +74,7 @@ public class Program
                 switch (ch)
                 {
                     case 'c':
-                        foreach (/*Product*/ var item in dal.Product.GetList())
+                        foreach (/*Product*/ var item in dal.Product.GetAll())
                         {
                             Console.WriteLine(item);
                         };
@@ -205,7 +205,7 @@ public class Program
                         Console.WriteLine(myOrder);
                         break;
                     case 'c':
-                        foreach (Order item in dal.Order.GetList())
+                        foreach (Order item in dal.Order.GetAll())
                         {
                             Console.WriteLine(item);
                         };
@@ -313,7 +313,7 @@ public class Program
                         Console.WriteLine(myOrderItem);
                         break;
                     case 'c':
-                        foreach (OrderItem item in dal.OrderItem.GetList())
+                        foreach (OrderItem item in dal.OrderItem.GetAll())
                         {
                             Console.WriteLine(item);
                         };
@@ -362,7 +362,7 @@ public class Program
                     case 'g':
                         Console.WriteLine("please enter: Id of order");
                         int id = int.Parse(Console.ReadLine() ?? "0");
-                        foreach (OrderItem item in dal.OrderItem.GetListOfOrderItemOfOrder(id))
+                        foreach (OrderItem item in dal.OrderItem.GetListOrderItems(id))
                         {
                             Console.WriteLine(item);
                         };
