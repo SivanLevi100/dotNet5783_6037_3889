@@ -129,7 +129,7 @@ internal class Product : BlApi.IProduct
         {
             foreach (DO.Order order in Dal.Order.GetAll())//עוברים על כל ההזמנות
             {
-                if (Dal.OrderItem.GetListOrderItems(order.Id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
+                if (Dal.OrderItem.GetAll(order.Id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
                 {
                     Dal.Product.Delete(id);
                     return;

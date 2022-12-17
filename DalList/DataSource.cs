@@ -100,7 +100,7 @@ internal sealed class DataSource
                 CustomerAdress = "address_" + cities[random.Next(cities.Length)],
                 OrderDate = DateTime.Now - new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)),
                 ShipDate = DateTime.Now + new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)) ,
-                DeliveryDate = DateTime.MinValue,
+                DeliveryDate = null
             };
 
             OrderList.Add(order);
@@ -115,8 +115,8 @@ internal sealed class DataSource
                 CustomerEmail = names[random.Next(names.Length)] + "@gmail.com",
                 CustomerAdress = "address_" + cities[random.Next(cities.Length)],
                 OrderDate = DateTime.Now - new TimeSpan(random.NextInt64(10L * 1000L * 1000L * 3600L * 24L * 10L)),
-                ShipDate = DateTime.MinValue,
-                DeliveryDate = DateTime.MinValue
+                ShipDate = null,
+                DeliveryDate = null
             };
             OrderList.Add(order);
         }

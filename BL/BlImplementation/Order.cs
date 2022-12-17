@@ -21,11 +21,11 @@ internal class Order : BlApi.IOrder
         BO.OrderStatus status1 = new BO.OrderStatus();
         foreach (DO.Order order in Dal.Order.GetAll())
         {
-            if (order.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
+            if (order.OrderDate != null)//ההזמנה נוצרה
                 status1 = BO.OrderStatus.Confirmed;
-            if (order.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
+            if (order.ShipDate != null)//ההזמנה נשלחה
                 status1 = BO.OrderStatus.shipped;
-            if (order.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
+            if (order.DeliveryDate != null)//ההזמנה נמסרה
                 status1 = BO.OrderStatus.delivered;
 
         }
@@ -37,8 +37,8 @@ internal class Order : BlApi.IOrder
                 OrderId = item.Id,
                 CustomerName = item.CustomerName,
                 Status = status1,
-                AmountItems = Dal?.OrderItem.GetListOrderItems(item.Id).Sum(orderItem => orderItem?.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"),
-                TotalPrice = Dal?.OrderItem.GetListOrderItems(item.Id).Sum(orderItem => orderItem?.Price * orderItem?.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
+                AmountItems = Dal?.OrderItem.GetAll(item.Id).Sum(orderItem => orderItem?.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"),
+                TotalPrice = Dal?.OrderItem.GetAll(item.Id).Sum(orderItem => orderItem?.Price * orderItem?.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
             };
         }
         //return orderList.Select( order => new BO.OrderForList
@@ -60,14 +60,14 @@ internal class Order : BlApi.IOrder
             {
                 BO.OrderStatus status1 = new BO.OrderStatus();
                 DO.Order orderDO = Dal.Order.Get(idOrder);
-                if (orderDO.OrderDate != DateTime.MinValue&& orderDO.ShipDate == DateTime.MinValue&& orderDO.DeliveryDate == DateTime.MinValue)//ההזמנה נוצרה
+                if (orderDO.OrderDate != null && orderDO.ShipDate == null && orderDO.DeliveryDate == null)//ההזמנה נוצרה
                     status1 = BO.OrderStatus.Confirmed;
-                if (orderDO.ShipDate != DateTime.MinValue && orderDO.DeliveryDate == DateTime.MinValue)//ההזמנה נשלחה
+                if (orderDO.ShipDate != null && orderDO.DeliveryDate == null)//ההזמנה נשלחה
                     status1 = BO.OrderStatus.shipped;
-                if (orderDO.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
+                if (orderDO.DeliveryDate != null)//ההזמנה נמסרה
                     status1 = BO.OrderStatus.delivered;
                 double sumOfPrices = 0;
-                IEnumerable<DO.OrderItem> orderItemListDo = Dal.OrderItem.GetListOrderItems(idOrder);
+                IEnumerable<DO.OrderItem> orderItemListDo = Dal.OrderItem.GetAll(idOrder);
                 foreach (DO.OrderItem orderItem in orderItemListDo)
                 {
                     sumOfPrices += orderItem.Price * orderItem.Amount;
@@ -120,10 +120,10 @@ internal class Order : BlApi.IOrder
         bool flag = false;
         try
         {
-            IEnumerable<DO.Order> orderListDo = Dal.Order.GetAll();
+            IEnumerable<DO.Order?> orderListDo = Dal.Order.GetAll();
             foreach (DO.Order order in orderListDo)
             {
-                if (order.Id == idOrder && order.ShipDate != DateTime.MinValue && order.DeliveryDate == DateTime.MinValue)//תבדוק האם הזמנה קיימת (בשכבת נתונים), כבר נשלחה אך עוד לא סופקה
+                if (order.Id == idOrder && order.ShipDate != null && order.DeliveryDate == null)//תבדוק האם הזמנה קיימת (בשכבת נתונים), כבר נשלחה אך עוד לא סופקה
                     flag = true;
             }
         }
@@ -151,8 +151,8 @@ internal class Order : BlApi.IOrder
                     ShipDate= orderDo.ShipDate,
                     DeliveryDate = DateTime.Now,
                     Status = BO.OrderStatus.delivered,
-                    OrdersItemsList = /*listBo*/ (List<BO.OrderItem?>?)Dal.OrderItem.GetListOrderItems(idOrder),
-                    TotalPrice= Dal.OrderItem.GetListOrderItems(idOrder).Sum(orderItem=>orderItem.Price*orderItem.Amount)
+                    OrdersItemsList = /*listBo*/ (List<BO.OrderItem?>?)Dal.OrderItem.GetAll(idOrder),
+                    TotalPrice= Dal.OrderItem.GetAll(idOrder).Sum(orderItem=>orderItem.Price*orderItem.Amount)
 
                 };
                 return order;
@@ -205,8 +205,8 @@ internal class Order : BlApi.IOrder
                     ShipDate = DateTime.Now,
                     DeliveryDate = orderDo.DeliveryDate,
                     Status = BO.OrderStatus.shipped,
-                    OrdersItemsList = (List<BO.OrderItem?>)Dal.OrderItem.GetListOrderItems(idOrder),
-                    TotalPrice = Dal.OrderItem.GetListOrderItems(idOrder).Sum(orderItem => orderItem.Price * orderItem.Amount)
+                    OrdersItemsList = (List<BO.OrderItem?>)Dal.OrderItem.GetAll(idOrder),
+                    TotalPrice = Dal.OrderItem.GetAll(idOrder).Sum(orderItem => orderItem.Price * orderItem.Amount)
 
                 };
                 return order;
@@ -235,19 +235,19 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
-        List<Tuple<DateTime, string>> track = new List<Tuple<DateTime, string>>();
+        List<Tuple<DateTime?, string>> track = new List<Tuple<DateTime, string>>();
         BO.OrderStatus status1= new BO.OrderStatus();
-        if (orderTracking.OrderDate != DateTime.MinValue)//ההזמנה נוצרה
+        if (orderTracking.OrderDate != null)//ההזמנה נוצרה
         {
             track.Add(Tuple.Create(orderTracking.OrderDate, "The order has been created"));
             status1 = BO.OrderStatus.Confirmed;
         }
-        if (orderTracking.ShipDate != DateTime.MinValue)//ההזמנה נשלחה
+        if (orderTracking.ShipDate != null)//ההזמנה נשלחה
         {
             track.Add(Tuple.Create(orderTracking.ShipDate, "The order has been sent"));
             status1 = BO.OrderStatus.shipped;
         }
-        if (orderTracking.DeliveryDate != DateTime.MinValue)//ההזמנה נמסרה
+        if (orderTracking.DeliveryDate != null)//ההזמנה נמסרה
         {
             track.Add(Tuple.Create(orderTracking.DeliveryDate, "The order has been delivered"));
             status1 = BO.OrderStatus.delivered;

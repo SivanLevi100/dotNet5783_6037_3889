@@ -33,7 +33,6 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="NotFoundExceptions"></exception>
     public OrderItem Get(int id)
     {
-
         foreach (OrderItem orderItem in _dstaSource.OrderItemList)
         {
             if (orderItem.Id == id)
@@ -41,6 +40,19 @@ internal class DalOrderItem : IOrderItem
         }
         throw new NotFoundExceptions("The orderItem id is not exist in List");
     }
+
+    public OrderItem GetF(Func<OrderItem?, bool>? filter)
+    {
+        foreach (OrderItem orderItem in _dstaSource.OrderList)
+        {
+            if (filter(orderItem))
+                return orderItem;
+        }
+        throw new NotFoundExceptions("The orderItem is not exist in List");
+    }
+
+
+
 
     /// <summary>
     /// A request/read method of the list of all order item objects
@@ -51,6 +63,8 @@ internal class DalOrderItem : IOrderItem
         : _dstaSource.OrderItemList?.Where(item => filter(item)) 
         ?? throw new DoesNotExistException("Missing orderitem"))
         ?? throw new DataCorruptionException("Missing ordritem list");
+
+
 
     /// <summary>
     /// A method to delete an order items object that receives an order item ID number
@@ -96,38 +110,34 @@ internal class DalOrderItem : IOrderItem
     /// <param name="idOrderItem2"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public OrderItem GetOrderItemofTwoId(int idOrderItem1, int idOrderItem2)
-    {
-        foreach (OrderItem orderItem in _dstaSource.OrderItemList)
-        {
-            if (orderItem.OrderId == idOrderItem1 && orderItem.ProductId == idOrderItem2)
-                return orderItem;
-        }
-        throw new NotFoundExceptions("The orderItem id is not exist in List");
+    //public OrderItem GetOrderItemofTwoId(int idOrderItem1, int idOrderItem2)
+    //{
+    //    foreach (OrderItem orderItem in _dstaSource.OrderItemList)
+    //    {
+    //        if (orderItem.OrderId == idOrderItem1 && orderItem.ProductId == idOrderItem2)
+    //            return orderItem;
+    //    }
+    //    throw new NotFoundExceptions("The orderItem id is not exist in List");
 
+    //}
 
-        //if (DataSource.orderItemList.Exists(x => x.OrderId == idOrderItem1 && x.ProductId == idOrderItem2))
-        //    return DataSource.orderItemList.Find(x => x.OrderId == idOrderItem1 && x.ProductId == idOrderItem2);
-        //throw new NotFoundExceptions("the orderItem id is not exist in List");
-    }
+    ///// <summary>
+    ///// Method of request/reading of a list/array of order details according to the ID number of an order
+    ///// </summary>
+    ///// <param name="myOrderId"></param>
+    ///// <returns></returns>
+    ///// <exception cref="NotFoundExceptions"></exception>
+    //public IEnumerable<OrderItem?> GetListOrderItems(int myOrderId)
+    //{
+    //    //if(_dstaSource.OrderItemList.Exists(x => x.OrderId == myOrderId))
+    //    //{
+    //    //    return _dstaSource.OrderItemList.FindAll(x => x.OrderId == myOrderId).ToList();
+    //    //}
+    //    //throw new NotFoundExceptions("the order is not exist in List");
 
-    /// <summary>
-    /// Method of request/reading of a list/array of order details according to the ID number of an order
-    /// </summary>
-    /// <param name="myOrderId"></param>
-    /// <returns></returns>
-    /// <exception cref="NotFoundExceptions"></exception>
-    public IEnumerable<OrderItem?> GetListOrderItems(int myOrderId)
-    {
-        //if(_dstaSource.OrderItemList.Exists(x => x.OrderId == myOrderId))
-        //{
-        //    return _dstaSource.OrderItemList.FindAll(x => x.OrderId == myOrderId).ToList();
-        //}
-        //throw new NotFoundExceptions("the order is not exist in List");
-
-        return  _dstaSource.OrderItemList.Where(elem => myOrderId == elem?.OrderId) 
-            ?? throw new NotFoundExceptions("the order is not exist in List");
-    }
+    //    return  _dstaSource.OrderItemList.Where(elem => myOrderId == elem?.OrderId) 
+    //        ?? throw new NotFoundExceptions("the order is not exist in List");
+    //}
 
 
 }

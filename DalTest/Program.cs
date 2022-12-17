@@ -356,13 +356,13 @@ public class Program
                         idOrderItem1 = int.Parse(Console.ReadLine() ?? "0");
                         Console.WriteLine("please enter: Id of product");
                         idOrderItem2 = int.Parse(Console.ReadLine() ?? "0");
-                        myOrderItem = dal.OrderItem.GetOrderItemofTwoId(idOrderItem1, idOrderItem2);
+                        myOrderItem = dal.OrderItem.GetF([idOrderItem1, idOrderItem2](int id1,int id2) {if(id1=idOrderItem1 && id2=idOrderItem2)}(idOrderItem1,););
                         Console.WriteLine(myOrderItem);
                         break;
                     case 'g':
                         Console.WriteLine("please enter: Id of order");
                         int id = int.Parse(Console.ReadLine() ?? "0");
-                        foreach (OrderItem item in dal.OrderItem.GetListOrderItems(id))
+                        foreach (OrderItem item in dal.OrderItem.GetAll(id))
                         {
                             Console.WriteLine(item);
                         };

@@ -140,9 +140,9 @@ internal class Cart: BlApi.ICart
             CustomerName = cart1.CustomerName,
             CustomerAdress = cart1.CustomerAdress,
             CustomerEmail = cart1.CustomerEmail,
-            DeliveryDate = DateTime.MinValue,
+            DeliveryDate = null,
             OrderDate = DateTime.Now,
-            ShipDate = DateTime.MinValue
+            ShipDate = null
         };
         int numberOrder;
         try

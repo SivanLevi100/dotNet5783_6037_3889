@@ -37,15 +37,29 @@ internal class DalOrder:IOrder
         throw new NotFoundExceptions("The order id is not exist in List");
     }
 
+    public Order GetF(Func<Order?, bool>? filter)
+    {
+        foreach (Order order in _dstaSource1.OrderList)
+        {
+            if (filter(order))
+                return order;
+        }
+        throw new NotFoundExceptions("The order is not exist in List");
+
+    }
+
+
 
     /// <summary>
     /// Request/read method of the list of all objects of an order
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter)
-    {
-        return _dstaSource1.OrderList.ToList();
-    }
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter) =>
+        (filter == null ? _dstaSource1.OrderList?.Select(item => item)
+        : _dstaSource1.OrderList?.Where(item => filter(item))
+        ?? throw new DoesNotExistException("Missing order"))
+        ?? throw new DataCorruptionException("Missing order list");
+
 
     /// <summary>
     /// A method to delete an order object that receives an order ID number

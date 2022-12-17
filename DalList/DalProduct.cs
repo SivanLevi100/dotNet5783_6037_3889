@@ -17,13 +17,10 @@ internal class DalProduct : IProduct
     /// <exception cref="DuplicateIdExceptions"></exception>
     public int Add(Product product1)
     {
-        //return 5;
-        //DataSource.s_instance.ProductList.Add(product1);       
         if (ds.ProductList.Exists(x => x?.Id == product1.Id))
             throw new DuplicateIdExceptions("No place in List to add");
         ds.ProductList.Add(product1);
         return product1.Id;
-
     }
 
     /// <summary>
@@ -40,24 +37,31 @@ internal class DalProduct : IProduct
                 return product;
         }
         throw new NotFoundExceptions("The product id is not exist in List");
-
-        /***************************/////////
-
-        //if (DataSource.productList.Exists(x => x.Id == idProduct1))
-        //    return DataSource.productList.Find(x => x.Id == idProduct1);
-        //throw new NotFoundExceptions("the product id is not exist in List");
     }
+
+    public Product GetF(Func<Product?, bool>? filter)
+    {
+        foreach (Product product in ds.ProductList)
+        {
+            if(filter(product))
+                return product;
+        }
+        throw new NotFoundExceptions("The product is not exist in List");
+    }
+
 
     /// <summary>
     /// Request/read method of the list of all objects of a product
     /// </summary>
     /// <returns></returns>
    // public IEnumerable<DO.Product> GetList() => ds.ProductList;
+    public IEnumerable<DO.Product?> GetAll(Func<Product?, bool>? filter)=>
+        (filter == null ? ds.ProductList?.Select(item => item)
+        : ds.ProductList?.Where(item => filter(item))
+        ?? throw new DoesNotExistException("Missing product"))
+        ?? throw new DataCorruptionException("Missing product list");
 
-    public IEnumerable<DO.Product?> GetAll(Func<Product?, bool>? filter)
-    {
-        return ds.ProductList.ToList();
-    }
+
 
 
     /// <summary>
@@ -75,15 +79,6 @@ internal class DalProduct : IProduct
             }
         }
         throw new NotFoundExceptions("The product is not exist in the List");
-
-
-        //if (DataSource.productList.Exists(x => x.Id == idProduct1))
-        //{
-        //    Product productDelete = DataSource.productList.Find(x => x.Id == idProduct1);
-        //    DataSource.productList.Remove(productDelete);
-        //    return;
-        //}
-        //throw new NotFoundExceptions("The product is not exist in the List");
     }
 
     /// <summary>
@@ -100,19 +95,6 @@ internal class DalProduct : IProduct
             return;
         }
         throw new NotFoundExceptions("the product id is not exist in List");
-
-       
-
-        //for (int i = 0; i < DataSource.productList.Count(); i++)
-        //{
-        //    if (DataSource.productList.Exists(x => x.Id == product1.Id))
-        //    {
-        //        int j = DataSource.productList.IndexOf(DataSource.productList.Find(x => x.Id == product1.Id));
-        //        DataSource.productList[j] = product1;
-        //        return;
-        //    }
-        //}
-        //throw new NotFoundExceptions("the product id is not exist in array");
 
     }
 
