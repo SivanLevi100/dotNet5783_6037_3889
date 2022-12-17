@@ -20,13 +20,24 @@ internal class Product : BlApi.IProduct
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {
-        return Dal.Product.GetList().Select(product => new BO.ProductForList
+        //return Dal.Product.GetAll().Select(product => new BO.ProductForList
+        //{
+        //    IdProduct = product.Id,
+        //    Name = product.Name,
+        //    Price = product.Price,
+        //    Category = (BO.Category)product.Category
+        //});
+        var productList = Dal.Product.GetAll(item => item != null);
+        foreach (DO.Product item in productList)
         {
-            IdProduct = product.Id,
-            Name = product.Name,
-            Price = product.Price,
-            Category = (BO.Category)product.Category
-        });
+            yield return new BO.ProductForList  
+            {
+                IdProduct = item.Id,
+                Name = item.Name,
+                Price = item.Price,
+                Category = (BO.Category)item.Category
+            };
+        }
     }
 
 
@@ -116,9 +127,9 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            foreach (DO.Order order in Dal.Order.GetList())//עוברים על כל ההזמנות
+            foreach (DO.Order order in Dal.Order.GetAll())//עוברים על כל ההזמנות
             {
-                if (Dal.OrderItem.GetListOfOrderItemOfOrder(order.Id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
+                if (Dal.OrderItem.GetListOrderItems(order.Id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
                 {
                     Dal.Product.Delete(id);
                     return;

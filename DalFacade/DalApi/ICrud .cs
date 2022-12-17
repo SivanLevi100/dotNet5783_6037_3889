@@ -11,9 +11,8 @@ public interface ICrud<T> where T : struct
 {
     int Add(T entity);
     T Get(int entity);
-    T Get(Func<T?, bool>? filter);
     void Delete(int entity);
     void Update(T entity);
-    IEnumerable<T?> GetList(Func<T?, bool>? filter = null);
+    IEnumerable<T?> GetAll(Func<T?, bool>? filter = null);
 
 }

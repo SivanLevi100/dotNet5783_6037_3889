@@ -7,6 +7,46 @@ using System.Threading.Tasks;
 
 namespace DO;
 
+[Serializable]
+public class DoesNotExistException : Exception
+{
+    public DoesNotExistException()
+    {
+    }
+
+    public DoesNotExistException(string? message) : base(message)
+    {
+    }
+
+    public DoesNotExistException(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
+
+    protected DoesNotExistException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+    }
+}
+
+[Serializable]
+public class DataCorruptionException : Exception
+{
+    public DataCorruptionException()
+    {
+    }
+
+    public DataCorruptionException(string? message) : base(message)
+    {
+    }
+
+    public DataCorruptionException(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
+
+    protected DataCorruptionException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+    }
+}
+[Serializable]
 public class NotFoundExceptions: Exception
 {
     public NotFoundExceptions()

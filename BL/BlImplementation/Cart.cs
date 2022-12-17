@@ -127,7 +127,7 @@ internal class Cart: BlApi.ICart
         foreach (BO.OrderItem orderItem in cart1?.OrdersItemsList) //כל המוצרים קיימים, כמויות חיוביות, יש מספיק במלאי
         {
             DO.Product productOfDo = Dal.Product.Get(orderItem.ProductId);
-            if(Dal.Product.GetList().Contains(productOfDo) == false)//מוצר לא קיים
+            if(Dal.Product.GetAll().Contains(productOfDo) == false)//מוצר לא קיים
                 throw new BO.NotExiestsExceptions("The product does not exist");
             if (orderItem.AmountInOrder <= 0) //כמות שלילית
                 throw new BO.IncorrectDataExceptions("Invalid item quantity");

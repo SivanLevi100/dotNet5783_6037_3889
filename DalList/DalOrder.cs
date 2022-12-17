@@ -37,16 +37,12 @@ internal class DalOrder:IOrder
         throw new NotFoundExceptions("The order id is not exist in List");
     }
 
-    Order Get(Func<Order?, bool>? filter)
-    {
-        return _dstaSource1.OrderList.
-    }
 
     /// <summary>
     /// Request/read method of the list of all objects of an order
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order?> GetList(Func<Order?, bool>? filter)
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter)
     {
         return _dstaSource1.OrderList.ToList();
     }
