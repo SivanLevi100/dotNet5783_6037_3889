@@ -37,8 +37,8 @@ internal class Order : BlApi.IOrder
                 OrderId = item.Id,
                 CustomerName = item.CustomerName,
                 Status = status1,
-                AmountItems = Dal?.OrderItem.GetAll(item.Id).Sum(orderItem => orderItem?.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"),
-                TotalPrice = Dal?.OrderItem.GetAll(item.Id).Sum(orderItem => orderItem?.Price * orderItem?.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
+                AmountItems = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item.Id).Sum(orderItem => orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"),
+                TotalPrice = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item.Id).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
             };
         }
         //return orderList.Select( order => new BO.OrderForList
@@ -48,7 +48,6 @@ internal class Order : BlApi.IOrder
         //    Status = status1,
         //    AmountItems = Dal?.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"), 
         //    TotalPrice = Dal?.OrderItem.GetListOfOrderItemOfOrder(order.Id).Sum(orderItem => orderItem.Price * orderItem.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
-
         //});
     }
 
@@ -67,7 +66,7 @@ internal class Order : BlApi.IOrder
                 if (orderDO.DeliveryDate != null)//ההזמנה נמסרה
                     status1 = BO.OrderStatus.delivered;
                 double sumOfPrices = 0;
-                IEnumerable<DO.OrderItem> orderItemListDo = Dal.OrderItem.GetAll(idOrder);
+                IEnumerable<DO.OrderItem?>? orderItemListDo = Dal.OrderItem.GetAll(orderitem => orderitem.Value.OrderId == idOrder);
                 foreach (DO.OrderItem orderItem in orderItemListDo)
                 {
                     sumOfPrices += orderItem.Price * orderItem.Amount;
@@ -113,7 +112,6 @@ internal class Order : BlApi.IOrder
         //    });
         //}
 
-
         if (idOrder <= 0)
             throw new BO.IncorrectDataExceptions("Order id is incorrect");
 
@@ -151,9 +149,8 @@ internal class Order : BlApi.IOrder
                     ShipDate= orderDo.ShipDate,
                     DeliveryDate = DateTime.Now,
                     Status = BO.OrderStatus.delivered,
-                    OrdersItemsList = /*listBo*/ (List<BO.OrderItem?>?)Dal.OrderItem.GetAll(idOrder),
-                    TotalPrice= Dal.OrderItem.GetAll(idOrder).Sum(orderItem=>orderItem.Price*orderItem.Amount)
-
+                    OrdersItemsList = /*listBo*/ (List<BO.OrderItem?>?)Dal.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == idOrder),
+                    TotalPrice= Dal.OrderItem.GetAll(orderItem => orderItem.Value.OrderId== idOrder).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount)
                 };
                 return order;
             }
@@ -176,10 +173,10 @@ internal class Order : BlApi.IOrder
         bool flag = false;
         try
         {
-            IEnumerable<DO.Order> orderListDo = Dal.Order.GetAll();
+            IEnumerable<DO.Order?>? orderListDo = Dal.Order.GetAll();
             foreach (DO.Order order in orderListDo)
             {
-                if (order.Id == idOrder && order.ShipDate == DateTime.MinValue)//הזמנה קיימת (בשכבת נתונים) ועוד לא נשלחה
+                if (order.Id == idOrder && order.ShipDate == null)//הזמנה קיימת (בשכבת נתונים) ועוד לא נשלחה
                     flag = true;
             }
         }
@@ -205,9 +202,8 @@ internal class Order : BlApi.IOrder
                     ShipDate = DateTime.Now,
                     DeliveryDate = orderDo.DeliveryDate,
                     Status = BO.OrderStatus.shipped,
-                    OrdersItemsList = (List<BO.OrderItem?>)Dal.OrderItem.GetAll(idOrder),
-                    TotalPrice = Dal.OrderItem.GetAll(idOrder).Sum(orderItem => orderItem.Price * orderItem.Amount)
-
+                    OrdersItemsList = (List<BO.OrderItem?>)Dal.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == idOrder),
+                    TotalPrice = Dal.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == idOrder).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount)
                 };
                 return order;
             }
@@ -235,7 +231,7 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
-        List<Tuple<DateTime?, string>> track = new List<Tuple<DateTime, string>>();
+        List<Tuple<DateTime?, string>> track = new List<Tuple<DateTime?, string>>();
         BO.OrderStatus status1= new BO.OrderStatus();
         if (orderTracking.OrderDate != null)//ההזמנה נוצרה
         {

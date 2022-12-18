@@ -13,8 +13,6 @@ public class Program
 {
     static IDal dal = DalList.Instance;
 
-  
-   
     static void Main(string[] args)
     {
 
@@ -356,13 +354,13 @@ public class Program
                         idOrderItem1 = int.Parse(Console.ReadLine() ?? "0");
                         Console.WriteLine("please enter: Id of product");
                         idOrderItem2 = int.Parse(Console.ReadLine() ?? "0");
-                        myOrderItem = dal.OrderItem.GetF([idOrderItem1, idOrderItem2](int id1,int id2) {if(id1=idOrderItem1 && id2=idOrderItem2)}(idOrderItem1,););
+                        myOrderItem = dal.OrderItem.GetF(orderItem => orderItem.Value.ProductId==idOrderItem1 && orderItem.Value.ProductId == idOrderItem2);
                         Console.WriteLine(myOrderItem);
                         break;
                     case 'g':
                         Console.WriteLine("please enter: Id of order");
                         int id = int.Parse(Console.ReadLine() ?? "0");
-                        foreach (OrderItem item in dal.OrderItem.GetAll(id))
+                        foreach (OrderItem item in dal.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == id))
                         {
                             Console.WriteLine(item);
                         };

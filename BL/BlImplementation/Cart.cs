@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using BlApi;
+using BO;
 using Dal;
 using DalApi;
 using Microsoft.VisualBasic;
@@ -34,7 +35,7 @@ internal class Cart: BlApi.ICart
             throw new BO.NotExiestsExceptions("Product request failed", str);
 
         }
-        if (cart1.OrdersItemsList.Exists(orderItem => orderItem?.ProductId != doProduct.Id)) //אם מוצר לא קיים בסל קניות
+        if (cart1?.OrdersItemsList?.Exists(orderItem => orderItem?.ProductId != doProduct.Id)??throw new NotExiestsExceptions("The list of order items in the shopping cart is null")) //אם מוצר לא קיים בסל קניות
         {
             if (doProduct.Id == id && doProduct.InStock >= 0) //תבדוק האם המוצר קיים ויש במלאי
             {
@@ -102,7 +103,7 @@ internal class Cart: BlApi.ICart
                 orderItem.TotalPriceOfItem = doProduct.Price * newAmount;
                 cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
             }
-            if (orderItem.ProductId == id && newAmount + orderItem.AmountInOrder == 0) //אם הכמות נהייתה 0
+            if (orderItem?.ProductId == id && newAmount + orderItem.AmountInOrder == 0) //אם הכמות נהייתה 0
             {
                 cart1.TotalPrice = cart1.TotalPrice - orderItem.TotalPriceOfItem; //עדכון מחיר סל
                 cart1.OrdersItemsList.Remove(orderItem);
@@ -159,7 +160,7 @@ internal class Cart: BlApi.ICart
             {
                 //Id = 0,
                 OrderId = numberOrder,
-                ProductId = boOrderItem.ProductId,
+                ProductId = boOrderItem?.ProductId ?? throw new NotExiestsExceptions("Order item null"),
                 Price = boOrderItem.Price,
                 Amount = boOrderItem.AmountInOrder
             };

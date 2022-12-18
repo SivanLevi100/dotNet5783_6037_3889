@@ -9,6 +9,7 @@
 
 //using BlApi;
 //using BO;
+using BO;
 using Dal;
 using DalApi;
 
@@ -35,7 +36,7 @@ internal class Product : BlApi.IProduct
                 IdProduct = item.Id,
                 Name = item.Name,
                 Price = item.Price,
-                Category = (BO.Category)item.Category
+                Category = (BO.Category?)item.Category ?? throw new NotExiestsExceptions("Category is Unavailable")
             };
         }
     }
@@ -52,7 +53,7 @@ internal class Product : BlApi.IProduct
                 {
                     Id = productOfDo.Id,
                     Name = productOfDo.Name,
-                    Category = (BO.Category)productOfDo.Category,
+                    Category = (BO.Category?)productOfDo.Category ?? throw new NotExiestsExceptions("Category is Unavailable"),
                     Price = productOfDo.Price,
                     InStock = productOfDo.InStock,
                 };
@@ -79,9 +80,9 @@ internal class Product : BlApi.IProduct
                 {
                     IdProduct = productOfDO.Id,
                     Name = productOfDO.Name,
-                    Category = (BO.Category)productOfDO.Category,
+                    Category = (BO.Category?)productOfDO.Category ?? throw new NotExiestsExceptions("Category is Unavailable"),
                     IsAvailable = (productOfDO.InStock > 0) ? true : false,
-                    AmountInCart = cart.OrdersItemsList.FindAll(orderItem => orderItem?.ProductId == id).Count(), 
+                    AmountInCart = cart?.OrdersItemsList?.FindAll(orderItem => orderItem?.ProductId == id).Count()?? throw new NotExiestsExceptions("The list of order items in the shopping cart is null"), 
                     Price = productOfDO.Price
                 };
                 return productItem;
@@ -109,7 +110,7 @@ internal class Product : BlApi.IProduct
                     Name = product1.Name,
                     Price = product1.Price,
                     InStock = product1.InStock,
-                    Category = (DO.Category)product1.Category,
+                    Category = (DO.Category?)product1.Category ?? throw new NotExiestsExceptions("Category is Unavailable"),
                 };
                 Dal.Product.Add(productOfDO);
             }
@@ -122,14 +123,13 @@ internal class Product : BlApi.IProduct
             throw new BO.IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
     }
 
-    //////////
     public void Delete(int id)
     {
         try
         {
             foreach (DO.Order order in Dal.Order.GetAll())//עוברים על כל ההזמנות
             {
-                if (Dal.OrderItem.GetAll(order.Id).Any(orderItem => orderItem.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
+                if (Dal.OrderItem.GetAll(OrderItem => OrderItem.Value.OrderId == order.Id).Any(orderItem => orderItem.Value.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
                 {
                     Dal.Product.Delete(id);
                     return;
@@ -158,7 +158,7 @@ internal class Product : BlApi.IProduct
                     Name = product1.Name,
                     Price = product1.Price,
                     InStock = product1.InStock,
-                    Category = (DO.Category)product1?.Category,
+                    Category = (DO.Category?)product1?.Category ?? throw new NotExiestsExceptions("Category is Unavailable"),
                 };
                 Dal.Product.Update(productOfDO);
 

@@ -43,7 +43,7 @@ internal class DalOrderItem : IOrderItem
 
     public OrderItem GetF(Func<OrderItem?, bool>? filter)
     {
-        foreach (OrderItem orderItem in _dstaSource.OrderList)
+        foreach (OrderItem orderItem in _dstaSource.OrderItemList)
         {
             if (filter(orderItem))
                 return orderItem;
