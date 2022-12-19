@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
-        
+        <Label Content="Id:" HorizontalAlignment="Left" Margin="94,53,0,0" VerticalAlignment="Top" Width="55"/>
+        <Label Content="Category:" HorizontalAlignment="Left" Margin="94,84,0,0" VerticalAlignment="Top"/>
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="94,115,0,0" VerticalAlignment="Top"/>
+        <Label Content="Price:" HorizontalAlignment="Left" Margin="94,146,0,0" VerticalAlignment="Top"/>
+        <Label Content="In Stock:" HorizontalAlignment="Left" Margin="94,177,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtId" MaxLength="9" HorizontalAlignment="Left" Margin="204,57,0,0" TextWrapping="Wrap" Text="12345" VerticalAlignment="Top" Width="120" Height="17" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
+        <ComboBox x:Name="ComboBoxCategory"  HorizontalAlignment="Left" Margin="204,94,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="204,128,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="204,154,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
+        <TextBox x:Name="txtInStock" HorizontalAlignment="Left" Margin="204,181,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="165,231,0,0" VerticalAlignment="Top" Height="19" Width="38" Click="AddButton_Click"/>
+        <Button Content="Update" Margin="165,231,0,0" VerticalAlignment="Top" Height="19" Width="38" Click="UpdateButton_Click"/>
+
+
     </Grid>
 </Window>
