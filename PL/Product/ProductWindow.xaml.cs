@@ -118,7 +118,7 @@ public partial class ProductWindow : Window
         Close();
     }
 
-    
+
     private void TextBox_OnlyNumbers_PreviewKeyDown(object sender, KeyEventArgs e)//הכנסת רק מספרים לתיבת הטקסט
     {
         TextBox text = sender as TextBox;
@@ -143,5 +143,7 @@ public partial class ProductWindow : Window
         e.Handled = true; //ignore this key. mark event as handled, will not be routed to other
         return;
     }
+
+    /*****/
 
 }
