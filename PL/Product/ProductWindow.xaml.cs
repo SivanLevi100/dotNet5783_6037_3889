@@ -4,6 +4,7 @@ using BO;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,56 +25,100 @@ namespace PL.Product;
 public partial class ProductWindow : Window
 {
     private IBl bl = new Bl();
-    public ProductWindow(int id = 0)
+    public ProductWindow(bool addButton,bool updateButton ,int id = 0)
     {
+        InitializeComponent();
 
         try
         {
             BO.Product product = id == 0 ? new() { Category = BO.Category.Unavailable } : bl.Product.GetProductDetailsManager(id);
-            InitializeComponent();
+            //txtId.Text = product.Id;
+            //txtName.Text=product.Name;
+            //txtPrice.Text = product.Price;
+            //txtInStock.Text= product.InStock;
+            //ComboBoxCategory.SelectedItem = (BO.Category)product.Category;
+            
+            //InitializeComponent();
         }
         catch (IncorrectDataExceptions str)
         {
-            Close();
             MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            Close();
         }
         ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
-        //InitializeComponent();
+
+        if (addButton == false)
+        {
+            AddButton.Visibility = Visibility.Hidden;
+        }
+        else
+        {
+            AddButton.Visibility = Visibility.Visible;
+        }
+
+        if (updateButton == false)
+        {
+            UpdateButton.Visibility = Visibility.Hidden;
+        }
+        else
+        {
+            UpdateButton.Visibility = Visibility.Visible;
+            txtId.IsEnabled = false;//txtId לא ניתן לשנות אותו
+        }
 
     }
 
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
-        //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-
-        BO.Product product = new();
+        BO.Product? product = new BO.Product();
         product.Id = int.Parse(txtId.Text);
         product.Name = txtName.Text;
         product.Price = double.Parse(txtPrice.Text);
         product.InStock = int.Parse(txtInStock.Text);
         product.Category = (BO.Category)ComboBoxCategory.SelectedItem;
         
-
         try
         {
-            bl.Product.Add((BO.Product)sender);
-
+            bl.Product.Add(product);
         }
-        catch(BO.IncorrectDataExceptions str)
+        catch (BO.IncorrectDataExceptions str)
         {
-            //Close();
-            //MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
+            MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            Close();
         }
+        MessageBox.Show("The Product added");
+        Close();
     }
 
     private void UpdateButton_Click(object sender, RoutedEventArgs e)
     {
-        bl.Product.Update((BO.Product)sender);
+        if((BO.Category?)ComboBoxCategory.SelectedItem == BO.Category.Unavailable)
+        {
+            MessageBox.Show("Not all fields are filled");
+        }
+        BO.Product? product = new BO.Product();
+        product.Id = int.Parse(txtId.Text);
+        product.Name = txtName.Text;
+        product.Price = double.Parse(txtPrice.Text);
+        product.InStock = int.Parse(txtInStock.Text);
+        product.Category = (BO.Category)ComboBoxCategory.SelectedItem;
+
+        try
+        {
+            bl.Product.Update(product);
+        }
+        catch(BO.IncorrectDataExceptions str) 
+        {
+            MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            Close();
+            return;
+        }
+        MessageBox.Show("The Product updated");
+        Close();
     }
 
-
+    
     private void TextBox_OnlyNumbers_PreviewKeyDown(object sender, KeyEventArgs e)//הכנסת רק מספרים לתיבת הטקסט
     {
         TextBox text = sender as TextBox;

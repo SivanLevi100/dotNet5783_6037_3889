@@ -27,7 +27,8 @@
         <ListView x:Name="ProductListview" MouseDoubleClick="ListView_DoubleClick" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="Auto" Header="ID">
+                    <GridViewColumn>
+                        <!--Width="Auto" Header="ID">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Margin="29,-1" Text="{Binding ID}" TextAlignment="Right" Padding="2"/>
@@ -53,7 +54,7 @@
                             <DataTemplate>
                                 <TextBox Margin="29,-1" Text="{Binding Price}" HorizontalContentAlignment="Center" Padding="2"/>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>
+                        </GridViewColumn.CellTemplate>-->
                     </GridViewColumn>
                 </GridView>
             </ListView.View>

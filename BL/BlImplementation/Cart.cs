@@ -35,7 +35,7 @@ internal class Cart: BlApi.ICart
             throw new BO.NotExiestsExceptions("Product request failed", str);
 
         }
-        if (cart1?.OrdersItemsList?.Exists(orderItem => orderItem?.ProductId != doProduct.Id)??throw new NotExiestsExceptions("The list of order items in the shopping cart is null")) //אם מוצר לא קיים בסל קניות
+        if (cart1.OrdersItemsList.Exists(orderItem => orderItem?.ProductId != doProduct.Id))//??throw new NotExiestsExceptions("The list of order items in the shopping cart is null")) //אם מוצר לא קיים בסל קניות
         {
             if (doProduct.Id == id && doProduct.InStock >= 0) //תבדוק האם המוצר קיים ויש במלאי
             {

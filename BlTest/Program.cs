@@ -48,6 +48,8 @@ class Program  /*internal*/
         BO.ProductItem myProductItem;
         BO.Cart myCart = new BO.Cart()
         {
+            TotalPrice = 0,
+            OrdersItemsList = null,
             CustomerName = "David",
             CustomerAdress = "Jerusalem",
             CustomerEmail = "david@gmail.com"

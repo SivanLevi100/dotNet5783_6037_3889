@@ -32,22 +32,27 @@ public partial class ProductListWindow : Window
 
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var listProducts = (BO.Category?)ProductListview.SelectedItem == BO.Category.Unavailable ? bl.Product.GetProductList()
-        : bl.Product.GetProductList().Where(product => product?.Category == (BO.Category?)ProductListview.SelectedItem);
+        //BO.Category category = (BO.Category)CatgegorySelector.SelectedItem;
+
+        var listProducts = (BO.Category?)CatgegorySelector.SelectedItem == BO.Category.Unavailable ? bl.Product.GetProductList()
+         : bl.Product.GetProductList().Where(product => product?.Category == (BO.Category?)CatgegorySelector.SelectedItem);
         ProductListview.ItemsSource = listProducts;
 
+
+        //var listProducts = (BO.Category?)ProductListview.SelectedItem == BO.Category.Unavailable ? bl.Product.GetProductList()
+        // : bl.Product.GetProductList().Where(product => product?.Category == (BO.Category?)ProductListview.SelectedItem);
+        //ProductListview.ItemsSource = listProducts;
     }
 
-    private void ButtonAddNewProduct_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
+    private void ButtonAddNewProduct_Click(object sender, RoutedEventArgs e) => new ProductWindow(true,false).Show();
 
     private void ListView_DoubleClick(object sender, MouseButtonEventArgs e)
     {
-        int id = ((ProductForList?)(sender as ListViewItem)?.DataContext)?.IdProduct
-           ?? throw new NullReferenceException("null event sender");
-        new ProductWindow(id).Show();
-
-
-        //new ProductWindow().Show();
+        //int id = ((ProductForList?)(sender as ListViewItem)?.DataContext)?.IdProduct
+        //   ?? throw new NullReferenceException("null event sender");
+        //new ProductWindow(id).Show();
+        
+        new ProductWindow(false,true).Show();
     }
 
 }
