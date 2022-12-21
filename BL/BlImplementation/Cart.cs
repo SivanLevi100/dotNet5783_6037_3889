@@ -84,7 +84,7 @@ internal class Cart: BlApi.ICart
 
         }
         //DO.Product product = Dal.Product.Get(id);
-        foreach (BO.OrderItem orderItem in cart1?.OrdersItemsList)
+        foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
         {
             if (orderItem?.ProductId == id && newAmount > orderItem.AmountInOrder) //אם הכמות גדלה
             {

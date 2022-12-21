@@ -66,7 +66,7 @@ internal class Order : BlApi.IOrder
                 if (orderDO.DeliveryDate != null)//ההזמנה נמסרה
                     status1 = BO.OrderStatus.delivered;
                 double sumOfPrices = 0;
-                IEnumerable<DO.OrderItem?>? orderItemListDo = Dal.OrderItem.GetAll(orderitem => orderitem.Value.OrderId == idOrder);
+                IEnumerable<DO.OrderItem?>? orderItemListDo = Dal.OrderItem.GetAll(orderitem => orderitem?/*Value*/.OrderId == idOrder);
                 foreach (DO.OrderItem orderItem in orderItemListDo)
                 {
                     sumOfPrices += orderItem.Price * orderItem.Amount;
