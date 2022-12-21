@@ -41,11 +41,10 @@ public partial class ProductListWindow : Window
 
     private void ListView_DoubleClick(object sender, MouseButtonEventArgs e)
     {
+        new ProductWindow(false, true).Show();
         //int id = ((ProductForList?)(sender as ListViewItem)?.DataContext)?.IdProduct
         //   ?? throw new NullReferenceException("null event sender");
         //new ProductWindow(id).Show();
-        
-        new ProductWindow(false,true).Show();
     }
 
 }
