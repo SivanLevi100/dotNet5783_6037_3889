@@ -25,6 +25,8 @@ namespace PL.Product;
 public partial class ProductWindow : Window
 {
     private IBl bl = new Bl();
+
+
     public ProductWindow(bool addButton,bool updateButton ,int id = 0)
     {
         InitializeComponent();
