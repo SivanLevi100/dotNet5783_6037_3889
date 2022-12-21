@@ -26,12 +26,36 @@ public partial class ProductWindow : Window
 {
     private IBl bl = new Bl();
 
+    //בנאי למצב הוספה
+    public ProductWindow(bool addButton, bool updateButton)
+    {
+        InitializeComponent();
+        ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        if (addButton == false)
+        {
+            AddButton.Visibility = Visibility.Hidden;
+        }
+        else
+        {
+            AddButton.Visibility = Visibility.Visible;
+        }
 
+        if (updateButton == false)
+        {
+            UpdateButton.Visibility = Visibility.Hidden;
+        }
+        else
+        {
+            UpdateButton.Visibility = Visibility.Visible;
+            txtId.IsEnabled = false;//txtId לא ניתן לשנות אותו
+        }
+    }
+    //בנאי למצב עדכון
     public ProductWindow(bool addButton,bool updateButton ,int id = 0)
     {
         InitializeComponent();
 
-        ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
         if (addButton == false)
         {
