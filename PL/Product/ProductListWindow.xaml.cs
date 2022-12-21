@@ -32,16 +32,9 @@ public partial class ProductListWindow : Window
 
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        //BO.Category category = (BO.Category)CatgegorySelector.SelectedItem;
-
         var listProducts = (BO.Category?)CatgegorySelector.SelectedItem == BO.Category.Unavailable ? bl.Product.GetProductList()
          : bl.Product.GetProductList().Where(product => product?.Category == (BO.Category?)CatgegorySelector.SelectedItem);
         ProductListview.ItemsSource = listProducts;
-
-
-        //var listProducts = (BO.Category?)ProductListview.SelectedItem == BO.Category.Unavailable ? bl.Product.GetProductList()
-        // : bl.Product.GetProductList().Where(product => product?.Category == (BO.Category?)ProductListview.SelectedItem);
-        //ProductListview.ItemsSource = listProducts;
     }
 
     private void ButtonAddNewProduct_Click(object sender, RoutedEventArgs e) => new ProductWindow(true,false).Show();

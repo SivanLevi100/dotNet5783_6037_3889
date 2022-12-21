@@ -29,24 +29,7 @@ public partial class ProductWindow : Window
     {
         InitializeComponent();
 
-        try
-        {
-            BO.Product product = id == 0 ? new() { Category = BO.Category.Unavailable } : bl.Product.GetProductDetailsManager(id);
-            //txtId.Text = product.Id;
-            //txtName.Text=product.Name;
-            //txtPrice.Text = product.Price;
-            //txtInStock.Text= product.InStock;
-            //ComboBoxCategory.SelectedItem = (BO.Category)product.Category;
-            
-            //InitializeComponent();
-        }
-        catch (IncorrectDataExceptions str)
-        {
-            MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            Close();
-        }
         ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-
 
         if (addButton == false)
         {
@@ -65,6 +48,20 @@ public partial class ProductWindow : Window
         {
             UpdateButton.Visibility = Visibility.Visible;
             txtId.IsEnabled = false;//txtId לא ניתן לשנות אותו
+            try
+            {
+                BO.Product product = id == 0 ? new() { Category = BO.Category.Unavailable } : bl.Product.GetProductDetailsManager(id);
+                //txtId.Text =product.Id;
+                //txtName.Text=product.Name;
+                //txtPrice.Text = product.Price;
+                //txtInStock.Text= product.InStock;
+                //ComboBoxCategory.SelectedItem = (BO.Category)product.Category;
+            }
+            catch (IncorrectDataExceptions str)
+            {
+                MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                Close();
+            }
         }
 
     }
