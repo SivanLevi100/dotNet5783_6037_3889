@@ -26,62 +26,51 @@ public partial class ProductWindow : Window
 {
     private IBl bl = new Bl();
 
-    //בנאי למצב הוספה
+    //Builder for the add product window
     public ProductWindow(bool addButton, bool updateButton)
     {
         InitializeComponent();
         ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
         if (addButton == false)
-        {
             AddButton.Visibility = Visibility.Hidden;
-        }
         else
-        {
             AddButton.Visibility = Visibility.Visible;
-        }
 
         if (updateButton == false)
-        {
             UpdateButton.Visibility = Visibility.Hidden;
-        }
         else
         {
             UpdateButton.Visibility = Visibility.Visible;
-            txtId.IsEnabled = false;//txtId לא ניתן לשנות אותו
+            txtId.IsEnabled = false;//This field cannot be changed
         }
     }
-    //בנאי למצב עדכון
+
+    //Constructor for the product update window
     public ProductWindow(bool addButton,bool updateButton ,int id = 0)
     {
         InitializeComponent();
 
-        //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
         if (addButton == false)
-        {
             AddButton.Visibility = Visibility.Hidden;
-        }
         else
-        {
             AddButton.Visibility = Visibility.Visible;
-        }
 
         if (updateButton == false)
-        {
             UpdateButton.Visibility = Visibility.Hidden;
-        }
         else
         {
             UpdateButton.Visibility = Visibility.Visible;
-            txtId.IsEnabled = false;//txtId לא ניתן לשנות אותו
+            txtId.IsEnabled = false;//This field cannot be changed
             try
             {
                 BO.Product product = id == 0 ? new() { Category = BO.Category.Unavailable } : bl.Product.GetProductDetailsManager(id);
-                //txtId.Text =product.Id;
-                //txtName.Text=product.Name;
-                //txtPrice.Text = product.Price;
-                //txtInStock.Text= product.InStock;
-                //ComboBoxCategory.SelectedItem = (BO.Category)product.Category;
+                txtId.Text = product.Id.ToString();
+                txtName.Text = product.Name;
+                txtPrice.Text = product.Price.ToString();
+                txtInStock.Text= product.InStock.ToString();
+                ComboBoxCategory.SelectedItem = (BO.Category?)product.Category;
             }
             catch (IncorrectDataExceptions str)
             {
@@ -92,6 +81,7 @@ public partial class ProductWindow : Window
 
     }
 
+    //A function that implements an Add button click event
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
         BO.Product? product = new BO.Product();
@@ -112,8 +102,11 @@ public partial class ProductWindow : Window
         }
         MessageBox.Show("The Product added");
         Close();
+        new ProductListWindow().Show();
+
     }
 
+    //A function that implements an Update button click event
     private void UpdateButton_Click(object sender, RoutedEventArgs e)
     {
         if((BO.Category?)ComboBoxCategory.SelectedItem == BO.Category.Unavailable)
@@ -139,9 +132,11 @@ public partial class ProductWindow : Window
         }
         MessageBox.Show("The Product updated");
         Close();
+        new ProductListWindow().Show();
+
     }
 
-
+    //Function to check input only numbers
     private void TextBox_OnlyNumbers_PreviewKeyDown(object sender, KeyEventArgs e)//הכנסת רק מספרים לתיבת הטקסט
     {
         TextBox text = sender as TextBox;
@@ -167,6 +162,5 @@ public partial class ProductWindow : Window
         return;
     }
 
-    /*****/
 
 }

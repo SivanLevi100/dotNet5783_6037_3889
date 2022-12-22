@@ -23,6 +23,8 @@ namespace PL.Product;
 public partial class ProductListWindow : Window
 {
     private IBl bl = new Bl();
+
+    //constructor
     public ProductListWindow()
     {
         InitializeComponent();
@@ -30,6 +32,7 @@ public partial class ProductListWindow : Window
         CatgegorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
 
+    //A function that implements filtering a list of products by category
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var listProducts = (BO.Category?)CatgegorySelector.SelectedItem == BO.Category.Unavailable ? bl.Product.GetProductList()
@@ -37,14 +40,21 @@ public partial class ProductListWindow : Window
         ProductListview.ItemsSource = listProducts;
     }
 
-    private void ButtonAddNewProduct_Click(object sender, RoutedEventArgs e) => new ProductWindow(true,false).Show();
+    //A function that implements a click on the "Add New Product" button
+    private void ButtonAddNewProduct_Click(object sender, RoutedEventArgs e)
+    {
+        new ProductWindow(true, false).Show();
+        Close();
+    }
 
+    //A function that implements a double click on an item in a product list
     private void ListView_DoubleClick(object sender, MouseButtonEventArgs e)
     {
-        new ProductWindow(false, true,0/*e.id*/).Show();
-        //int id = ((ProductForList?)(sender as ListViewItem)?.DataContext)?.IdProduct
-        //   ?? throw new NullReferenceException("null event sender");
-        //new ProductWindow(id).Show();
+        ListBox listBox= sender as ListBox;
+        BO.ProductForList product = new BO.ProductForList();
+        product = listBox.SelectedItem as BO.ProductForList;
+        new ProductWindow(false, true,product.IdProduct).Show();
+        Close();
     }
 
 }
