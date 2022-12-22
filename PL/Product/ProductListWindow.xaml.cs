@@ -43,7 +43,7 @@ public partial class ProductListWindow : Window
     //A function that implements a click on the "Add New Product" button
     private void ButtonAddNewProduct_Click(object sender, RoutedEventArgs e)
     {
-        new ProductWindow(true, false).Show();
+        new ProductWindow().Show();
         Close();
     }
 
@@ -53,7 +53,7 @@ public partial class ProductListWindow : Window
         ListBox listBox= sender as ListBox;
         BO.ProductForList product = new BO.ProductForList();
         product = listBox.SelectedItem as BO.ProductForList;
-        new ProductWindow(false, true,product.IdProduct).Show();
+        new ProductWindow(product.IdProduct).Show();
         Close();
     }
 

@@ -24,10 +24,14 @@ namespace PL;
 public partial class MainWindow : Window
 {
     private IBl bl = new Bl();
+
+    //constructor
     public MainWindow()
     {
         InitializeComponent();
     }
+
+    //Pressing the enter button - opening a product list window
     private void ShowProductButton_Click(object sender, RoutedEventArgs e) => new ProductListWindow().Show();
 
 

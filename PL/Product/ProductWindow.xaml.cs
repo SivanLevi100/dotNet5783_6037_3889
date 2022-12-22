@@ -1,11 +1,14 @@
 ﻿using BlApi;
 using BlImplementation;
 using BO;
+using DO;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,56 +30,36 @@ public partial class ProductWindow : Window
     private IBl bl = new Bl();
 
     //Builder for the add product window
-    public ProductWindow(bool addButton, bool updateButton)
+    public ProductWindow()
     {
         InitializeComponent();
         ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        if (addButton == false)
-            AddButton.Visibility = Visibility.Hidden;
-        else
-            AddButton.Visibility = Visibility.Visible;
+        AddButton.Visibility = Visibility.Visible;
+        UpdateButton.Visibility = Visibility.Hidden;
 
-        if (updateButton == false)
-            UpdateButton.Visibility = Visibility.Hidden;
-        else
-        {
-            UpdateButton.Visibility = Visibility.Visible;
-            txtId.IsEnabled = false;//This field cannot be changed
-        }
     }
 
     //Constructor for the product update window
-    public ProductWindow(bool addButton,bool updateButton ,int id = 0)
+    public ProductWindow(int id = 0)
     {
         InitializeComponent();
-
         ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-
-        if (addButton == false)
-            AddButton.Visibility = Visibility.Hidden;
-        else
-            AddButton.Visibility = Visibility.Visible;
-
-        if (updateButton == false)
-            UpdateButton.Visibility = Visibility.Hidden;
-        else
+        AddButton.Visibility = Visibility.Hidden;
+        UpdateButton.Visibility = Visibility.Visible;
+        txtId.IsEnabled = false;//This field cannot be changed
+        try
         {
-            UpdateButton.Visibility = Visibility.Visible;
-            txtId.IsEnabled = false;//This field cannot be changed
-            try
-            {
-                BO.Product product = id == 0 ? new() { Category = BO.Category.Unavailable } : bl.Product.GetProductDetailsManager(id);
-                txtId.Text = product.Id.ToString();
-                txtName.Text = product.Name;
-                txtPrice.Text = product.Price.ToString();
-                txtInStock.Text= product.InStock.ToString();
-                ComboBoxCategory.SelectedItem = (BO.Category?)product.Category;
-            }
-            catch (IncorrectDataExceptions str)
-            {
-                MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                Close();
-            }
+            BO.Product product = id == 0 ? new() { Category = BO.Category.Unavailable } : bl.Product.GetProductDetailsManager(id);
+            txtId.Text = product.Id.ToString();
+            txtName.Text = product.Name;
+            txtPrice.Text = product.Price.ToString();
+            txtInStock.Text = product.InStock.ToString();
+            ComboBoxCategory.SelectedItem = (BO.Category?)product.Category;
+        }
+        catch (IncorrectDataExceptions str)
+        {
+            MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            Close();
         }
 
     }
@@ -84,13 +67,17 @@ public partial class ProductWindow : Window
     //A function that implements an Add button click event
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
+        while(string.IsNullOrEmpty(txtId.Text)||string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtPrice.Text) || string.IsNullOrEmpty(txtInStock.Text) || ComboBoxCategory.SelectedItem == null || txtPrice.Text == "0" || txtInStock.Text == "0" || txtId.Text=="000000000" || txtName.Text== "Name")
+        {
+            MessageBox.Show("Not all fields are filled");
+            return;
+        }
         BO.Product? product = new BO.Product();
         product.Id = int.Parse(txtId.Text);
         product.Name = txtName.Text;
         product.Price = double.Parse(txtPrice.Text);
         product.InStock = int.Parse(txtInStock.Text);
         product.Category = (BO.Category)ComboBoxCategory.SelectedItem;
-        
         try
         {
             bl.Product.Add(product);
@@ -99,6 +86,8 @@ public partial class ProductWindow : Window
         {
             MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             Close();
+            //new ProductListWindow().Show();
+            //return;
         }
         MessageBox.Show("The Product added");
         Close();
