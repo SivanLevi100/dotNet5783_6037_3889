@@ -254,6 +254,7 @@ class Program  /*internal*/
                         id = int.Parse(Console.ReadLine() ?? "0");
                         myCart = bl.Cart.AddProduct(myCart, id);
                         Console.WriteLine(myCart);
+                        Console.WriteLine("The product has been added to the shopping cart\n");
                         break;
                     case 'b':
                         Console.WriteLine("please enter: id");
@@ -262,10 +263,11 @@ class Program  /*internal*/
                         amount = int.Parse(Console.ReadLine() ?? "0");
                         myCart = bl.Cart.UpdateAmountOfProduct(myCart, id, amount);
                         Console.WriteLine(myCart);//מדפיס סל מעודכן
+                        Console.WriteLine("The product amount has been updated in the shopping cart\n");
                         break;
                     case 'c':
                         bl.Cart.Confirm(myCart);
-                        Console.WriteLine("The cart is confirmed");//מדפיס סל מעודכן
+                        Console.WriteLine("The cart is confirmed\n");//מדפיס סל מעודכן
                         break;
                     default:
                         ch = 'x';

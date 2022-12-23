@@ -22,6 +22,9 @@ internal class Cart: BlApi.ICart
     {
         if (id <= 0) 
             throw new BO.IncorrectDataExceptions("Product Id is not positive number");
+        if (cart1.OrdersItemsList == null)
+            cart1.OrdersItemsList = new();
+  
         if (cart1 == null) 
             throw new BO.NotExiestsExceptions("Missing cart object");
 
@@ -49,7 +52,8 @@ internal class Cart: BlApi.ICart
                     TotalPriceOfItem = doProduct.Price
 
                 };
-                cart1.OrdersItemsList.Append(newOrderItem); //מוסיף ערך לסוף הרצף
+                cart1.OrdersItemsList.Add(newOrderItem);
+                //cart1.OrdersItemsList.Append(newOrderItem); //מוסיף ערך לסוף הרצף
                 cart1.TotalPrice = cart1.TotalPrice + newOrderItem.TotalPriceOfItem;
             }
             else
@@ -124,6 +128,9 @@ internal class Cart: BlApi.ICart
 
         //if (cart1.OrdersItemsList.Any(orderItem => orderItem.ProductId != Dal.Product.Get(orderItem.ProductId).Id))//מוצר לא קיים
         //    throw new BO.NotExiestsExceptions("The product does not exist");
+       
+        if (cart1.OrdersItemsList == null)
+            throw new BO.NotExiestsExceptions("The shopping cart is empty");
 
         foreach (BO.OrderItem orderItem in cart1?.OrdersItemsList) //כל המוצרים קיימים, כמויות חיוביות, יש מספיק במלאי
         {
