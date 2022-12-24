@@ -7,8 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using BlApi;
-using BO;
-using Dal;
 using DalApi;
 using Microsoft.VisualBasic;
 
@@ -16,7 +14,7 @@ namespace BlImplementation;
 
 internal class Cart: BlApi.ICart
 {
-    private IDal Dal = DalList.Instance;    
+    private DalApi.IDal? Dal = DalApi.Factory.Get();
 
     public BO.Cart AddProduct(BO.Cart cart1, int id)
     {
@@ -31,7 +29,7 @@ internal class Cart: BlApi.ICart
         DO.Product doProduct;
         try    //נבדוק האם המוצר קיים
         {
-            doProduct = Dal.Product.Get(id);
+            doProduct = Dal.Product.Get(id); //Dal?
         }
         catch (DO.NotFoundExceptions str)
         {
@@ -80,7 +78,7 @@ internal class Cart: BlApi.ICart
         DO.Product doProduct;
         try    //נבדוק האם המוצר קיים
         {
-            doProduct = Dal.Product.Get(id);
+            doProduct = Dal.Product.Get(id); //Dal?
         }
         catch (DO.NotFoundExceptions str)
         {
@@ -134,8 +132,8 @@ internal class Cart: BlApi.ICart
 
         foreach (BO.OrderItem orderItem in cart1?.OrdersItemsList) //כל המוצרים קיימים, כמויות חיוביות, יש מספיק במלאי
         {
-            DO.Product productOfDo = Dal.Product.Get(orderItem.ProductId);
-            if(Dal.Product.GetAll().Contains(productOfDo) == false)//מוצר לא קיים
+            DO.Product productOfDo = Dal.Product.Get(orderItem.ProductId);  //Dal?
+            if (Dal?.Product.GetAll().Contains(productOfDo) == false)//מוצר לא קיים
                 throw new BO.NotExiestsExceptions("The product does not exist");
             if (orderItem.AmountInOrder <= 0) //כמות שלילית
                 throw new BO.IncorrectDataExceptions("Invalid item quantity");
@@ -167,13 +165,13 @@ internal class Cart: BlApi.ICart
             {
                 //Id = 0,
                 OrderId = numberOrder,
-                ProductId = boOrderItem?.ProductId ?? throw new NotExiestsExceptions("Order item null"),
+                ProductId = boOrderItem?.ProductId ?? throw new BO.NotExiestsExceptions("Order item null"),
                 Price = boOrderItem.Price,
                 Amount = boOrderItem.AmountInOrder
             };
             try
             {
-                Dal.OrderItem.Add(doOrderItem);
+                Dal?.OrderItem.Add(doOrderItem);
             }
             catch (DO.DuplicateIdExceptions str)
             {
@@ -186,7 +184,7 @@ internal class Cart: BlApi.ICart
             {
                 DO.Product product = Dal.Product.Get(boOrderItem.ProductId); //בקשת מוצר משכבת הנתונים
                 product.InStock= product.InStock - boOrderItem.AmountInOrder; //עדכון המלאי
-                Dal.Product.Update(product); //עדכון מוצר 
+                Dal?.Product.Update(product); //עדכון מוצר 
             }
             catch (DO.DuplicateIdExceptions str)
             {

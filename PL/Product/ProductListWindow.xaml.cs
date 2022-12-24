@@ -1,6 +1,4 @@
-﻿using BlApi;
-using BlImplementation;
-using BO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,21 +20,21 @@ namespace PL.Product;
 /// </summary>
 public partial class ProductListWindow : Window
 {
-    private IBl bl = new Bl();
+    private  BlApi.IBl? bl = BlApi.Factory.Get();
 
     //constructor
     public ProductListWindow()
     {
         InitializeComponent();
-        ProductListview.ItemsSource = bl.Product.GetProductList();
+        ProductListview.ItemsSource = bl?.Product.GetProductList();
         CatgegorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
 
     //A function that implements filtering a list of products by category
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var listProducts = (BO.Category?)CatgegorySelector.SelectedItem == BO.Category.Unavailable ? bl.Product.GetProductList()
-         : bl.Product.GetProductList().Where(product => product?.Category == (BO.Category?)CatgegorySelector.SelectedItem);
+        var listProducts = (BO.Category?)CatgegorySelector.SelectedItem == BO.Category.Unavailable ? bl?.Product.GetProductList()
+         : bl?.Product.GetProductList().Where(product => product?.Category == (BO.Category?)CatgegorySelector.SelectedItem);
         ProductListview.ItemsSource = listProducts;
     }
 

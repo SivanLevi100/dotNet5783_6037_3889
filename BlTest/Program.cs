@@ -8,7 +8,7 @@ namespace BlTest;
 
 class Program  /*internal*/
 {
-    static IBl bl = new Bl();
+    static BlApi.IBl? bl = BlApi.Factory.Get();
     static void Main(string[] args)
     {
         int choose;
@@ -110,7 +110,7 @@ class Program  /*internal*/
                             Category = category,
                             InStock = instock
                         };
-                        bl.Product.Add(myProduct);
+                        bl?.Product.Add(myProduct);
                         Console.WriteLine($@"id number of the added product {id}");
                         break;
                     case 'e':
@@ -139,12 +139,12 @@ class Program  /*internal*/
                             Category = category1,
                             InStock = instock1
                         };
-                        bl.Product.Update(myProduct);
+                        bl?.Product.Update(myProduct);
                         break;
                     case 'f':
                         Console.WriteLine("please enter: Id of product");
                         Int32.TryParse(Console.ReadLine(), out id);
-                        bl.Product.Delete(id);
+                        bl?.Product.Delete(id);
                         break;
                     default:
                         ch = 'x';
@@ -266,7 +266,7 @@ class Program  /*internal*/
                         Console.WriteLine("The product amount has been updated in the shopping cart\n");
                         break;
                     case 'c':
-                        bl.Cart.Confirm(myCart);
+                        bl?.Cart.Confirm(myCart);
                         Console.WriteLine("The cart is confirmed\n");//מדפיס סל מעודכן
                         break;
                     default:

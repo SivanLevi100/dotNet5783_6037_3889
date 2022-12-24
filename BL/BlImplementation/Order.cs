@@ -7,19 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BlApi;
-using Dal;
 using DalApi;
 
 namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
 {
-    private IDal Dal = DalList.Instance;
+    private DalApi.IDal? Dal = DalApi.Factory.Get();
 
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
         BO.OrderStatus status1 = new BO.OrderStatus();
-        foreach (DO.Order order in Dal.Order.GetAll())
+        foreach (DO.Order order in Dal.Order.GetAll()) //Dal?
         {
             if (order.OrderDate != null)//ההזמנה נוצרה
                 status1 = BO.OrderStatus.Confirmed;
@@ -29,7 +28,7 @@ internal class Order : BlApi.IOrder
                 status1 = BO.OrderStatus.delivered;
 
         }
-        var orderList = Dal.Order.GetAll( item => item != null);
+        var orderList = Dal?.Order.GetAll( item => item != null);
         foreach (DO.Order item in orderList)
         {
             yield return new BO.OrderForList
@@ -58,7 +57,7 @@ internal class Order : BlApi.IOrder
             if (idOrder > 0)
             {
                 BO.OrderStatus status1 = new BO.OrderStatus();
-                DO.Order orderDO = Dal.Order.Get(idOrder);
+                DO.Order orderDO = Dal.Order.Get(idOrder);  //Dal?
                 if (orderDO.OrderDate != null && orderDO.ShipDate == null && orderDO.DeliveryDate == null)//ההזמנה נוצרה
                     status1 = BO.OrderStatus.Confirmed;
                 if (orderDO.OrderDate != null&& orderDO.ShipDate != null && orderDO.DeliveryDate == null)//ההזמנה נשלחה
@@ -104,7 +103,7 @@ internal class Order : BlApi.IOrder
             throw new BO.IncorrectDataExceptions("Order id is incorrect");
         try
         {
-            orderDO=Dal.Order.Get(idOrder);
+            orderDO=Dal.Order.Get(idOrder); //Dal?
             if (orderDO.OrderDate != null && orderDO.DeliveryDate == null && orderDO.ShipDate != null)//ההזמנה לא נמסרה
             {
                 orderDO.DeliveryDate = DateTime.Now;
@@ -142,11 +141,11 @@ internal class Order : BlApi.IOrder
             throw new BO.IncorrectDataExceptions("Order id is incorrect");
         try
         {
-            orderDO = Dal.Order.Get(idOrder);
-            if(orderDO.OrderDate != null && orderDO.ShipDate == null &&orderDO.DeliveryDate == null)//ההזמנה לא נמסרה
+            orderDO = Dal.Order.Get(idOrder); //Dal?
+            if (orderDO.OrderDate != null && orderDO.ShipDate == null &&orderDO.DeliveryDate == null)//ההזמנה לא נמסרה
             {
                 orderDO.ShipDate = DateTime.Now;
-                Dal.Order.Update(orderDO); //עדכון בשכבת הנתונים
+                Dal?.Order.Update(orderDO); //עדכון בשכבת הנתונים
                 BO.Order orderBO = new BO.Order
                 {
                     Id = orderDO.Id,
@@ -158,7 +157,7 @@ internal class Order : BlApi.IOrder
                     DeliveryDate = orderDO.DeliveryDate,
                     Status = BO.OrderStatus.shipped,
                     OrdersItemsList = getDOlistOfOrderItem(idOrder),
-                    TotalPrice = Dal.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == idOrder).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount)
+                    TotalPrice = Dal.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == idOrder).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount)  //Dal?
                 };
                 return orderBO;
             }
@@ -179,7 +178,7 @@ internal class Order : BlApi.IOrder
         DO.Order orderTracking = new DO.Order();
         try
         {
-            orderTracking = Dal.Order.Get(idOrder);
+            orderTracking = Dal.Order.Get(idOrder); //Dal?
         }
         catch (DO.NotFoundExceptions str)
         {
@@ -215,7 +214,7 @@ internal class Order : BlApi.IOrder
     public List<BO.OrderItem?>? getDOlistOfOrderItem(int id)
     {
         List<BO.OrderItem?>? listBo=new List<BO.OrderItem>();
-        foreach(DO.OrderItem doOrderItem in Dal.OrderItem.GetAll(orderItem=>orderItem.Value.OrderId==id))
+        foreach(DO.OrderItem doOrderItem in Dal.OrderItem.GetAll(orderItem=>orderItem.Value.OrderId==id))//Dal?
         {
             listBo.Add(new BO.OrderItem
             {

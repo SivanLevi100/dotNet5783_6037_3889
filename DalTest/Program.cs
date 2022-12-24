@@ -11,7 +11,7 @@ namespace DalTest;
 
 public class Program
 {
-    static IDal dal = DalList.Instance;
+    static DalApi.IDal? dal = DalApi.Factory.Get();
 
     static void Main(string[] args)
     {
@@ -72,7 +72,7 @@ public class Program
                 switch (ch)
                 {
                     case 'c':
-                        foreach (/*Product*/ var item in dal.Product.GetAll())
+                        foreach (var item in dal.Product.GetAll())
                         {
                             Console.WriteLine(item);
                         };
@@ -155,9 +155,8 @@ public class Program
     /// <summary>
     /// method for each order sub-menu
     /// </summary>
-    public static void SubMenuOrder(/*IDal dal*/)
+    public static void SubMenuOrder()
     {
-        IDal dal = DalList.Instance;
         Order myOrder;
         int idOrder;
         string menu = "\ta - Option to add an object to a order list\n";
@@ -255,9 +254,8 @@ public class Program
     /// <summary>
     /// Method for sub-menu of each order items
     /// </summary>
-    public static void SubMenuOrderItem(/*IDal dal*/)
+    public static void SubMenuOrderItem()
     {
-        IDal dal = DalList.Instance;
         OrderItem myOrderItem;
         int idOrderItem = 0;
         int idOrderItem1 = 0, idOrderItem2 = 0;

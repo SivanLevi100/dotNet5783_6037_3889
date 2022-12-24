@@ -1,6 +1,4 @@
-﻿using BlApi;
-using BlImplementation;
-using BO;
+﻿using BO;
 using DO;
 using Microsoft.VisualBasic;
 using System;
@@ -27,7 +25,7 @@ namespace PL.Product;
 /// </summary>
 public partial class ProductWindow : Window
 {
-    private IBl bl = new Bl();
+    private BlApi.IBl? bl = BlApi.Factory.Get();
 
     //Builder for the add product window
     public ProductWindow()
@@ -80,7 +78,7 @@ public partial class ProductWindow : Window
         product.Category = (BO.Category)ComboBoxCategory.SelectedItem;
         try
         {
-            bl.Product.Add(product);
+            bl?.Product.Add(product);
         }
         catch (BO.IncorrectDataExceptions str)
         {
@@ -111,7 +109,7 @@ public partial class ProductWindow : Window
 
         try
         {
-            bl.Product.Update(product);
+            bl?.Product.Update(product);
         }
         catch(BO.IncorrectDataExceptions str) 
         {

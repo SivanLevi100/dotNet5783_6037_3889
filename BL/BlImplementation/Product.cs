@@ -9,15 +9,13 @@
 
 //using BlApi;
 //using BO;
-using BO;
-using Dal;
 using DalApi;
 
 namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
 {
-    private IDal Dal = DalList.Instance;
+    private DalApi.IDal? Dal = DalApi.Factory.Get();
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {
@@ -28,7 +26,7 @@ internal class Product : BlApi.IProduct
         //    Price = product.Price,
         //    Category = (BO.Category)product.Category
         //});
-        var productList = Dal.Product.GetAll(item => item != null);
+        var productList = Dal?.Product.GetAll(item => item != null);
         foreach (DO.Product item in productList)
         {
             yield return new BO.ProductForList  
@@ -36,7 +34,7 @@ internal class Product : BlApi.IProduct
                 IdProduct = item.Id,
                 Name = item.Name,
                 Price = item.Price,
-                Category = (BO.Category?)item.Category ?? throw new NotExiestsExceptions("Category is Unavailable")
+                Category = (BO.Category?)item.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable")
             };
         }
     }
@@ -48,12 +46,12 @@ internal class Product : BlApi.IProduct
         {
             if (id > 0)
             {
-                DO.Product productOfDo = Dal.Product.Get(id);
+                DO.Product productOfDo = Dal.Product.Get(id);  //Dal?
                 BO.Product product = new BO.Product
                 {
                     Id = productOfDo.Id,
                     Name = productOfDo.Name,
-                    Category = (BO.Category?)productOfDo.Category ?? throw new NotExiestsExceptions("Category is Unavailable"),
+                    Category = (BO.Category?)productOfDo.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
                     Price = productOfDo.Price,
                     InStock = productOfDo.InStock,
                 };
@@ -75,14 +73,14 @@ internal class Product : BlApi.IProduct
         {
             if (id > 0)
             {
-                DO.Product productOfDO = Dal.Product.Get(id);
+                DO.Product productOfDO = Dal.Product.Get(id); //Dal?
                 BO.ProductItem productItem = new BO.ProductItem
                 {
                     IdProduct = productOfDO.Id,
                     Name = productOfDO.Name,
-                    Category = (BO.Category?)productOfDO.Category ?? throw new NotExiestsExceptions("Category is Unavailable"),
+                    Category = (BO.Category?)productOfDO.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
                     IsAvailable = (productOfDO.InStock > 0) ? true : false,
-                    AmountInCart = cart?.OrdersItemsList?.FindAll(orderItem => orderItem?.ProductId == id).Count()?? throw new NotExiestsExceptions("The list of order items in the shopping cart is null"), 
+                    AmountInCart = cart?.OrdersItemsList?.FindAll(orderItem => orderItem?.ProductId == id).Count()?? throw new BO.NotExiestsExceptions("The list of order items in the shopping cart is null"), 
                     Price = productOfDO.Price
                 };
                 return productItem;
@@ -110,9 +108,9 @@ internal class Product : BlApi.IProduct
                     Name = product1.Name,
                     Price = product1.Price,
                     InStock = product1.InStock,
-                    Category = (DO.Category?)product1.Category ?? throw new NotExiestsExceptions("Category is Unavailable"),
+                    Category = (DO.Category?)product1.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
                 };
-                Dal.Product.Add(productOfDO);
+                Dal?.Product.Add(productOfDO);
             }
             catch (DO.NotFoundExceptions str)
             {
@@ -127,11 +125,11 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            foreach (DO.Order order in Dal.Order.GetAll())//עוברים על כל ההזמנות
+            foreach (DO.Order order in Dal.Order.GetAll())//עוברים על כל ההזמנות //Dal?
             {
                 if (Dal.OrderItem.GetAll(OrderItem => OrderItem.Value.OrderId == order.Id).Any(orderItem => orderItem.Value.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
                 {
-                    Dal.Product.Delete(id);
+                    Dal?.Product.Delete(id);
                     return;
                 }
                 else
@@ -158,9 +156,9 @@ internal class Product : BlApi.IProduct
                     Name = product1.Name,
                     Price = product1.Price,
                     InStock = product1.InStock,
-                    Category = (DO.Category?)product1?.Category ?? throw new NotExiestsExceptions("Category is Unavailable"),
+                    Category = (DO.Category?)product1?.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
                 };
-                Dal.Product.Update(productOfDO);
+                Dal?.Product.Update(productOfDO);
 
             }
             catch (DO.NotFoundExceptions str)
