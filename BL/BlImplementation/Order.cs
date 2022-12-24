@@ -105,7 +105,7 @@ internal class Order : BlApi.IOrder
         try
         {
             orderDO=Dal.Order.Get(idOrder);
-            if (orderDO.DeliveryDate == null)//ההזמנה לא נמסרה
+            if (orderDO.OrderDate != null && orderDO.DeliveryDate == null && orderDO.ShipDate != null)//ההזמנה לא נמסרה
             {
                 orderDO.DeliveryDate = DateTime.Now;
                 Dal.Order.Update(orderDO); //עדכון בשכבת הנתונים
@@ -143,7 +143,7 @@ internal class Order : BlApi.IOrder
         try
         {
             orderDO = Dal.Order.Get(idOrder);
-            if (orderDO.ShipDate == null)//ההזמנה לא נמסרה
+            if(orderDO.OrderDate != null && orderDO.ShipDate == null &&orderDO.DeliveryDate == null)//ההזמנה לא נמסרה
             {
                 orderDO.ShipDate = DateTime.Now;
                 Dal.Order.Update(orderDO); //עדכון בשכבת הנתונים
