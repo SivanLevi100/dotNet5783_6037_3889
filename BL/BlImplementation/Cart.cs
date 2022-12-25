@@ -20,29 +20,27 @@ internal class Cart: BlApi.ICart
     {
         if (id <= 0) 
             throw new BO.IncorrectDataExceptions("Product Id is not positive number");
+        if (cart1 == null)
+            throw new BO.NotExiestsExceptions("Missing cart object");
         if (cart1.OrdersItemsList == null)
             cart1.OrdersItemsList = new();
-  
-        if (cart1 == null) 
-            throw new BO.NotExiestsExceptions("Missing cart object");
 
         DO.Product doProduct;
-        try    //נבדוק האם המוצר קיים
+        try  
         {
-            doProduct = Dal.Product.Get(id); //Dal?
+            doProduct = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests"); 
         }
         catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Product request failed", str);
-
         }
-        if (cart1.OrdersItemsList.Exists(orderItem => orderItem?.ProductId != doProduct.Id))//??throw new NotExiestsExceptions("The list of order items in the shopping cart is null")) //אם מוצר לא קיים בסל קניות
+        if (cart1.OrdersItemsList.Exists(orderItem => orderItem?.ProductId != doProduct.Id)) //If a product does not exist in the shopping basket
         {
-            if (doProduct.Id == id && doProduct.InStock >= 0) //תבדוק האם המוצר קיים ויש במלאי
+            if (doProduct.Id == id && doProduct.InStock >= 0) //Check if the product exists and is in stock
             {
                 BO.OrderItem newOrderItem = new BO.OrderItem
                 {
-                    Id = 0, //////////////?
+                    Id = 0,
                     ProductId = doProduct.Id,
                     NameProduct = doProduct.Name,
                     Price = doProduct.Price,
@@ -51,17 +49,16 @@ internal class Cart: BlApi.ICart
 
                 };
                 cart1.OrdersItemsList.Add(newOrderItem);
-                //cart1.OrdersItemsList.Append(newOrderItem); //מוסיף ערך לסוף הרצף
                 cart1.TotalPrice = cart1.TotalPrice + newOrderItem.TotalPriceOfItem;
             }
             else
                 throw new BO.NotExiestsExceptions("The product does not exist or is out of stock");
         }
-        else  //אם המוצר כבר מופיע בסל קניות
+        else  //If the product appears in the shopping cart
         {   
-            foreach (BO.OrderItem orderItem in cart1.OrdersItemsList)
+            foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
             {
-                if(orderItem?.ProductId == doProduct.Id && doProduct.InStock >= 0) //אם זה המוצר והכמות גדולה מ0 
+                if(orderItem?.ProductId == doProduct.Id && doProduct.InStock >= 0) //If this is the product and the quantity is greater than 0
                 {
                     orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
                     orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
@@ -76,21 +73,19 @@ internal class Cart: BlApi.ICart
     public BO.Cart UpdateAmountOfProduct(BO.Cart cart1, int id, int newAmount)
     {
         DO.Product doProduct;
-        try    //נבדוק האם המוצר קיים
+        try    
         {
-            doProduct = Dal.Product.Get(id); //Dal?
+            doProduct = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
         }
         catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Product request failed", str);
-
         }
-        //DO.Product product = Dal.Product.Get(id);
-        foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
+        foreach (BO.OrderItem? orderItem in cart1?.OrdersItemsList ?? throw new BO.NotExiestsExceptions("The Cart is not exiests"))
         {
-            if (orderItem?.ProductId == id && newAmount > orderItem.AmountInOrder) //אם הכמות גדלה
+            if (orderItem?.ProductId == id && newAmount > orderItem.AmountInOrder) //If the amount increases
             {
-                if (doProduct.InStock >= 0)//אם יש מוצר במלאי
+                if (doProduct.InStock >= 0)//If there is a product in stock
                 {
                     orderItem.AmountInOrder = newAmount;
                     orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
@@ -99,18 +94,16 @@ internal class Cart: BlApi.ICart
                 else
                     throw new BO.NotExiestsExceptions("The product is not in stock");
             }
-            if (orderItem?.ProductId == id && newAmount < orderItem.AmountInOrder) //אם הכמות קטנה
+            if (orderItem?.ProductId == id && newAmount < orderItem.AmountInOrder) //If the amount decreases
             {
                 orderItem.AmountInOrder = newAmount;
                 orderItem.TotalPriceOfItem = doProduct.Price * newAmount;
                 cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
             }
-            if (orderItem?.ProductId == id && newAmount + orderItem.AmountInOrder == 0) //אם הכמות נהייתה 0
+            if (orderItem?.ProductId == id && newAmount + orderItem.AmountInOrder == 0) //If the amount = 0
             {
-                cart1.TotalPrice = cart1.TotalPrice - orderItem.TotalPriceOfItem; //עדכון מחיר סל
+                cart1.TotalPrice = cart1.TotalPrice - orderItem.TotalPriceOfItem; //cart price update
                 cart1.OrdersItemsList.Remove(orderItem);
-
-                //cart1.OrdersItemsList/*.ToList()*/.Remove(orderItem);
             }
         }
         return cart1;   
@@ -118,31 +111,31 @@ internal class Cart: BlApi.ICart
 
     public void Confirm(BO.Cart cart1)
     {
-        if (string.IsNullOrWhiteSpace(cart1?.CustomerName) && string.IsNullOrWhiteSpace(cart1?.CustomerAdress)) //מחרוזת ריקה ולא חוקית
+        if (string.IsNullOrWhiteSpace(cart1?.CustomerName) && string.IsNullOrWhiteSpace(cart1?.CustomerAdress)) //An empty and invalid string
             throw new BO.IncorrectDataExceptions("Buyer's name and address are blank");
 
-        if (!new EmailAddressAttribute().IsValid(cart1?.CustomerEmail))//כתובת אימיל לא חוקית
+        if (!new EmailAddressAttribute().IsValid(cart1?.CustomerEmail))//Invalid email address
             throw new BO.IncorrectDataExceptions("Email address in invalid format");
 
         //if (cart1.OrdersItemsList.Any(orderItem => orderItem.ProductId != Dal.Product.Get(orderItem.ProductId).Id))//מוצר לא קיים
         //    throw new BO.NotExiestsExceptions("The product does not exist");
        
-        if (cart1.OrdersItemsList == null)
+        if (cart1?.OrdersItemsList == null)
             throw new BO.NotExiestsExceptions("The shopping cart is empty");
 
-        foreach (BO.OrderItem orderItem in cart1?.OrdersItemsList) //כל המוצרים קיימים, כמויות חיוביות, יש מספיק במלאי
+        foreach (BO.OrderItem? orderItem in cart1?.OrdersItemsList ?? throw new BO.NotExiestsExceptions("The Cart is not exiests")) //All products exist, positive quantities, enough in stock
         {
-            DO.Product productOfDo = Dal.Product.Get(orderItem.ProductId);  //Dal?
-            if (Dal?.Product.GetAll().Contains(productOfDo) == false)//מוצר לא קיים
+            DO.Product productOfDo = Dal?.Product.Get(orderItem?.ProductId ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiests")) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");  
+            if (Dal?.Product.GetAll().Contains(productOfDo) == false)//Product does not exist
                 throw new BO.NotExiestsExceptions("The product does not exist");
-            if (orderItem.AmountInOrder <= 0) //כמות שלילית
+            if (orderItem.AmountInOrder <= 0) //negative quantity
                 throw new BO.IncorrectDataExceptions("Invalid item quantity");
-            if(orderItem.AmountInOrder > Dal.Product.Get(orderItem.ProductId).InStock) //אין מספיק במלאי
+            if(orderItem.AmountInOrder > Dal?.Product.Get(orderItem.ProductId).InStock) //Not enough in stock
                 throw new BO.IncorrectDataExceptions("This product is out of stock");
         }
         DO.Order doOrder = new DO.Order
         {
-            //Id= 0,/////////////////////////?
+            Id = 0,
             CustomerName = cart1.CustomerName,
             CustomerAdress = cart1.CustomerAdress,
             CustomerEmail = cart1.CustomerEmail,
@@ -153,17 +146,17 @@ internal class Cart: BlApi.ICart
         int numberOrder;
         try
         {
-            numberOrder = Dal.Order.Add(doOrder);  //הוספת הזמנה לשכבת הנתונים
+            numberOrder = Dal?.Order.Add(doOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");  //Add an order to the data layer
         }
         catch(DO.DuplicateIdExceptions str)
         {
             throw new BO.NotExiestsExceptions("Failed to add order to data tier", str);
         }
-        foreach(BO.OrderItem boOrderItem in cart1.OrdersItemsList)//בניית אוביקטים של פריט הזמנה והוספתם לשכבת הנתונים
+        foreach(BO.OrderItem? boOrderItem in cart1.OrdersItemsList)//Building order item objects and adding them to the data layer
         {
             DO.OrderItem doOrderItem = new DO.OrderItem
             {
-                //Id = 0,
+                Id = boOrderItem?.Id ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiests"),
                 OrderId = numberOrder,
                 ProductId = boOrderItem?.ProductId ?? throw new BO.NotExiestsExceptions("Order item null"),
                 Price = boOrderItem.Price,
@@ -178,24 +171,21 @@ internal class Cart: BlApi.ICart
                 throw new BO.NotExiestsExceptions("Failed to add orderItem to data tier", str);
             }
         }
-        foreach (BO.OrderItem boOrderItem in cart1.OrdersItemsList)//אישור ההזמנה
+        foreach (BO.OrderItem? boOrderItem in cart1.OrdersItemsList) //Order Confirmation
         {
             try
             {
-                DO.Product product = Dal.Product.Get(boOrderItem.ProductId); //בקשת מוצר משכבת הנתונים
-                product.InStock= product.InStock - boOrderItem.AmountInOrder; //עדכון המלאי
-                Dal?.Product.Update(product); //עדכון מוצר 
+                DO.Product product = Dal?.Product.Get(boOrderItem.ProductId)?? throw new BO.NotExiestsExceptions("The Product is not exiests"); //Request a product from the data layer
+                product.InStock= product.InStock - boOrderItem.AmountInOrder; //In Stock update
+                Dal?.Product.Update(product); //Update Product
             }
             catch (DO.DuplicateIdExceptions str)
             {
                 throw new BO.NotExiestsExceptions("Failed to request data layer products and updates", str);
             }
         }
-        cart1.OrdersItemsList.Clear(); //ריקון הסל כלומר מחקית רשימת פריטי הזמנה מהסל
+        cart1.OrdersItemsList.Clear(); //Emptying the basket means deleting a list of order items from the basket
     }
-
-
-
 
 
 }

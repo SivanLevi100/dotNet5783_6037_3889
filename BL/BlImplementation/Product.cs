@@ -26,15 +26,15 @@ internal class Product : BlApi.IProduct
         //    Price = product.Price,
         //    Category = (BO.Category)product.Category
         //});
-        var productList = Dal?.Product.GetAll(item => item != null);
-        foreach (DO.Product item in productList)
+        var productList = Dal?.Product.GetAll(item => item != null)?? throw new BO.NotExiestsExceptions("The Product is not exiests");
+        foreach (DO.Product? item in productList)
         {
             yield return new BO.ProductForList  
             {
-                IdProduct = item.Id,
-                Name = item.Name,
-                Price = item.Price,
-                Category = (BO.Category?)item.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable")
+                IdProduct = item?.Id ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
+                Name = item?.Name ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
+                Price = item?.Price ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
+                Category = (BO.Category?)item?.Category ?? throw new BO.NotExiestsExceptions("The Product is not exiests") ?? throw new BO.NotExiestsExceptions("Category is Unavailable")
             };
         }
     }
@@ -46,7 +46,7 @@ internal class Product : BlApi.IProduct
         {
             if (id > 0)
             {
-                DO.Product productOfDo = Dal.Product.Get(id);  //Dal?
+                DO.Product productOfDo = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests"); 
                 BO.Product product = new BO.Product
                 {
                     Id = productOfDo.Id,
@@ -73,7 +73,7 @@ internal class Product : BlApi.IProduct
         {
             if (id > 0)
             {
-                DO.Product productOfDO = Dal.Product.Get(id); //Dal?
+                DO.Product productOfDO = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests"); 
                 BO.ProductItem productItem = new BO.ProductItem
                 {
                     IdProduct = productOfDO.Id,
@@ -118,16 +118,16 @@ internal class Product : BlApi.IProduct
             }
         }
         else
-            throw new BO.IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
+            throw new BO.IncorrectDataExceptions("The product data received is incorrect");//The incorrectness of the data received as a parameter
     }
 
     public void Delete(int id)
     {
         try
         {
-            foreach (DO.Order order in Dal.Order.GetAll())//עוברים על כל ההזמנות //Dal?
+            foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests"))//Loop through all orders 
             {
-                if (Dal.OrderItem.GetAll(OrderItem => OrderItem.Value.OrderId == order.Id).Any(orderItem => orderItem.Value.ProductId != id))//אם המוצר לא נמצא ברשימת פרטי הזמנה בסל
+                if (Dal.OrderItem.GetAll(OrderItem => OrderItem.Value.OrderId == order?.Id).Any(orderItem => orderItem.Value.ProductId != id))//If the product is not in the list of order details in the basket
                 {
                     Dal?.Product.Delete(id);
                     return;
@@ -167,7 +167,7 @@ internal class Product : BlApi.IProduct
             }
         }
         else
-            throw new BO.IncorrectDataExceptions("The product data received is incorrect");//חוסר תקינות הנתונים שהתקבלו כפרמטר
+            throw new BO.IncorrectDataExceptions("The product data received is incorrect");//The incorrectness of the data received as a parameter
     }
 
 

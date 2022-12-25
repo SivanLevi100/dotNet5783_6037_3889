@@ -72,7 +72,7 @@ public class Program
                 switch (ch)
                 {
                     case 'c':
-                        foreach (var item in dal.Product.GetAll())
+                        foreach (var item in dal?.Product.GetAll()??throw new DO.DoesNotExistException("The List Of Product is not exists"))
                         {
                             Console.WriteLine(item);
                         };
@@ -97,19 +97,19 @@ public class Program
                             Category = category,
                             InStock = instock
                         };
-                        id =dal.Product.Add(myProduct);
+                        id =dal?.Product.Add(myProduct) ?? throw new DO.DoesNotExistException("The Product is not exiests");
                         Console.WriteLine($@"id number of the added product {id}");
                         break;
                     case 'b':
                         Console.WriteLine("please enter: Id of product");
                         id = Int32.Parse(Console.ReadLine() ?? "0");
-                        myProduct = dal.Product.Get(id);
+                        myProduct = dal?.Product.Get(id)?? throw new DO.DoesNotExistException("The Product is not exiests");
                         Console.WriteLine(myProduct);
                         break;
                     case 'd':
                         Console.WriteLine("please enter: id");
                         id = int.Parse(Console.ReadLine() ?? "0");
-                        myProduct = dal.Product.Get(id); 
+                        myProduct = dal?.Product.Get(id)??throw new DO.DoesNotExistException("The Product is not exiests");
                         Console.WriteLine(myProduct);
 
                         Console.WriteLine("Enter new values ​​to update the object"); 
@@ -137,7 +137,7 @@ public class Program
                     case 'e':
                         Console.WriteLine("please enter: Id of product");
                         Int32.TryParse(Console.ReadLine(), out id);
-                        dal.Product.Delete(id);
+                        dal?.Product.Delete(id);
                         break;
                     default:
                         ch = 'x';
@@ -192,17 +192,17 @@ public class Program
                             CustomerAdress = CustomerAdress ?? "Unknown",
                             CustomerEmail = CustomerEmail ?? "Unknown",
                         };
-                        idOrder = dal.Order.Add(myOrder);
+                        idOrder = dal?.Order.Add(myOrder)?? throw new DO.DoesNotExistException("The Order is not exiests");
                         Console.WriteLine($@"id number of the added order {idOrder}");
                         break;
                     case 'b':
                         Console.WriteLine("please enter: Id of order");
                         idOrder = Int32.Parse(Console.ReadLine() ?? "0");
-                        myOrder = dal.Order.Get(idOrder);
+                        myOrder = dal?.Order.Get(idOrder) ?? throw new DO.DoesNotExistException("The Order is not exiests");
                         Console.WriteLine(myOrder);
                         break;
                     case 'c':
-                        foreach (Order item in dal.Order.GetAll())
+                        foreach (Order? item in dal?.Order.GetAll() ?? throw new DO.DoesNotExistException("The Order is not exiests"))
                         {
                             Console.WriteLine(item);
                         };
@@ -210,7 +210,7 @@ public class Program
                     case 'd':
                         Console.WriteLine("please enter: Id");
                         idOrder = int.Parse(Console.ReadLine() ?? "0");
-                        myOrder = dal.Order.Get(idOrder);
+                        myOrder = dal?.Order.Get(idOrder) ?? throw new DO.DoesNotExistException("The Order is not exiests");
                         Console.WriteLine(myOrder);
 
                         Console.WriteLine("Enter new values ​​to update the object");
@@ -235,7 +235,7 @@ public class Program
                     case 'e':
                         Console.WriteLine("please enter: Id of order");
                         Int32.TryParse(Console.ReadLine(), out idOrder);
-                        dal.Order.Delete(idOrder);
+                        dal?.Order.Delete(idOrder);
                         break;
                     default:
                         ch = 'x';
@@ -298,18 +298,18 @@ public class Program
                             Price = price,
                             Amount = amount,
                         };
-                        idOrderItem = dal.OrderItem.Add(myOrderItem);
+                        idOrderItem = dal?.OrderItem.Add(myOrderItem) ?? throw new DO.DoesNotExistException("The OrderItem is not exiests");
                         Console.WriteLine($@"id number of the added orderItem {idOrderItem}");
 
                         break;
                     case 'b':
                         Console.WriteLine("please enter: Id of orderItem");
                         idOrderItem = int.Parse(Console.ReadLine() ?? "0");
-                        myOrderItem = dal.OrderItem.Get(idOrderItem);
+                        myOrderItem = dal?.OrderItem.Get(idOrderItem) ?? throw new DO.DoesNotExistException("The OrderItem is not exiests");
                         Console.WriteLine(myOrderItem);
                         break;
                     case 'c':
-                        foreach (OrderItem item in dal.OrderItem.GetAll())
+                        foreach (OrderItem? item in dal?.OrderItem.GetAll()?? throw new DO.DoesNotExistException("The OrderItem is not exiests"))
                         {
                             Console.WriteLine(item);
                         };
@@ -317,7 +317,7 @@ public class Program
                     case 'd':
                         Console.WriteLine("please enter: Id");
                         idOrderItem = int.Parse(Console.ReadLine() ?? "0");
-                        myOrderItem = dal.OrderItem.Get(idOrderItem);
+                        myOrderItem = dal?.OrderItem.Get(idOrderItem)?? throw new DO.DoesNotExistException("The OrderItem is not exiests");
                         Console.WriteLine(myOrderItem);
 
                         Console.WriteLine("Enter new values ​​to update the object");
@@ -345,20 +345,20 @@ public class Program
                     case 'e':
                         Console.WriteLine("please enter: Id of orderItem");
                         idOrderItem = int.Parse(Console.ReadLine() ?? "0");
-                        dal.OrderItem.Delete(idOrderItem);
+                        dal?.OrderItem.Delete(idOrderItem);
                         break;
                     case 'f':
                         Console.WriteLine("please enter: Id of order");
                         idOrderItem1 = int.Parse(Console.ReadLine() ?? "0");
                         Console.WriteLine("please enter: Id of product");
                         idOrderItem2 = int.Parse(Console.ReadLine() ?? "0");
-                        myOrderItem = dal.OrderItem.GetF(orderItem => orderItem.Value.ProductId==idOrderItem1 && orderItem.Value.ProductId == idOrderItem2);
+                        myOrderItem = dal?.OrderItem.GetF(orderItem => orderItem?.Value.ProductId == idOrderItem1 && orderItem.Value.ProductId == idOrderItem2) ?? throw new DO.DoesNotExistException("The OrderItem is not exiests");
                         Console.WriteLine(myOrderItem);
                         break;
                     case 'g':
                         Console.WriteLine("please enter: Id of order");
                         int id = int.Parse(Console.ReadLine() ?? "0");
-                        foreach (OrderItem item in dal.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == id))
+                        foreach (OrderItem item in dal?.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == id) ?? throw new DO.DoesNotExistException("The OrderItem is not exiests"))
                         {
                             Console.WriteLine(item);
                         };

@@ -40,7 +40,6 @@ class Program  /*internal*/
         }
     }
 
-    ////////////////
     public static void SubMenuProduct()
     {
         int id;
@@ -73,7 +72,7 @@ class Program  /*internal*/
                 switch (ch)
                 {
                     case 'a':
-                        foreach (BO.ProductForList item in bl.Product.GetProductList())
+                        foreach (BO.ProductForList? item in bl?.Product.GetProductList() ?? throw new BO.NotExiestsExceptions("The List of Product is not exiests"))
                         {
                             Console.WriteLine(item);
                         };
@@ -81,13 +80,13 @@ class Program  /*internal*/
                     case 'b':
                         Console.WriteLine("please enter: Id of product");
                         id = Int32.Parse(Console.ReadLine() ?? "0");
-                        myProduct = bl.Product.GetProductDetailsManager(id);
+                        myProduct = bl?.Product.GetProductDetailsManager(id)??throw new BO.NotExiestsExceptions("The Product is not exiests");
                         Console.WriteLine(myProduct);
                         break;
                     case 'c':
                         Console.WriteLine("please enter: Id of product");
                         id = Int32.Parse(Console.ReadLine() ?? "0");
-                        myProductItem = bl.Product.GetProductDetailsBuyer(id, myCart);
+                        myProductItem = bl?.Product.GetProductDetailsBuyer(id, myCart) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
                         Console.WriteLine(myProductItem);
                         break;
                     case 'd':
@@ -116,7 +115,7 @@ class Program  /*internal*/
                     case 'e':
                         Console.WriteLine("please enter: id");
                         id = int.Parse(Console.ReadLine() ?? "0");
-                        myProduct = bl.Product.GetProductDetailsManager(id);
+                        myProduct = bl?.Product.GetProductDetailsManager(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
                         Console.WriteLine(myProduct);
 
                         Console.WriteLine("Enter new values ​​to update the object");
@@ -182,7 +181,7 @@ class Program  /*internal*/
                 switch (ch)
                 {
                     case 'a':
-                        foreach (BO.OrderForList item in bl.Order.GetOrderList())
+                        foreach (BO.OrderForList item in bl?.Order.GetOrderList() ?? throw new BO.NotExiestsExceptions("The list of Order is not exiests"))
                         {
                             Console.WriteLine(item);
                         };
@@ -190,25 +189,25 @@ class Program  /*internal*/
                     case 'b':
                         Console.WriteLine("please enter: Id of order");
                         id = Int32.Parse(Console.ReadLine() ?? "0");
-                        myOrder = bl.Order.GetOrderDetails(id);
+                        myOrder = bl?.Order.GetOrderDetails(id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
                         Console.WriteLine(myOrder);
                         break;
                     case 'c':
                         Console.WriteLine("please enter: id");
                         id = int.Parse(Console.ReadLine() ?? "0");
-                        myOrder = bl.Order.UpdateDelivery(id);
+                        myOrder = bl?.Order.UpdateDelivery(id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
                         Console.WriteLine(myOrder);
                         break;
                     case 'd':
                         Console.WriteLine("please enter: id");
                         id = int.Parse(Console.ReadLine() ?? "0");
-                        myOrder = bl.Order.UpdateShipping(id);
+                        myOrder = bl?.Order.UpdateShipping(id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
                         Console.WriteLine(myOrder);
                         break;
                     case 'e':
                         Console.WriteLine("please enter: id");
                         id = int.Parse(Console.ReadLine() ?? "0");
-                        myOrderTracking = bl.Order.Tracking(id);
+                        myOrderTracking = bl?.Order.Tracking(id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
                         Console.WriteLine(myOrderTracking);
                         break;
                     default:
@@ -252,7 +251,7 @@ class Program  /*internal*/
                     case 'a':
                         Console.WriteLine("please enter: id");
                         id = int.Parse(Console.ReadLine() ?? "0");
-                        myCart = bl.Cart.AddProduct(myCart, id);
+                        myCart = bl?.Cart.AddProduct(myCart, id) ?? throw new BO.NotExiestsExceptions("The Cart is not exiests");
                         Console.WriteLine(myCart);
                         Console.WriteLine("The product has been added to the shopping cart\n");
                         break;
@@ -261,7 +260,7 @@ class Program  /*internal*/
                         id = int.Parse(Console.ReadLine() ?? "0");
                         Console.WriteLine("please enter: new amount");
                         amount = int.Parse(Console.ReadLine() ?? "0");
-                        myCart = bl.Cart.UpdateAmountOfProduct(myCart, id, amount);
+                        myCart = bl?.Cart.UpdateAmountOfProduct(myCart, id, amount) ?? throw new BO.NotExiestsExceptions("The Cart is not exiests");
                         Console.WriteLine(myCart);//מדפיס סל מעודכן
                         Console.WriteLine("The product amount has been updated in the shopping cart\n");
                         break;
