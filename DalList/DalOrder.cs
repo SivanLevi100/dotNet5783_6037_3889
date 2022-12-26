@@ -27,24 +27,32 @@ internal class DalOrder:IOrder
     /// <param name="idOrder1"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public Order Get(int idOrder1)
+    public Order? Get(int idOrder1)
     {
-        foreach (Order order in _dstaSource1.OrderList)
-        {
-            if (order.Id == idOrder1)
-                return order;
-        }
-        throw new NotFoundExceptions("The order id is not exist in List");
+        return _dstaSource1.OrderList?.FirstOrDefault(order => order.Value.Id == idOrder1)
+          ?? throw new NotFoundExceptions("The order id is not exist in List");
+
+        //foreach (Order order in _dstaSource1.OrderList)
+        //{
+        //    if (order.Id == idOrder1)
+        //        return order;
+        //}
+        //throw new NotFoundExceptions("The order id is not exist in List");
     }
 
     public Order GetF(Func<Order?, bool>? filter)
     {
-        foreach (Order order in _dstaSource1.OrderList)
-        {
-            if (filter(order))
-                return order;
-        }
-        throw new NotFoundExceptions("The order is not exist in List");
+        return _dstaSource1.OrderList?.FirstOrDefault(order => filter(order))
+          ?? throw new NotFoundExceptions("The order id is not exist in List");
+
+
+
+        //foreach (Order order in _dstaSource1.OrderList)
+        //{
+        //    if (filter(order))
+        //        return order;
+        //}
+        //throw new NotFoundExceptions("The order is not exist in List");
 
     }
 
@@ -67,15 +75,18 @@ internal class DalOrder:IOrder
     /// <param name="idOrder1"></param>
     public void Delete(int idOrder1)
     {
-        foreach (Order order in _dstaSource1.OrderList)
-        {
-            if (idOrder1 == order.Id)
-            {
-                _dstaSource1.OrderList.Remove(order);
-                return;
-            }
-        }
-        throw new NotFoundExceptions("The order is not exist in the List");
+        if (_dstaSource1.OrderList?.RemoveAll(order => order.Value.Id == idOrder1) == 0)
+            throw new NotFoundExceptions("The order is not exist in the List");
+
+        //foreach (Order order in _dstaSource1.OrderList)
+        //{
+        //    if (idOrder1 == order.Id)
+        //    {
+        //        _dstaSource1.OrderList.Remove(order);
+        //        return;
+        //    }
+        //}
+        //throw new NotFoundExceptions("The order is not exist in the List");
     }
 
 
@@ -88,11 +99,19 @@ internal class DalOrder:IOrder
     {
         if (_dstaSource1.OrderList.Exists(x => x?.Id == order1.Id))
         {
-            int j = _dstaSource1.OrderList.IndexOf(_dstaSource1.OrderList.Find(x => x?.Id == order1.Id));
-            _dstaSource1.OrderList[j] = order1;
+            _dstaSource1.OrderList.RemoveAll(order => order.Value.Id == order1.Id);
+            _dstaSource1.OrderList.Add(order1);
             return;
         }
         throw new NotFoundExceptions("the order id is not exist in List");
+
+        //if (_dstaSource1.OrderList.Exists(x => x?.Id == order1.Id))
+        //{
+        //    int j = _dstaSource1.OrderList.IndexOf(_dstaSource1.OrderList.Find(x => x?.Id == order1.Id));
+        //    _dstaSource1.OrderList[j] = order1;
+        //    return;
+        //}
+        //throw new NotFoundExceptions("the order id is not exist in List");
     }
 
 

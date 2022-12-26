@@ -130,7 +130,7 @@ internal class Cart: BlApi.ICart
                 throw new BO.NotExiestsExceptions("The product does not exist");
             if (orderItem.AmountInOrder <= 0) //negative quantity
                 throw new BO.IncorrectDataExceptions("Invalid item quantity");
-            if(orderItem.AmountInOrder > Dal?.Product.Get(orderItem.ProductId).InStock) //Not enough in stock
+            if(orderItem.AmountInOrder > Dal?.Product.Get(orderItem.ProductId).Value.InStock) //Not enough in stock
                 throw new BO.IncorrectDataExceptions("This product is out of stock");
         }
         DO.Order doOrder = new DO.Order

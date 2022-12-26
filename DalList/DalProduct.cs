@@ -29,24 +29,32 @@ internal class DalProduct : IProduct
     /// <param name="idProduct1"></param>
     /// <returns></returns>
     /// <exception cref="NotFoundExceptions"></exception>
-    public Product Get(int idProduct1)
+    public Product? Get(int idProduct1)
     {
-        foreach (Product product in ds.ProductList)
-        {
-            if (product.Id == idProduct1)
-                return product;
-        }
-        throw new NotFoundExceptions("The product id is not exist in List");
+        return ds.ProductList?.FirstOrDefault(product => product.Value.Id== idProduct1)
+            ?? throw new NotFoundExceptions("The product id is not exist in List");
+
+
+        //foreach (Product product in ds.ProductList)
+        //{
+        //    if (product.Id == idProduct1)
+        //        return product;
+        //}
+        //throw new NotFoundExceptions("The product id is not exist in List");
     }
 
     public Product GetF(Func<Product?, bool>? filter)
     {
-        foreach (Product product in ds.ProductList)
-        {
-            if(filter(product))
-                return product;
-        }
-        throw new NotFoundExceptions("The product is not exist in List");
+        return ds.ProductList?.FirstOrDefault(product => filter(product))
+           ?? throw new NotFoundExceptions("The product id is not exist in List");
+
+
+        //foreach (Product product in ds.ProductList)
+        //{
+        //    if(filter(product))
+        //        return product;
+        //}
+        //throw new NotFoundExceptions("The product is not exist in List");
     }
 
 
@@ -70,15 +78,19 @@ internal class DalProduct : IProduct
     /// <param name="idProduct1"></param>
     public void Delete(int idProduct1)
     {
-        foreach(Product product in ds.ProductList)
-        {
-            if(idProduct1 == product.Id)
-            {
-                ds.ProductList.Remove(product);
-                return;
-            }
-        }
-        throw new NotFoundExceptions("The product is not exist in the List");
+        if (ds.ProductList?.RemoveAll(product => product.Value.Id == idProduct1)==0)
+            throw new NotFoundExceptions("The product is not exist in the List");
+
+
+            //foreach(Product product in ds.ProductList)
+            //{
+            //    if(idProduct1 == product.Id)
+            //    {
+            //        ds.ProductList.Remove(product);
+            //        return;
+            //    }
+            //}
+            //throw new NotFoundExceptions("The product is not exist in the List");
     }
 
     /// <summary>
@@ -87,14 +99,21 @@ internal class DalProduct : IProduct
     /// <param name="product1"></param>
     public void Update(Product product1)
     {
-
         if (ds.ProductList.Exists(x => x?.Id == product1.Id))
         {
-            int j = ds.ProductList.IndexOf(ds.ProductList.Find(x => x?.Id == product1.Id));
-            ds.ProductList[j] = product1;
+            ds.ProductList.RemoveAll(product=>product.Value.Id== product1.Id);
+            ds.ProductList.Add(product1);
             return;
         }
         throw new NotFoundExceptions("the product id is not exist in List");
+
+        //if (ds.ProductList.Exists(x => x?.Id == product1.Id))
+        //{
+        //    int j = ds.ProductList.IndexOf(ds.ProductList.Find(x => x?.Id == product1.Id));
+        //    ds.ProductList[j] = product1;
+        //    return;
+        //}
+        //throw new NotFoundExceptions("the product id is not exist in List");
 
     }
 

@@ -73,8 +73,8 @@ internal class Order : BlApi.IOrder
                     ShipDate = orderDO.ShipDate,
                     DeliveryDate = orderDO.DeliveryDate,
                     Status = status1,
-                    TotalPrice = sumOfPrices
-
+                    TotalPrice = sumOfPrices,
+                    OrdersItemsList = getDOlistOfOrderItem(orderDO.Id)
                 };
                 return order;
             }
@@ -212,7 +212,7 @@ internal class Order : BlApi.IOrder
             listBo.Add(new BO.OrderItem
             {
                 Id = doOrderItem.Id,
-                NameProduct=Dal.Product.Get(doOrderItem.Id).Name,
+                NameProduct=Dal.Product.Get(doOrderItem.Id).Value.Name,
                 ProductId = doOrderItem.ProductId,
                 Price = doOrderItem.Price,
                 AmountInOrder = doOrderItem.Amount,
