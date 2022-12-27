@@ -34,10 +34,10 @@ public class Order
         str += $"Delivery Date: {DeliveryDate} \n";
         str += $"status: {Status} \n";
         str += $"Total Price: {TotalPrice} \n";
-        str += "List of ordersItems: \n";
+        str += $"List of ordersItems: \n";
         foreach (OrderItem? item in OrdersItemsList ?? throw new BO.NotExiestsExceptions("The list of orderItem is not exiest"))
         {
-            str += item;
+            str +=$" orderitem: {item}\n";
         }
         return str;
     }

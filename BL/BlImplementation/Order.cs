@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,8 +45,9 @@ internal class Order : BlApi.IOrder
 
     public BO.Order GetOrderDetails(int idOrder)
     {
+        
         if (idOrder < 0) throw new BO.IncorrectDataExceptions("id order is invalid");
-
+        //return new BO.Order();
         try
         {
             return from item in Dal?.Order.GetAll()
@@ -63,10 +65,8 @@ internal class Order : BlApi.IOrder
                        DeliveryDate = order.DeliveryDate,
                        Status = statusFromDate(order),
                        TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
-                       OrdersItemsList = listOrderItems
+                       OrdersItemsList = //getBOlistOfOrderItem
                    };
-
-
         }
         catch (DO.NotFoundExceptions str)
         {
@@ -95,7 +95,7 @@ internal class Order : BlApi.IOrder
                     ShipDate = orderDO.ShipDate,
                     DeliveryDate = DateTime.Now,
                     Status = BO.OrderStatus.delivered,
-                    OrdersItemsList = getDOlistOfOrderItem(idOrder),
+                    OrdersItemsList = getBOlistOfOrderItem(idOrder),
                     TotalPrice = Dal.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderId == idOrder)
                     .Sum(orderItem => ((DO.OrderItem)orderItem!).Price * ((DO.OrderItem)orderItem!).Amount)
                 };
@@ -134,7 +134,7 @@ internal class Order : BlApi.IOrder
                     ShipDate = DateTime.Now,
                     DeliveryDate = orderDO.DeliveryDate,
                     Status = BO.OrderStatus.shipped,
-                    OrdersItemsList = getDOlistOfOrderItem(idOrder),
+                    OrdersItemsList = getBOlistOfOrderItem(idOrder),
                     TotalPrice = Dal?.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderId == idOrder)
                     .Sum(orderItem => ((DO.OrderItem)orderItem!).Price * ((DO.OrderItem)orderItem!).Amount)
                     ?? throw new BO.NotExiestsExceptions("The Order is not exiests")
@@ -189,9 +189,9 @@ internal class Order : BlApi.IOrder
 
 
     //Helper function to return a list of order details
-    private List<BO.OrderItem?>? getDOlistOfOrderItem(int id)
+    private List<BO.OrderItem> getBOlistOfOrderItem(int id)
     {
-        List<BO.OrderItem?>? listBo = new();
+        List<BO.OrderItem> listBo = new();
         foreach (DO.OrderItem doOrderItem in Dal?.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests"))
         {
             listBo.Add(new BO.OrderItem
