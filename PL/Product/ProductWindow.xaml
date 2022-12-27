@@ -19,7 +19,7 @@
         <TextBox x:Name="txtInStock" HorizontalAlignment="Left" Margin="204,181,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
         <Button x:Name="AddButton"  Content="Add" HorizontalAlignment="Left" Margin="165,231,0,0" VerticalAlignment="Top" Height="19" Width="38" Click="AddButton_Click"/>
         <Button x:Name="UpdateButton"  Content="Update" Margin="156,255,588,0" VerticalAlignment="Top" Height="19" Click="UpdateButton_Click"/>
-
+ 
 
     </Grid>
 </Window>
