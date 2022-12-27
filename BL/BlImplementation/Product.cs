@@ -19,24 +19,14 @@ internal class Product : BlApi.IProduct
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {
-        //return Dal.Product.GetAll().Select(product => new BO.ProductForList
-        //{
-        //    IdProduct = product.Id,
-        //    Name = product.Name,
-        //    Price = product.Price,
-        //    Category = (BO.Category)product.Category
-        //});
-        var productList = Dal?.Product.GetAll(item => item != null)?? throw new BO.NotExiestsExceptions("The Product is not exiests");
-        foreach (DO.Product? item in productList)
+        return Dal?.Product.GetAll().Select(product => new BO.ProductForList
         {
-            yield return new BO.ProductForList  
-            {
-                IdProduct = item?.Id ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
-                Name = item?.Name ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
-                Price = item?.Price ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
-                Category = (BO.Category?)item?.Category ?? throw new BO.NotExiestsExceptions("The Product is not exiests") ?? throw new BO.NotExiestsExceptions("Category is Unavailable")
-            };
-        }
+            IdProduct = product?.Id ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
+            Name = product?.Name ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
+            Price = product?.Price ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
+            Category = (BO.Category?)product?.Category ?? throw new BO.NotExiestsExceptions("The Product is not exiests") ?? throw new BO.NotExiestsExceptions("Category is Unavailable")
+        }) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
+
     }
 
 
@@ -125,21 +115,36 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests"))//Loop through all orders 
-            {
-                if (Dal.OrderItem.GetAll(OrderItem => OrderItem.Value.OrderId == order?.Id).Any(orderItem => orderItem.Value.ProductId != id))//If the product is not in the list of order details in the basket
-                {
-                    Dal?.Product.Delete(id);
-                    return;
-                }
-                else
-                    throw new BO.NotExiestsExceptions("This product appears on orders");
-            }
+            var orderItemD = (from order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests")
+                              from orderItem in Dal.OrderItem.GetAll()
+                              where order.Value.Id == orderItem.Value.OrderId && orderItem.Value.ProductId != id
+                              select orderItem).FirstOrDefault();
+            Dal.Product.Delete(orderItemD?.ProductId ?? throw new BO.NotExiestsExceptions("No such product exists at all//////"));
         }
         catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("No such product exists at all", str);
         }
+
+
+
+        //try
+        //{
+        //    foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests"))//Loop through all orders 
+        //    {
+        //        if (Dal.OrderItem.GetAll(OrderItem => OrderItem.Value.OrderId == order?.Id).Any(orderItem => orderItem.Value.ProductId != id))//If the product is not in the list of order details in the basket
+        //        {
+        //            Dal?.Product.Delete(id);
+        //            return;
+        //        }
+        //        else
+        //            throw new BO.NotExiestsExceptions("This product appears on orders");
+        //    }
+        //}
+        //catch (DO.NotFoundExceptions str)
+        //{
+        //    throw new BO.NotExiestsExceptions("No such product exists at all", str);
+        //}
     }
 
 

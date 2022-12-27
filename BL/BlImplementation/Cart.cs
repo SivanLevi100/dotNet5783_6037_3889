@@ -55,17 +55,24 @@ internal class Cart: BlApi.ICart
                 throw new BO.NotExiestsExceptions("The product does not exist or is out of stock");
         }
         else  //If the product appears in the shopping cart
-        {   
-            foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
-            {
-                if(orderItem?.ProductId == doProduct.Id && doProduct.InStock >= 0) //If this is the product and the quantity is greater than 0
-                {
-                    orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
-                    orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
-                    cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
-                    break;
-                }
-            }
+        {
+            BO.OrderItem? orderItem = (from item in cart1.OrdersItemsList
+                            where item.ProductId == doProduct.Id && doProduct.InStock >= 0
+                            select item).First();
+            orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
+            orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
+            cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+
+            //foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
+            //{
+            //    if(orderItem?.ProductId == doProduct.Id && doProduct.InStock >= 0) //If this is the product and the quantity is greater than 0
+            //    {
+            //        orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
+            //        orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
+            //        cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+            //        break;
+            //    }
+            //}
         }
         return cart1;
     }
@@ -81,6 +88,28 @@ internal class Cart: BlApi.ICart
         {
             throw new BO.NotExiestsExceptions("Product request failed", str);
         }
+
+        //var orderItem1 = (from item in cart1.OrdersItemsList
+        //                where item.ProductId == id && newAmount > item.AmountInOrder && doProduct.InStock >= 0
+        //                select item).First();
+        //orderItem1.AmountInOrder = newAmount;
+        //orderItem1.TotalPriceOfItem = doProduct.Price * orderItem1.AmountInOrder;
+        //cart1.TotalPrice = cart1.TotalPrice + orderItem1.TotalPriceOfItem;
+
+                         //var orderItem2 = (from item in cart1.OrdersItemsList
+                         //                 where item.ProductId == id && newAmount < item.AmountInOrder
+                         //                 select item).First();
+                         //orderItem2.AmountInOrder = newAmount;
+                         //orderItem2.TotalPriceOfItem = doProduct.Price * newAmount;
+                         //cart1.TotalPrice = cart1.TotalPrice + orderItem2.TotalPriceOfItem;
+
+                         //var orderItem3 = (from item in cart1.OrdersItemsList
+                         //                  where item?.ProductId == id && newAmount + item.AmountInOrder == 0
+                         //                  select item).First();
+
+                         //cart1.TotalPrice = cart1.TotalPrice - orderItem3.TotalPriceOfItem; //cart price update
+                         //cart1.OrdersItemsList.Remove(orderItem3);
+
         foreach (BO.OrderItem? orderItem in cart1?.OrdersItemsList ?? throw new BO.NotExiestsExceptions("The Cart is not exiests"))
         {
             if (orderItem?.ProductId == id && newAmount > orderItem.AmountInOrder) //If the amount increases

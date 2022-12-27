@@ -72,7 +72,7 @@ public class Program
                 switch (ch)
                 {
                     case 'c':
-                        foreach (var item in dal?.Product.GetAll()??throw new DO.DoesNotExistException("The List Of Product is not exists"))
+                        foreach (var item in dal?.Product.GetAll() ?? throw new DO.DoesNotExistException("The List Of Product is not exists"))
                         {
                             Console.WriteLine(item);
                         };

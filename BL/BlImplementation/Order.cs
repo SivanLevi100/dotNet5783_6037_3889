@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BlApi;
+using BO;
 using DalApi;
 
 namespace BlImplementation;
@@ -18,6 +19,9 @@ internal class Order : BlApi.IOrder
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
         BO.OrderStatus status1 = new BO.OrderStatus();
+
+       // var status2 = from order in Dal.Order.GetAll()
+
         foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The Order is not exiests")) 
         {
             if (order?.OrderDate != null) //The order has been created
@@ -28,18 +32,31 @@ internal class Order : BlApi.IOrder
                 status1 = BO.OrderStatus.delivered;
 
         }
-        var orderList = Dal?.Order.GetAll( item => item != null) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
-        foreach (DO.Order? item in orderList)
+        return Dal?.Order.GetAll().Select(item => new BO.OrderForList
         {
-            yield return new BO.OrderForList
-            {
-                OrderId = item?.Id ?? throw new BO.NotExiestsExceptions("The Order is not exiests"),
-                CustomerName = item?.CustomerName,
-                Status = status1,
-                AmountItems = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item?.Id).Sum(orderItem => orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"),
-                TotalPrice = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item?.Id).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
-            };
-        }
+            OrderId = item?.Id ?? throw new BO.NotExiestsExceptions("The Order is not exiests"),
+            CustomerName = item?.CustomerName,
+            Status = status1,
+            AmountItems = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item?.Id).Sum(orderItem => orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"),
+            TotalPrice = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item?.Id).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
+
+        }) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
+
+
+        //var orderList = Dal?.Order.GetAll( item => item != null) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
+        //foreach (DO.Order? item in orderList)
+        //{
+        //    yield return new BO.OrderForList
+        //    {
+        //        OrderId = item?.Id ?? throw new BO.NotExiestsExceptions("The Order is not exiests"),
+        //        CustomerName = item?.CustomerName,
+        //        Status = status1,
+        //        AmountItems = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item?.Id).Sum(orderItem => orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"),
+        //        TotalPrice = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item?.Id).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
+        //    };
+        //}
+
+
     }
 
     public BO.Order GetOrderDetails(int idOrder)
