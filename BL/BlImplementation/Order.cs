@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BlApi;
-using BO;
+//using BO;
 using DalApi;
 
 namespace BlImplementation;
@@ -16,87 +16,24 @@ internal class Order : BlApi.IOrder
 {
     private DalApi.IDal? Dal = DalApi.Factory.Get();
 
+
     public IEnumerable<BO.OrderForList> GetOrderList()
-    {
-        BO.OrderStatus status1 = new BO.OrderStatus();
-
-       // var status2 = from order in Dal.Order.GetAll()
-
-        foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The Order is not exiests")) 
-        {
-            if (order?.OrderDate != null) //The order has been created
-                status1 = BO.OrderStatus.Confirmed;
-            if (order?.ShipDate != null) //The order has been sent
-                status1 = BO.OrderStatus.shipped;
-            if (order?.DeliveryDate != null) //The order has been delivered
-                status1 = BO.OrderStatus.delivered;
-
-        }
-        return Dal?.Order.GetAll().Select(item => new BO.OrderForList
-        {
-            OrderId = item?.Id ?? throw new BO.NotExiestsExceptions("The Order is not exiests"),
-            CustomerName = item?.CustomerName,
-            Status = status1,
-            AmountItems = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item?.Id).Sum(orderItem => orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"),
-            TotalPrice = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item?.Id).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
-
-        }) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
-
-
-        //var orderList = Dal?.Order.GetAll( item => item != null) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
-        //foreach (DO.Order? item in orderList)
-        //{
-        //    yield return new BO.OrderForList
-        //    {
-        //        OrderId = item?.Id ?? throw new BO.NotExiestsExceptions("The Order is not exiests"),
-        //        CustomerName = item?.CustomerName,
-        //        Status = status1,
-        //        AmountItems = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item?.Id).Sum(orderItem => orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order"),
-        //        TotalPrice = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.Id == item?.Id).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiest in the order")
-        //    };
-        //}
-
-
-    }
-
-    public BO.Order GetOrderDetails(int idOrder)
     {
         try
         {
-            if (idOrder > 0)
-            {
-                BO.OrderStatus status1 = new BO.OrderStatus();
-                DO.Order orderDO = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");  
-                if (orderDO.OrderDate != null && orderDO.ShipDate == null && orderDO.DeliveryDate == null)//ההזמנה נוצרה
-                    status1 = BO.OrderStatus.Confirmed;
-                if (orderDO.OrderDate != null&& orderDO.ShipDate != null && orderDO.DeliveryDate == null)//ההזמנה נשלחה
-                    status1 = BO.OrderStatus.shipped;
-                if (orderDO.OrderDate != null&& orderDO.ShipDate != null && orderDO.DeliveryDate != null)//ההזמנה נמסרה
-                    status1 = BO.OrderStatus.delivered;
-                double sumOfPrices = 0;
-                IEnumerable<DO.OrderItem?>? orderItemListDo = Dal.OrderItem.GetAll(orderitem =>orderitem.Value.OrderId == idOrder);
-                foreach (DO.OrderItem orderItem in orderItemListDo)
-                {
-                    sumOfPrices += orderItem.Price * orderItem.Amount;
-                }
+            return from item in Dal?.Order.GetAll()
+                   where item != null
+                   let order = ((DO.Order)item)!
+                   let listOrderItems = Dal!.OrderItem.GetAll(o => ((DO.OrderItem)o!).OrderId == order.Id).Cast<DO.OrderItem>()
+                   select new BO.OrderForList
+                   {
+                       OrderId = order.Id,
+                       CustomerName = order.CustomerName,
+                       AmountItems = (from orderitem in listOrderItems select orderitem).Count(),
+                       TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
+                       Status = statusFromDate(order)
+                   };
 
-                BO.Order order = new BO.Order
-                {
-                    Id = orderDO.Id,
-                    CustomerName = orderDO.CustomerName,
-                    CustomerAdress = orderDO.CustomerAdress,
-                    CustomerEmail = orderDO.CustomerEmail,
-                    OrderDate = orderDO.OrderDate,
-                    ShipDate = orderDO.ShipDate,
-                    DeliveryDate = orderDO.DeliveryDate,
-                    Status = status1,
-                    TotalPrice = sumOfPrices,
-                    OrdersItemsList = getDOlistOfOrderItem(orderDO.Id)
-                };
-                return order;
-            }
-            else
-                throw new BO.NotExiestsExceptions("Order request failed");
         }
         catch (DO.NotFoundExceptions str)
         {
@@ -105,14 +42,45 @@ internal class Order : BlApi.IOrder
 
     }
 
+    public BO.Order GetOrderDetails(int idOrder)
+    {
+        if (idOrder < 0) throw new BO.IncorrectDataExceptions("id order is invalid");
+
+        try
+        {
+            return from item in Dal?.Order.GetAll()
+                   where item != null
+                   let order = ((DO.Order)item)!
+                   let listOrderItems = Dal.OrderItem.GetAll(orderitem => orderitem?.OrderId == idOrder).Cast<DO.OrderItem>()
+                   select new BO.Order
+                   {
+                       Id = order.Id,
+                       CustomerName = order.CustomerName,
+                       CustomerAdress = order.CustomerAdress,
+                       CustomerEmail = order.CustomerEmail,
+                       OrderDate = order.OrderDate,
+                       ShipDate = order.ShipDate,
+                       DeliveryDate = order.DeliveryDate,
+                       Status = statusFromDate(order),
+                       TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
+                       OrdersItemsList = listOrderItems
+                   };
+
+
+        }
+        catch (DO.NotFoundExceptions str)
+        {
+            throw new BO.NotExiestsExceptions("Order request failed", str);
+        }
+    }
+
     public BO.Order UpdateDelivery(int idOrder)//Order delivery update
     {
         DO.Order orderDO;
-        if (idOrder <= 0)
-            throw new BO.IncorrectDataExceptions("Order id is incorrect");
+        if (idOrder <= 0) throw new BO.IncorrectDataExceptions("Order id is incorrect");
         try
         {
-            orderDO = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests"); 
+            orderDO = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
             if (orderDO.OrderDate != null && orderDO.DeliveryDate == null && orderDO.ShipDate != null) //The order was not delivered
             {
                 orderDO.DeliveryDate = DateTime.Now;
@@ -128,7 +96,8 @@ internal class Order : BlApi.IOrder
                     DeliveryDate = DateTime.Now,
                     Status = BO.OrderStatus.delivered,
                     OrdersItemsList = getDOlistOfOrderItem(idOrder),
-                    TotalPrice = Dal.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == idOrder).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount)
+                    TotalPrice = Dal.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderId == idOrder)
+                    .Sum(orderItem => ((DO.OrderItem)orderItem!).Price * ((DO.OrderItem)orderItem!).Amount)
                 };
                 return orderBO;
             }
@@ -150,8 +119,8 @@ internal class Order : BlApi.IOrder
             throw new BO.IncorrectDataExceptions("Order id is incorrect");
         try
         {
-            orderDO = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests"); 
-            if (orderDO.OrderDate != null && orderDO.ShipDate == null &&orderDO.DeliveryDate == null)//The order was not sent
+            orderDO = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
+            if (orderDO.OrderDate != null && orderDO.ShipDate == null && orderDO.DeliveryDate == null)//The order was not sent
             {
                 orderDO.ShipDate = DateTime.Now;
                 Dal?.Order.Update(orderDO); //Update in the data layer
@@ -166,8 +135,11 @@ internal class Order : BlApi.IOrder
                     DeliveryDate = orderDO.DeliveryDate,
                     Status = BO.OrderStatus.shipped,
                     OrdersItemsList = getDOlistOfOrderItem(idOrder),
-                    TotalPrice = Dal?.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == idOrder).Sum(orderItem => orderItem.Value.Price * orderItem.Value.Amount) ?? throw new BO.NotExiestsExceptions("The Order is not exiests")  
+                    TotalPrice = Dal?.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderId == idOrder)
+                    .Sum(orderItem => ((DO.OrderItem)orderItem!).Price * ((DO.OrderItem)orderItem!).Amount)
+                    ?? throw new BO.NotExiestsExceptions("The Order is not exiests")
                 };
+
                 return orderBO;
             }
             else
@@ -178,58 +150,54 @@ internal class Order : BlApi.IOrder
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
     }
-  
+
     public BO.OrderTracking Tracking(int idOrder) //Order Tracking
     {
         if (idOrder <= 0)
             throw new BO.IncorrectDataExceptions("Order id is incorrect");
 
-        DO.Order orderTracking = new DO.Order();
+        DO.Order order = new DO.Order();
         try
         {
-            orderTracking = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests"); 
+            order = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
         }
         catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Order request failed", str);
         }
-        //List<Tuple<DateTime?, string?>>? track = new();
         List<Tuple<DateTime?, string>> track = new List<Tuple<DateTime?, string>>();
-        BO.OrderStatus status1= new BO.OrderStatus();
-        if (orderTracking.OrderDate != null)//The order has been created
+        if (order.DeliveryDate != null)//The order has been delivered
         {
-            track.Add(Tuple.Create(orderTracking.OrderDate, "The order has been created"));
-            status1 = BO.OrderStatus.Confirmed;
+            track.Add(Tuple.Create(order.DeliveryDate, "The order has been delivered"));
         }
-        if (orderTracking.ShipDate != null)//The order has been sent
+        if (order.ShipDate != null)//The order has been sent
         {
-            track.Add(Tuple.Create(orderTracking.ShipDate, "The order has been sent"));
-            status1 = BO.OrderStatus.shipped;
+            track.Add(Tuple.Create(order.ShipDate, "The order has been sent"));
         }
-        if (orderTracking.DeliveryDate != null)//The order has been delivered
+        if (order.OrderDate != null)//The order has been created
         {
-            track.Add(Tuple.Create(orderTracking.DeliveryDate, "The order has been delivered"));
-            status1 = BO.OrderStatus.delivered;
+            track.Add(Tuple.Create(order.OrderDate, "The order has been created"));
         }
-        return new BO.OrderTracking  
+
+        return new BO.OrderTracking
         {
             OrderId = idOrder,
-            Status = status1,
+            Status = statusFromDate(order),
             Tracking = track,
         };
     }
 
 
     //Helper function to return a list of order details
-    public List<BO.OrderItem?>? getDOlistOfOrderItem(int id)
+    private List<BO.OrderItem?>? getDOlistOfOrderItem(int id)
     {
-        List<BO.OrderItem?>? listBo=new List<BO.OrderItem>();
+        List<BO.OrderItem?>? listBo = new();
         foreach (DO.OrderItem doOrderItem in Dal?.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests"))
         {
             listBo.Add(new BO.OrderItem
             {
                 Id = doOrderItem.Id,
-                NameProduct=Dal.Product.Get(doOrderItem.Id).Value.Name,
+                NameProduct = Dal.Product.Get(doOrderItem.Id).Value.Name,
                 ProductId = doOrderItem.ProductId,
                 Price = doOrderItem.Price,
                 AmountInOrder = doOrderItem.Amount,
@@ -239,5 +207,21 @@ internal class Order : BlApi.IOrder
         }
         return listBo;
     }
+
+    private BO.OrderStatus statusFromDate(DO.Order order)
+    {
+
+        if (order.DeliveryDate != null) //The order has been delivered
+            return BO.OrderStatus.delivered;
+
+        if (order.ShipDate != null) //The order has been sent
+            return BO.OrderStatus.shipped;
+
+        if (order.OrderDate != null) //The order has been created
+            return BO.OrderStatus.Confirmed;
+
+        return BO.OrderStatus.Unknown;
+    }
+
 
 }

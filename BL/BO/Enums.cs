@@ -21,5 +21,6 @@ public enum OrderStatus
 {
     Confirmed,
     shipped,
-    delivered
+    delivered,
+    Unknown
 }

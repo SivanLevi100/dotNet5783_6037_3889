@@ -67,7 +67,7 @@ internal class DalProduct : IProduct
         (filter == null ? ds.ProductList?.Select(item => item)
         : ds.ProductList?.Where(item => filter(item))
         ?? throw new DoesNotExistException("Missing product"))
-        ?? throw new DataCorruptionException("Missing product list");
+        ?? throw new DoesNotExistException("Missing product list");
 
 
 

@@ -19,36 +19,43 @@ internal class Product : BlApi.IProduct
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {
-        return Dal?.Product.GetAll().Select(product => new BO.ProductForList
+        try
         {
-            IdProduct = product?.Id ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
-            Name = product?.Name ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
-            Price = product?.Price ?? throw new BO.NotExiestsExceptions("The Product is not exiests"),
-            Category = (BO.Category?)product?.Category ?? throw new BO.NotExiestsExceptions("The Product is not exiests") ?? throw new BO.NotExiestsExceptions("Category is Unavailable")
-        }) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
+            return from item in Dal?.Product.GetAll()
+                   where item != null
+                   let product = ((DO.Product)item)!
+                   select new BO.ProductForList
+                   {
+                       IdProduct = product.Id,
+                       Name = product.Name,
+                       Price = product.Price,
+                       Category = (BO.Category?)product.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable")
+                   };
+        }
+        catch (DO.DoesNotExistException str)
+        {
+            throw new BO.IncorrectDataExceptions("Product request failed", str);
+        }
 
     }
 
 
     public BO.Product GetProductDetailsManager(int id)
     {
+        if (id < 0) throw new BO.IncorrectDataExceptions("id order is invalid");
+
         try
         {
-            if (id > 0)
+            DO.Product productOfDo = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
+            BO.Product product = new BO.Product
             {
-                DO.Product productOfDo = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests"); 
-                BO.Product product = new BO.Product
-                {
-                    Id = productOfDo.Id,
-                    Name = productOfDo.Name,
-                    Category = (BO.Category?)productOfDo.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
-                    Price = productOfDo.Price,
-                    InStock = productOfDo.InStock,
-                };
-                return product;
-            }
-            else
-                throw new BO.NotExiestsExceptions("Product request failed");
+                Id = productOfDo.Id,
+                Name = productOfDo.Name,
+                Category = (BO.Category?)productOfDo.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
+                Price = productOfDo.Price,
+                InStock = productOfDo.InStock,
+            };
+            return product;
         }
         catch (DO.NotFoundExceptions str)
         {
@@ -59,25 +66,21 @@ internal class Product : BlApi.IProduct
 
     public BO.ProductItem GetProductDetailsBuyer(int id, BO.Cart cart)
     {
+        if (id < 0) throw new BO.IncorrectDataExceptions("id order is invalid");
+
         try
         {
-            if (id > 0)
+            DO.Product productOfDO = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
+            BO.ProductItem productItem = new BO.ProductItem
             {
-                DO.Product productOfDO = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests"); 
-                BO.ProductItem productItem = new BO.ProductItem
-                {
-                    IdProduct = productOfDO.Id,
-                    Name = productOfDO.Name,
-                    Category = (BO.Category?)productOfDO.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
-                    IsAvailable = (productOfDO.InStock > 0) ? true : false,
-                    AmountInCart = cart?.OrdersItemsList?.FindAll(orderItem => orderItem?.ProductId == id).Count()?? throw new BO.NotExiestsExceptions("The list of order items in the shopping cart is null"), 
-                    Price = productOfDO.Price
-                };
-                return productItem;
-            }
-            else
-                throw new BO.NotExiestsExceptions("Product request failed");
-
+                IdProduct = productOfDO.Id,
+                Name = productOfDO.Name,
+                Category = (BO.Category?)productOfDO.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
+                IsAvailable = (productOfDO.InStock > 0) ? true : false,
+                AmountInCart = cart?.OrdersItemsList?.FindAll(orderItem => orderItem?.ProductId == id).Count() ?? throw new BO.NotExiestsExceptions("The list of order items in the shopping cart is null"),
+                Price = productOfDO.Price
+            };
+            return productItem;
         }
         catch (DO.NotFoundExceptions str)
         {
@@ -115,11 +118,13 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            var orderItemD = (from order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests")
-                              from orderItem in Dal.OrderItem.GetAll()
-                              where order.Value.Id == orderItem.Value.OrderId && orderItem.Value.ProductId != id
+            var orderItemD = (from item in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests")
+                              let order = ((DO.Order)item)!
+                              from item1 in Dal.OrderItem.GetAll()
+                              let orderItem = ((DO.OrderItem)item1)!
+                              where order.Id == orderItem.OrderId && orderItem.ProductId != id
                               select orderItem).FirstOrDefault();
-            Dal.Product.Delete(orderItemD?.ProductId ?? throw new BO.NotExiestsExceptions("No such product exists at all//////"));
+            Dal.Product.Delete(orderItemD.ProductId);
         }
         catch (DO.NotFoundExceptions str)
         {
