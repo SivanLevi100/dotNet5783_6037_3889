@@ -20,6 +20,7 @@ internal class Order : BlApi.IOrder
 
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
+
         try
         {
             return from item in Dal?.Order.GetAll()
@@ -31,6 +32,7 @@ internal class Order : BlApi.IOrder
                        OrderId = order.Id,
                        CustomerName = order.CustomerName,
                        AmountItems = (from orderitem in listOrderItems select orderitem).Count(),
+                       /*(from orderitem in listOrderItems select orderitem).Sum(or => or.Amount)*/
                        TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
                        Status = statusFromDate(order)
                    };
@@ -47,31 +49,31 @@ internal class Order : BlApi.IOrder
     {
         
         if (idOrder < 0) throw new BO.IncorrectDataExceptions("id order is invalid");
-        //return new BO.Order();
-        try
-        {
-            return from item in Dal?.Order.GetAll()
-                   where item != null
-                   let order = ((DO.Order)item)!
-                   let listOrderItems = Dal.OrderItem.GetAll(orderitem => orderitem?.OrderId == idOrder).Cast<DO.OrderItem>()
-                   select new BO.Order
-                   {
-                       Id = order.Id,
-                       CustomerName = order.CustomerName,
-                       CustomerAdress = order.CustomerAdress,
-                       CustomerEmail = order.CustomerEmail,
-                       OrderDate = order.OrderDate,
-                       ShipDate = order.ShipDate,
-                       DeliveryDate = order.DeliveryDate,
-                       Status = statusFromDate(order),
-                       TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
-                       OrdersItemsList = //getBOlistOfOrderItem
-                   };
-        }
-        catch (DO.NotFoundExceptions str)
-        {
-            throw new BO.NotExiestsExceptions("Order request failed", str);
-        }
+        return new BO.Order();
+        //try
+        //{
+        //    return from item in Dal?.Order.GetAll()
+        //           where item != null
+        //           let order = ((DO.Order)item)!
+        //           let listOrderItems = Dal.OrderItem.GetAll(orderitem => orderitem?.OrderId == idOrder).Cast<DO.OrderItem>()
+        //           select new BO.Order
+        //           {
+        //               Id = order.Id,
+        //               CustomerName = order.CustomerName,
+        //               CustomerAdress = order.CustomerAdress,
+        //               CustomerEmail = order.CustomerEmail,
+        //               OrderDate = order.OrderDate,
+        //               ShipDate = order.ShipDate,
+        //               DeliveryDate = order.DeliveryDate,
+        //               Status = statusFromDate(order),
+        //               TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
+        //               OrdersItemsList = //getBOlistOfOrderItem
+        //           };
+        //}
+        //catch (DO.NotFoundExceptions str)
+        //{
+        //    throw new BO.NotExiestsExceptions("Order request failed", str);
+        //}
     }
 
     public BO.Order UpdateDelivery(int idOrder)//Order delivery update
