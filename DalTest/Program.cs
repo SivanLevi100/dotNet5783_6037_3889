@@ -352,13 +352,13 @@ public class Program
                         idOrderItem1 = int.Parse(Console.ReadLine() ?? "0");
                         Console.WriteLine("please enter: Id of product");
                         idOrderItem2 = int.Parse(Console.ReadLine() ?? "0");
-                        myOrderItem = dal?.OrderItem.GetF(orderItem => orderItem.Value.ProductId == idOrderItem1 && orderItem.Value.ProductId == idOrderItem2) ?? throw new DO.DoesNotExistException("The OrderItem is not exiests");
+                        myOrderItem = dal?.OrderItem.GetF(orderItem => ((DO.OrderItem)orderItem!).OrderId == idOrderItem1 && ((DO.OrderItem)orderItem!).ProductId == idOrderItem2) ?? throw new DO.DoesNotExistException("The OrderItem is not exiests");
                         Console.WriteLine(myOrderItem);
                         break;
                     case 'g':
                         Console.WriteLine("please enter: Id of order");
                         int id = int.Parse(Console.ReadLine() ?? "0");
-                        foreach (OrderItem item in dal?.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == id) ?? throw new DO.DoesNotExistException("The OrderItem is not exiests"))
+                        foreach (OrderItem item in dal?.OrderItem.GetAll(orderItem =>((DO.OrderItem)orderItem!).OrderId == id) ?? throw new DO.DoesNotExistException("The OrderItem is not exiests"))
                         {
                             Console.WriteLine(item);
                         };

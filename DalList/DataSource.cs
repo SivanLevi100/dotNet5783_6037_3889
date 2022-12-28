@@ -6,6 +6,7 @@
 //using System.Reflection;
 //using System.Security.Cryptography;
 
+using DalApi;
 using DO;
 namespace Dal;
 
@@ -130,21 +131,36 @@ internal sealed class DataSource
     {
         for (int i = 0; i < 40; i++)
         {
+            DO.Product product1 = (DO.Product)ProductList[random.Next(ProductList.Count)]!;
+            DO.Order order1 = (DO.Order)OrderList[random.Next(OrderList.Count)]!;
+
             OrderItem orderItem = new OrderItem();
             orderItem.Id = Config.OrderItemLastId;
-            orderItem.ProductId = random.Next();
-            orderItem.OrderId = random.Next();
+            orderItem.ProductId = product1.Id;
+            orderItem.OrderId = order1.Id;
             orderItem.Amount = random.Next(1, 5);
-            foreach (Product product in ProductList)
-            {
-                if (product.Id == orderItem.ProductId)
-                {
-                    orderItem.Price = product.Price * orderItem.Amount;
-                    break;
-                }
-            }
+            orderItem.Price = product1.Price;
+
             OrderItemList.Add(orderItem);
         }
+
+        //for (int i = 0; i < 40; i++)
+        //{
+        //    OrderItem orderItem = new OrderItem();
+        //    orderItem.Id = Config.OrderItemLastId;
+        //    orderItem.ProductId = random.Next();
+        //    orderItem.OrderId = random.Next();
+        //    orderItem.Amount = random.Next(1, 5);
+        //    foreach (Product product in ProductList)
+        //    {
+        //        if (product.Id == orderItem.ProductId)
+        //        {
+        //            orderItem.Price = product.Price * orderItem.Amount;
+        //            break;
+        //        }
+        //    }
+        //    OrderItemList.Add(orderItem);
+        //}
     }
 
 

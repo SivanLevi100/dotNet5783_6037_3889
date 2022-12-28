@@ -47,33 +47,33 @@ internal class Order : BlApi.IOrder
 
     public BO.Order GetOrderDetails(int idOrder)
     {
-        
+        //return new BO.Order();
+
         if (idOrder < 0) throw new BO.IncorrectDataExceptions("id order is invalid");
-        return new BO.Order();
-        //try
-        //{
-        //    return from item in Dal?.Order.GetAll()
-        //           where item != null
-        //           let order = ((DO.Order)item)!
-        //           let listOrderItems = Dal.OrderItem.GetAll(orderitem => orderitem?.OrderId == idOrder).Cast<DO.OrderItem>()
-        //           select new BO.Order
-        //           {
-        //               Id = order.Id,
-        //               CustomerName = order.CustomerName,
-        //               CustomerAdress = order.CustomerAdress,
-        //               CustomerEmail = order.CustomerEmail,
-        //               OrderDate = order.OrderDate,
-        //               ShipDate = order.ShipDate,
-        //               DeliveryDate = order.DeliveryDate,
-        //               Status = statusFromDate(order),
-        //               TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
-        //               OrdersItemsList = //getBOlistOfOrderItem
-        //           };
-        //}
-        //catch (DO.NotFoundExceptions str)
-        //{
-        //    throw new BO.NotExiestsExceptions("Order request failed", str);
-        //}
+        try
+        {
+            return from item in Dal?.Order.GetAll()
+                   where item != null
+                   let order = ((DO.Order)item)!
+                   let listOrderItems = Dal.OrderItem.GetAll(orderitem => orderitem?.OrderId == idOrder).Cast<DO.OrderItem>()
+                   select new BO.Order
+                   {
+                       Id = order.Id,
+                       CustomerName = order.CustomerName,
+                       CustomerAdress = order.CustomerAdress,
+                       CustomerEmail = order.CustomerEmail,
+                       OrderDate = order.OrderDate,
+                       ShipDate = order.ShipDate,
+                       DeliveryDate = order.DeliveryDate,
+                       Status = statusFromDate(order),
+                       TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
+                       OrdersItemsList = //getBOlistOfOrderItem()
+                   };
+        }
+        catch (DO.NotFoundExceptions str)
+        {
+            throw new BO.NotExiestsExceptions("Order request failed", str);
+        }
     }
 
     public BO.Order UpdateDelivery(int idOrder)//Order delivery update
@@ -104,8 +104,7 @@ internal class Order : BlApi.IOrder
                 return orderBO;
             }
             else
-                throw new BO.NotExiestsExceptions("The Order request faile");
-
+                throw new BO.NotExiestsExceptions("The order has not been sent so it is not possible to update order delivery\n");
         }
         catch (DO.NotFoundExceptions str)
         {
@@ -145,7 +144,7 @@ internal class Order : BlApi.IOrder
                 return orderBO;
             }
             else
-                throw new BO.NotExiestsExceptions("The Order request faile");
+                throw new BO.NotExiestsExceptions("The order has been delivered so it is not possible to update shipping\n");
         }
         catch (DO.NotFoundExceptions str)
         {
@@ -191,9 +190,9 @@ internal class Order : BlApi.IOrder
 
 
     //Helper function to return a list of order details
-    private List<BO.OrderItem> getBOlistOfOrderItem(int id)
+    private List<BO.OrderItem?>? getBOlistOfOrderItem(int id)
     {
-        List<BO.OrderItem> listBo = new();
+        List<BO.OrderItem?>? listBo = new();
         foreach (DO.OrderItem doOrderItem in Dal?.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests"))
         {
             listBo.Add(new BO.OrderItem
