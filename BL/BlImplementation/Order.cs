@@ -192,7 +192,9 @@ internal class Order : BlApi.IOrder
     //Helper function to return a list of order details
     private List<BO.OrderItem?>? getBOlistOfOrderItem(int id)
     {
+
         List<BO.OrderItem?>? listBo = new();
+
         foreach (DO.OrderItem doOrderItem in Dal?.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests"))
         {
             listBo.Add(new BO.OrderItem
