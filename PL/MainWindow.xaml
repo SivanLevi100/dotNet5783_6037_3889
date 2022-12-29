@@ -8,7 +8,12 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button Content="Enter" HorizontalAlignment="Left" Margin="368,167,0,0" VerticalAlignment="Top" Click="ShowProductButton_Click"/>
+        <Button Content="Admin" Background="Azure" FontSize="20" HorizontalAlignment="Left" Margin="90,97,0,0" VerticalAlignment="Top" Height="39" Width="88" Click="AdminButton_Click"/>
+        <Button Content="New Order" Background="Azure" FontSize="20" HorizontalAlignment="Left" Margin="36,188,0,0" VerticalAlignment="Top" Height="42" Width="196" Click="NewOrderButton_Click"/>
+        <ComboBox x:Name="NumberOfOrder" HorizontalAlignment="Left" Margin="617,96,0,0" VerticalAlignment="Top" Width="149" Height="39" SelectionChanged="NumberOfOrder_SelectionChanged"/>
+        <Label Content="Number Of Order:" FontSize="16" HorizontalAlignment="Left" Margin="470,98,0,0" VerticalAlignment="Top" Height="37" Width="142"/>
+        <Button Content="Track" Background="Azure" FontSize="20" HorizontalAlignment="Left" Margin="541,157,0,0" VerticalAlignment="Top" Height="50" Width="127" Click="TrackButton_Click"/>
 
     </Grid>
-    
+
 </Window>

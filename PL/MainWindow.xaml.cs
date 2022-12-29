@@ -32,5 +32,23 @@ public partial class MainWindow : Window
     //Pressing the enter button - opening a product list window
     private void ShowProductButton_Click(object sender, RoutedEventArgs e) => new ProductListWindow().Show();
 
+    private void AdminButton_Click(object sender, RoutedEventArgs e)
+    {
 
+    }
+
+    private void NewOrderButton_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void NumberOfOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
+
+    private void TrackButton_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
 }
