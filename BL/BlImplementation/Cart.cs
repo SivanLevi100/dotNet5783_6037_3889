@@ -66,7 +66,7 @@ internal class Cart : BlApi.ICart
 
             //foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
             //{
-            //    if(orderItem?.ProductId == doProduct.Id && doProduct.InStock >= 0) //If this is the product and the quantity is greater than 0
+            //    if (orderItem?.ProductId == doProduct.Id && doProduct.InStock >= 0) //If this is the product and the quantity is greater than 0
             //    {
             //        orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
             //        orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
@@ -202,7 +202,7 @@ internal class Cart : BlApi.ICart
                                     Price = item.Price,
                                     Amount = item.AmountInOrder
                                 };
-            Dal?.OrderItem.Add();///////////////
+           // Dal?.OrderItem.Add();///////////////
         }
         catch (DO.DuplicateIdExceptions str)
         {
