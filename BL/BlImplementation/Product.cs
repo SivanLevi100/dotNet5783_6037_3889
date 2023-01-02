@@ -39,6 +39,31 @@ internal class Product : BlApi.IProduct
 
     }
 
+    public IEnumerable<BO.ProductItem?> GetProductItemList()
+    {
+        try
+        {
+            return from item in Dal?.Product.GetAll()
+                   where item != null
+                   let product = ((DO.Product)item)!
+                   select new BO.ProductItem
+                   {
+                       IdProduct = product.Id,
+                       Name = product.Name,
+                       Price = product.Price,
+                       Category = (BO.Category?)product.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
+                       IsAvailable = product.InStock > 0? true : false,
+                       AmountInCart = 5////////////////////////////????????/????????
+                   };
+        }
+        catch (DO.DoesNotExistException str)
+        {
+            throw new BO.IncorrectDataExceptions("Product request failed", str);
+        }
+
+
+    }
+
 
     public BO.Product GetProductDetailsManager(int id)
     {

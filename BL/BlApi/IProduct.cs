@@ -49,5 +49,6 @@ public interface IProduct
     /// <param name="product1"></param>
     public void Update(BO.Product product1);
 
+    public IEnumerable<BO.ProductItem?> GetProductItemList();
 
 }

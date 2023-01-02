@@ -8,11 +8,41 @@
         Title="OrderWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="342*"/>
+            <RowDefinition Height="Auto" MinHeight="67.04"/>
         </Grid.RowDefinitions>
-        <Label Content="ID:" Grid.Row="1" HorizontalAlignment="Left" Margin="76,37,0,0" VerticalAlignment="Top" Width="34" Height="29"/>
+        <Label Content="ID:" Grid.Row="1" HorizontalAlignment="Left" Margin="89,32,0,0" VerticalAlignment="Top" Width="34" Height="29"/>
+        <Label Content="Customer Name:"  HorizontalAlignment="Left" Margin="76,66,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="99"/>
+        <Label Content="Customer Email:" HorizontalAlignment="Left" Margin="60,97,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="95"/>
+        <Label Content="Customer Adress:" HorizontalAlignment="Left" Margin="60,123,0,0" Grid.Row="1" VerticalAlignment="Top" Height="24" Width="103"/>
+        <Label Content="Order Date:" HorizontalAlignment="Left" Margin="70,0,0,0" Grid.Row="1" VerticalAlignment="Center" Height="26" Width="72"/>
+        <Label Content="Ship Date:" HorizontalAlignment="Left" Margin="68,192,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="64"/>
+        <Label Content="Delivery Date:" HorizontalAlignment="Left" Margin="58,223,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="84"/>
+        <Label Content="Status:" HorizontalAlignment="Left" Margin="76,268,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="45"/>
+        <Label Content="Total Price" HorizontalAlignment="Left" Margin="315,24,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="64"/>
+        <Label Content="OrdersItem List:" HorizontalAlignment="Left" Margin="315,59,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="122"/>
+        <TextBox x:Name="txtId"  HorizontalAlignment="Left" Margin="163,32,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtCustomerName" HorizontalAlignment="Left" Margin="180,74,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtCustomerEmail" HorizontalAlignment="Left" Margin="180,105,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtCustomerAdress" HorizontalAlignment="Left" Margin="180,129,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtShipDate" HorizontalAlignment="Left" Margin="163,192,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtOrderDate" HorizontalAlignment="Left" Margin="175,158,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtDeliveryDate" HorizontalAlignment="Left" Margin="180,236,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" TextChanged="txtDeliveryDate_TextChanged"/>
+        <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Margin="163,276,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtTotalPrice" HorizontalAlignment="Left" Margin="437,24,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <ListView x:Name="OrdersItemListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="432,62,93,123">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="UpdateOrderDate"  Content="Update Date of Order"  HorizontalAlignment="Left" Margin="588,289,0,0" Grid.Row="1" VerticalAlignment="Top" Click="UpdateDateOrderButton_Click"/>
+        <Button x:Name="UpdateShiping" Content="Update Shiping date" HorizontalAlignment="Left" Margin="437,275,0,0" Grid.Row="1" VerticalAlignment="Top" Height="24" Width="120" Click="UpdateShipingButton_Click"/>
+        <Button x:Name="UpdateDelivery" Content="Update Delivery date" HorizontalAlignment="Left" Margin="437,312,0,0" Grid.Row="1" VerticalAlignment="Top" Click="UpdateDelivery_Click"/>
+
+
 
     </Grid>
 </Window>

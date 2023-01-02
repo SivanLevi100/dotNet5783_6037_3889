@@ -1,4 +1,5 @@
-﻿using PL.Product;
+﻿using PL.Order;
+using PL.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,12 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        IEnumerable<int> orderForLists1 = new List<int>();
+        orderForLists1 =  from item in bl?.Order.GetOrderList()
+                          where item != null
+                          select item.OrderId;
+        NumberOfOrder.ItemsSource = orderForLists1;
+
     }
 
     //Pressing the enter button - opening a product list window
@@ -34,7 +41,8 @@ public partial class MainWindow : Window
 
     private void AdminButton_Click(object sender, RoutedEventArgs e)
     {
-
+        OrderList.Visibility = Visibility.Visible;
+        ProductList.Visibility = Visibility.Visible;
     }
 
     private void NewOrderButton_Click(object sender, RoutedEventArgs e)
@@ -42,13 +50,18 @@ public partial class MainWindow : Window
 
     }
 
-    private void NumberOfOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
-
     private void TrackButton_Click(object sender, RoutedEventArgs e)
     {
+        //פותח חלון מעקב הזמנות
+    }
 
+    private void OrderList_Click(object sender, RoutedEventArgs e)
+    {
+        new OrderListWindow().Show();
+    }
+
+    private void ProductList_Click(object sender, RoutedEventArgs e)
+    {
+        new ProductListWindow().Show();
     }
 }

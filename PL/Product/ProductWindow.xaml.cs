@@ -26,6 +26,7 @@ namespace PL.Product;
 public partial class ProductWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
+  //  public BO.Product? Product { get; set; }
 
     //Builder for the add product window
     public ProductWindow()

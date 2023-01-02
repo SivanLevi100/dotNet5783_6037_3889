@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,17 +12,77 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
-namespace PL.Order
+namespace PL.Order;
+
+
+public partial class OrderWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for OrderWindow.xaml
-    /// </summary>
-    public partial class OrderWindow : Window
+    private BlApi.IBl? bl = BlApi.Factory.Get();
+
+    public OrderWindow(int id)
     {
-        public OrderWindow()
+        InitializeComponent();
+        try
         {
-            InitializeComponent();
+            UpdateShiping.Visibility = Visibility.Hidden;
+            UpdateDelivery.Visibility = Visibility.Hidden;
+            BO.Order order = bl?.Order.GetOrderDetails(id);
+            txtId.Text = order.Id.ToString();
+            txtCustomerName.Text = order.CustomerName;
+            txtCustomerEmail.Text = order.CustomerEmail;
+            txtCustomerAdress.Text = order.CustomerAdress;
+            txtOrderDate.Text = order.OrderDate.ToString();
+            txtShipDate.Text = order.ShipDate.ToString();
+            txtDeliveryDate.Text = order.DeliveryDate.ToString();
+            txtStatus.Text= order.Status.ToString();
+            txtTotalPrice.Text = order.TotalPrice.ToString();
+            OrdersItemListView.ItemsSource = bl.Order.GetOrderList(id);//צריך להוסיף בשכבה הלוגית בפונקציה של רשימת הזמנות ביטוי עם פילטר 
+            txtId.IsEnabled = false;
+            txtCustomerName.IsEnabled = false;
+            txtCustomerEmail.IsEnabled = false;
+            txtCustomerAdress.IsEnabled = false;
+            txtOrderDate.IsEnabled = false;
+            txtShipDate.IsEnabled = false;
+            txtDeliveryDate.IsEnabled = false;
+            txtStatus.IsEnabled = false;
+            txtTotalPrice.IsEnabled = false;
+
         }
+        catch (IncorrectDataExceptions str)
+        {
+            MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            Close();
+        }
+
+
+    }
+
+    private void UpdateDateOrderButton_Click(object sender, RoutedEventArgs e)
+    {
+        txtShipDate.IsEnabled = true;
+        txtDeliveryDate.IsEnabled = true;
+        UpdateDelivery.Visibility = Visibility.Visible;
+        UpdateShiping.Visibility= Visibility.Visible;
+ 
+    }
+
+    //private void UpdateDelivery(object sender, RoutedEventArgs e)
+    //{
+    //    bl.Order.UpdateDelivery(int.Parse(txtId.Text));
+    //    MessageBox.Show("update delivery date");
+    //    Close();
+    //}
+
+    private void UpdateShipingButton_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void UpdateDelivery_Click(object sender, RoutedEventArgs e)
+    {
+
+
     }
 }
