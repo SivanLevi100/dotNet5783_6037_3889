@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        Title="ProductListWindow" Height="640" Width="800">
-
+        Title="ProductListWindow" Height="640" Width="800"
+        DataContext="{Binding ProductList, RelativeSource={RelativeSource Mode=Self}}">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Content="Catgegory:" HorizontalAlignment="Left" Margin="56,0,0,0" VerticalAlignment="Top" Grid.Column="0"/>
-            <ComboBox Name="CatgegorySelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CatgegorySelector_SelectionChanged"/>
+            <ComboBox Name="CatgegorySelector"  HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1"  SelectionChanged="CatgegorySelector_SelectionChanged"/>
 
         </Grid>
         <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="ButtonAddNewProduct_Click"/>

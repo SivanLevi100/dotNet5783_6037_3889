@@ -21,40 +21,55 @@ public partial class OrderWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
 
+    public static readonly DependencyProperty OrderDependency = DependencyProperty.Register(nameof(Order), typeof(BO.Order), typeof(Window));
+    public BO.Order? Order { get => (BO.Order)GetValue(OrderDependency); private set => SetValue(OrderDependency, value); }
+
     public OrderWindow(int id)
     {
-        InitializeComponent();
         try
         {
-            UpdateShiping.Visibility = Visibility.Hidden;
-            UpdateDelivery.Visibility = Visibility.Hidden;
-            BO.Order order = bl?.Order.GetOrderDetails(id);
-            txtId.Text = order.Id.ToString();
-            txtCustomerName.Text = order.CustomerName;
-            txtCustomerEmail.Text = order.CustomerEmail;
-            txtCustomerAdress.Text = order.CustomerAdress;
-            txtOrderDate.Text = order.OrderDate.ToString();
-            txtShipDate.Text = order.ShipDate.ToString();
-            txtDeliveryDate.Text = order.DeliveryDate.ToString();
-            txtStatus.Text= order.Status.ToString();
-            txtTotalPrice.Text = order.TotalPrice.ToString();
-            OrdersItemListView.ItemsSource = bl.Order.GetOrderList(id);//צריך להוסיף בשכבה הלוגית בפונקציה של רשימת הזמנות ביטוי עם פילטר 
-            txtId.IsEnabled = false;
-            txtCustomerName.IsEnabled = false;
-            txtCustomerEmail.IsEnabled = false;
-            txtCustomerAdress.IsEnabled = false;
-            txtOrderDate.IsEnabled = false;
-            txtShipDate.IsEnabled = false;
-            txtDeliveryDate.IsEnabled = false;
-            txtStatus.IsEnabled = false;
-            txtTotalPrice.IsEnabled = false;
-
+            Order = id == 0 ? new() : bl.Order.GetOrderDetails(id);
+            InitializeComponent();
         }
-        catch (IncorrectDataExceptions str)
+        catch (BO.IncorrectDataExceptions ex)
         {
-            MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             Close();
+            MessageBox.Show(ex.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
+
+        //InitializeComponent();
+
+        //try
+        //{
+        //    UpdateShiping.Visibility = Visibility.Hidden;
+        //    UpdateDelivery.Visibility = Visibility.Hidden;
+        //    BO.Order order = bl?.Order.GetOrderDetails(id);
+        //    txtId.Text = order.Id.ToString();
+        //    txtCustomerName.Text = order.CustomerName;
+        //    txtCustomerEmail.Text = order.CustomerEmail;
+        //    txtCustomerAdress.Text = order.CustomerAdress;
+        //    txtOrderDate.Text = order.OrderDate.ToString();
+        //    txtShipDate.Text = order.ShipDate.ToString();
+        //    txtDeliveryDate.Text = order.DeliveryDate.ToString();
+        //    txtStatus.Text = order.Status.ToString();
+        //    txtTotalPrice.Text = order.TotalPrice.ToString();
+        //    OrdersItemListView.ItemsSource = bl.Order.GetOrderList(/*id*/);//צריך להוסיף בשכבה הלוגית בפונקציה של רשימת הזמנות ביטוי עם פילטר 
+        //    txtId.IsEnabled = false;
+        //    txtCustomerName.IsEnabled = false;
+        //    txtCustomerEmail.IsEnabled = false;
+        //    txtCustomerAdress.IsEnabled = false;
+        //    txtOrderDate.IsEnabled = false;
+        //    txtShipDate.IsEnabled = false;
+        //    txtDeliveryDate.IsEnabled = false;
+        //    txtStatus.IsEnabled = false;
+        //    txtTotalPrice.IsEnabled = false;
+
+        //}
+        //catch (IncorrectDataExceptions str)
+        //{
+        //    MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        //    Close();
+        //}
 
 
     }
@@ -77,12 +92,12 @@ public partial class OrderWindow : Window
 
     private void UpdateShipingButton_Click(object sender, RoutedEventArgs e)
     {
-
+        bl.Order.UpdateShipping(5);/////////////////////**************************////////////
     }
 
     private void UpdateDelivery_Click(object sender, RoutedEventArgs e)
     {
-
+        bl.Order.UpdateDelivery(5);////////////////**********************/////////////////////
 
     }
 }

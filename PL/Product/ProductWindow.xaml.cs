@@ -26,7 +26,9 @@ namespace PL.Product;
 public partial class ProductWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
-  //  public BO.Product? Product { get; set; }
+
+    public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(Product), typeof(BO.Product), typeof(Window));
+    public BO.Product? Product { get => (BO.Product)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
 
     //Builder for the add product window
     public ProductWindow()
@@ -41,25 +43,44 @@ public partial class ProductWindow : Window
     //Constructor for the product update window
     public ProductWindow(int id = 0)
     {
-        InitializeComponent();
-        ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        AddButton.Visibility = Visibility.Hidden;
-        UpdateButton.Visibility = Visibility.Visible;
-        txtId.IsEnabled = false;//This field cannot be changed
+
         try
         {
-            BO.Product product = id == 0 ? new() { Category = BO.Category.Unavailable } : bl.Product.GetProductDetailsManager(id);
-            txtId.Text = product.Id.ToString();
-            txtName.Text = product.Name;
-            txtPrice.Text = product.Price.ToString();
-            txtInStock.Text = product.InStock.ToString();
-            ComboBoxCategory.SelectedItem = (BO.Category?)product.Category;
+            Product = id == 0 ? new() { Category = BO.Category.Unavailable} : bl.Product.GetProductDetailsManager(id);
+            InitializeComponent();
+            ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            AddButton.Visibility = Visibility.Hidden;
+            UpdateButton.Visibility = Visibility.Visible;
+            txtId.IsEnabled = false;//This field cannot be changed
+
         }
-        catch (IncorrectDataExceptions str)
+        catch (BO.IncorrectDataExceptions ex)
         {
-            MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            MessageBox.Show(ex.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             Close();
+
         }
+
+        //משלב 3:**//
+        //InitializeComponent();
+        //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        //AddButton.Visibility = Visibility.Hidden;
+        //UpdateButton.Visibility = Visibility.Visible;
+        //txtId.IsEnabled = false;//This field cannot be changed
+        //try
+        //{
+        //    BO.Product product = id == 0 ? new() { Category = BO.Category.Unavailable } : bl.Product.GetProductDetailsManager(id);
+        //    txtId.Text = product.Id.ToString();
+        //    txtName.Text = product.Name;
+        //    txtPrice.Text = product.Price.ToString();
+        //    txtInStock.Text = product.InStock.ToString();
+        //    ComboBoxCategory.SelectedItem = (BO.Category?)product.Category;
+        //}
+        //catch (IncorrectDataExceptions str)
+        //{
+        //    MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        //    Close();
+        //}
 
     }
 

@@ -1,6 +1,7 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,9 +23,24 @@ public partial class ProductListWindow : Window
 {
     private  BlApi.IBl? bl = BlApi.Factory.Get();
 
+    public static readonly DependencyProperty ProductListDependency = DependencyProperty.Register(nameof(ProductList), typeof(ObservableCollection<ProductForList?>), typeof(Window));
+    public ObservableCollection<ProductForList?> ProductList
+    {
+        get => (ObservableCollection<ProductForList?>)GetValue(ProductListDependency);
+        private set => SetValue(ProductListDependency, value);
+    }
+    //public Category Category { get; set; } = Category.Unavailable;
+
+
+
+
     //constructor
     public ProductListWindow()
     {
+        //InitializeComponent();
+        //var temp = bl?.Product?.GetProductList();
+        //ProductList = temp == null ? new() : new(temp);
+
         InitializeComponent();
         ProductListview.ItemsSource = bl?.Product.GetProductList();
         CatgegorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));

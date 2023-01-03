@@ -34,6 +34,9 @@ public partial class MainWindow : Window
                           select item.OrderId;
         NumberOfOrder.ItemsSource = orderForLists1;
 
+        Track.IsEnabled = false;
+
+
     }
 
     //Pressing the enter button - opening a product list window
@@ -43,11 +46,12 @@ public partial class MainWindow : Window
     {
         OrderList.Visibility = Visibility.Visible;
         ProductList.Visibility = Visibility.Visible;
+        Admin.IsEnabled = false;
     }
 
     private void NewOrderButton_Click(object sender, RoutedEventArgs e)
     {
-
+        new NewOrderWindow().Show();
     }
 
     private void TrackButton_Click(object sender, RoutedEventArgs e)
@@ -58,10 +62,18 @@ public partial class MainWindow : Window
     private void OrderList_Click(object sender, RoutedEventArgs e)
     {
         new OrderListWindow().Show();
+        Admin.IsEnabled = true;
     }
 
     private void ProductList_Click(object sender, RoutedEventArgs e)
     {
         new ProductListWindow().Show();
+        Admin.IsEnabled = true;
+    }
+
+    private void NumberOfOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        //Track.Visibility = Visibility.Visible;
+        Track.IsEnabled = true;
     }
 }

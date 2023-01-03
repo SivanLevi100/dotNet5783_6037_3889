@@ -5,22 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        Title="ProductWindow" Height="450" Width="800">
- 
+        Title="ProductWindow" Height="450" Width="800"
+        DataContext="{Binding Product, RelativeSource={RelativeSource Self}, Mode=OneWay}">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="58" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Background" Value="Azure" />
+            <Setter Property="FontStyle" Value="Italic" />
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Label Content="Id:" HorizontalAlignment="Left" Margin="94,53,0,0" VerticalAlignment="Top" Width="55"/>
         <Label Content="Category:" HorizontalAlignment="Left" Margin="94,84,0,0" VerticalAlignment="Top"/>
         <Label Content="Name:" HorizontalAlignment="Left" Margin="94,115,0,0" VerticalAlignment="Top"/>
         <Label Content="Price:" HorizontalAlignment="Left" Margin="94,146,0,0" VerticalAlignment="Top"/>
         <Label Content="In Stock:" HorizontalAlignment="Left" Margin="94,177,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtId"  MaxLength="9" HorizontalAlignment="Left" Margin="204,57,0,0" TextWrapping="Wrap" Text="000000000" VerticalAlignment="Top" Width="120" Height="17" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
-        <ComboBox x:Name="ComboBoxCategory"  HorizontalAlignment="Left" Margin="204,94,0,0" VerticalAlignment="Top" Width="120" />
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="204,128,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="204,154,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
-        <TextBox x:Name="txtInStock" HorizontalAlignment="Left" Margin="204,181,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
-        <Button x:Name="AddButton"  Content="Add" HorizontalAlignment="Left" Margin="165,231,0,0" VerticalAlignment="Top" Height="19" Width="38" Click="AddButton_Click"/>
-        <Button x:Name="UpdateButton"  Content="Update" Margin="156,255,588,0" VerticalAlignment="Top" Height="19" Click="UpdateButton_Click"/>
- 
+        <TextBox x:Name="txtId"  MaxLength="9" HorizontalAlignment="Left" Margin="204,57,0,0" TextWrapping="Wrap" Text="{Binding Id}"  VerticalAlignment="Top" Width="120" Height="17" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
+        <ComboBox x:Name="ComboBoxCategory" SelectedItem="{Binding Category}" HorizontalAlignment="Left" Margin="204,94,0,0" VerticalAlignment="Top" Width="120" />
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="204,128,0,0" TextWrapping="Wrap" Text="{Binding Name}"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="204,154,0,0" TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
+        <TextBox x:Name="txtInStock" HorizontalAlignment="Left" Margin="204,181,0,0" TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
+        <Button x:Name="AddButton"  Content="Add" HorizontalAlignment="Left" Margin="124,231,0,0" VerticalAlignment="Top"  Click="AddButton_Click" Height="24" Width="99"/>
+        <Button x:Name="UpdateButton"  Content="Update" Margin="113,282,0,0" VerticalAlignment="Top"  Click="UpdateButton_Click" Height="29" Width="110" HorizontalAlignment="Left"/>
+
 
     </Grid>
 </Window>
