@@ -1,4 +1,5 @@
-﻿using PL.Order;
+﻿using PL.Cart;
+using PL.Order;
 using PL.Product;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ public partial class MainWindow : Window
 
     private void NewOrderButton_Click(object sender, RoutedEventArgs e)
     {
-        new NewOrderWindow().Show();
+        new CatalogProductsWindow().Show();
     }
 
     private void TrackButton_Click(object sender, RoutedEventArgs e)

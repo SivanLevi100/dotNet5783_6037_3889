@@ -1,12 +1,13 @@
-﻿<Window x:Class="PL.Order.NewOrderWindow"
+﻿<Window x:Class="PL.Cart.CatalogProductsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Order"
+        xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
-        Title="NewOrderWindow" Height="450" Width="800"
+        Title="CatalogProductsWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -22,8 +23,8 @@
 
         </Grid>
         <Label x:Name="Category" Content="Category"  Grid.Column="0" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Stretch" Width="116"/>
-        <ComboBox x:Name="CatgegorySelector" HorizontalAlignment="Stretch" Margin="488,0,0,0" VerticalAlignment="Stretch" Width="202" SelectionChanged="CatgegorySelector_SelectionChanged"/>
-        <ListView x:Name="ProductItemListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ComboBox x:Name="CatgegorySelector" ItemsSource="{Binding Categories1}" Text="{Binding Category1}" SelectedItem="{Binding Category1}" HorizontalAlignment="Stretch" Margin="488,0,0,0" VerticalAlignment="Stretch" Width="202" SelectionChanged="CatgegorySelector_SelectionChanged"/>
+        <ListView x:Name="ProductItemListView" ItemsSource="{Binding ProductItems}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

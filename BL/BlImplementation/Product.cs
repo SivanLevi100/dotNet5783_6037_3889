@@ -53,7 +53,7 @@ internal class Product : BlApi.IProduct
                        Price = product.Price,
                        Category = (BO.Category?)product.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
                        IsAvailable = product.InStock > 0? true : false,
-                       AmountInCart = 5////////////////////////////????????/????????
+                       AmountInCart = 0
                    };
         }
         catch (DO.DoesNotExistException str)
