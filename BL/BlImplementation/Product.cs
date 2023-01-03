@@ -63,7 +63,7 @@ internal class Product : BlApi.IProduct
 
 
     }
-
+    
 
     public BO.Product GetProductDetailsManager(int id)
     {
@@ -157,7 +157,7 @@ internal class Product : BlApi.IProduct
         }
 
 
-
+        /*/*//////
         //try
         //{
         //    foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests"))//Loop through all orders 
