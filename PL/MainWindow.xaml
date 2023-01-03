@@ -20,7 +20,7 @@
         <ComboBox x:Name="NumberOfOrder" HorizontalAlignment="Left" Margin="617,96,0,0" VerticalAlignment="Top" Width="149" Height="39" SelectionChanged="NumberOfOrder_SelectionChanged"/>
         <Label Content="Number Of Order:" FontSize="16" HorizontalAlignment="Left" Margin="470,98,0,0" VerticalAlignment="Top" Height="37" Width="142"/>
         <Button x:Name="Track" Content="Track"   HorizontalAlignment="Left" Margin="541,157,0,0" VerticalAlignment="Top" Height="50" Width="127" Click="TrackButton_Click"/>
-        <Button x:Name="OrderList" Content="List of Orders"  IsEnabled="{Binding ElementName=Admin,Path=Visibility}"  HorizontalAlignment="Left" Margin="36,167,0,0" VerticalAlignment="Top" Click="OrderList_Click"/>
+        <Button x:Name="OrderList" Content="List of Orders"  Visibility="Hidden" HorizontalAlignment="Left" Margin="36,167,0,0" VerticalAlignment="Top" Click="OrderList_Click"/>
         <Button x:Name="ProductList" Content="List of Products" Visibility="Hidden" HorizontalAlignment="Left" Margin="173,172,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>
 
     </Grid>
