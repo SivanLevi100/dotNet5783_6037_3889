@@ -24,6 +24,8 @@ public partial class MainWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
 
+
+
     //constructor
     public MainWindow()
     {

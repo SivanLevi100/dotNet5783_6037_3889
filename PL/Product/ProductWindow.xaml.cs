@@ -30,6 +30,9 @@ public partial class ProductWindow : Window
     public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(Product), typeof(BO.Product), typeof(Window));
     public BO.Product? Product { get => (BO.Product)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
 
+    public Array Categories { get; set; } = Enum.GetValues(typeof(BO.Category));
+
+
     //Builder for the add product window
     public ProductWindow()
     {
@@ -58,6 +61,7 @@ public partial class ProductWindow : Window
         {
             MessageBox.Show(ex.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             Close();
+            new ProductListWindow().Show();
 
         }
 

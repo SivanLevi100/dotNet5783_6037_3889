@@ -29,29 +29,33 @@ public partial class ProductListWindow : Window
         get => (ObservableCollection<ProductForList?>)GetValue(ProductListDependency);
         private set => SetValue(ProductListDependency, value);
     }
-    //public Category Category { get; set; } = Category.Unavailable;
-
-
+    public BO.Category Category { get; set; } = Category.Unavailable;
+    public Array Categories { get; set; } = Enum.GetValues(typeof(BO.Category));
 
 
     //constructor
     public ProductListWindow()
     {
-        //InitializeComponent();
-        //var temp = bl?.Product?.GetProductList();
-        //ProductList = temp == null ? new() : new(temp);
-
         InitializeComponent();
-        ProductListview.ItemsSource = bl?.Product.GetProductList();
-        CatgegorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        var temp = bl?.Product?.GetProductList();
+        ProductList = temp == null ? new() : new(temp);
+
+        //InitializeComponent();
+        //ProductListview.ItemsSource = bl?.Product.GetProductList();
+        //CatgegorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
 
     //A function that implements filtering a list of products by category
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var listProducts = (BO.Category?)CatgegorySelector.SelectedItem == BO.Category.Unavailable ? bl?.Product.GetProductList()
-         : bl?.Product.GetProductList().Where(product => product?.Category == (BO.Category?)CatgegorySelector.SelectedItem);
-        ProductListview.ItemsSource = listProducts;
+
+        var temp = Category == BO.Category.Unavailable ?
+            bl?.Product.GetProductList() : bl?.Product.GetProductList().Where(item => item.Category == Category);
+        ProductList = temp == null ? new() : new(temp);
+
+        //var listProducts = (BO.Category?)CatgegorySelector.SelectedItem == BO.Category.Unavailable ? bl?.Product.GetProductList()
+        // : bl?.Product.GetProductList().Where(product => product?.Category == (BO.Category?)CatgegorySelector.SelectedItem);
+        //ProductListview.ItemsSource = listProducts;
     }
 
     //A function that implements a click on the "Add New Product" button

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="800"
-        DataContext="{Binding ProductList, RelativeSource={RelativeSource Mode=Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -20,11 +20,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Content="Catgegory:" HorizontalAlignment="Left" Margin="56,0,0,0" VerticalAlignment="Top" Grid.Column="0"/>
-            <ComboBox Name="CatgegorySelector"  HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1"  SelectionChanged="CatgegorySelector_SelectionChanged"/>
+            <ComboBox Name="CatgegorySelector" Text="{Binding Category}"  SelectedItem="{Binding Category}" ItemsSource="{Binding Categories}" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1"  SelectionChanged="CatgegorySelector_SelectionChanged"/>
 
         </Grid>
         <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="ButtonAddNewProduct_Click"/>
-        <ListView x:Name="ProductListview" MouseDoubleClick="ListView_DoubleClick" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="ProductListview" ItemsSource="{Binding ProductList}" MouseDoubleClick="ListView_DoubleClick" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn>
