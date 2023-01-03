@@ -1,4 +1,5 @@
 ﻿using BO;
+using PL.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,13 +29,15 @@ public partial class OrderWindow : Window
     {
         try
         {
-            Order = id == 0 ? new() : bl.Order.GetOrderDetails(id);
+            Order = id == 0 ? new() : bl?.Order.GetOrderDetails(id);
             InitializeComponent();
         }
         catch (BO.IncorrectDataExceptions ex)
         {
-            Close();
             MessageBox.Show(ex.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            Close();
+            new OrderListWindow().ShowDialog();
+            //new OrderListWindow().Show();
         }
 
         //InitializeComponent();

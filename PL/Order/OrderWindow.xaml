@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="OrderWindow" Height="450" Width="800"
         DataContext="{Binding Order, RelativeSource={RelativeSource Self}, Mode=OneWay}">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25*"/>
@@ -23,16 +24,16 @@
         <Label Content="Status:" HorizontalAlignment="Left" Margin="76,268,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="45"/>
         <Label Content="Total Price" HorizontalAlignment="Left" Margin="315,24,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="64"/>
         <Label Content="OrdersItem List:" HorizontalAlignment="Left" Margin="315,59,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="122"/>
-        <TextBox x:Name="txtId"  HorizontalAlignment="Left" Margin="163,32,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Id}"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtId" Text="{Binding Id}" HorizontalAlignment="Left" Margin="163,32,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtCustomerName" HorizontalAlignment="Left" Margin="180,74,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding CustomerName}" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtCustomerEmail" HorizontalAlignment="Left" Margin="180,105,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtCustomerAdress" HorizontalAlignment="Left" Margin="180,129,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtShipDate" HorizontalAlignment="Left" Margin="163,192,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtOrderDate" HorizontalAlignment="Left" Margin="175,158,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtDeliveryDate" HorizontalAlignment="Left" Margin="180,236,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Margin="163,276,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtTotalPrice" HorizontalAlignment="Left" Margin="437,24,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        <ListView x:Name="OrdersItemListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="432,62,93,123">
+        <TextBox x:Name="txtCustomerEmail" HorizontalAlignment="Left" Margin="180,105,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtCustomerAdress" HorizontalAlignment="Left" Margin="180,129,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding CustomerAdress}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtShipDate" HorizontalAlignment="Left" Margin="163,192,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding ShipDate}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtOrderDate" HorizontalAlignment="Left" Margin="175,158,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding OrderDate}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtDeliveryDate" HorizontalAlignment="Left" Margin="180,236,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Margin="163,276,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtTotalPrice" HorizontalAlignment="Left"  Margin="437,24,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="120"/>
+        <ListView x:Name="OrdersItemListView" Grid.Row="1" ItemsSource="{Binding OrdersItemsList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="432,62,93,123">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

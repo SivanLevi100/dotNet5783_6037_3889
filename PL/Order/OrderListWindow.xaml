@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
-        Title="OrderListWindow" Height="450" Width="800">
+        Title="OrderListWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -13,13 +15,15 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Content="List Of Order" Background="Azure" FontWeight="Black" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Height="32" Width="175"/>
-        <ListView x:Name="OrdertListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="OrdertListview_MouseDoubleClick" >
+        <!--<DataGrid x:Name="OrderDataGrid" Grid.Row="1" ItemsSource="{Binding OrdertList}" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="OrderDataGrid_SelectionChanged"/>-->
+        <ListView x:Name="OrdertListview" ItemsSource="{Binding OrdertList}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="OrdertListview_MouseDoubleClick" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
+        
 
 
     </Grid>
