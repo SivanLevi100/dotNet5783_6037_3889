@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <Label  Content="OrderStatus:" Background="Azure" FontWeight="Black" FontSize="18" HorizontalAlignment="Center" Margin="56,0,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+            <Label  Content="Order Status:" Background="Azure" FontWeight="Black" FontSize="18" HorizontalAlignment="Center" Margin="56,0,0,0" VerticalAlignment="Top" Grid.Column="0"/>
             <ComboBox Name="OrderStatusSelected" Text="{Binding OrderStatus}" SelectedItem="{Binding OrderStatus}" ItemsSource="{Binding AllStatus}" Grid.Column="1" SelectionChanged="orderStatusSelected_SelectionChanged" Margin="82,0,82,0"/>
 
         </Grid>

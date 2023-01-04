@@ -24,7 +24,7 @@
         </Grid>
         <Label x:Name="Category" Content="Category"  Grid.Column="0" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Stretch" Width="116"/>
         <ComboBox x:Name="CatgegorySelector" ItemsSource="{Binding Categories1}" Text="{Binding Category1}" SelectedItem="{Binding Category1}" HorizontalAlignment="Stretch" Margin="488,0,0,0" VerticalAlignment="Stretch" Width="202" SelectionChanged="CatgegorySelector_SelectionChanged"/>
-        <ListView x:Name="ProductItemListView" ItemsSource="{Binding ProductItems}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="ProductItemListView" ItemsSource="{Binding ProductItems}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="ProductItemListView_MouseDoubleClick" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

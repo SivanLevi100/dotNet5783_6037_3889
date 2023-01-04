@@ -21,8 +21,8 @@ internal class Cart : BlApi.ICart
     {
         if (id <= 0)
             throw new BO.IncorrectDataExceptions("Product Id is not positive number");
-        if (cart1 == null)
-            throw new BO.NotExiestsExceptions("Missing cart object");
+        //if (cart1 == null)
+        //    throw new BO.NotExiestsExceptions("Missing cart object");
         if (cart1.OrdersItemsList == null)
             cart1.OrdersItemsList = new();
 
@@ -83,12 +83,15 @@ internal class Cart : BlApi.ICart
         DO.Product doProduct;
         try
         {
-            doProduct = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
+            doProduct = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
         }
         catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Product request failed", str);
         }
+
+        //להוריד את הלולאה כי נבדוק על פריט מסוים שקיבלנו את הת.ז שלו ועליו נעשה את ה if
+
 
         //var orderItem1 = (from item in cart1.OrdersItemsList
         //                where item.ProductId == id && newAmount > item.AmountInOrder && doProduct.InStock >= 0
@@ -113,6 +116,7 @@ internal class Cart : BlApi.ICart
 
         foreach (BO.OrderItem? orderItem in cart1?.OrdersItemsList ?? throw new BO.NotExiestsExceptions("The Cart is not exiests"))
         {
+            if (orderItem.AmountInOrder == 0) throw new BO.IncorrectDataExceptions("The product is not exiest in the cart");
             if (orderItem?.ProductId == id && newAmount > orderItem.AmountInOrder) //If the amount increases
             {
                 if (doProduct.InStock >= 0)//If there is a product in stock

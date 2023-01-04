@@ -37,7 +37,6 @@ public partial class OrderListWindow : Window
     public OrderListWindow()
     {
         InitializeComponent();
-        // OrdertListview.ItemsSource = bl?.Order.GetOrderList();
         var temp = bl?.Order.GetOrderList();
         OrdertList = temp == null ? new() : new(temp);
 
@@ -50,7 +49,6 @@ public partial class OrderListWindow : Window
         order = listBox.SelectedItem as BO.OrderForList;
         new OrderWindow(order.OrderId).Show();
         Close();
-
     }
 
     private void OrderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

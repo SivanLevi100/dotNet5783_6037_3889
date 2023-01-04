@@ -37,9 +37,9 @@ public partial class ProductWindow : Window
     public ProductWindow()
     {
         InitializeComponent();
-        ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        AddButton.Visibility = Visibility.Visible;
-        UpdateButton.Visibility = Visibility.Hidden;
+        ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category)); /////////////
+        AddButton.Visibility = Visibility.Visible; ////////////////
+        UpdateButton.Visibility = Visibility.Hidden; //////////////
 
     }
 

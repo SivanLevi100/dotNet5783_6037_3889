@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Product;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -51,4 +52,12 @@ public partial class CatalogProductsWindow : Window
 
     }
 
+    private void ProductItemListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        ListView listView= sender as ListView;
+        BO.ProductItem productItem = new BO.ProductItem();
+        productItem = listView.SelectedItem as BO.ProductItem;
+        new ProductItemWindow(productItem.IdProduct).Show();
+       // Close();
+    }
 }

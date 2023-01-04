@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800"
         DataContext="{Binding Product, RelativeSource={RelativeSource Self}, Mode=OneWay}">
+
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Width" Value="58" />
@@ -24,11 +25,11 @@
         <Label Content="Price:" HorizontalAlignment="Left" Margin="94,146,0,0" VerticalAlignment="Top"/>
         <Label Content="In Stock:" HorizontalAlignment="Left" Margin="94,177,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtId"  MaxLength="9" HorizontalAlignment="Left" Margin="204,57,0,0" TextWrapping="Wrap" Text="{Binding Id}"  VerticalAlignment="Top" Width="120" Height="17" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
-        <ComboBox x:Name="ComboBoxCategory" SelectedItem="{Binding Category}" HorizontalAlignment="Left" Margin="204,94,0,0" VerticalAlignment="Top" Width="120" />
+        <ComboBox x:Name="ComboBoxCategory" Text="{Binding Category}" SelectedItem="{Binding Category}" HorizontalAlignment="Left" Margin="204,94,0,0" VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="204,128,0,0" TextWrapping="Wrap" Text="{Binding Name}"  VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="204,154,0,0" TextWrapping="Wrap" Text="{Binding Price}" VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
         <TextBox x:Name="txtInStock" HorizontalAlignment="Left" Margin="204,181,0,0" TextWrapping="Wrap" Text="{Binding InStock}" VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
-        <Button x:Name="AddButton"  Content="Add" HorizontalAlignment="Left" Margin="124,231,0,0" VerticalAlignment="Top"  Click="AddButton_Click" Height="24" Width="99"/>
+        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="124,231,0,0" VerticalAlignment="Top"  Click="AddButton_Click" Height="24" Width="99"/>
         <Button x:Name="UpdateButton"  Content="Update" Margin="113,282,0,0" VerticalAlignment="Top"  Click="UpdateButton_Click" Height="29" Width="110" HorizontalAlignment="Left"/>
 
 

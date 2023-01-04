@@ -29,7 +29,7 @@ public partial class OrderWindow : Window
     {
         try
         {
-            Order = id == 0 ? new() : bl?.Order.GetOrderDetails(id);
+            Order = id == 0 ? new() { Status=BO.OrderStatus.Unknown} : bl?.Order.GetOrderDetails(id);
             InitializeComponent();
         }
         catch (BO.IncorrectDataExceptions ex)
