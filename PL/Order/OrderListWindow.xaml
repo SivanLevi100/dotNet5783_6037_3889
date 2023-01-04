@@ -14,7 +14,19 @@
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="List Of Order" Background="Azure" FontWeight="Black" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Height="32" Width="175"/>
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+         VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <Label  Content="OrderStatus:" Background="Azure" FontWeight="Black" FontSize="18" HorizontalAlignment="Center" Margin="56,0,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+            <ComboBox Name="OrderStatusSelected" Text="{Binding OrderStatus}" SelectedItem="{Binding OrderStatus}" ItemsSource="{Binding AllStatus}" Grid.Column="1" SelectionChanged="orderStatusSelected_SelectionChanged" Margin="82,0,82,0"/>
+
+        </Grid>
+
+
+        <!--<Label Content="List Of Order" Background="Azure" FontWeight="Black" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Top" Height="32" Width="175" Margin="60,-8,0,0"/>-->
         <!--<DataGrid x:Name="OrderDataGrid" Grid.Row="1" ItemsSource="{Binding OrdertList}" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="OrderDataGrid_SelectionChanged"/>-->
         <ListView x:Name="OrdertListview" ItemsSource="{Binding OrdertList}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="OrdertListview_MouseDoubleClick" >
             <ListView.View>
@@ -23,7 +35,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
 
 
     </Grid>

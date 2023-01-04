@@ -30,6 +30,8 @@ public partial class OrderListWindow : Window
         get => (ObservableCollection<OrderForList?>)GetValue(OrderListDependency);
         private set => SetValue(OrderListDependency, value);
     }
+    public BO.OrderStatus OrderStatus { get; set; } = BO.OrderStatus.Unknown;
+    public Array AllStatus { get; set; } = Enum.GetValues(typeof(BO.OrderStatus));
 
 
     public OrderListWindow()
@@ -58,5 +60,14 @@ public partial class OrderListWindow : Window
         //order = DataGrid as BO.OrderForList;
         //new OrderWindow(order.OrderId).Show();
         //Close();
+    }
+
+    //סינון לפי סטטוס הזמנה ComboBox
+    private void orderStatusSelected_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var temp = OrderStatus == BO.OrderStatus.Unknown ? bl?.Order.GetOrderList() 
+            : bl?.Order.GetOrderList().Where(item => item.Status == OrderStatus);
+        OrdertList = temp == null ? new() : new(temp);
+
     }
 }
