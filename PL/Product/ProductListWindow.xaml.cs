@@ -48,7 +48,6 @@ public partial class ProductListWindow : Window
     //A function that implements filtering a list of products by category
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
         var temp = Category == BO.Category.Unavailable ?
             bl?.Product.GetProductList() : bl?.Product.GetProductList().Where(item => item.Category == Category);
         ProductList = temp == null ? new() : new(temp);
