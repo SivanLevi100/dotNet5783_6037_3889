@@ -143,7 +143,7 @@ public partial class ProductWindow : Window
             Close();
             return;
         }
-        MessageBox.Show("The Product updated");
+        MessageBox.Show("The Product updated","updated", MessageBoxButton.OK);
         Close();
         new ProductListWindow().Show();
 

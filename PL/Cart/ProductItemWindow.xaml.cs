@@ -61,16 +61,28 @@ public partial class ProductItemWindow : Window
 
     private void RemoveItemButton_Click(object sender, RoutedEventArgs e)
     {
-
-        try
+        if (MessageBox.Show("Are you sure you want to remove the item from the cart?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
         {
-            MyCart = bl.Cart.UpdateAmountOfProduct(MyCart, ProductItem.IdProduct, ProductItem.AmountInCart - 1);
-            MessageBox.Show("The Product removed from cart");
-
+            try
+            {
+                if(ProductItem?.AmountInCart==0)
+                {
+                    MessageBox.Show("The item cannot be removed");
+                }
+                else 
+                {
+                    MyCart = bl.Cart.UpdateAmountOfProduct(MyCart, ProductItem.IdProduct, ProductItem.AmountInCart - 1);
+                    MessageBox.Show("The Product removed from cart");
+                }
+            }
+            catch (BO.IncorrectDataExceptions ex)
+            {
+                MessageBox.Show(ex.Message, "Failed to remove a product because it is not in the cart");
+            }
         }
-        catch (BO.IncorrectDataExceptions ex)
+        else
         {
-            MessageBox.Show(ex.Message, "Failed to remove a product because it is not in the cart");
+            MessageBox.Show("The item has not been removed from the cart", "Item not removed");
         }
         Close();
 

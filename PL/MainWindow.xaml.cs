@@ -79,4 +79,9 @@ public partial class MainWindow : Window
         //Track.Visibility = Visibility.Visible;
        // Track.IsEnabled = true;
     }
+
+    private void CustomerButton_Click(object sender, RoutedEventArgs e)
+    {
+        
+    }
 }
