@@ -21,8 +21,8 @@ internal class Cart : BlApi.ICart
     {
         if (id <= 0)
             throw new BO.IncorrectDataExceptions("Product Id is not positive number");
-        //if (cart1 == null)
-        //    throw new BO.NotExiestsExceptions("Missing cart object");
+        if(cart1 == null)
+            cart1=new BO.Cart();
         if (cart1.OrdersItemsList == null)
             cart1.OrdersItemsList = new();
 
@@ -37,7 +37,7 @@ internal class Cart : BlApi.ICart
         }
         if (cart1.OrdersItemsList.Exists(orderItem => orderItem?.ProductId != doProduct.Id)) //If a product does not exist in the shopping basket
         {
-            if (doProduct.Id == id && doProduct.InStock >= 0) //Check if the product exists and is in stock
+            if (doProduct.Id == id && doProduct.InStock > 0) //Check if the product exists and is in stock
             {
                 BO.OrderItem newOrderItem = new BO.OrderItem
                 {
@@ -47,7 +47,6 @@ internal class Cart : BlApi.ICart
                     Price = doProduct.Price,
                     AmountInOrder = 1,
                     TotalPriceOfItem = doProduct.Price
-
                 };
                 cart1.OrdersItemsList.Add(newOrderItem);
                 cart1.TotalPrice = cart1.TotalPrice + newOrderItem.TotalPriceOfItem;
@@ -57,23 +56,23 @@ internal class Cart : BlApi.ICart
         }
         else  //If the product appears in the shopping cart
         {
-            BO.OrderItem? orderItem = (from item in cart1.OrdersItemsList
-                                       where item.ProductId == doProduct.Id && doProduct.InStock >= 0
-                                       select item).First();
-            orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
-            orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
-            cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+            //BO.OrderItem? orderItem = (from item in cart1.OrdersItemsList
+            //                           where item.ProductId == doProduct.Id && doProduct.InStock >= 0
+            //                           select item).First();
+            //orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
+            //orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
+            //cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
 
-            //foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
-            //{
-            //    if (orderItem?.ProductId == doProduct.Id && doProduct.InStock >= 0) //If this is the product and the quantity is greater than 0
-            //    {
-            //        orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
-            //        orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
-            //        cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
-            //        break;
-            //    }
-            //}
+            foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
+            {
+                if (orderItem?.ProductId == doProduct.Id && doProduct.InStock > 0) //If this is the product and the quantity is greater than 0
+                {
+                    orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
+                    orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
+                    cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+                    break;
+                }
+            }
         }
         return cart1;
     }
@@ -84,31 +83,32 @@ internal class Cart : BlApi.ICart
         BO.OrderItem orderItem;
         try
         {
-            doProduct = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
+            doProduct = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
         }
         catch (DO.NotFoundExceptions str)
         {
             throw new BO.NotExiestsExceptions("Product request failed", str);
         }
-        if (cart1.OrdersItemsList.Exists(o => o.ProductId == id))
-            orderItem = cart1.OrdersItemsList.Fist(item => item.ProductId == id);
+        if(cart1?.OrdersItemsList?.Count() == 0|| cart1?.OrdersItemsList==null|| cart1.OrdersItemsList.Exists(item => item.ProductId != id))
+            throw new BO.NotExiestsExceptions("This item cannot be found because it is not in the basket");
         else
-            throw new BO.NotExiestsExceptions("אי אפשר להסיר פריט זה כי הוא לא נמצא בסל");
+            orderItem = cart1.OrdersItemsList.Find(item => item.ProductId == id);
+
         if (newAmount > orderItem.AmountInOrder)
         {
-            if (doProduct.InStock >= 0)//If there is a product in stock
+            if (doProduct.InStock > 0)//If there is a product in stock
             {
                 orderItem.AmountInOrder = newAmount;
                 orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
                 cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
             }
             else
-                throw new BO.NotExiestsExceptions("The product is not in stock");
+                throw new BO.IncorrectDataExceptions("The product is not in stock");
         }
         if (newAmount < orderItem.AmountInOrder) //If the amount decreases
         {
             orderItem.AmountInOrder = newAmount;
-            rderItem.TotalPriceOfItem = doProduct.Price * newAmount;
+            orderItem.TotalPriceOfItem = doProduct.Price * newAmount;
             cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
         }
         if (newAmount + orderItem.AmountInOrder == 0)//If the amount = 0

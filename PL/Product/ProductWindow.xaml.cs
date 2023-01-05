@@ -30,14 +30,18 @@ public partial class ProductWindow : Window
     public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(Product), typeof(BO.Product), typeof(Window));
     public BO.Product? Product { get => (BO.Product)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
 
-    public Array Categories { get; set; } = Enum.GetValues(typeof(BO.Category));
+    //public BO.Category Category { get; set; } = BO.Category.Unavailable;
+
+    public Array Categories { get { return Enum.GetValues(typeof(BO.Category)); } }
+   // public Array Categories { get; set; } = Enum.GetValues(typeof(BO.Category));
+
 
 
     //Builder for the add product window
     public ProductWindow()
     {
         InitializeComponent();
-        ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category)); /////////////
+        //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category)); /////////////
         AddButton.Visibility = Visibility.Visible; ////////////////
         UpdateButton.Visibility = Visibility.Hidden; //////////////
 
@@ -51,7 +55,7 @@ public partial class ProductWindow : Window
         {
             Product = id == 0 ? new() { Category = BO.Category.Unavailable} : bl.Product.GetProductDetailsManager(id);
             InitializeComponent();
-            ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
             AddButton.Visibility = Visibility.Hidden;
             UpdateButton.Visibility = Visibility.Visible;
             txtId.IsEnabled = false;//This field cannot be changed

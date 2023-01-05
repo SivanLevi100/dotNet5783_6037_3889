@@ -1,4 +1,5 @@
-﻿using PL.Product;
+﻿using BO;
+using PL.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,7 @@ public partial class ProductItemWindow : Window
             Close();
 
         }
+
     }
 
     private void RemoveItemButton_Click(object sender, RoutedEventArgs e)
@@ -65,17 +67,10 @@ public partial class ProductItemWindow : Window
         {
             try
             {
-                if(ProductItem?.AmountInCart==0)
-                {
-                    MessageBox.Show("The item cannot be removed");
-                }
-                else 
-                {
-                    MyCart = bl.Cart.UpdateAmountOfProduct(MyCart, ProductItem.IdProduct, ProductItem.AmountInCart - 1);
-                    MessageBox.Show("The Product removed from cart");
-                }
+                MyCart = bl.Cart.UpdateAmountOfProduct(MyCart, ProductItem.IdProduct, ProductItem.AmountInCart - 1);
+                MessageBox.Show("The Product removed from cart");
             }
-            catch (BO.IncorrectDataExceptions ex)
+            catch (BO.NotExiestsExceptions ex)
             {
                 MessageBox.Show(ex.Message, "Failed to remove a product because it is not in the cart");
             }

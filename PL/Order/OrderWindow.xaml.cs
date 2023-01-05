@@ -31,6 +31,9 @@ public partial class OrderWindow : Window
         {
             Order = id == 0 ? new() { Status=BO.OrderStatus.Unknown} : bl?.Order.GetOrderDetails(id);
             InitializeComponent();
+
+            //datagrid.ItemsSource = bl.Order.GetOrderDetails(id).OrdersItemsList;
+            //OrdersItemListView.ItemsSource = bl?.Order.GetOrderDetails(id).OrdersItemsList; 
         }
         catch (BO.IncorrectDataExceptions ex)
         {

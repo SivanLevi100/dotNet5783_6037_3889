@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="OrderWindow" Height="450" Width="800"
         DataContext="{Binding Order, RelativeSource={RelativeSource Self}, Mode=OneWay}">
+    <Window.Resources>
+        <Style TargetType="local:OrderWindow">
+            <Setter Property="Background" Value="AliceBlue" />
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -49,7 +54,7 @@
         <Button x:Name="UpdateOrderDate"  Content="Update Date of Order"  HorizontalAlignment="Left" Margin="588,289,0,0" Grid.Row="1" VerticalAlignment="Top" Click="UpdateDateOrderButton_Click" Height="20" Width="119"/>
         <Button x:Name="UpdateShiping" Content="Update Shiping date" HorizontalAlignment="Left" Margin="437,275,0,0" Grid.Row="1" VerticalAlignment="Top" Height="24" Width="120" Click="UpdateShipingButton_Click"/>
         <Button x:Name="UpdateDelivery" Content="Update Delivery date" HorizontalAlignment="Left" Margin="437,312,0,0" Grid.Row="1" VerticalAlignment="Top" Click="UpdateDelivery_Click" Height="20" Width="115"/>
-        <DataGrid Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="403,180,125,90"/>
+        <DataGrid x:Name="datagrid" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="403,180,125,90"/>
 
 
 

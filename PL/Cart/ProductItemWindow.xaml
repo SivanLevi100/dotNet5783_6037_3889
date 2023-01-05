@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
         Title="ProductItemWindow" Height="450" Width="800"
-        DataContext="{Binding ProductItem, RelativeSource={RelativeSource Self}, Mode=OneWay}">
+        DataContext="{Binding ProductItem, RelativeSource={RelativeSource Self},Mode=OneWay}">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="15" />
