@@ -15,6 +15,11 @@
             <Setter Property="FontSize" Value="15" />
             <Setter Property="Background" Value="Azure" />
             <Setter Property="FontStyle" Value="Italic" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="17" />
+                </Style>
+            </Style.Resources>
         </Style>
     </Window.Resources>
 

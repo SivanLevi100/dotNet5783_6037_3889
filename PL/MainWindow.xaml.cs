@@ -37,7 +37,7 @@ public partial class MainWindow : Window
                           select item.OrderId;
         NumberOfOrder.ItemsSource = orderForLists1;
 
-        Track.IsEnabled = false;
+        //Track.IsEnabled = false;
 
 
     }
@@ -77,6 +77,6 @@ public partial class MainWindow : Window
     private void NumberOfOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         //Track.Visibility = Visibility.Visible;
-        Track.IsEnabled = true;
+       // Track.IsEnabled = true;
     }
 }

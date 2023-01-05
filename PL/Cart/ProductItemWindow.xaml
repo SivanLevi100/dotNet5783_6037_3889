@@ -18,6 +18,12 @@
             <Setter Property="Width" Value="150" />
             <Setter Property="IsEnabled" Value="false" />
             <Setter Property="Height" Value="30" />
+            <Setter Property="Foreground" Value="BlueViolet" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="12" />
+                </Style>
+            </Style.Resources>
         </Style>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="15" />
@@ -26,6 +32,13 @@
             <Setter Property="Width" Value="90" />
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="Background" Value="AliceBlue" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="17" />
+                </Style>
+            </Style.Resources>
         </Style>
 
     </Window.Resources>

@@ -9,19 +9,36 @@
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="LightPink" />
-            <Setter Property="FontSize" Value="20" /> 
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Width" Value="145" />
+            <Setter Property="Height" Value="60" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="BorderBrush" Value="Purple" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Foreground" Value="Purple"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20" />
+                </Style>
+            </Style.Resources>
         </Style>
+        
     </Window.Resources>
 
     <Grid>
-        <Button Content="Enter" HorizontalAlignment="Left" Margin="368,167,0,0" VerticalAlignment="Top" Click="ShowProductButton_Click"/>
-        <Button x:Name="Admin" Content="Admin"  HorizontalAlignment="Left" Margin="90,97,0,0" VerticalAlignment="Top" Height="39" Width="88" Click="AdminButton_Click"/>
-        <Button Content="New Order" HorizontalAlignment="Left" Margin="36,276,0,0" VerticalAlignment="Top" Height="42" Width="196" Click="NewOrderButton_Click"/>
-        <ComboBox x:Name="NumberOfOrder" HorizontalAlignment="Left" Margin="617,96,0,0" VerticalAlignment="Top" Width="149" Height="39" SelectionChanged="NumberOfOrder_SelectionChanged"/>
-        <Label Content="Number Of Order:" FontSize="16" HorizontalAlignment="Left" Margin="470,98,0,0" VerticalAlignment="Top" Height="37" Width="142"/>
-        <Button x:Name="Track" Content="Track"   HorizontalAlignment="Left" Margin="541,157,0,0" VerticalAlignment="Top" Height="50" Width="127" Click="TrackButton_Click"/>
-        <Button x:Name="OrderList" Content="List of Orders"  Visibility="Hidden" HorizontalAlignment="Left" Margin="36,167,0,0" VerticalAlignment="Top" Click="OrderList_Click"/>
-        <Button x:Name="ProductList" Content="List of Products" Visibility="Hidden" HorizontalAlignment="Left" Margin="173,172,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>
+        <!--<Button Content="Enter" HorizontalAlignment="Left" Margin="368,167,0,0" VerticalAlignment="Top" Click="ShowProductButton_Click"/>-->
+        <Button x:Name="Admin" Content="Admin" Height="90" Width="180" HorizontalAlignment="Left" Margin="108,107,0,0" VerticalAlignment="Top" Click="AdminButton_Click"/>
+        <Button Content="New Order" HorizontalAlignment="Left" Margin="612,235,0,0" VerticalAlignment="Top" Click="NewOrderButton_Click"/>
+        <ComboBox x:Name="NumberOfOrder" HorizontalAlignment="Left" Margin="42,365,0,0" VerticalAlignment="Top"  Height="39" SelectionChanged="NumberOfOrder_SelectionChanged" Width="60"/>
+        <Label Content="Number Of Order:" FontSize="16" HorizontalAlignment="Left" Margin="298,277,0,0" VerticalAlignment="Top" Height="37" Width="142"/>
+        <Button x:Name="Track" Content="Track"  HorizontalAlignment="Left" Margin="369,326,0,0" VerticalAlignment="Top" Click="TrackButton_Click"/>
+        <Button x:Name="OrderList" Content="List of Orders" Visibility="Hidden"  HorizontalAlignment="Left" Margin="30,217,0,0" VerticalAlignment="Top" Click="OrderList_Click"/>
+        <Button x:Name="ProductList" Content="List of Products" Visibility="Hidden" HorizontalAlignment="Left" Margin="225,217,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>
+        <Button Content="Customer" Height="90" Width="180"  HorizontalAlignment="Left" Margin="504,111,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" />
+        <TextBox HorizontalAlignment="Left" Margin="440,282,0,0" TextWrapping="Wrap" Text="Number of Order" VerticalAlignment="Top" Width="136" Height="27"/>
+        <Label Content="Electronics store" FontSize="40" Foreground="BlueViolet"  HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="62" Width="308"/>
 
     </Grid>
 

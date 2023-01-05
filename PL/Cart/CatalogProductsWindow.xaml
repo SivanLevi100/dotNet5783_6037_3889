@@ -10,20 +10,19 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="16*"/>
+            <RowDefinition Height="179*"/>
+            <RowDefinition Height="Auto" MinHeight="44.04"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-         VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
 
         </Grid>
-        <Label x:Name="Category" Content="Category"  Grid.Column="0" HorizontalAlignment="Left" Margin="76,0,0,0" VerticalAlignment="Stretch" Width="116"/>
-        <ComboBox x:Name="CatgegorySelector" ItemsSource="{Binding Categories1}" Text="{Binding Category1}" SelectedItem="{Binding Category1}" HorizontalAlignment="Stretch" Margin="488,0,0,0" VerticalAlignment="Stretch" Width="202" SelectionChanged="CatgegorySelector_SelectionChanged"/>
+        <Label x:Name="Category" Content="Category"  Grid.Column="0" HorizontalAlignment="Left" Margin="76,0,0,0" Width="116"/>
+        <ComboBox x:Name="CatgegorySelector" ItemsSource="{Binding Categories1}" Text="{Binding Category1}" SelectedItem="{Binding Category1}" Margin="543,0,55,0" SelectionChanged="CatgegorySelector_SelectionChanged"/>
         <ListView x:Name="ProductItemListView" ItemsSource="{Binding ProductItems}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="ProductItemListView_MouseDoubleClick" >
             <ListView.View>
                 <GridView>
@@ -31,6 +30,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Content="My Cart" FontSize="20" Background="AliceBlue" Foreground="BlueViolet" BorderBrush="MediumPurple" HorizontalAlignment="Left" Margin="644,5,0,10" Grid.Row="2" Width="146" Click="MyCartButton_Click"/>
 
 
 

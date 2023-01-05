@@ -60,4 +60,9 @@ public partial class CatalogProductsWindow : Window
         new ProductItemWindow(productItem.IdProduct).Show();
        // Close();
     }
+
+    private void MyCartButton_Click(object sender, RoutedEventArgs e)
+    {
+        new MyCartWindow().Show();
+    }
 }
