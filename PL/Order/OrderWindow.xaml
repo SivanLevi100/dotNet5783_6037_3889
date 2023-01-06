@@ -6,57 +6,96 @@
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
         Title="OrderWindow" Height="450" Width="800"
-        DataContext="{Binding Order, RelativeSource={RelativeSource Self}, Mode=OneWay}">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
+    <!--DataContext="{Binding Order, RelativeSource={RelativeSource Self}, Mode=OneWay}">-->
+
+
     <Window.Resources>
         <Style TargetType="local:OrderWindow">
             <Setter Property="Background" Value="AliceBlue" />
         </Style>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="48,0,0,0" />
+            <Setter Property="Height" Value="26" />
+            <Setter Property="Width" Value="110" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontStyle" Value="Italic" />
+        </Style>
+        
+        <Style TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Width" Value="128" />
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="8" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Background" Value="Violet" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Width" Value="140" />
+            <Setter Property="Height" Value="35"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="17" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="67*"/>
-            <RowDefinition Height="Auto" MinHeight="74.04"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="Auto" MinHeight="76.04"/>
         </Grid.RowDefinitions>
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition Width="220"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions >-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="148"/>
+            <ColumnDefinition Width="149"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions >
 
-        <Label Content="ID:" Grid.Row="1" HorizontalAlignment="Left" Margin="89,32,0,0" VerticalAlignment="Top" Width="34" Height="29"/>
-        <Label Content="Customer Name:"  HorizontalAlignment="Left" Margin="76,66,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="99"/>
-        <Label Content="Customer Email:" HorizontalAlignment="Left" Margin="60,97,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="95"/>
-        <Label Content="Customer Adress:" HorizontalAlignment="Left" Margin="60,123,0,0" Grid.Row="1" VerticalAlignment="Top" Height="24" Width="103"/>
-        <Label Content="Order Date:" HorizontalAlignment="Left" Margin="70,0,0,0" Grid.Row="1" VerticalAlignment="Center" Height="26" Width="72"/>
-        <Label Content="Ship Date:" HorizontalAlignment="Left" Margin="68,192,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="64"/>
-        <Label Content="Delivery Date:" HorizontalAlignment="Left" Margin="58,223,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="84"/>
-        <Label Content="Status:" HorizontalAlignment="Left" Margin="76,268,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="45"/>
-        <Label Content="Total Price" HorizontalAlignment="Left" Margin="315,24,0,0" Grid.Row="1" VerticalAlignment="Top" Height="26" Width="64"/>
-        <Label Content="OrdersItem List:" HorizontalAlignment="Left" Margin="315,59,0,0" Grid.Row="1" VerticalAlignment="Top" Height="40" Width="122"/>
-        <TextBox x:Name="txtId" Text="{Binding Id}" HorizontalAlignment="Left" Margin="163,32,0,0" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="18"/>
-        <TextBox x:Name="txtCustomerName" HorizontalAlignment="Left" Margin="180,74,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding CustomerName}" VerticalAlignment="Top" Width="120" Height="18"/>
-        <TextBox x:Name="txtCustomerEmail" HorizontalAlignment="Left" Margin="180,105,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="120" Height="18"/>
-        <TextBox x:Name="txtCustomerAdress" HorizontalAlignment="Left" Margin="180,129,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding CustomerAdress}" VerticalAlignment="Top" Width="120" Height="18"/>
-        <TextBox x:Name="txtShipDate" HorizontalAlignment="Left" Margin="163,192,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding ShipDate}" VerticalAlignment="Top" Width="120" Height="18"/>
-        <TextBox x:Name="txtOrderDate" HorizontalAlignment="Left" Margin="175,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding OrderDate}" VerticalAlignment="Center" Width="120" Height="18"/>
-        <TextBox x:Name="txtDeliveryDate" HorizontalAlignment="Left" Margin="180,236,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding DeliveryDate}" VerticalAlignment="Top" Width="120" Height="18"/>
-        <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Margin="163,276,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Status}" VerticalAlignment="Top" Width="120" Height="18"/>
-        <TextBox x:Name="txtTotalPrice" HorizontalAlignment="Left"  Margin="437,24,0,0" Grid.Row="1" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="120" Height="18"/>
-        <ListView x:Name="OrdersItemListView" Grid.Row="1" ItemsSource="{Binding OrdersItemsList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="432,62,125,200">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button x:Name="UpdateOrderDate"  Content="Update Date of Order"  HorizontalAlignment="Left" Margin="588,289,0,0" Grid.Row="1" VerticalAlignment="Top" Click="UpdateDateOrderButton_Click" Height="20" Width="119"/>
-        <Button x:Name="UpdateShiping" Content="Update Shiping date" HorizontalAlignment="Left" Margin="437,275,0,0" Grid.Row="1" VerticalAlignment="Top" Height="24" Width="120" Click="UpdateShipingButton_Click"/>
-        <Button x:Name="UpdateDelivery" Content="Update Delivery date" HorizontalAlignment="Left" Margin="437,312,0,0" Grid.Row="1" VerticalAlignment="Top" Click="UpdateDelivery_Click" Height="20" Width="115"/>
-        <DataGrid x:Name="datagrid" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="403,180,125,90"/>
-
-
+        <Label Content="ID:" Grid.Row="1" Grid.ColumnSpan="2" Height="26" Width="110"  />
+        <Label Content="Customer Name:" Grid.Row="2" Grid.ColumnSpan="2" Height="26" Width="110"/>
+        <Label Content="Customer Email:" Grid.Row="3" Grid.ColumnSpan="2" Height="26" Width="110" />
+        <Label Content="Customer Adress:" Grid.Row="4" Grid.ColumnSpan="2" Height="26" Width="110"/>
+        <Label Content="Order Date:" Grid.Row="5" Grid.ColumnSpan="2" Height="26" Width="110" />
+        <Label Content="Ship Date:" Grid.Row="6" Grid.ColumnSpan="2" Height="26" Width="110"/>
+        <Label Content="Delivery Date:" Grid.Row="7" Grid.ColumnSpan="2" Height="26" Width="110" />
+        <Label Content="Status:" Grid.Row="1" Grid.Column="2" Height="26" Width="110" Grid.ColumnSpan="2"/>
+        <Label Content="Total Price" Grid.Row="2" Grid.Column="2" Height="26" Width="110" Grid.ColumnSpan="2" />
+        <Label Content="OrdersItem List:" Grid.Row="3" Grid.Column="2" Height="26" Width="110" Grid.ColumnSpan="2" />
+        <TextBox x:Name="idtextttt" Text="{Binding Path=Order.Id}" Grid.Row="1" Grid.Column="1" />
+        <TextBox Text="{Binding Path=Order.CustomerName}" Grid.Row="2" Grid.Column="1" />
+        <TextBox Text="{Binding Path=Order.CustomerEmail}" Grid.Row="3" Grid.Column="1"  />
+        <TextBox Text="{Binding Path=Order.CustomerAdress}" Grid.Row="4" Grid.Column="1" />
+        <TextBox Text="{Binding Path=Order.ShipDate}" Grid.Row="5" Grid.Column="1" />
+        <TextBox Text="{Binding Path=Order.OrderDate}" Grid.Row="6" Grid.Column="1" />
+        <TextBox Text="{Binding Path=Order.DeliveryDate}" Grid.Row="7" Grid.Column="1" />
+        <TextBox Text="{Binding Path=Order.Status}" Grid.Row="1" Grid.Column="3"/>
+        <TextBox Text="{Binding Path=Order.TotalPrice}" Grid.Row="2" Grid.Column="3"/>
+        <DataGrid Grid.Column="3" Grid.Row="3" ItemsSource="{Binding Path=Order.OrdersItemsList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="14,0,34,10" Grid.RowSpan="3"/>
+        <Button Content="Update Delivery date" Grid.Row="8" Grid.Column="3" Click="UpdateDelivery_Click" Margin="14,3,0,0"/>
+        <Button Content="Update Shiping date" Margin="179,2,0,0" Grid.Row="8" Grid.Column="3" Click="UpdateShipingButton_Click"  />
+        <Button Content="Update Date of Order"  Margin="97,4,0,0" Grid.Row="7" Grid.Column="3" Click="UpdateDateOrderButton_Click" />
 
     </Grid>
 </Window>

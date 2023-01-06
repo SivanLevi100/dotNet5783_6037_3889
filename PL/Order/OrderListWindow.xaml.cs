@@ -44,11 +44,17 @@ public partial class OrderListWindow : Window
 
     private void OrdertListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        ListBox listBox = sender as ListBox;
-        BO.OrderForList order = new BO.OrderForList();
-        order = listBox.SelectedItem as BO.OrderForList;
-        new OrderWindow(order.OrderId).Show();
+        ListView listview = sender as ListView;
+        BO.OrderForList order1 = new BO.OrderForList();
+        order1 = listview.SelectedItem as BO.OrderForList;
+        new OrderWindow(order1.OrderId).Show();
         Close();
+
+        //ListBox listBox = sender as ListBox;
+        //BO.OrderForList order = new BO.OrderForList();
+        //order = listBox.SelectedItem as BO.OrderForList;
+        //new OrderWindow(order.OrderId).Show();
+        //Close();
     }
 
     private void OrderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

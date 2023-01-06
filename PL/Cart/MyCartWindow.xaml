@@ -5,15 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
-        Title="MyCartWindow" Height="450" Width="800">
+        Title="MyCartWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="17*"/>
             <RowDefinition Height="176*"/>
             <RowDefinition Height="Auto" MinHeight="48.04"/>
         </Grid.RowDefinitions>
-        <Button Content="Order Confirmation" HorizontalAlignment="Left" Margin="618,10,0,0" Grid.Row="2" VerticalAlignment="Top" Height="24" Width="119" Click="OrderConfirmationButton_Click"/>
-        <Label Content="My Cart" FontSize="18" HorizontalAlignment="Left" Margin="319,0,0,0" VerticalAlignment="Center" Width="113" Height="34"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+        <Button Content="Order Confirmation" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="2" VerticalAlignment="Top" Height="24" Width="119" Click="OrderConfirmationButton_Click" Grid.Column="2"/>
+        <Label Content="My Cart" FontSize="18" HorizontalAlignment="Left" Margin="57,-7,0,0" VerticalAlignment="Top" Width="122" Height="34" Grid.Column="1"/>
+        <ListBox  Grid.Row="1" ItemsSource="{Binding OrdertItemsOfCart}" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+        <Button Grid.Column="1" Content="Delete the basket" HorizontalAlignment="Left" Margin="118,6,0,0" Grid.Row="2" VerticalAlignment="Top" Height="32" Width="107"/>
+        <TextBox HorizontalAlignment="Left" Margin="158,16,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top" Width="85" Height="19"/>
+        <Label Content="The price of all items:" HorizontalAlignment="Left" Margin="30,9,0,0" Grid.Row="2" VerticalAlignment="Top" Width="123" Height="26"/>
 
     </Grid>
 </Window>

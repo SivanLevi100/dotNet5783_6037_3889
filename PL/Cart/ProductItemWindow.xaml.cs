@@ -25,6 +25,7 @@ public partial class ProductItemWindow : Window
     public static readonly DependencyProperty CartDependency = DependencyProperty.Register(nameof(MyCart), typeof(BO.Cart), typeof(Window));
     public BO.Cart MyCart { get => (BO.Cart)GetValue(CartDependency); private set => SetValue(CartDependency, value); }
 
+    
     public ProductItemWindow(int id=0)
     {
 
@@ -49,6 +50,7 @@ public partial class ProductItemWindow : Window
         try
         {
             MyCart = bl?.Cart.AddProduct(MyCart, ProductItem.IdProduct);
+            ProductItem.AmountInCart +=1;
             MessageBox.Show("The Product added to cart");
 
         }

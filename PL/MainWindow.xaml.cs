@@ -59,7 +59,9 @@ public partial class MainWindow : Window
 
     private void TrackButton_Click(object sender, RoutedEventArgs e)
     {
-        //פותח חלון מעקב הזמנות
+        int idOrder = int.Parse(txtnumber.Text);
+        new OrderTrackingWindow(idOrder).Show();
+        //פותח חלון מעקב הזמנה
     }
 
     private void OrderList_Click(object sender, RoutedEventArgs e)

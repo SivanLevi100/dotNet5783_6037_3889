@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 using PL.Product;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,12 @@ public partial class OrderWindow : Window
     public static readonly DependencyProperty OrderDependency = DependencyProperty.Register(nameof(Order), typeof(BO.Order), typeof(Window));
     public BO.Order? Order { get => (BO.Order)GetValue(OrderDependency); private set => SetValue(OrderDependency, value); }
 
-    public OrderWindow(int id)
+    public OrderWindow(int id=0)
     {
         try
         {
             Order = id == 0 ? new() { Status=BO.OrderStatus.Unknown} : bl?.Order.GetOrderDetails(id);
             InitializeComponent();
-
             //datagrid.ItemsSource = bl.Order.GetOrderDetails(id).OrdersItemsList;
             //OrdersItemListView.ItemsSource = bl?.Order.GetOrderDetails(id).OrdersItemsList; 
         }
@@ -39,53 +39,27 @@ public partial class OrderWindow : Window
         {
             MessageBox.Show(ex.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             Close();
-            new OrderListWindow().ShowDialog();
-            //new OrderListWindow().Show();
+            //new OrderListWindow().ShowDialog();
+            new OrderListWindow().Show();
         }
-
-        //InitializeComponent();
-
-        //try
+        //catch (BO.NotExiestsExceptions ex)
         //{
-        //    UpdateShiping.Visibility = Visibility.Hidden;
-        //    UpdateDelivery.Visibility = Visibility.Hidden;
-        //    BO.Order order = bl?.Order.GetOrderDetails(id);
-        //    txtId.Text = order.Id.ToString();
-        //    txtCustomerName.Text = order.CustomerName;
-        //    txtCustomerEmail.Text = order.CustomerEmail;
-        //    txtCustomerAdress.Text = order.CustomerAdress;
-        //    txtOrderDate.Text = order.OrderDate.ToString();
-        //    txtShipDate.Text = order.ShipDate.ToString();
-        //    txtDeliveryDate.Text = order.DeliveryDate.ToString();
-        //    txtStatus.Text = order.Status.ToString();
-        //    txtTotalPrice.Text = order.TotalPrice.ToString();
-        //    OrdersItemListView.ItemsSource = bl.Order.GetOrderList(/*id*/);//צריך להוסיף בשכבה הלוגית בפונקציה של רשימת הזמנות ביטוי עם פילטר 
-        //    txtId.IsEnabled = false;
-        //    txtCustomerName.IsEnabled = false;
-        //    txtCustomerEmail.IsEnabled = false;
-        //    txtCustomerAdress.IsEnabled = false;
-        //    txtOrderDate.IsEnabled = false;
-        //    txtShipDate.IsEnabled = false;
-        //    txtDeliveryDate.IsEnabled = false;
-        //    txtStatus.IsEnabled = false;
-        //    txtTotalPrice.IsEnabled = false;
-
-        //}
-        //catch (IncorrectDataExceptions str)
-        //{
-        //    MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        //    MessageBox.Show(ex.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         //    Close();
+        //    //new OrderListWindow().ShowDialog();
+        //    new OrderListWindow().Show();
         //}
+
 
 
     }
 
     private void UpdateDateOrderButton_Click(object sender, RoutedEventArgs e)
     {
-        txtShipDate.IsEnabled = true;
-        txtDeliveryDate.IsEnabled = true;
-        UpdateDelivery.Visibility = Visibility.Visible;
-        UpdateShiping.Visibility= Visibility.Visible;
+        //txtShipDate.IsEnabled = true;
+        //txtDeliveryDate.IsEnabled = true;
+        //UpdateDelivery.Visibility = Visibility.Visible;
+        //UpdateShiping.Visibility= Visibility.Visible;
  
     }
 
@@ -98,12 +72,35 @@ public partial class OrderWindow : Window
 
     private void UpdateShipingButton_Click(object sender, RoutedEventArgs e)
     {
-        bl.Order.UpdateShipping(5);/////////////////////**************************////////////
+        try
+        {
+            Order=bl?.Order.UpdateShipping(Order.Id);
+
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Shipping date cannot be updated", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            Close();
+            new OrderListWindow().Show();
+        }
+
+
+        
     }
 
     private void UpdateDelivery_Click(object sender, RoutedEventArgs e)
     {
-        bl.Order.UpdateDelivery(5);////////////////**********************/////////////////////
+        try
+        {
+           Order= bl?.Order.UpdateDelivery(Order.Id);
+
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Delivery date cannot be updated", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            Close();
+            new OrderListWindow().Show();
+        }
 
     }
 }

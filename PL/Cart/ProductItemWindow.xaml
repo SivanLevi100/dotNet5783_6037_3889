@@ -16,7 +16,7 @@
             <Setter Property="FontSize" Value="15" />
             <Setter Property="FontStyle" Value="Italic" />
             <Setter Property="Width" Value="150" />
-            <Setter Property="IsEnabled" Value="false" />
+            <Setter Property="IsEnabled" Value="False" />
             <Setter Property="Height" Value="30" />
             <Setter Property="Foreground" Value="BlueViolet" />
             <Style.Resources>
