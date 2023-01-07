@@ -61,7 +61,7 @@ internal class Order : BlApi.IOrder
                 DO.Order orderDO = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
                 BO.OrderStatus status1 = statusFromDate(orderDO);
                 double sumOfPrices = 0;
-                IEnumerable<DO.OrderItem?>? orderItemListDo = Dal.OrderItem.GetAll(orderitem => orderitem.Value.OrderId == idOrder);
+                IEnumerable<DO.OrderItem?>? orderItemListDo = Dal.OrderItem.GetAll(orderitem => ((DO.OrderItem)orderitem!).OrderId == idOrder);
                 foreach (DO.OrderItem orderItem in orderItemListDo)
                 {
                     sumOfPrices += orderItem.Price * orderItem.Amount;

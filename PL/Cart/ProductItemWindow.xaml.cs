@@ -57,10 +57,10 @@ public partial class ProductItemWindow : Window
         catch (BO.NotExiestsExceptions ex) 
         {
             MessageBox.Show(ex.Message, "The product is out of stock");
-            Close();
+           
 
         }
-
+        Close();
     }
 
     private void RemoveItemButton_Click(object sender, RoutedEventArgs e)
