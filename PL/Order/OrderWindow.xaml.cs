@@ -54,21 +54,12 @@ public partial class OrderWindow : Window
 
     }
 
-    private void UpdateDateOrderButton_Click(object sender, RoutedEventArgs e)
+    private void AddProductForOrderButton_Click(object sender, RoutedEventArgs e)
     {
-        //txtShipDate.IsEnabled = true;
-        //txtDeliveryDate.IsEnabled = true;
-        //UpdateDelivery.Visibility = Visibility.Visible;
-        //UpdateShiping.Visibility= Visibility.Visible;
  
+
     }
 
-    //private void UpdateDelivery(object sender, RoutedEventArgs e)
-    //{
-    //    bl.Order.UpdateDelivery(int.Parse(txtId.Text));
-    //    MessageBox.Show("update delivery date");
-    //    Close();
-    //}
 
     private void UpdateShipingButton_Click(object sender, RoutedEventArgs e)
     {

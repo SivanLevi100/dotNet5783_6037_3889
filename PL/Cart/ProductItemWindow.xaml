@@ -73,6 +73,7 @@
         <Button Grid.Column="2" Content="Add item" Margin="40,47,0,0" Grid.Row="6" Click="AddItemButton_Click"  />
         <Button Grid.Column="2" Content="Remove item"  Margin="170,47,0,0" Grid.Row="6" Click="RemoveItemButton_Click"  />
 
+
     </Grid>
 
 
