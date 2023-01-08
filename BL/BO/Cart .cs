@@ -14,12 +14,22 @@ public class Cart
     public List<OrderItem?>? OrdersItemsList { get; set; }
     public double TotalPrice { get; set; }
 
-    public override string ToString() => $@"
-    Customer Name: {CustomerName}
-    Customer Email: {CustomerEmail}
-    Customer Adress: {CustomerAdress}
-    List of OrdersItems: {OrdersItemsList}
-    Total Price Of Item: {TotalPrice}";
+    public override string ToString()
+    {
+        string str = "";
+        str += $"Customer Name: {CustomerName} \n";
+        str += $"Customer Email: {CustomerEmail} \n";
+        str += $"Customer Adress: {CustomerAdress} \n";
+        str += $"Total Price Of Item: {TotalPrice} \n";
+        str += $"List of OrdersItems: \n";
+        foreach (var item in OrdersItemsList ?? throw new BO.NotExiestsExceptions("The list of orderItem is not exiest"))
+        {
+            str += $" orderitem: {item}\n";
+        }
+        return str;
+
+
+    }
 
 
 }

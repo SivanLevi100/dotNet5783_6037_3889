@@ -87,8 +87,8 @@
         <TextBox Text="{Binding Path=Order.CustomerName}" Grid.Row="2" Grid.Column="1" />
         <TextBox Text="{Binding Path=Order.CustomerEmail}" Grid.Row="3" Grid.Column="1"  />
         <TextBox Text="{Binding Path=Order.CustomerAdress}" Grid.Row="4" Grid.Column="1" />
-        <TextBox Text="{Binding Path=Order.ShipDate}" Grid.Row="5" Grid.Column="1" />
-        <TextBox Text="{Binding Path=Order.OrderDate}" Grid.Row="6" Grid.Column="1" />
+        <TextBox Text="{Binding Path=Order.OrderDate}" Grid.Row="5" Grid.Column="1" />
+        <TextBox Text="{Binding Path=Order.ShipDate}" Grid.Row="6" Grid.Column="1" />
         <TextBox Text="{Binding Path=Order.DeliveryDate}" Grid.Row="7" Grid.Column="1" />
         <TextBox Text="{Binding Path=Order.Status}" Grid.Row="1" Grid.Column="3"/>
         <TextBox Text="{Binding Path=Order.TotalPrice}" Grid.Row="2" Grid.Column="3"/>

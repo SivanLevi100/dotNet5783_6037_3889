@@ -51,13 +51,6 @@ internal class Order : BlApi.IOrder
         {
             if (idOrder > 0)
             {
-                //BO.OrderStatus status1 = new BO.OrderStatus();
-                //if (orderDO.OrderDate != null && orderDO.ShipDate == null && orderDO.DeliveryDate == null)//ההזמנה נוצרה
-                //    status1 = BO.OrderStatus.Confirmed;
-                //if (orderDO.OrderDate != null && orderDO.ShipDate != null && orderDO.DeliveryDate == null)//ההזמנה נשלחה
-                //    status1 = BO.OrderStatus.shipped;
-                //if (orderDO.OrderDate != null && orderDO.ShipDate != null && orderDO.DeliveryDate != null)//ההזמנה נמסרה
-                //    status1 = BO.OrderStatus.delivered;
                 DO.Order orderDO = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
                 BO.OrderStatus status1 = statusFromDate(orderDO);
                 double sumOfPrices = 0;
@@ -78,21 +71,21 @@ internal class Order : BlApi.IOrder
                     DeliveryDate = orderDO.DeliveryDate,
                     Status = status1,
                     TotalPrice = sumOfPrices,
-                    //OrdersItemsList= getBOlistOfOrderItem(orderDO.Id)
+                    OrdersItemsList= getBOlistOfOrderItem(orderDO.Id)
 
                 };
                 return order;
             }
             else
-                throw new BO.NotExiestsExceptions("Order request failed");
+                throw new BO.NotExiestsExceptions("Order request failed/**");
         }
         catch (DO.NotFoundExceptions str)
         {
-            throw new BO.NotExiestsExceptions("Order request failed", str);
+            throw new BO.NotExiestsExceptions("Order request failed/*****", str);
         }
         catch (BO.NotExiestsExceptions str)
         {
-            throw new BO.NotExiestsExceptions("Order request failed", str);
+            throw new BO.NotExiestsExceptions("Order request failed/*/*/*", str);
         }
         //return new BO.Order();
 
@@ -144,7 +137,7 @@ internal class Order : BlApi.IOrder
                     ShipDate = orderDO.ShipDate,
                     DeliveryDate = DateTime.Now,
                     Status = BO.OrderStatus.delivered,
-                   // OrdersItemsList = getBOlistOfOrderItem(idOrder),
+                    OrdersItemsList = getBOlistOfOrderItem(idOrder),
                     TotalPrice = Dal.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderId == idOrder)
                     .Sum(orderItem => ((DO.OrderItem)orderItem!).Price * ((DO.OrderItem)orderItem!).Amount)
                 };
@@ -248,7 +241,7 @@ internal class Order : BlApi.IOrder
             listBo.Add(new BO.OrderItem
             {
                 Id = doOrderItem.Id,
-                NameProduct = Dal.Product.Get(doOrderItem.Id).Value.Name,
+                NameProduct = Dal.Product.Get(doOrderItem.ProductId).Value.Name,
                 ProductId = doOrderItem.ProductId,
                 Price = doOrderItem.Price,
                 AmountInOrder = doOrderItem.Amount,

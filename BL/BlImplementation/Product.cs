@@ -141,40 +141,40 @@ internal class Product : BlApi.IProduct
 
     public void Delete(int id)
     {
-        try
-        {
-            var orderItemD = (from item in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests")
-                              let order = ((DO.Order)item)!
-                              from item1 in Dal.OrderItem.GetAll()
-                              let orderItem = ((DO.OrderItem)item1)!
-                              where order.Id == orderItem.OrderId && orderItem.ProductId != id
-                              select orderItem).FirstOrDefault();
-            Dal.Product.Delete(orderItemD.ProductId);
-        }
-        catch (DO.NotFoundExceptions str)
-        {
-            throw new BO.NotExiestsExceptions("No such product exists at all", str);
-        }
-
-
-        /*/*//////
         //try
         //{
-        //    foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests"))//Loop through all orders 
-        //    {
-        //        if (Dal.OrderItem.GetAll(OrderItem => OrderItem.Value.OrderId == order?.Id).Any(orderItem => orderItem.Value.ProductId != id))//If the product is not in the list of order details in the basket
-        //        {
-        //            Dal?.Product.Delete(id);
-        //            return;
-        //        }
-        //        else
-        //            throw new BO.NotExiestsExceptions("This product appears on orders");
-        //    }
+        //    var orderItemD = (from item in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests")
+        //                      let order = ((DO.Order)item)!
+        //                      from item1 in Dal.OrderItem.GetAll()
+        //                      let orderItem = ((DO.OrderItem)item1)!
+        //                      where order.Id == orderItem.OrderId && orderItem.ProductId != id
+        //                      select orderItem).FirstOrDefault();
+        //    Dal.Product.Delete(orderItemD.ProductId);
         //}
         //catch (DO.NotFoundExceptions str)
         //{
         //    throw new BO.NotExiestsExceptions("No such product exists at all", str);
         //}
+
+
+        /*/*//////
+        try
+        {
+            foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests"))//Loop through all orders 
+            {
+                if (Dal.OrderItem.GetAll(OrderItem => OrderItem.Value.OrderId == order?.Id).Any(orderItem => orderItem.Value.ProductId != id))//If the product is not in the list of order details in the basket
+                {
+                    Dal?.Product.Delete(id);
+                    return;
+                }
+                else
+                    throw new BO.NotExiestsExceptions("This product appears on orders");
+            }
+        }
+        catch (DO.NotFoundExceptions str)
+        {
+            throw new BO.NotExiestsExceptions("No such product exists at all", str);
+        }
     }
 
 

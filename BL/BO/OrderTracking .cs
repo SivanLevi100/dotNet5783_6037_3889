@@ -12,9 +12,17 @@ public class OrderTracking
     public OrderStatus? Status { get; set; }
     public List<Tuple<DateTime?,string?>>? Tracking { get; set; }
 
-    public override string ToString() => $@"
-    Order Id: {OrderId}
-    Status: {Status}
-    Tracking: {Tracking}";
-
+    public override string ToString()
+    {
+        string str = "";
+        str += $"Order Id: {OrderId} \n";
+        str+= $"Status: { Status}\n";
+        str+=$"Tracking: ";
+        foreach (var item in Tracking)
+        {
+            str +=$"{item}\n";
+        }
+        return str;
+    }
 }
+
