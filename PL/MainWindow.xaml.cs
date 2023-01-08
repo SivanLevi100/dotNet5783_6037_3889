@@ -32,10 +32,10 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         IEnumerable<int> orderForLists1 = new List<int>();
-        orderForLists1 =  from item in bl?.Order.GetOrderList()
-                          where item != null
-                          select item.OrderId;
-        NumberOfOrder.ItemsSource = orderForLists1;
+        orderForLists1 = from item in bl?.Order.GetOrderList()
+                         where item != null
+                         select item.OrderId;
+        //NumberOfOrder.ItemsSource = orderForLists1;
 
         //Track.IsEnabled = false;
 
@@ -85,5 +85,10 @@ public partial class MainWindow : Window
     private void CustomerButton_Click(object sender, RoutedEventArgs e)
     {
         
+    }
+
+    private void txtnumber_TextChanged(object sender, TextChangedEventArgs e)
+    {
+
     }
 }

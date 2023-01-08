@@ -22,7 +22,8 @@ public partial class OrderTrackingWindow : Window
     public static readonly DependencyProperty OrderTrackingDependency = DependencyProperty.Register(nameof(OrderTracking), typeof(BO.OrderTracking), typeof(Window));
     public BO.OrderTracking? OrderTracking { get => (BO.OrderTracking)GetValue(OrderTrackingDependency); private set => SetValue(OrderTrackingDependency, value); }
 
-    public OrderTrackingWindow(int id=0)
+
+    public OrderTrackingWindow(int id)
     {
         try
         {
@@ -35,5 +36,11 @@ public partial class OrderTrackingWindow : Window
 
         }
         InitializeComponent();
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBox.Show("Exit the page");
+        Close();
     }
 }

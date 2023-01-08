@@ -5,8 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
-        Title="OrderTrackingWindow" Height="450" Width="800">
+        Title="OrderTrackingWindow" Height="450" Width="800"
+        DataContext="{Binding OrderTracking, RelativeSource={RelativeSource Mode=Self}}">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="230"/>
+
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions >
+        <Label Content="ID Order" Grid.Row="1" Grid.Column="0" Height="26" Width="110"/>
+        <Label Content="Status" Grid.Row="2" Grid.Column="0" Height="26" Width="110"/>
+        <Label Content="Tracking" Grid.Row="3" Grid.Column="0" Height="26" Width="110"/>
+        <TextBox Text="{Binding Path=OrderId}" Grid.Row="1" Grid.Column="1" Margin="10,10,10,10"/>
+        <TextBox Text="{Binding Path=Status}" Grid.Row="2" Grid.Column="1" Margin="10,10,10,10"/>
+
+        <Button Content="confirmation" Grid.Column="2" Margin="112,46,112,46" Grid.Row="4" Click="Button_Click"/>
+        <!--<ListBox ItemsSource="{Binding Path=Tracking}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="1" Margin="40,0,40,0" Grid.Row="3"/>-->
+        <ListView ItemsSource="{Binding Path=Tracking}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="1" Margin="40,0,40,0" Grid.Row="3" RenderTransformOrigin="0.443,-0.971" Height="80" VerticalAlignment="Center">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </Grid>
 </Window>
