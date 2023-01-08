@@ -3,10 +3,12 @@ using DO;
 using PL.Product;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -26,14 +28,20 @@ public partial class OrderWindow : Window
     public static readonly DependencyProperty OrderDependency = DependencyProperty.Register(nameof(Order), typeof(BO.Order), typeof(Window));
     public BO.Order? Order { get => (BO.Order)GetValue(OrderDependency); private set => SetValue(OrderDependency, value); }
 
+    //לרשימה של פריטים בהזמנה
+    public static readonly DependencyProperty OrderItemListDependency = DependencyProperty.Register(nameof(OrderItemList), typeof(ObservableCollection<BO.OrderItem?>), typeof(Window));
+    public ObservableCollection<BO.OrderItem?> OrderItemList
+    {
+        get => (ObservableCollection<BO.OrderItem?>)GetValue(OrderItemListDependency);
+        private set => SetValue(OrderItemListDependency, value);
+    }
+
     public OrderWindow(int id=0)
     {
         try
         {
             Order = id == 0 ? new() { Status=BO.OrderStatus.Unknown} : bl?.Order.GetOrderDetails(id);
             InitializeComponent();
-            //datagrid.ItemsSource = bl.Order.GetOrderDetails(id).OrdersItemsList;
-            //OrdersItemListView.ItemsSource = bl?.Order.GetOrderDetails(id).OrdersItemsList; 
         }
         catch (BO.IncorrectDataExceptions ex)
         {
@@ -56,7 +64,7 @@ public partial class OrderWindow : Window
 
     private void AddProductForOrderButton_Click(object sender, RoutedEventArgs e)
     {
- 
+        new OrderItemWindow(Order.Id).Show();
 
     }
 
@@ -71,12 +79,10 @@ public partial class OrderWindow : Window
         catch (BO.NotExiestsExceptions ex)
         {
             MessageBox.Show(ex.Message, "Shipping date cannot be updated", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            Close();
-            new OrderListWindow().Show();
+            //Close();
+            //new OrderListWindow().Show();
         }
 
-
-        
     }
 
     private void UpdateDelivery_Click(object sender, RoutedEventArgs e)
@@ -89,9 +95,15 @@ public partial class OrderWindow : Window
         catch (BO.NotExiestsExceptions ex)
         {
             MessageBox.Show(ex.Message, "Delivery date cannot be updated", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            Close();
-            new OrderListWindow().Show();
+            //Close();
+            //new OrderListWindow().Show();
         }
 
+
+    }
+
+    private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        new OrderItemWindow(Order.Id).Show();
     }
 }

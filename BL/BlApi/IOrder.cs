@@ -42,6 +42,6 @@ public interface IOrder
     /// <returns></returns>
     public BO.OrderTracking Tracking(int idOrder);
 
-    public void AddItemForOrder(BO.Order order, int idProduct, int Amount);
+    public BO.Order AddItemForOrder(BO.Order order, int idProduct, int Amount);
 
 }

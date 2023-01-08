@@ -5,8 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
-        Title="OrderConfirmationWindow" Height="450" Width="800">
+        Title="OrderConfirmationWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="230"/>
+
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions >
+
+        <Label Content="Customer Name:" Grid.Row="1" Grid.Column="0" Height="26" Width="110"/>
+        <Label Content="Customer Email:" Grid.Row="2" Grid.Column="0" Height="26" Width="110" />
+        <Label Content="Customer Adress:" Grid.Row="3"  Grid.Column="0" Height="26" Width="110"/>
+        <TextBox Text="{Binding Path=MyCart1.CustomerName}" Grid.Row="1" Grid.Column="1" Margin="10,10,10,10" />
+        <TextBox Text="{Binding Path=MyCart1.CustomerEmail}" Grid.Row="2" Grid.Column="1" Margin="10,12,10,10"  />
+        <TextBox Text="{Binding Path=MyCart1.CustomerAdress}" Grid.Row="3" Grid.Column="1" Margin="10,14,10,10" />
+        <Button Grid.Column="2" Content="Order Confirmation" HorizontalAlignment="Left" Height="46" Margin="122,38,0,0" Grid.Row="6" VerticalAlignment="Top" Width="150" Click="OrderConfirmationButton_Click"/>
+
+
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 using PL.Order;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ public partial class MyCartWindow : Window
 
     public MyCartWindow()
     {
-        //OrdertItemsOfCart =bl.Cart.Getcart();
+        //  OrdertItemsOfCart = MyCart.OrdersItemsList.Cast<OrderItem>();  //הצגת הפריטים בסל 
         InitializeComponent();
     }
 

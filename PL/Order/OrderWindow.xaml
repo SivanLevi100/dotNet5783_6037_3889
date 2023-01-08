@@ -92,10 +92,11 @@
         <TextBox Text="{Binding Path=Order.DeliveryDate}" Grid.Row="7" Grid.Column="1" />
         <TextBox Text="{Binding Path=Order.Status}" Grid.Row="1" Grid.Column="3"/>
         <TextBox Text="{Binding Path=Order.TotalPrice}" Grid.Row="2" Grid.Column="3"/>
-        <DataGrid Grid.Column="3" Grid.Row="3" ItemsSource="{Binding Path=Order.OrdersItemsList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="14,0,34,10" Grid.RowSpan="3"/>
+        <DataGrid Grid.Column="3" Grid.Row="3" ItemsSource="{Binding Path=Order.OrdersItemsList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="14,0,34,10" Grid.RowSpan="3" SelectionChanged="DataGrid_SelectionChanged"/>
         <Button Content="Update Delivery date" Grid.Row="8" Grid.Column="3" Click="UpdateDelivery_Click" Margin="14,3,0,0"/>
         <Button Content="Update Shiping date" Margin="179,2,0,0" Grid.Row="8" Grid.Column="3" Click="UpdateShipingButton_Click"  />
         <Button Content="Add Product for order" Margin="97,4,0,0" Grid.Row="7" Grid.Column="3" Click="AddProductForOrderButton_Click" />
 
+        
     </Grid>
 </Window>

@@ -29,6 +29,10 @@ public partial class CatalogProductsWindow : Window
     public BO.Category Category1 { get; set; } = BO.Category.Unavailable;
     public Array Categories1 { get; set; } = Enum.GetValues(typeof(BO.Category));
 
+    //public static readonly DependencyProperty CartDependency = DependencyProperty.Register(nameof(MyCart), typeof(BO.Cart), typeof(Window));
+    //public BO.Cart MyCart { get => (BO.Cart)GetValue(CartDependency); private set => SetValue(CartDependency, value); }
+
+
 
 
     public CatalogProductsWindow()
@@ -63,6 +67,7 @@ public partial class CatalogProductsWindow : Window
 
     private void MyCartButton_Click(object sender, RoutedEventArgs e)
     {
+        
         new MyCartWindow().Show();
     }
 }

@@ -232,7 +232,7 @@ internal class Order : BlApi.IOrder
 
     //וגם הוספת פריט או הורדת פריט,פונקציה המוסיפה מוצר להזמנה שכבר קיימת
     //Amount = כמה רוצה להוסיך או להוריד
-    public void AddItemForOrder( BO.Order order,int idProduct,int Amount)
+    public BO.Order AddItemForOrder( BO.Order order,int idProduct,int Amount)
     {
         DO.Product doProduct;
         DO.Order doOrder;
@@ -258,7 +258,7 @@ internal class Order : BlApi.IOrder
         {
             BO.OrderItem orderItem = new BO.OrderItem
             {
-                Id = 0,//////// 
+                Id = 0, // Dal.OrderItem.GetF(item=>item.Value.ProductId==doProduct.Id).Id, //////// 
                 ProductId = doProduct.Id,
                 NameProduct = doProduct.Name,
                 Price = doProduct.Price,
@@ -268,7 +268,7 @@ internal class Order : BlApi.IOrder
             order.OrdersItemsList.Add(orderItem);
             order.TotalPrice += doProduct.Price;
         }
-        
+        return order;
 
 
     }
