@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace PL.Order;
 
@@ -26,6 +27,7 @@ public partial class OrderConfirmationWindow : Window
     //public static readonly DependencyProperty Cart1Dependency = DependencyProperty.Register(nameof(MyCart1), typeof(BO.Cart), typeof(Window));
     //public BO.Cart MyCart1 { get => (BO.Cart)GetValue(Cart1Dependency); private set => SetValue(Cart1Dependency, value); }
 
+    public BO.Cart c1 = CatalogProductsWindow.myCart;
 
     public OrderConfirmationWindow()
     {
@@ -34,20 +36,30 @@ public partial class OrderConfirmationWindow : Window
 
     private void OrderConfirmationButton_Click(object sender, RoutedEventArgs e)
     {
+        //while (string.IsNullOrEmpty(MyCart1.CustomerName) || string.IsNullOrEmpty(MyCart1.CustomerEmail) || string.IsNullOrEmpty(MyCart1.CustomerAdress))
+        //{
+        //    MessageBox.Show("Not all fields are filled");
+        //    return;
+        //}
         try
         {
-           // bl.Cart.Confirm(myCart);
+            CatalogProductsWindow.myCart.CustomerName = c1.CustomerName;
+            CatalogProductsWindow.myCart.CustomerEmail = c1.CustomerEmail;
+            CatalogProductsWindow.myCart.CustomerAdress = c1.CustomerAdress;
 
+            bl?.Cart.Confirm(CatalogProductsWindow.myCart);
         }
-        catch(BO.IncorrectDataExceptions str) 
+        catch (BO.IncorrectDataExceptions str) 
         {
             MessageBox.Show(str.Message, "Buyer's name or address are blank or Email address in invalid format", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
+            return;
         }
         catch (BO.NotExiestsExceptions str)
         {
             MessageBox.Show(str.Message, "The shopping cart is empty", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
+            return;
         }
+        MessageBox.Show("The order was successfully placed");
+
     }
 }

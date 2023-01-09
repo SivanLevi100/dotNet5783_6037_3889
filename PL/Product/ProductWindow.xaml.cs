@@ -69,33 +69,32 @@ public partial class ProductWindow : Window
 
         }
 
-        //משלב 3:**//
-        //InitializeComponent();
-        //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        //AddButton.Visibility = Visibility.Hidden;
-        //UpdateButton.Visibility = Visibility.Visible;
-        //txtId.IsEnabled = false;//This field cannot be changed
-        //try
-        //{
-        //    BO.Product product = id == 0 ? new() { Category = BO.Category.Unavailable } : bl.Product.GetProductDetailsManager(id);
-        //    txtId.Text = product.Id.ToString();
-        //    txtName.Text = product.Name;
-        //    txtPrice.Text = product.Price.ToString();
-        //    txtInStock.Text = product.InStock.ToString();
-        //    ComboBoxCategory.SelectedItem = (BO.Category?)product.Category;
-        //}
-        //catch (IncorrectDataExceptions str)
-        //{
-        //    MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-        //    Close();
-        //}
-
     }
 
     //A function that implements an Add button click event
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
-        while(string.IsNullOrEmpty(txtId.Text)||string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtPrice.Text) || string.IsNullOrEmpty(txtInStock.Text) || ComboBoxCategory.SelectedItem == null || txtPrice.Text == "0" || txtInStock.Text == "0" || txtId.Text=="000000000" || txtName.Text== "Name")
+        //while (string.IsNullOrEmpty(txtId.Text) || string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtPrice.Text) || string.IsNullOrEmpty(txtInStock.Text) || ComboBoxCategory.SelectedItem == null || txtPrice.Text == "0" || txtInStock.Text == "0" || txtId.Text == "000000000" || txtName.Text == "Name")
+        //{
+        //    MessageBox.Show("Not all fields are filled");
+        //    return;
+        //}
+        //try
+        //{
+        //    bl?.Product.Add(Product);
+        //}
+        //catch (BO.IncorrectDataExceptions str)
+        //{
+        //    MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+        //    Close();
+        //    //new ProductListWindow().Show();
+        //    //return;
+        //}
+        //MessageBox.Show("The Product added");
+        //Close();
+        //new ProductListWindow().Show();
+
+        while (string.IsNullOrEmpty(txtId.Text) || string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtPrice.Text) || string.IsNullOrEmpty(txtInStock.Text) || ComboBoxCategory.SelectedItem == null || txtPrice.Text == "0" || txtInStock.Text == "0" || txtId.Text == "000000000" || txtName.Text == "Name")
         {
             MessageBox.Show("Not all fields are filled");
             return;

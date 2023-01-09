@@ -29,16 +29,56 @@ public partial class MyCartWindow : Window
         private set => SetValue(OrderItemsDependency, value);
     }
 
-   
+    //public static readonly DependencyProperty TotalPriceDependency = DependencyProperty.Register(nameof(TotalPrice), typeof(double), typeof(Window));
+    //public double TotalPrice { get => (double)GetValue(TotalPriceDependency); private set => SetValue(TotalPriceDependency, value); }
+    public double totalPrice;
+
 
     public MyCartWindow()
     {
-        //  OrdertItemsOfCart = MyCart.OrdersItemsList.Cast<OrderItem>();  //הצגת הפריטים בסל 
+        List<BO.OrderItem?> Collection = CatalogProductsWindow.myCart.OrdersItemsList;
+        foreach(var item in Collection)
+        {
+            OrdertItemsOfCart.Add(item);
+        }
+        totalPrice= CatalogProductsWindow.myCart.TotalPrice;
         InitializeComponent();
+
+
+        //TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
+        //OrdertItemsOfCart.Add();   //הצגת הפריטים בסל 
     }
 
     private void OrderConfirmationButton_Click(object sender, RoutedEventArgs e)
     {
         new OrderConfirmationWindow().Show();
+    }
+
+    private void DeleteTheBasketButton_Click(object sender, RoutedEventArgs e)
+    {
+        CatalogProductsWindow.myCart.OrdersItemsList = null;
+        CatalogProductsWindow.myCart.TotalPrice = 0;
+        //CatalogProductsWindow.myCart = null;
+    }
+
+    private void ExitButton_Click(object sender, RoutedEventArgs e)
+    {
+        new CatalogProductsWindow().Show();
+        Close();
+    }
+
+    private void AddButton_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void RemoveButton_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void RemoveProductButton_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }

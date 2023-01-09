@@ -7,6 +7,65 @@
         mc:Ignorable="d"
         Title="MyCartWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Window.Resources>
+        <Style x:Key="AddAndRemoveStyle" TargetType="Button" >
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="Background" Value="AliceBlue" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="20" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="25" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="mybutton" TargetType="Button">
+            <Setter Property="Background" Value="LavenderBlush"/>
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Width" Value="165" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="BorderBrush" Value="Purple" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Foreground" Value="Purple"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="17" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style x:Key="removeProduct" TargetType="Button">
+            <Setter Property="Background" Value="AliceBlue"/>
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Width" Value="115" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="Focusable" Value="True" />
+            <Setter Property="BorderBrush" Value="Blue" />
+            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="18" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+
+
+
+    </Window.Resources>
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,12 +79,99 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
-        <Button Content="Order Confirmation" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="2" VerticalAlignment="Top" Height="24" Width="119" Click="OrderConfirmationButton_Click" Grid.Column="2"/>
+        <Button Grid.Column="1" Content="Delete the basket" Style="{StaticResource mybutton}"  Margin="0,6,0,0" Grid.Row="2" Click="DeleteTheBasketButton_Click"/>
+        <Button Content="Order Confirmation"  Margin="0,6,0,0" Style="{StaticResource mybutton}"  Grid.Row="2" Click="OrderConfirmationButton_Click" Grid.Column="2"/>
         <Label Content="My Cart" FontSize="18" HorizontalAlignment="Left" Margin="57,-7,0,0" VerticalAlignment="Top" Width="122" Height="34" Grid.Column="1"/>
-        <ListBox  Grid.Row="1" ItemsSource="{Binding OrdertItemsOfCart}" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-        <Button Grid.Column="1" Content="Delete the basket" HorizontalAlignment="Left" Margin="118,6,0,0" Grid.Row="2" VerticalAlignment="Top" Height="32" Width="107"/>
-        <TextBox HorizontalAlignment="Left" Margin="158,16,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top" Width="85" Height="19"/>
-        <Label Content="The price of all items:" HorizontalAlignment="Left" Margin="30,9,0,0" Grid.Row="2" VerticalAlignment="Top" Width="123" Height="26"/>
+        <TextBox HorizontalAlignment="Left" Margin="172,16,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding totalPrice}" VerticalAlignment="Top" Width="85" Height="19"/>
+
+        <TextBlock Text="The price of all items:" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="23,0,0,0" Grid.Row="2" Height="27" Width="144">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="Black"></Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="BlueViolet" />
+                            <Setter Property="TextDecorations" Value="Underline" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+
+        <Button Grid.Column="2" Content="X" Foreground="Red" Background="White" BorderBrush="White"  FontSize="27" HorizontalAlignment="Left" Margin="218,0,0,0" VerticalAlignment="Top" Height="37" Width="39" Grid.Row="1" Click="ExitButton_Click"/>
+        <ListView ItemsSource="{Binding OrdertItemsOfCart}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="3" Margin="0,0,154,0" >
+            <ListView.View>
+                <GridView>
+                    <!--<GridViewColumn/>-->
+                    <GridViewColumn Width="Auto" Header="Id">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding Id}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Id Product">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding ProductId}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Name Product">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding NameProduct}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn  Width="45" Header="Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Margin="-5,-1" Text="{Binding Price}" TextAlignment="Center" Padding="5" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn  Width="53" Header="Amount">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Margin="-5,-1" Text="{Binding AmountInOrder}" TextAlignment="Center" Padding="5" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn  Width="65" Header="Total Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Margin="-5,-1" Text="{Binding TotalPriceOfItem}" TextAlignment="Center" Padding="5" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="35" Header="Add">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="+" Style="{StaticResource AddAndRemoveStyle}" Click="AddButton_Click" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" Header="Remove">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="-" Style="{StaticResource AddAndRemoveStyle}" Click="RemoveButton_Click" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Remove the Product">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="remove product" Style="{StaticResource removeProduct}" Click="RemoveProductButton_Click"  />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
 
     </Grid>
+
 </Window>

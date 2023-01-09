@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-
-    <!--DataContext="{Binding Product, RelativeSource={RelativeSource Self}, Mode=OneWay}">-->
+    
+         <!--DataContext="{Binding Product, RelativeSource={RelativeSource Self}, Mode=TwoWay}">-->
 
     <Window.Resources>
         <Style TargetType="local:ProductWindow">

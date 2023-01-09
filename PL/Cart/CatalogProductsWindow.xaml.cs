@@ -1,4 +1,5 @@
-﻿using PL.Product;
+﻿using BO;
+using PL.Product;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +21,8 @@ public partial class CatalogProductsWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
 
+    public static BO.Cart myCart = new() { OrdersItemsList=new List<BO.OrderItem?>()};
+
     public static readonly DependencyProperty ProductItemDependency = DependencyProperty.Register(nameof(ProductItems), typeof(ObservableCollection<BO.ProductItem?>), typeof(Window));
     public ObservableCollection<BO.ProductItem?> ProductItems
     {
@@ -29,8 +32,8 @@ public partial class CatalogProductsWindow : Window
     public BO.Category Category1 { get; set; } = BO.Category.Unavailable;
     public Array Categories1 { get; set; } = Enum.GetValues(typeof(BO.Category));
 
-    //public static readonly DependencyProperty CartDependency = DependencyProperty.Register(nameof(MyCart), typeof(BO.Cart), typeof(Window));
-    //public BO.Cart MyCart { get => (BO.Cart)GetValue(CartDependency); private set => SetValue(CartDependency, value); }
+    //public static readonly DependencyProperty ProductItem1Dependency = DependencyProperty.Register(nameof(ProductItem), typeof(BO.ProductItem), typeof(Window));
+    //public BO.ProductItem ProductItem { get => (BO.ProductItem)GetValue(ProductItem1Dependency); private set => SetValue(ProductItem1Dependency, value); }
 
 
 
@@ -44,15 +47,9 @@ public partial class CatalogProductsWindow : Window
     }
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        //var listProducts = (BO.Category?)CatgegorySelector.SelectedItem == BO.Category.Unavailable ? bl?.Product.GetProductItemList()
-        //: bl?.Product.GetProductItemList().Where(product => product?.Category == (BO.Category?)CatgegorySelector.SelectedItem);
-        //ProductItemListView.ItemsSource = listProducts;
-
-
         var temp = Category1 == BO.Category.Unavailable ?
         bl?.Product.GetProductItemList() : bl?.Product.GetProductItemList().Where(item => item.Category == Category1);
         ProductItems = temp == null ? new() : new(temp);
-
 
     }
 
@@ -69,5 +66,23 @@ public partial class CatalogProductsWindow : Window
     {
         
         new MyCartWindow().Show();
+        Close();
+    }
+
+    private void AddItemButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            ProductItem productItem = (ProductItem)((sender as Button)!.DataContext!);
+            myCart = bl.Cart.AddProduct(myCart, productItem.IdProduct);
+            MessageBox.Show("The Product added to cart");
+
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "The product is out of stock");
+
+
+        }
     }
 }

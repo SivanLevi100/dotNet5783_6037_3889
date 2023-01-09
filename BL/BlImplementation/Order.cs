@@ -31,8 +31,8 @@ internal class Order : BlApi.IOrder
                    {
                        OrderId = order.Id,
                        CustomerName = order.CustomerName,
-                       AmountItems = (from orderitem in listOrderItems select orderitem).Count(),
-                       /*(from orderitem in listOrderItems select orderitem).Sum(or => or.Amount)*/
+                       AmountItems = /*(from orderitem in listOrderItems select orderitem).Count(),*/
+                       (from orderitem in listOrderItems select orderitem).Sum(or => or.Amount),
                        TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
                        Status = statusFromDate(order)
                    };
@@ -71,7 +71,7 @@ internal class Order : BlApi.IOrder
                     DeliveryDate = orderDO.DeliveryDate,
                     Status = status1,
                     TotalPrice = sumOfPrices,
-                    OrdersItemsList= getBOlistOfOrderItem(orderDO.Id)
+                    OrdersItemsList = getBOlistOfOrderItem(orderDO.Id)
 
                 };
                 return order;
@@ -87,7 +87,6 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.NotExiestsExceptions("Order request failed/*/*/*", str);
         }
-        //return new BO.Order();
 
         //if (idOrder < 0) throw new BO.IncorrectDataExceptions("id order is invalid");
         //try
@@ -107,7 +106,7 @@ internal class Order : BlApi.IOrder
         //               DeliveryDate = order.DeliveryDate,
         //               Status = statusFromDate(order),
         //               TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
-        //               OrdersItemsList = //getBOlistOfOrderItem()
+        //               OrdersItemsList = getBOlistOfOrderItem(order.Id)
         //           };
         //}
         //catch (DO.NotFoundExceptions str)

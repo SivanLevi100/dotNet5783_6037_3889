@@ -28,9 +28,8 @@ public partial class OrderTrackingWindow : Window
         try
         {
             OrderTracking = bl.Order.Tracking(id);
-
         }
-        catch(BO.NotExiestsExceptions str)
+        catch (BO.NotExiestsExceptions str)
         {
             MessageBox.Show(str.Message, "This order does not exist", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
@@ -40,6 +39,7 @@ public partial class OrderTrackingWindow : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
+       
         MessageBox.Show("Exit the page");
         Close();
     }

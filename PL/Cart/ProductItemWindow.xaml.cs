@@ -3,6 +3,7 @@ using BO;
 using PL.Product;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,17 +24,15 @@ public partial class ProductItemWindow : Window
     public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(ProductItem), typeof(BO.ProductItem), typeof(Window));
     public BO.ProductItem? ProductItem { get => (BO.ProductItem)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
 
-    public static readonly DependencyProperty CartDependency = DependencyProperty.Register(nameof(MyCart), typeof(BO.Cart), typeof(Window));
-    public BO.Cart MyCart { get => (BO.Cart)GetValue(CartDependency); private set => SetValue(CartDependency, value); }
+    //public static readonly DependencyProperty CartDependency = DependencyProperty.Register(nameof(MyCart), typeof(BO.Cart), typeof(Window));
+    //public BO.Cart MyCart { get => (BO.Cart)GetValue(CartDependency); private set => SetValue(CartDependency, value); }
 
 
-    public ProductItemWindow(int id=0)
+    public ProductItemWindow(int id = 0)
     {
-
-        //InitializeComponent();
         try
         {
-            ProductItem = id == 0 ? new() : bl?.Product.GetProductDetailsBuyer(id, MyCart);
+            ProductItem = id == 0 ? new() : bl?.Product.GetProductDetailsBuyer(id,CatalogProductsWindow.myCart);
             InitializeComponent();
 
         }
@@ -50,8 +49,9 @@ public partial class ProductItemWindow : Window
     {
         try
         {
-            MyCart = bl?.Cart.AddProduct(MyCart, ProductItem.IdProduct);
-            ProductItem.AmountInCart += 1;
+            CatalogProductsWindow.myCart = bl?.Cart.AddProduct(CatalogProductsWindow.myCart, ProductItem.IdProduct);
+            //ProductItem.AmountInCart += 1;
+            ProductItem = bl?.Product.GetProductDetailsBuyer(ProductItem.IdProduct, CatalogProductsWindow.myCart);
             MessageBox.Show("The Product added to cart");
 
         }
@@ -70,7 +70,8 @@ public partial class ProductItemWindow : Window
         {
             try
             {
-                MyCart = bl.Cart.UpdateAmountOfProduct(MyCart, ProductItem.IdProduct, ProductItem.AmountInCart - 1);
+                CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, ProductItem.IdProduct, ProductItem.AmountInCart - 1);
+                ProductItem = bl?.Product.GetProductDetailsBuyer(ProductItem.IdProduct, CatalogProductsWindow.myCart);
                 MessageBox.Show("The Product removed from cart");
             }
             catch (BO.NotExiestsExceptions ex)
