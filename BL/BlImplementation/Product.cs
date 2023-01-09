@@ -126,7 +126,7 @@ internal class Product : BlApi.IProduct
                     Name = product1.Name,
                     Price = product1.Price,
                     InStock = product1.InStock,
-                    Category = (DO.Category?)product1.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
+                    Category = (DO.Category?)product1.Category ?? throw new BO.IncorrectDataExceptions("Category is Unavailable"),
                 };
                 Dal?.Product.Add(productOfDO);
             }

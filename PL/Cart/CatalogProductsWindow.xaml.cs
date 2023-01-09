@@ -44,6 +44,7 @@ public partial class CatalogProductsWindow : Window
         var temp = bl?.Product?.GetProductItemList();
         ProductItems = temp == null ? new() : new(temp);
 
+        
     }
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {

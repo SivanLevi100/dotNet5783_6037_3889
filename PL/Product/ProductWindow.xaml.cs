@@ -44,7 +44,6 @@ public partial class ProductWindow : Window
         //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category)); /////////////
         AddButton.Visibility = Visibility.Visible; ////////////////
         UpdateButton.Visibility = Visibility.Hidden; //////////////
-
     }
 
     //Constructor for the product update window
@@ -74,25 +73,18 @@ public partial class ProductWindow : Window
     //A function that implements an Add button click event
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
-        //while (string.IsNullOrEmpty(txtId.Text) || string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtPrice.Text) || string.IsNullOrEmpty(txtInStock.Text) || ComboBoxCategory.SelectedItem == null || txtPrice.Text == "0" || txtInStock.Text == "0" || txtId.Text == "000000000" || txtName.Text == "Name")
-        //{
-        //    MessageBox.Show("Not all fields are filled");
-        //    return;
-        //}
         //try
         //{
         //    bl?.Product.Add(Product);
+        //    MessageBox.Show("The Product added");
+        //    Close();
+        //    new ProductListWindow().Show();
         //}
         //catch (BO.IncorrectDataExceptions str)
         //{
         //    MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         //    Close();
-        //    //new ProductListWindow().Show();
-        //    //return;
         //}
-        //MessageBox.Show("The Product added");
-        //Close();
-        //new ProductListWindow().Show();
 
         while (string.IsNullOrEmpty(txtId.Text) || string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtPrice.Text) || string.IsNullOrEmpty(txtInStock.Text) || ComboBoxCategory.SelectedItem == null || txtPrice.Text == "0" || txtInStock.Text == "0" || txtId.Text == "000000000" || txtName.Text == "Name")
         {
@@ -125,6 +117,7 @@ public partial class ProductWindow : Window
     //A function that implements an Update button click event
     private void UpdateButton_Click(object sender, RoutedEventArgs e)
     {
+
         if((BO.Category?)ComboBoxCategory.SelectedItem == BO.Category.Unavailable)
         {
             MessageBox.Show("Not all fields are filled");

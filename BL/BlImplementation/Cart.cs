@@ -246,5 +246,4 @@ internal class Cart : BlApi.ICart
         cart1.OrdersItemsList.Clear(); //Emptying the basket means deleting a list of order items from the basket
     }
 
-
 }
