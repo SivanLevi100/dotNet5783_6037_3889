@@ -35,7 +35,8 @@ internal class Cart : BlApi.ICart
         {
             throw new BO.NotExiestsExceptions("Product request failed", str);
         }
-        if (cart1.OrdersItemsList.Exists(orderItem => orderItem?.ProductId != doProduct.Id)) //If a product does not exist in the shopping basket
+        BO.OrderItem? newOrderItem1= cart1.OrdersItemsList.FirstOrDefault(item=>item?.Id==id);
+        if (newOrderItem1==null) //If a product does not exist in the shopping basket
         {
             if (doProduct.Id == id && doProduct.InStock > 0) //Check if the product exists and is in stock
             {

@@ -36,12 +36,17 @@ public partial class MyCartWindow : Window
 
     public MyCartWindow()
     {
-        List<BO.OrderItem?> Collection = CatalogProductsWindow.myCart.OrdersItemsList;
-        foreach(var item in Collection)
+        if(CatalogProductsWindow.myCart.OrdersItemsList!=null)
         {
-            OrdertItemsOfCart.Add(item);
+            List<BO.OrderItem?>? Collection = CatalogProductsWindow.myCart.OrdersItemsList;
+            foreach (var item in Collection)
+            {
+                OrdertItemsOfCart.Add(item);
+            }
         }
-        totalPrice= CatalogProductsWindow.myCart.TotalPrice;
+
+        //OrdertItemsOfCart= CatalogProductsWindow.myCart.OrdersItemsList;
+        totalPrice = CatalogProductsWindow.myCart.TotalPrice;
         InitializeComponent();
 
 

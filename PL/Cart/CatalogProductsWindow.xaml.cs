@@ -60,7 +60,11 @@ public partial class CatalogProductsWindow : Window
         BO.ProductItem productItem = new BO.ProductItem();
         productItem = listView.SelectedItem as BO.ProductItem;
         new ProductItemWindow(productItem.IdProduct).Show();
-       // Close();
+
+        //var temp = bl?.Product?.GetProductItemList();
+        //ProductItems = temp == null ? new() : new(temp);
+
+        // Close();
     }
 
     private void MyCartButton_Click(object sender, RoutedEventArgs e)
@@ -85,5 +89,10 @@ public partial class CatalogProductsWindow : Window
 
 
         }
+    }
+
+    private void GroupingButton_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }

@@ -229,7 +229,10 @@ class Program  /*internal*/
         {
             CustomerName = "David",
             CustomerAdress = "Jerusalem",
-            CustomerEmail = "david@gmail.com"
+            CustomerEmail = "david@gmail.com",
+            //OrdersItemsList = new(),
+            //TotalPrice= 0
+
         };
         int id;
         int amount;

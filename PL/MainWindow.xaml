@@ -31,12 +31,13 @@
 
     <Grid>
         <!--<Button Content="Enter" HorizontalAlignment="Left" Margin="368,167,0,0" VerticalAlignment="Top" Click="ShowProductButton_Click"/>-->
-        <Button x:Name="Admin" Content="Admin"  Height="90" Width="180" HorizontalAlignment="Left" Margin="108,107,0,0" VerticalAlignment="Top" Click="AdminButton_Click"/>
+        <Button x:Name="Admin" Content="Admin"  Height="90" Width="180" HorizontalAlignment="Left" Margin="108,107,0,0" VerticalAlignment="Top" Click="AdminButton_Click" />
         <Button Content="New Order" HorizontalAlignment="Left" Margin="612,235,0,0" VerticalAlignment="Top" Click="NewOrderButton_Click"/>
         <Label Content="Number Of Order:" FontSize="16" HorizontalAlignment="Left" Margin="298,277,0,0" VerticalAlignment="Top" Height="37" Width="142"/>
         <Button x:Name="Track" Content="Track"  HorizontalAlignment="Left" Margin="369,326,0,0" VerticalAlignment="Top" Click="TrackButton_Click"/>
         <Button x:Name="OrderList" Content="List of Orders" Visibility="Hidden"  HorizontalAlignment="Left" Margin="30,217,0,0" VerticalAlignment="Top" Click="OrderList_Click"/>
-        <Button x:Name="ProductList" Content="List of Products" Visibility="Hidden" HorizontalAlignment="Left" Margin="225,217,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>
+        <Button x:Name="ProductList" Content="List of Products" Visibility="Hidden" HorizontalAlignment="Left" 
+                Margin="225,217,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>
         <Button Content="Customer" Height="90" Width="180"  HorizontalAlignment="Left" Margin="504,111,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="CustomerButton_Click" />
         <TextBox x:Name="txtnumber" HorizontalAlignment="Left" Margin="440,282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136" Height="27" TextChanged="txtnumber_TextChanged"/>
         <Label Content="Electricity Products Store" FontSize="30" Foreground="Blue" FontWeight="Black"   HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="62" Width="388"/>
