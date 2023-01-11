@@ -35,7 +35,7 @@ internal class Cart : BlApi.ICart
         {
             throw new BO.NotExiestsExceptions("Product request failed", str);
         }
-        BO.OrderItem? newOrderItem1= cart1.OrdersItemsList.FirstOrDefault(item=>item?.Id==id);
+        BO.OrderItem? newOrderItem1= cart1.OrdersItemsList.FirstOrDefault(item=>item?.ProductId==id);
         if (newOrderItem1==null) //If a product does not exist in the shopping basket
         {
             if (doProduct.Id == id && doProduct.InStock > 0) //Check if the product exists and is in stock
@@ -57,26 +57,35 @@ internal class Cart : BlApi.ICart
         }
         else  //If the product appears in the shopping cart
         {
-            //BO.OrderItem? orderItem = (from item in cart1.OrdersItemsList
-            //                           where item.ProductId == doProduct.Id && doProduct.InStock >= 0
-            //                           select item).First();
-            //orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
-            //orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
-            //cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
-
-            foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
+            if(newOrderItem1.AmountInOrder<doProduct.InStock)
             {
-                if (orderItem?.ProductId == doProduct.Id && doProduct.InStock > 0) //If this is the product and the quantity is greater than 0
-                {
-                    orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
-                    orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
-                    cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
-                    break;
-                }
+                newOrderItem1.AmountInOrder ++;
+                newOrderItem1.TotalPriceOfItem = doProduct.Price * newOrderItem1.AmountInOrder;
+                cart1.TotalPrice = cart1.TotalPrice + newOrderItem1.TotalPriceOfItem;
             }
+
+            //foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
+            //{
+            //    if (orderItem?.ProductId == doProduct.Id && doProduct.InStock > 0) //If this is the product and the quantity is greater than 0
+            //    {
+            //        orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
+            //        orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
+            //        cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+            //        break;
+            //    }
+            //}
         }
         return cart1;
     }
+
+
+    //BO.OrderItem? orderItem = (from item in cart1.OrdersItemsList
+    //                           where item.ProductId == doProduct.Id && doProduct.InStock >= 0
+    //                           select item).First();
+    //orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
+    //orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
+    //cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+
 
     public BO.Cart UpdateAmountOfProduct(BO.Cart cart1, int id, int newAmount)
     {

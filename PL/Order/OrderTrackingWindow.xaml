@@ -29,7 +29,7 @@
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Foreground" Value="Navy" />
-            <Setter Property="Background" Value="AliceBlue" />
+            <Setter Property="Background" Value="Wheat" />
             <Style.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="17" />

@@ -74,16 +74,47 @@ public partial class MyCartWindow : Window
 
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
+        try
+        {
+            BO.OrderItem orderItem= (BO.OrderItem)((sender as Button)!.DataContext!);
+            //ProductItem productItem = (ProductItem)((sender as Button)!.DataContext!);
+            CatalogProductsWindow.myCart = bl.Cart.AddProduct(CatalogProductsWindow.myCart, orderItem.ProductId);
+            MessageBox.Show("The Product added to cart");
 
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "The product is out of stock");
+        }
     }
 
     private void RemoveButton_Click(object sender, RoutedEventArgs e)
     {
+        try
+        {
+            BO.OrderItem orderItem = (BO.OrderItem)((sender as Button)!.DataContext!);
+            CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, orderItem.ProductId, orderItem.AmountInOrder - 1);
 
+            // ProductItem = bl?.Product.GetProductDetailsBuyer(ProductItem.IdProduct, CatalogProductsWindow.myCart);
+            MessageBox.Show("The Item removed from cart");
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Failed to remove a product because it is not in the cart");
+        }
     }
 
     private void RemoveProductButton_Click(object sender, RoutedEventArgs e)
     {
-
+        try
+        {
+            BO.OrderItem orderItem = (BO.OrderItem)((sender as Button)!.DataContext!);
+            CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, orderItem.ProductId, (orderItem.AmountInOrder)*(-1));
+            MessageBox.Show("The Product removed from cart");
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Failed to remove a product because it is not in the cart");
+        }
     }
 }

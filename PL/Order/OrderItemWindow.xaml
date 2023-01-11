@@ -7,12 +7,41 @@
         mc:Ignorable="d"
         Title="OrderItemWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Window.Resources>
+        <Style TargetType="local:OrderItemWindow">
+            <Setter Property="Background" Value="AliceBlue" />
+        </Style>
 
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="48,0,0,0" />
+            <Setter Property="Height" Value="26" />
+            <Setter Property="Width" Value="110" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontStyle" Value="Italic" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Width" Value="128" />
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="8" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+    </Window.Resources>
     <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="171,122,0,0" TextWrapping="Wrap" Text="{Binding idProduct}" VerticalAlignment="Top" Width="120"/>
-        <Label Content="ID of product" HorizontalAlignment="Left" Margin="71,114,0,0" VerticalAlignment="Top"/>
-        <Label Content="Amount of Product" HorizontalAlignment="Left" Margin="98,160,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="246,160,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="120"/>
+        <TextBox HorizontalAlignment="Left" Margin="199,114,0,0" TextWrapping="Wrap" Text="{Binding idProduct}" VerticalAlignment="Top" Width="123" Height="26"/>
+        <Label Content="ID of product:" HorizontalAlignment="Left" Margin="71,114,0,0" VerticalAlignment="Top"/>
+        <Label Content="Amount of Product:" Margin="65,165,0,0" Height="40" Width="134"/>
+        <TextBox Margin="199,165,0,0" TextWrapping="Wrap" Text="{Binding Amount}" Width="123" Height="28"/>
         <Button Content="Add item for order" HorizontalAlignment="Left" Margin="210,235,0,0" VerticalAlignment="Top" Click="AddItemForOrderButton_Click"/>
 
     </Grid>

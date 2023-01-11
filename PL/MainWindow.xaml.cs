@@ -39,7 +39,6 @@ public partial class MainWindow : Window
 
         //Track.IsEnabled = false;
 
-
     }
 
     //Pressing the enter button - opening a product list window
@@ -60,8 +59,12 @@ public partial class MainWindow : Window
     private void TrackButton_Click(object sender, RoutedEventArgs e)
     {
         int idOrder = int.Parse(txtnumber.Text);
-        new OrderTrackingWindow(idOrder).Show();
-        //פותח חלון מעקב הזמנה
+        BO.OrderForList order= bl.Order.GetOrderList().FirstOrDefault(o => o.OrderId == idOrder);
+        if(order==null)
+            MessageBox.Show("Failure getting entity");
+        else
+            new OrderTrackingWindow(idOrder).Show();
+
     }
 
     private void OrderList_Click(object sender, RoutedEventArgs e)

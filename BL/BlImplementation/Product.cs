@@ -102,7 +102,8 @@ internal class Product : BlApi.IProduct
                 Name = productOfDO.Name,
                 Category = (BO.Category?)productOfDO.Category ?? throw new BO.NotExiestsExceptions("Category is Unavailable"),
                 IsAvailable = (productOfDO.InStock > 0) ? true : false,
-                AmountInCart = cart?.OrdersItemsList==null? 0 :cart?.OrdersItemsList?.FindAll(orderItem => orderItem?.ProductId == id).Count() ?? throw new BO.NotExiestsExceptions("The list of order items in the shopping cart is null"),
+                AmountInCart = cart?.OrdersItemsList==null? 0 :cart?.OrdersItemsList?.FindAll(orderItem => orderItem?.ProductId == id)
+                .Sum(o=>o.AmountInOrder) ?? throw new BO.NotExiestsExceptions("The list of order items in the shopping cart is null"),
                 Price = productOfDO.Price
             };
             return productItem;

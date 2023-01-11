@@ -86,8 +86,6 @@ public partial class CatalogProductsWindow : Window
         catch (BO.NotExiestsExceptions ex)
         {
             MessageBox.Show(ex.Message, "The product is out of stock");
-
-
         }
     }
 

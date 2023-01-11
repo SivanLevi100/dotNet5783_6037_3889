@@ -50,7 +50,6 @@ public partial class ProductItemWindow : Window
         try
         {
             CatalogProductsWindow.myCart = bl?.Cart.AddProduct(CatalogProductsWindow.myCart, ProductItem.IdProduct);
-            //ProductItem.AmountInCart += 1;
             ProductItem = bl?.Product.GetProductDetailsBuyer(ProductItem.IdProduct, CatalogProductsWindow.myCart);
             MessageBox.Show("The Product added to cart");
 
@@ -62,7 +61,7 @@ public partial class ProductItemWindow : Window
 
         }
         Close();
-       // new CatalogProductsWindow().Show();
+        //new CatalogProductsWindow().Show();
     }
 
     private void RemoveItemButton_Click(object sender, RoutedEventArgs e)
