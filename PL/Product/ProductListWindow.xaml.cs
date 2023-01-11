@@ -61,6 +61,9 @@ public partial class ProductListWindow : Window
     private void ButtonAddNewProduct_Click(object sender, RoutedEventArgs e)
     {
         new ProductWindow().Show();
+        //var temp = bl?.Product?.GetProductList(); //////////////
+        //ProductList = temp == null ? new() : new(temp);
+
         Close();
     }
 

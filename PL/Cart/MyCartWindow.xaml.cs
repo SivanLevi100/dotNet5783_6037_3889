@@ -65,10 +65,10 @@ public partial class MyCartWindow : Window
         try
         {
             BO.OrderItem orderItem= (BO.OrderItem)((sender as Button)!.DataContext!);
-            //ProductItem productItem = (ProductItem)((sender as Button)!.DataContext!);
             CatalogProductsWindow.myCart = bl.Cart.AddProduct(CatalogProductsWindow.myCart, orderItem.ProductId);
+            var temp = CatalogProductsWindow.myCart.OrdersItemsList;
+            OrdertItemsOfCart = temp == null ? new() : new(temp);
             MessageBox.Show("The Product added to cart");
-
         }
         catch (BO.NotExiestsExceptions ex)
         {
@@ -82,8 +82,8 @@ public partial class MyCartWindow : Window
         {
             BO.OrderItem orderItem = (BO.OrderItem)((sender as Button)!.DataContext!);
             CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, orderItem.ProductId, orderItem.AmountInOrder - 1);
-
-            // ProductItem = bl?.Product.GetProductDetailsBuyer(ProductItem.IdProduct, CatalogProductsWindow.myCart);
+            var temp = CatalogProductsWindow.myCart.OrdersItemsList;
+            OrdertItemsOfCart = temp == null ? new() : new(temp);
             MessageBox.Show("The Item removed from cart");
         }
         catch (BO.NotExiestsExceptions ex)
