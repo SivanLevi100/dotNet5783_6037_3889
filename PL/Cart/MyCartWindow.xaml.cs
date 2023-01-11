@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DO;
 using PL.Order;
 using System;
 using System.Collections.Generic;
@@ -104,5 +105,12 @@ public partial class MyCartWindow : Window
         {
             MessageBox.Show(ex.Message, "Failed to remove a product because it is not in the cart");
         }
+        var temp = CatalogProductsWindow.myCart.OrdersItemsList;
+        OrdertItemsOfCart = temp == null ? new() : new(temp);
+    }
+
+    private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+    
     }
 }

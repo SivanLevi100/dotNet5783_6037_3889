@@ -41,7 +41,7 @@ public partial class CatalogProductsWindow : Window
     public CatalogProductsWindow()
     {
         InitializeComponent();
-        var temp = bl?.Product?.GetProductItemList(myCart);
+        var temp = bl?.Product.GetProductItemList(myCart);
         ProductItems = temp == null ? new() : new(temp);
 
         

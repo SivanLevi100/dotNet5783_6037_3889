@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 using BlApi;
 using DalApi;
+using DO;
 using Microsoft.VisualBasic;
 
 namespace BlImplementation;
@@ -99,12 +100,19 @@ internal class Cart : BlApi.ICart
         {
             throw new BO.NotExiestsExceptions("Product request failed", str);
         }
-        if(cart1?.OrdersItemsList?.Count() == 0|| cart1?.OrdersItemsList==null|| cart1.OrdersItemsList.Exists(item => item.ProductId != id))
-            throw new BO.NotExiestsExceptions("This item cannot be found because it is not in the basket");
-        else
-            orderItem = cart1.OrdersItemsList.Find(item => item.ProductId == id);
+        //if(cart1?.OrdersItemsList?.Count() == 0|| cart1?.OrdersItemsList==null|| cart1.OrdersItemsList.Exists(item => item?.ProductId != id))
+        //    throw new BO.NotExiestsExceptions("This item cannot be found because it is not in the basket");
+        //else
+        //    orderItem = cart1?.OrdersItemsList.Find(item => item?.ProductId == id)??throw new BO.NotExiestsExceptions("The product does not exist");
+        orderItem = cart1?.OrdersItemsList?.Find(item => item?.ProductId == id)??throw new BO.NotExiestsExceptions("The product does not exist");
 
-        if (newAmount > orderItem.AmountInOrder)
+        if (newAmount + orderItem?.AmountInOrder == 0)//If the amount = 0
+        {
+            cart1.TotalPrice = cart1.TotalPrice - orderItem.TotalPriceOfItem; //cart price update
+            cart1.OrdersItemsList.Remove(orderItem);
+            return cart1;
+        }
+        if (newAmount > orderItem?.AmountInOrder)//If the amount increases add to the cart
         {
             if (doProduct.InStock > 0)//If there is a product in stock
             {
@@ -115,17 +123,13 @@ internal class Cart : BlApi.ICart
             else
                 throw new BO.IncorrectDataExceptions("The product is not in stock");
         }
-        if (newAmount < orderItem.AmountInOrder) //If the amount decreases
+        if (newAmount < orderItem?.AmountInOrder) //If the amount decreases remove from the cart
         {
             orderItem.AmountInOrder = newAmount;
             orderItem.TotalPriceOfItem = doProduct.Price * newAmount;
             cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
         }
-        if (newAmount + orderItem.AmountInOrder == 0)//If the amount = 0
-        {
-            cart1.TotalPrice = cart1.TotalPrice - orderItem.TotalPriceOfItem; //cart price update
-            cart1.OrdersItemsList.Remove(orderItem);
-        }
+       
         return cart1;
     }
 
