@@ -105,5 +105,6 @@ public partial class OrderWindow : Window
     private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         new OrderItemWindow(Order.Id).Show();
+       // Close();////////////
     }
 }

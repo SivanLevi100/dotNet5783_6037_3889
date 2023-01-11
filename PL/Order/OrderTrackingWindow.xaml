@@ -8,6 +8,10 @@
         Title="OrderTrackingWindow" Height="450" Width="800"
         DataContext="{Binding OrderTracking, RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
+        <Style TargetType="local:OrderTrackingWindow">
+            <Setter Property="Background" Value="AliceBlue" />
+        </Style>
+
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="15" />
             <Setter Property="FontStyle" Value="Italic" />
@@ -29,7 +33,7 @@
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Foreground" Value="Navy" />
-            <Setter Property="Background" Value="Wheat" />
+            <Setter Property="Background" Value="LightPink" />
             <Style.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="17" />

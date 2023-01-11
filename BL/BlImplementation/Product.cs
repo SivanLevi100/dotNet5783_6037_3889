@@ -142,23 +142,6 @@ internal class Product : BlApi.IProduct
 
     public void Delete(int id)
     {
-        //try
-        //{
-        //    var orderItemD = (from item in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests")
-        //                      let order = ((DO.Order)item)!
-        //                      from item1 in Dal.OrderItem.GetAll()
-        //                      let orderItem = ((DO.OrderItem)item1)!
-        //                      where order.Id == orderItem.OrderId && orderItem.ProductId != id
-        //                      select orderItem).FirstOrDefault();
-        //    Dal.Product.Delete(orderItemD.ProductId);
-        //}
-        //catch (DO.NotFoundExceptions str)
-        //{
-        //    throw new BO.NotExiestsExceptions("No such product exists at all", str);
-        //}
-
-
-        /*/*//////
         try
         {
             foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests"))//Loop through all orders 
@@ -176,6 +159,43 @@ internal class Product : BlApi.IProduct
         {
             throw new BO.NotExiestsExceptions("No such product exists at all", str);
         }
+
+        //try
+        //{
+        //    var orderItemD = (from item in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests")
+        //                      let order = ((DO.Order)item)!
+        //                      from item1 in Dal.OrderItem.GetAll()
+        //                      let orderItem = ((DO.OrderItem)item1)!
+        //                      where order.Id == orderItem.OrderId && orderItem.ProductId != id
+        //                      select orderItem).FirstOrDefault();
+        //    Dal.Product.Delete(orderItemD.ProductId);
+        //}
+        //catch (DO.NotFoundExceptions str)
+        //{
+        //    throw new BO.NotExiestsExceptions("No such product exists at all", str);
+        //}
+
+
+        //try
+        //{
+        //    foreach (DO.Order? order in Dal?.Order.GetAll())
+        //    {
+        //        DO.OrderItem item = Dal.OrderItem.GetAll().FirstOrDefault(orderItem => orderItem.Value.OrderId == order.Value.Id); //פריט בהזמנה שנמצא בהזמנה כלשהי
+        //    }
+        //    if (item == null)//מוצר זה לא נמצא באף הזמנה
+        //    {
+        //        Dal?.Product.Delete(id);
+        //    }
+        //    else
+        //        throw new BO.NotExiestsExceptions("This product appears on orders");
+        //}
+        //catch (DO.NotFoundExceptions str)
+        //{
+        //    throw new BO.NotExiestsExceptions("No such product exists at all", str);
+        //}
+
+
+
     }
 
 
