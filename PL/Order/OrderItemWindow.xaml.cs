@@ -50,6 +50,9 @@ public partial class OrderItemWindow : Window
         try
         {
             Order1 = bl.Order.AddItemForOrder(Order1, idProduct, Amount);
+            Order1= bl.Order.GetOrderDetails(Order1.Id);
+            MessageBox.Show("The Product added");
+           // new OrderWindow().Show();///////////***
 
         }
         catch (BO.NotExiestsExceptions str)

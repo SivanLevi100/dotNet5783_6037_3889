@@ -41,7 +41,7 @@ public partial class CatalogProductsWindow : Window
     public CatalogProductsWindow()
     {
         InitializeComponent();
-        var temp = bl?.Product?.GetProductItemList();
+        var temp = bl?.Product?.GetProductItemList(myCart);
         ProductItems = temp == null ? new() : new(temp);
 
         
@@ -49,7 +49,7 @@ public partial class CatalogProductsWindow : Window
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var temp = Category1 == BO.Category.Unavailable ?
-        bl?.Product.GetProductItemList() : bl?.Product.GetProductItemList().Where(item => item.Category == Category1);
+        bl?.Product.GetProductItemList(myCart) : bl?.Product.GetProductItemList(myCart).Where(item => item.Category == Category1);
         ProductItems = temp == null ? new() : new(temp);
 
     }
@@ -61,8 +61,8 @@ public partial class CatalogProductsWindow : Window
         productItem = listView.SelectedItem as BO.ProductItem;
         new ProductItemWindow(productItem.IdProduct).Show();
 
-        //var temp = bl?.Product?.GetProductItemList();
-        //ProductItems = temp == null ? new() : new(temp);
+        var temp = bl?.Product?.GetProductItemList(myCart);
+        ProductItems = temp == null ? new() : new(temp);
 
         // Close();
     }
@@ -80,14 +80,13 @@ public partial class CatalogProductsWindow : Window
         {
             ProductItem productItem = (ProductItem)((sender as Button)!.DataContext!);
             myCart = bl.Cart.AddProduct(myCart, productItem.IdProduct);
+            var temp = bl.Product.GetProductItemList(myCart);
+            ProductItems = temp == null ? new() : new(temp);
             MessageBox.Show("The Product added to cart");
-
         }
         catch (BO.NotExiestsExceptions ex)
         {
             MessageBox.Show(ex.Message, "The product is out of stock");
-
-
         }
     }
 

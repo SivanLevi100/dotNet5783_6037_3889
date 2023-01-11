@@ -29,29 +29,17 @@ public partial class MyCartWindow : Window
         private set => SetValue(OrderItemsDependency, value);
     }
 
-    //public static readonly DependencyProperty TotalPriceDependency = DependencyProperty.Register(nameof(TotalPrice), typeof(double), typeof(Window));
-    //public double TotalPrice { get => (double)GetValue(TotalPriceDependency); private set => SetValue(TotalPriceDependency, value); }
-    public double totalPrice;
+    public static readonly DependencyProperty TotalPriceDependency = DependencyProperty.Register(nameof(TotalPrice), typeof(double), typeof(Window));
+    public double TotalPrice { get => (double)GetValue(TotalPriceDependency); private set => SetValue(TotalPriceDependency, value); }
 
 
     public MyCartWindow()
     {
-        if(CatalogProductsWindow.myCart.OrdersItemsList!=null)
-        {
-            List<BO.OrderItem?>? Collection = CatalogProductsWindow.myCart.OrdersItemsList;
-            foreach (var item in Collection)
-            {
-                OrdertItemsOfCart.Add(item);
-            }
-        }
+        var temp = CatalogProductsWindow.myCart.OrdersItemsList;
+        OrdertItemsOfCart = temp == null ? new() : new(temp);
 
-        //OrdertItemsOfCart= CatalogProductsWindow.myCart.OrdersItemsList;
-        totalPrice = CatalogProductsWindow.myCart.TotalPrice;
         InitializeComponent();
-
-
-        //TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
-        //OrdertItemsOfCart.Add();   //הצגת הפריטים בסל 
+        TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
     }
 
     private void OrderConfirmationButton_Click(object sender, RoutedEventArgs e)
@@ -74,16 +62,47 @@ public partial class MyCartWindow : Window
 
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
-
+        try
+        {
+            BO.OrderItem orderItem= (BO.OrderItem)((sender as Button)!.DataContext!);
+            CatalogProductsWindow.myCart = bl.Cart.AddProduct(CatalogProductsWindow.myCart, orderItem.ProductId);
+            var temp = CatalogProductsWindow.myCart.OrdersItemsList;
+            OrdertItemsOfCart = temp == null ? new() : new(temp);
+            MessageBox.Show("The Product added to cart");
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "The product is out of stock");
+        }
     }
 
     private void RemoveButton_Click(object sender, RoutedEventArgs e)
     {
-
+        try
+        {
+            BO.OrderItem orderItem = (BO.OrderItem)((sender as Button)!.DataContext!);
+            CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, orderItem.ProductId, orderItem.AmountInOrder - 1);
+            var temp = CatalogProductsWindow.myCart.OrdersItemsList;
+            OrdertItemsOfCart = temp == null ? new() : new(temp);
+            MessageBox.Show("The Item removed from cart");
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Failed to remove a product because it is not in the cart");
+        }
     }
 
     private void RemoveProductButton_Click(object sender, RoutedEventArgs e)
     {
-
+        try
+        {
+            BO.OrderItem orderItem = (BO.OrderItem)((sender as Button)!.DataContext!);
+            CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, orderItem.ProductId, (orderItem.AmountInOrder)*(-1));
+            MessageBox.Show("The Product removed from cart");
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "Failed to remove a product because it is not in the cart");
+        }
     }
 }
