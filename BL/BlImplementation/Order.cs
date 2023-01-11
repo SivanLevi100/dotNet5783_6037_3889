@@ -282,12 +282,13 @@ internal class Order : BlApi.IOrder
 
         List<BO.OrderItem?>? listBo = new();
 
-        foreach (DO.OrderItem doOrderItem in Dal?.OrderItem.GetAll(orderItem => orderItem.Value.OrderId == id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests"))
+        foreach (DO.OrderItem doOrderItem in Dal?.OrderItem.GetAll(orderItem => ((DO.OrderItem)orderItem!).OrderId == id) ?? throw new BO.NotExiestsExceptions("The Order is not exiests"))
         {
             listBo.Add(new BO.OrderItem
             {
                 Id = doOrderItem.Id,
-                NameProduct = Dal.Product.Get(doOrderItem.ProductId).Value.Name,
+                //NameProduct = Dal?.Product?.Get(((DO.OrderItem)doOrderItem!).ProductId).Name,
+                NameProduct = Dal?.Product?.Get(doOrderItem.ProductId).Value.Name,
                 ProductId = doOrderItem.ProductId,
                 Price = doOrderItem.Price,
                 AmountInOrder = doOrderItem.Amount,

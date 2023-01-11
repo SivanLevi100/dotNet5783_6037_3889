@@ -162,7 +162,7 @@ internal class Product : BlApi.IProduct
         {
             foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests"))//Loop through all orders 
             {
-                if (Dal.OrderItem.GetAll(OrderItem => OrderItem.Value.OrderId == order?.Id).Any(orderItem => orderItem.Value.ProductId != id))//If the product is not in the list of order details in the basket
+                if (Dal.OrderItem.GetAll(OrderItem => ((DO.OrderItem)OrderItem!).OrderId == order?.Id).Any(orderItem => ((DO.OrderItem)orderItem!).ProductId != id))//If the product is not in the list of order details in the basket
                 {
                     Dal?.Product.Delete(id);
                     return;
