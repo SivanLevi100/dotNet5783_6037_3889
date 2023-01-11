@@ -61,7 +61,7 @@ public partial class MainWindow : Window
         int idOrder = int.Parse(txtnumber.Text);
         BO.OrderForList order= bl.Order.GetOrderList().FirstOrDefault(o => o.OrderId == idOrder);
         if(order==null)
-            MessageBox.Show("Failure getting entity");
+            MessageBox.Show("The number of order is not exiests");
         else
             new OrderTrackingWindow(idOrder).Show();
 
