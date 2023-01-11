@@ -52,7 +52,6 @@ public partial class ProductItemWindow : Window
             CatalogProductsWindow.myCart = bl?.Cart.AddProduct(CatalogProductsWindow.myCart, ProductItem.IdProduct);
             ProductItem = bl?.Product.GetProductDetailsBuyer(ProductItem.IdProduct, CatalogProductsWindow.myCart);
             MessageBox.Show("The Product added to cart");
-
         }
         catch (BO.NotExiestsExceptions ex) 
         {

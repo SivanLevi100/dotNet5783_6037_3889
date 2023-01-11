@@ -29,29 +29,17 @@ public partial class MyCartWindow : Window
         private set => SetValue(OrderItemsDependency, value);
     }
 
-    //public static readonly DependencyProperty TotalPriceDependency = DependencyProperty.Register(nameof(TotalPrice), typeof(double), typeof(Window));
-    //public double TotalPrice { get => (double)GetValue(TotalPriceDependency); private set => SetValue(TotalPriceDependency, value); }
-    public double totalPrice;
+    public static readonly DependencyProperty TotalPriceDependency = DependencyProperty.Register(nameof(TotalPrice), typeof(double), typeof(Window));
+    public double TotalPrice { get => (double)GetValue(TotalPriceDependency); private set => SetValue(TotalPriceDependency, value); }
 
 
     public MyCartWindow()
     {
-        if(CatalogProductsWindow.myCart.OrdersItemsList!=null)
-        {
-            List<BO.OrderItem?>? Collection = CatalogProductsWindow.myCart.OrdersItemsList;
-            foreach (var item in Collection)
-            {
-                OrdertItemsOfCart.Add(item);
-            }
-        }
+        var temp = CatalogProductsWindow.myCart.OrdersItemsList;
+        OrdertItemsOfCart = temp == null ? new() : new(temp);
 
-        //OrdertItemsOfCart= CatalogProductsWindow.myCart.OrdersItemsList;
-        totalPrice = CatalogProductsWindow.myCart.TotalPrice;
         InitializeComponent();
-
-
-        //TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
-        //OrdertItemsOfCart.Add();   //הצגת הפריטים בסל 
+        TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
     }
 
     private void OrderConfirmationButton_Click(object sender, RoutedEventArgs e)

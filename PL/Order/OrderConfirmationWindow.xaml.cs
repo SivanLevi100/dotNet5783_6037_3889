@@ -24,10 +24,10 @@ public partial class OrderConfirmationWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
 
-    //public static readonly DependencyProperty Cart1Dependency = DependencyProperty.Register(nameof(MyCart1), typeof(BO.Cart), typeof(Window));
-    //public BO.Cart MyCart1 { get => (BO.Cart)GetValue(Cart1Dependency); private set => SetValue(Cart1Dependency, value); }
+    public static readonly DependencyProperty Cart1Dependency = DependencyProperty.Register(nameof(MyCart1), typeof(BO.Cart), typeof(Window));
+    public BO.Cart MyCart1 { get => (BO.Cart)GetValue(Cart1Dependency); private set => SetValue(Cart1Dependency, value); }
 
-    public BO.Cart c1 = CatalogProductsWindow.myCart;
+    // public BO.Cart c1 = CatalogProductsWindow.myCart;
 
     public OrderConfirmationWindow()
     {
@@ -43,9 +43,9 @@ public partial class OrderConfirmationWindow : Window
         //}
         try
         {
-            CatalogProductsWindow.myCart.CustomerName = c1.CustomerName;
-            CatalogProductsWindow.myCart.CustomerEmail = c1.CustomerEmail;
-            CatalogProductsWindow.myCart.CustomerAdress = c1.CustomerAdress;
+            CatalogProductsWindow.myCart.CustomerName = MyCart1.CustomerName;
+            CatalogProductsWindow.myCart.CustomerEmail = MyCart1.CustomerEmail;
+            CatalogProductsWindow.myCart.CustomerAdress = MyCart1.CustomerAdress;
 
             bl?.Cart.Confirm(CatalogProductsWindow.myCart);
         }

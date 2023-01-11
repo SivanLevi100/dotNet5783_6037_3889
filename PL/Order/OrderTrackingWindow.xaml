@@ -12,7 +12,7 @@
             <Setter Property="FontSize" Value="15" />
             <Setter Property="FontStyle" Value="Italic" />
             <Setter Property="Width" Value="150" />
-            <Setter Property="IsEnabled" Value="False" />
+            <Setter Property="IsReadOnly" Value="true" />
             <Setter Property="Height" Value="30" />
             <Style.Resources>
                 <Style TargetType="Border">
@@ -37,7 +37,7 @@
             </Style.Resources>
         </Style>
 
-        
+
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -50,17 +50,17 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="128"/>
-            <ColumnDefinition Width="252"/>
+            <ColumnDefinition Width="311"/>
 
             <ColumnDefinition/>
         </Grid.ColumnDefinitions >
         <Label Content="ID Order" Grid.Row="1" Grid.Column="0" Margin="16,12,15,12"/>
         <Label Content="Status" Grid.Row="2" Grid.Column="0" Margin="16,12,15,12"/>
         <Label Content="Tracking" Grid.Row="3" Grid.Column="0" Margin="20,10,11,94"/>
-        <TextBox Text="{Binding Path=OrderId, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10,10,92,10"/>
-        <TextBox Text="{Binding Path=Status}" Grid.Row="2" Grid.Column="1" Margin="10,8,92,12"/>
+        <TextBox Text="{Binding Path=OrderId, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="40,10,121,10"/>
+        <TextBox Text="{Binding Path=Status}" Grid.Row="2" Grid.Column="1" Margin="40,8,121,12"/>
 
-        <Button Content="confirmation" Grid.Column="2" Margin="112,46,112,46" Grid.Row="4" Click="Button_Click"/>
+        <Button Content="confirmation" Grid.Column="2" Margin="112,46,0,0" Grid.Row="4" Click="Button_Click" Height="40" Width="110"/>
         <!--<ListBox ItemsSource="{Binding Path=Tracking}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="1" Margin="40,0,40,0" Grid.Row="3"/>-->
         <ListView ItemsSource="{Binding Path=Tracking}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="1" Margin="10,0,10,0" Grid.Row="3" RenderTransformOrigin="0.443,-0.971" Height="110" VerticalAlignment="Center">
             <ListView.View>

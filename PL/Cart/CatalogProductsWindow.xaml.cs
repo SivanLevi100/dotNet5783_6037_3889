@@ -80,7 +80,11 @@ public partial class CatalogProductsWindow : Window
         {
             ProductItem productItem = (ProductItem)((sender as Button)!.DataContext!);
             myCart = bl.Cart.AddProduct(myCart, productItem.IdProduct);
+            //var temp = bl.Product.GetProductItemList();
+            //ProductItems = temp == null ? new() : new(temp);
+
             MessageBox.Show("The Product added to cart");
+
 
         }
         catch (BO.NotExiestsExceptions ex)
