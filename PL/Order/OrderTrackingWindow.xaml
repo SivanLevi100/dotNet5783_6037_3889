@@ -73,8 +73,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Image Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="40,66,0,0" Grid.Row="4" VerticalAlignment="Top" Width="100" Source="/Order/ordered.jpg"/>
-        <Image Grid.Column="1" HorizontalAlignment="Left" Height="82" Margin="138,66,0,0" Grid.Row="4" VerticalAlignment="Top" Width="196" Source="/Order/tracking.jpg" Grid.ColumnSpan="2"/>
+        <Image Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="40,61,0,0" Grid.Row="4" VerticalAlignment="Top" Width="100" Source="/Order/ordered.jpg"/>
+        <Image Grid.Column="1" HorizontalAlignment="Left" Height="82" Margin="140,61,0,0" Grid.Row="4" VerticalAlignment="Top" Width="196" Source="/Order/tracking.jpg" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>
