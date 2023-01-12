@@ -55,7 +55,6 @@ internal class Product : BlApi.IProduct
                        IsAvailable = product.InStock > 0 ? true : false,
                        AmountInCart = cart?.OrdersItemsList == null ? 0 : cart?.OrdersItemsList?.FindAll(os => os?.ProductId == product.Id).Sum(o => o?.AmountInOrder) ?? throw new BO.NotExiestsExceptions("The list of order items in the shopping cart is null")
                    };
-            //return cart1.ToList();
         }
         catch (DO.DoesNotExistException str)
         {

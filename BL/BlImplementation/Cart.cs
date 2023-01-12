@@ -149,14 +149,6 @@ internal class Cart : BlApi.ICart
         if (cart1?.OrdersItemsList == null)
             throw new BO.NotExiestsExceptions("The shopping cart is empty");
 
-        //from BO.OrderItem? item in cart1?.OrdersItemsList ?? throw new BO.NotExiestsExceptions("The Cart is not exiests")//All products exist, positive quantities, enough in stock
-        //let productOfDo = Dal?.Product.Get(item?.ProductId ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiests")) ?? throw new BO.NotExiestsExceptions("The Product is not exiests")
-        //let product = Dal?.Product
-        //where product.GetAll().Contains(productOfDo) // ?? throw new BO.NotExiestsExceptions("The product does not exist")
-        //where item.AmountInOrder<=0 
-
-
-
         foreach (BO.OrderItem? orderItem in cart1?.OrdersItemsList ?? throw new BO.NotExiestsExceptions("The Cart is not exiests")) //All products exist, positive quantities, enough in stock
         {
             DO.Product productOfDo = Dal?.Product.Get(orderItem?.ProductId ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiests")) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
@@ -189,25 +181,6 @@ internal class Cart : BlApi.ICart
             throw new BO.NotExiestsExceptions("Failed to add order to data tier", str);
         }
 
-        //try
-        //{
-        //    var listOrderItem = from item in cart1.OrdersItemsList
-        //                        where item != null
-        //                        select new DO.OrderItem
-        //                        {
-        //                            Id = item?.Id ?? throw new BO.NotExiestsExceptions("The OrderItem is not exiests"),
-        //                            OrderId = numberOrder,
-        //                            ProductId = item?.ProductId ?? throw new BO.NotExiestsExceptions("Order item null"),
-        //                            Price = item.Price,
-        //                            Amount = item.AmountInOrder
-        //                        };
-        //    // Dal?.OrderItem.Add();///////////////
-        //}
-        //catch (DO.DuplicateIdExceptions str)
-        //{
-        //    throw new BO.NotExiestsExceptions("Failed to add orderItem to data tier", str);
-        //}
-
         foreach (BO.OrderItem? boOrderItem in cart1.OrdersItemsList)//Building order item objects and adding them to the data layer
         {
             DO.OrderItem doOrderItem = new DO.OrderItem
@@ -227,22 +200,6 @@ internal class Cart : BlApi.ICart
                 throw new BO.NotExiestsExceptions("Failed to add orderItem to data tier", str);
             }
         }
-        //try
-        //{
-        //    var orderItem = (from item in cart1.OrdersItemsList
-        //                     where item != null
-        //                     //let product = Dal?.Product.Get(item.ProductId) ?? throw new BO.NotExiestsExceptions("The Product is not exiests")
-        //                     select item).First();
-        //    DO.Product product = Dal?.Product.Get(orderItem.ProductId) ?? throw new BO.NotExiestsExceptions("The Product is not exiests"); //Request a product from the data layer
-        //    product.InStock = product.InStock - orderItem.AmountInOrder; //In Stock update
-        //    Dal?.Product.Update(product); //Update Product
-        //    ////////////
-        //}
-        //catch (DO.DuplicateIdExceptions str)
-        //{
-        //    throw new BO.NotExiestsExceptions("Failed to request data layer products and updates", str);
-        //}
-
 
 
         foreach (BO.OrderItem? boOrderItem in cart1.OrdersItemsList) //Order Confirmation
