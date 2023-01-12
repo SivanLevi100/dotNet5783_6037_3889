@@ -32,8 +32,9 @@ public partial class ProductWindow : Window
 
     //public BO.Category Category { get; set; } = BO.Category.Unavailable;
 
-    public Array Categories { get { return Enum.GetValues(typeof(BO.Category)); } }
-   // public Array Categories { get; set; } = Enum.GetValues(typeof(BO.Category));
+    //public Array Categories1 { get { return Enum.GetValues(typeof(BO.Category)); } }
+    // public Array Categories { get; set; } = Enum.GetValues(typeof(BO.Category));
+   public Array Categories2 { get; set; } = Enum.GetValues(typeof(BO.Category));
 
 
 

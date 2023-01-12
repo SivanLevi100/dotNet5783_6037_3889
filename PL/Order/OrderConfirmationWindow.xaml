@@ -72,9 +72,9 @@
         <Label Content="Customer Name:" Grid.Row="1" Grid.Column="0" Margin="24,12,23,10"/>
         <Label Content="Customer Email:" Grid.Row="2" Grid.Column="0" Margin="24,12,23,10" />
         <Label Content="Customer Adress:" Grid.Row="3"  Grid.Column="0" Margin="24,12,23,10"/>
-        <TextBox Text="{Binding MyCart1.CustomerName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10,10,52,10" />
-        <TextBox Text="{Binding MyCart1.CustomerEmail, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="10,10,52,10"  />
-        <TextBox Text="{Binding MyCart1.CustomerAdress, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Margin="10,8,52,12" />
+        <TextBox Text="{Binding CustomerName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10,10,52,10" />
+        <TextBox Text="{Binding CustomerEmail, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="10,10,52,10"  />
+        <TextBox Text="{Binding CustomerAdress, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Margin="10,8,52,12" />
         <Button Grid.Column="2" Content="Order Confirmation"  Margin="122,38,0,0" Grid.Row="6" Click="OrderConfirmationButton_Click" Height="47" Width="154"/>
 
 

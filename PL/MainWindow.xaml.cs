@@ -2,6 +2,7 @@
 using PL.Order;
 using PL.Product;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,7 @@ namespace PL;
 public partial class MainWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
+
 
 
 
@@ -95,3 +97,14 @@ public partial class MainWindow : Window
 
     }
 }
+/// <summary>
+/// ///////////
+/// </summary>
+//internal class Categories5 
+//{
+//    //static readonly IEnumerator s_enumerator = Enum.GetValues(typeof(BO.Category)).GetEnumerator();
+//    //public IEnumerator GetEnumerator() => s_enumerator;
+
+//    public Array Categories { get; set; } = Enum.GetValues(typeof(BO.Category));
+
+//}

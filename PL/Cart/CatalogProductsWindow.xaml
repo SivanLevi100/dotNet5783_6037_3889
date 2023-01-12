@@ -96,8 +96,8 @@
             </ListView.View>
         </ListView>
         <Button Content="My Cart" FontSize="20" Background="AliceBlue" Foreground="BlueViolet" BorderBrush="MediumPurple" HorizontalAlignment="Left" Margin="644,5,0,10" Grid.Row="2" Width="146" Click="MyCartButton_Click"/>
-        <Button Content="Grouping by category" HorizontalAlignment="Left" Margin="400,5,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="20"
-                Height="31" Width="239" Click="GroupingButton_Click" Background="AliceBlue" Foreground="BlueViolet" BorderBrush="MediumPurple"/>
+        <Button Content="Grouping by category" HorizontalAlignment="Left" Margin="14,5,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="20"
+                Height="31" Width="240" Click="GroupingButton_Click" Background="AliceBlue" Foreground="BlueViolet" BorderBrush="MediumPurple"/>
 
 
 

@@ -181,11 +181,14 @@ internal class Cart : BlApi.ICart
         try
         {
             numberOrder = Dal?.Order.Add(doOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");  //Add an order to the data layer
+            //doOrder.Id= numberOrder;
         }
+
         catch (DO.DuplicateIdExceptions str)
         {
             throw new BO.NotExiestsExceptions("Failed to add order to data tier", str);
         }
+
         //try
         //{
         //    var listOrderItem = from item in cart1.OrdersItemsList

@@ -46,13 +46,17 @@ public partial class MyCartWindow : Window
     private void OrderConfirmationButton_Click(object sender, RoutedEventArgs e)
     {
         new OrderConfirmationWindow().Show();
+        Close();
     }
 
     private void DeleteTheBasketButton_Click(object sender, RoutedEventArgs e)
     {
         CatalogProductsWindow.myCart.OrdersItemsList = null;
         CatalogProductsWindow.myCart.TotalPrice = 0;
-        //CatalogProductsWindow.myCart = null;
+
+        var temp = CatalogProductsWindow.myCart.OrdersItemsList;
+        OrdertItemsOfCart = temp == null ? new() : new(temp);
+        TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
     }
 
     private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -69,6 +73,10 @@ public partial class MyCartWindow : Window
             CatalogProductsWindow.myCart = bl.Cart.AddProduct(CatalogProductsWindow.myCart, orderItem.ProductId);
             var temp = CatalogProductsWindow.myCart.OrdersItemsList;
             OrdertItemsOfCart = temp == null ? new() : new(temp);
+
+            TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
+
+
             MessageBox.Show("The Product added to cart");
         }
         catch (BO.NotExiestsExceptions ex)
@@ -85,6 +93,9 @@ public partial class MyCartWindow : Window
             CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, orderItem.ProductId, orderItem.AmountInOrder - 1);
             var temp = CatalogProductsWindow.myCart.OrdersItemsList;
             OrdertItemsOfCart = temp == null ? new() : new(temp);
+            
+            TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
+
             MessageBox.Show("The Item removed from cart");
         }
         catch (BO.NotExiestsExceptions ex)
@@ -107,10 +118,8 @@ public partial class MyCartWindow : Window
         }
         var temp = CatalogProductsWindow.myCart.OrdersItemsList;
         OrdertItemsOfCart = temp == null ? new() : new(temp);
+        TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
+
     }
 
-    private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-    {
-    
-    }
 }

@@ -81,8 +81,8 @@
         </Grid.ColumnDefinitions>
         <Button Content="Delete the basket" Style="{StaticResource mybutton}"  Margin="400,0,0,0" Grid.Row="2" Click="DeleteTheBasketButton_Click" Height="40" Width="166" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Button Content="Order Confirmation"  Margin="605,0,0,0" Style="{StaticResource mybutton}"  Grid.Row="2" Click="OrderConfirmationButton_Click" Height="40" Width="164" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="My Cart" FontSize="18" HorizontalAlignment="Left" Margin="57,-7,0,0" VerticalAlignment="Top" Width="122" Height="34" Grid.Column="1"/>
-        <TextBox HorizontalAlignment="Left" Margin="172,16,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="85" Height="19" TextChanged="TextBox_TextChanged"/>
+        <Label Content="My Cart" FontSize="18" HorizontalAlignment="Left" Margin="306,-7,0,0" VerticalAlignment="Top" Width="122" Height="34"/>
+        <TextBox HorizontalAlignment="Left" Margin="172,16,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="85" Height="19" />
 
         <TextBlock Text="The price of all items:" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="23,0,0,0" Grid.Row="2" Height="27" Width="144">
             <TextBlock.Style>
@@ -99,7 +99,7 @@
         </TextBlock>
 
 
-        <Button Grid.Column="2" Content="X" Foreground="Red" Background="White" BorderBrush="White"  FontSize="27" HorizontalAlignment="Left" Margin="218,0,0,0" VerticalAlignment="Top" Height="37" Width="39" Grid.Row="1" Click="ExitButton_Click"/>
+        <Button Content="X" Foreground="Red" Background="White" BorderBrush="White"  FontSize="27" HorizontalAlignment="Left" Margin="730,-7,0,0" VerticalAlignment="Top" Height="37" Width="39" Click="ExitButton_Click"/>
         <ListView ItemsSource="{Binding OrdertItemsOfCart}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,31,0" >
             <ListView.View>
                 <GridView>

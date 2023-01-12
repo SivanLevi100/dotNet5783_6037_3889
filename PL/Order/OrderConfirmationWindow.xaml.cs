@@ -27,7 +27,17 @@ public partial class OrderConfirmationWindow : Window
     public static readonly DependencyProperty Cart1Dependency = DependencyProperty.Register(nameof(MyCart1), typeof(BO.Cart), typeof(Window));
     public BO.Cart MyCart1 { get => (BO.Cart)GetValue(Cart1Dependency); private set => SetValue(Cart1Dependency, value); }
 
-    // public BO.Cart c1 = CatalogProductsWindow.myCart;
+
+    public static readonly DependencyProperty CustomerNameDependency = DependencyProperty.Register(nameof(CustomerName), typeof(string), typeof(Window));
+    public string CustomerName { get => (string)GetValue(CustomerNameDependency); private set => SetValue(CustomerNameDependency, value); }
+
+    public static readonly DependencyProperty CustomerEmailDependency = DependencyProperty.Register(nameof(CustomerEmail), typeof(string), typeof(Window));
+    public string CustomerEmail { get => (string)GetValue(CustomerEmailDependency); private set => SetValue(CustomerEmailDependency, value); }
+    
+    public static readonly DependencyProperty CustomerAdressDependency = DependencyProperty.Register(nameof(CustomerAdress), typeof(string), typeof(Window));
+    public string CustomerAdress { get => (string)GetValue(CustomerAdressDependency); private set => SetValue(CustomerAdressDependency, value); }
+
+
 
     public OrderConfirmationWindow()
     {
@@ -36,18 +46,15 @@ public partial class OrderConfirmationWindow : Window
 
     private void OrderConfirmationButton_Click(object sender, RoutedEventArgs e)
     {
-        //while (string.IsNullOrEmpty(MyCart1.CustomerName) || string.IsNullOrEmpty(MyCart1.CustomerEmail) || string.IsNullOrEmpty(MyCart1.CustomerAdress))
-        //{
-        //    MessageBox.Show("Not all fields are filled");
-        //    return;
-        //}
+
         try
         {
-            CatalogProductsWindow.myCart.CustomerName = MyCart1.CustomerName;
-            CatalogProductsWindow.myCart.CustomerEmail = MyCart1.CustomerEmail;
-            CatalogProductsWindow.myCart.CustomerAdress = MyCart1.CustomerAdress;
+            CatalogProductsWindow.myCart.CustomerName = CustomerName;
+            CatalogProductsWindow.myCart.CustomerEmail = CustomerEmail;
+            CatalogProductsWindow.myCart.CustomerAdress = CustomerAdress;
 
             bl?.Cart.Confirm(CatalogProductsWindow.myCart);
+            Close();
         }
         catch (BO.IncorrectDataExceptions str) 
         {
