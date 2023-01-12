@@ -107,8 +107,6 @@
             </Button.Content>
         </Button>
 
-        <Image HorizontalAlignment="Left" Height="18" Margin="467,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="28" Source="/Cart/Cart.png"/>
-
 
 
     </Grid>
