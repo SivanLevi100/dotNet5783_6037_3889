@@ -14,7 +14,8 @@
 
   <ItemGroup>
     <None Remove="Cart\Cart.png" />
-    <None Remove="electric store logo.jpg" />
+    <None Remove="Logo store.jpg" />
+    <None Remove="Order\Logo store.jpg" />
     <None Remove="Order\ordered.jpg" />
     <None Remove="Order\tracking.jpg" />
     <None Remove="Order\תודה שקניתם אצלנו.jpg" />
@@ -26,7 +27,8 @@
 
   <ItemGroup>
     <Resource Include="Cart\Cart.png" />
-    <Resource Include="electric store logo.jpg" />
+    <Resource Include="Logo store.jpg" />
+    <Resource Include="Order\Logo store.jpg" />
     <Resource Include="Order\ordered.jpg" />
     <Resource Include="Order\tracking.jpg" />
     <Resource Include="Order\תודה שקניתם אצלנו.jpg" />

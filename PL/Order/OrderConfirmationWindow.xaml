@@ -73,9 +73,40 @@
         <TextBox Text="{Binding CustomerName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10,10,52,10" />
         <TextBox Text="{Binding CustomerEmail, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="10,10,52,10"  />
         <TextBox Text="{Binding CustomerAdress, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Margin="10,8,52,12" />
-        <Button Grid.Column="2" Content="Order Confirmation"  Margin="122,38,0,0" Grid.Row="6" Click="OrderConfirmationButton_Click" Height="47" Width="154"/>
+        <Button x:Name="OrderConfirmation" Grid.Column="2" Content="Order Confirmation"  Margin="122,38,0,0" Grid.Row="6" Click="OrderConfirmationButton_Click" Height="47" Width="154"/>
+        <TextBlock Grid.Column="2" FontSize="25" HorizontalAlignment="Left" Margin="160,25,0,0" Grid.Row="5" TextWrapping="Wrap"  VerticalAlignment="Top" Height="47" Width="95" Grid.RowSpan="2">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Text" Value=" " />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=OrderConfirmation, Path=IsMouseOver}" Value="True">
+                            <Setter Property="Text" Value="Thanks"/>
+                            <Setter Property="Foreground" Value="CadetBlue" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
         <Image Grid.Column="2" HorizontalAlignment="Left" Height="142" Grid.RowSpan="4" Grid.Row="1" VerticalAlignment="Top" Width="313" Source="/Order/תודה שקניתם אצלנו.jpg" Margin="70,48,0,0"/>
 
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,18,0,0" Grid.Row="6" Height="88" Width="457" Grid.ColumnSpan="3">
+            <CheckBox Name="cbSample" Content="Click here after filling in the details" Width="225" Height="22" />
+            <TextBlock FontSize="18" Height="60" Width="293">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Text" Value=" " />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=cbSample}" Value="True">
+                                <Setter Property="Text" Value="The order is ready - click to confirm" />
+                                <Setter Property="Foreground" Value="Green" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+        <Image HorizontalAlignment="Left" Height="65" VerticalAlignment="Top" Width="155" Source="/Order/Logo store.jpg" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>

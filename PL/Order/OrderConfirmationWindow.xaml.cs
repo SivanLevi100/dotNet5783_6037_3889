@@ -56,7 +56,7 @@ public partial class OrderConfirmationWindow : Window
             bl?.Cart.Confirm(CatalogProductsWindow.myCart);
             CatalogProductsWindow.myCart = null;
             CatalogProductsWindow.myCart=new() { OrdersItemsList = new List<BO.OrderItem?>() };
-            Close();
+            //Close();
         }
         catch (BO.IncorrectDataExceptions str) 
         {
