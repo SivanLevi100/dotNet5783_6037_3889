@@ -13,8 +13,6 @@
             <Setter Property="Background" Value="AliceBlue" />
         </Style>
 
-
-
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="15" />
             <Setter Property="FontStyle" Value="Italic" />
@@ -76,6 +74,7 @@
         <TextBox Text="{Binding CustomerEmail, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="10,10,52,10"  />
         <TextBox Text="{Binding CustomerAdress, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Margin="10,8,52,12" />
         <Button Grid.Column="2" Content="Order Confirmation"  Margin="122,38,0,0" Grid.Row="6" Click="OrderConfirmationButton_Click" Height="47" Width="154"/>
+        <Image Grid.Column="2" HorizontalAlignment="Left" Height="142" Grid.RowSpan="4" Grid.Row="1" VerticalAlignment="Top" Width="313" Source="/Order/תודה שקניתם אצלנו.jpg" Margin="70,48,0,0"/>
 
 
     </Grid>

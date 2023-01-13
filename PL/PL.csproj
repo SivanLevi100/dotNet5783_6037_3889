@@ -17,6 +17,7 @@
     <None Remove="electric store logo.jpg" />
     <None Remove="Order\ordered.jpg" />
     <None Remove="Order\tracking.jpg" />
+    <None Remove="Order\תודה שקניתם אצלנו.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +29,7 @@
     <Resource Include="electric store logo.jpg" />
     <Resource Include="Order\ordered.jpg" />
     <Resource Include="Order\tracking.jpg" />
+    <Resource Include="Order\תודה שקניתם אצלנו.jpg" />
   </ItemGroup>
 
 </Project>
