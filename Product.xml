@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<products>
+	<Product>
+		<Id>123456 </Id>
+		<Name>SHARP refrigerator </Name>
+		<Category>Refrigerator</Category>
+		<Price>2000</Price>
+		<InStock>10</InStock>
+	</Product>
+	<Product>
+		
+	</Product>
+</products>
