@@ -72,6 +72,7 @@ public partial class ProductItemWindow : Window
                 CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, ProductItem.IdProduct, ProductItem.AmountInCart - 1);
                 ProductItem = bl?.Product.GetProductDetailsBuyer(ProductItem.IdProduct, CatalogProductsWindow.myCart);
                 MessageBox.Show("The Product removed from cart");
+
             }
             catch (BO.NotExiestsExceptions ex)
             {

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Window.Resources>
         <Style TargetType="local:MainWindow">
             <Setter Property="Background" Value="AliceBlue" />
@@ -39,7 +40,7 @@
         <Button x:Name="ProductList" Content="List of Products" Visibility="Hidden" HorizontalAlignment="Left" 
                 Margin="225,217,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>
         <Button Content="Customer" Height="90" Width="180"  HorizontalAlignment="Left" Margin="504,111,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="CustomerButton_Click" />
-        <TextBox x:Name="txtnumber" HorizontalAlignment="Left" Margin="440,282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136" Height="27" TextChanged="txtnumber_TextChanged"/>
+        <TextBox x:Name="txtnumber" Text="{Binding idOrder,Mode=TwoWay}" HorizontalAlignment="Left" Margin="440,282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136" Height="27" TextChanged="txtnumber_TextChanged"/>
         <Image HorizontalAlignment="Center" Height="100" Margin="0,3,0,0" VerticalAlignment="Top" Width="302" Source="/Logo store.jpg"/>
 
 

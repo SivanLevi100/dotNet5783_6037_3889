@@ -64,7 +64,7 @@ public partial class CatalogProductsWindow : Window
         var temp = bl?.Product?.GetProductItemList(myCart);
         ProductItems = temp == null ? new() : new(temp);
 
-        // Close();
+        //Close();
     }
 
     private void MyCartButton_Click(object sender, RoutedEventArgs e)

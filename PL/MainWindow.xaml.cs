@@ -27,16 +27,14 @@ public partial class MainWindow : Window
     private BlApi.IBl? bl = BlApi.Factory.Get();
 
 
-
-
     //constructor
     public MainWindow()
     {
         InitializeComponent();
-        IEnumerable<int> orderForLists1 = new List<int>();
-        orderForLists1 = from item in bl?.Order.GetOrderList()
-                         where item != null
-                         select item.OrderId;
+        //IEnumerable<int> orderForLists1 = new List<int>();
+        //orderForLists1 = from item in bl?.Order.GetOrderList()
+        //                 where item != null
+        //                 select item.OrderId;
         //NumberOfOrder.ItemsSource = orderForLists1;
 
         //Track.IsEnabled = false;

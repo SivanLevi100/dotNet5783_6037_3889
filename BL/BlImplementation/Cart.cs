@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 using BlApi;
 using DalApi;
-using DO;
+//using DO;
 using Microsoft.VisualBasic;
 
 namespace BlImplementation;
@@ -62,30 +62,13 @@ internal class Cart : BlApi.ICart
             {
                 newOrderItem1.AmountInOrder ++;
                 newOrderItem1.TotalPriceOfItem = doProduct.Price * newOrderItem1.AmountInOrder;
-                cart1.TotalPrice = cart1.TotalPrice + newOrderItem1.TotalPriceOfItem;
-            }
+                cart1.TotalPrice = cart1.TotalPrice + doProduct.Price;
 
-            //foreach (BO.OrderItem? orderItem in cart1.OrdersItemsList)
-            //{
-            //    if (orderItem?.ProductId == doProduct.Id && doProduct.InStock > 0) //If this is the product and the quantity is greater than 0
-            //    {
-            //        orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
-            //        orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
-            //        cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
-            //        break;
-            //    }
-            //}
+            }
         }
         return cart1;
     }
 
-
-    //BO.OrderItem? orderItem = (from item in cart1.OrdersItemsList
-    //                           where item.ProductId == doProduct.Id && doProduct.InStock >= 0
-    //                           select item).First();
-    //orderItem.AmountInOrder = orderItem.AmountInOrder + 1;
-    //orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
-    //cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
 
 
     public BO.Cart UpdateAmountOfProduct(BO.Cart cart1, int id, int newAmount)
@@ -118,7 +101,8 @@ internal class Cart : BlApi.ICart
             {
                 orderItem.AmountInOrder = newAmount;
                 orderItem.TotalPriceOfItem = doProduct.Price * orderItem.AmountInOrder;
-                cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+                cart1.TotalPrice = cart1.TotalPrice + doProduct.Price;
+
             }
             else
                 throw new BO.IncorrectDataExceptions("The product is not in stock");
@@ -127,9 +111,10 @@ internal class Cart : BlApi.ICart
         {
             orderItem.AmountInOrder = newAmount;
             orderItem.TotalPriceOfItem = doProduct.Price * newAmount;
-            cart1.TotalPrice = cart1.TotalPrice + orderItem.TotalPriceOfItem;
+            cart1.TotalPrice = cart1.TotalPrice - doProduct.Price;
+
         }
-       
+
         return cart1;
     }
 
@@ -215,7 +200,6 @@ internal class Cart : BlApi.ICart
                 throw new BO.NotExiestsExceptions("Failed to request data layer products and updates", str);
             }
         }
-
 
         cart1.OrdersItemsList.Clear(); //Emptying the basket means deleting a list of order items from the basket
     }
