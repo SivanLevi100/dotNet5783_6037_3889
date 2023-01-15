@@ -5,69 +5,69 @@
 		<Name>SHARP refrigerator </Name>
 		<Category>Refrigerator</Category>
 		<Price>2000</Price>
-		<InStock>10</InStock>
+		<InStock>30</InStock>
 	</Product>
 	<Product>
 		<Id>123457</Id>
 		<Name>FUJICOM freezer</Name>
 		<Category>Refrigerator</Category>
 		<Price>2500</Price>
-		<InStock>8</InStock>
+		<InStock>25</InStock>
 	</Product>
 	<Product>
 		<Id>123468</Id>
 		<Name>Blomberg oven</Name>
 		<Category>Kitchen</Category>
 		<Price>800</Price>
-		<InStock>5</InStock>
+		<InStock>50</InStock>
 	</Product>
 	<Product>
-		<Id>193468</Id>
+		<Id>194468</Id>
 		<Name>kenwood mixer</Name>
 		<Category>Kitchen</Category>
 		<Price>4000</Price>
-		<InStock>13</InStock>
+		<InStock>55</InStock>
 	</Product>
 	<Product>
 		<Id>193568</Id>
 		<Name>Samsung TV 75</Name>
 		<Category>Computer</Category>
 		<Price>3800</Price>
-		<InStock>10</InStock>
+		<InStock>29</InStock>
 	</Product>
 	<Product>
-		<Id>193558</Id>
+		<Id>173558</Id>
 		<Name>Hp Computer Touch</Name>
 		<Category>Computer</Category>
 		<Price>3000</Price>
-		<InStock>7</InStock>
+		<InStock>48</InStock>
 	</Product>
 	<Product>
 		<Id>253558</Id>
 		<Name>Electra Washing  machine</Name>
 		<Category>Cooling</Category>
 		<Price>2300</Price>
-		<InStock>9</InStock>
+		<InStock>35</InStock>
 	</Product>
 	<Product>
 		<Id>253276</Id>
 		<Name>TADIRAN Air-Conditioner </Name>
 		<Category>Cooling</Category>
 		<Price>3200</Price>
-		<InStock>16</InStock>
+		<InStock>60</InStock>
 	</Product>
 	<Product>
 		<Id>253478</Id>
 		<Name>Bosch Dryer</Name>
 		<Category>Cleaning</Category>
 		<Price>3600</Price>
-		<InStock>15</InStock>
+		<InStock>24</InStock>
 	</Product>
 	<Product>
 		<Id>258876</Id>
 		<Name>Dishwasher Bosch</Name>
 		<Category>Cleaning</Category>
 		<Price>3200</Price>
-		<InStock>16</InStock>
+		<InStock>38</InStock>
 	</Product>
 </products>
