@@ -87,6 +87,26 @@ static class XMLTools
             throw new Exception($"fail to create xml file: {filePath}", ex);
         }
     }
+    public static void SaveListToXMLSerializer<T>(List<T> list, string entity) where T : struct
+    {
+        string filePath = $"{s_dir + entity}.xml";
+        try
+        {
+            using FileStream file = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
+            //using XmlWriter writer = XmlWriter.Create(file, new XmlWriterSettings() { Indent = true });
+
+            XmlSerializer serializer = new(typeof(List<T?>));
+            //if (s_writing)
+            //    serializer.Serialize(writer, list);
+            //else
+            serializer.Serialize(file, list);
+        }
+        catch (Exception ex)
+        {
+            // DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {dir + filePath}", ex);  }
+            throw new Exception($"fail to create xml file: {filePath}", ex);
+        }
+    }
 
     public static List<T?> LoadListFromXMLSerializer<T>(string entity) where T : struct
     {
@@ -104,5 +124,24 @@ static class XMLTools
             throw new Exception($"fail to load xml file: {filePath}", ex);
         }
     }
+
+    public static List<T> LoadListFromXMLSerializer1<T>(string entity) where T : struct
+    {
+        string filePath = $"{s_dir + entity}.xml";
+        try
+        {
+            if (!File.Exists(filePath)) return new();
+            using FileStream file = new(filePath, FileMode.Open);
+            XmlSerializer x = new(typeof(List<T?>));
+            return x.Deserialize(file) as List<T> ?? new();
+        }
+        catch (Exception ex)
+        {
+            // DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {dir + filePath}", ex);  }
+            throw new Exception($"fail to load xml file: {filePath}", ex);
+        }
+    }
+
+
     #endregion
 }

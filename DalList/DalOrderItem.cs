@@ -1,6 +1,7 @@
 ﻿
 using DalApi;
 using DO;
+using static Dal.DataSource;
 //using System.Collections.Generic;
 //using System.Diagnostics;
 //using System.Runtime.CompilerServices;
@@ -21,6 +22,7 @@ internal class DalOrderItem : IOrderItem
     {
         if (_dstaSource.OrderItemList.Exists(x => x?.Id == orderItem1.Id))
             throw new DuplicateIdExceptions("no place in List to add");
+        orderItem1.Id= Config.OrderItemLastId;
         _dstaSource.OrderItemList.Add(orderItem1);
         return orderItem1.Id;
     }

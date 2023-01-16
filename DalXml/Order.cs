@@ -19,7 +19,7 @@ public struct ImportentNumbers
 internal class Order : IOrder
 {
     const string o_orders = "orders"; //XML Serializer
-    //private readonly string configPath = "Config.xml";
+    private readonly string configPath = "Config.xml";
 
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? filter = null)
     {
@@ -40,35 +40,25 @@ internal class Order : IOrder
         if (listOrders.Exists(order1 => ((DO.Order)order1!).Id == order.Id))
             throw new DuplicateIdExceptions("no place in List to add");
 
-        //List<ImportentNumbers> runningList = XMLTools.LoadListFromXMLSerializer<ImportentNumbers>(configPath);
+        List<ImportentNumbers> runningList = XMLTools.LoadListFromXMLSerializer1<ImportentNumbers>(configPath);
 
-        //ImportentNumbers runningNum = (from number in runningList
-        //                               where (number.typeOfnumber == "Number Runing Order")
-        //                               select number).FirstOrDefault();
+        ImportentNumbers runningNum = (from number in runningList
+                                       where (number.typeOfnumber == "Number Runing Order")
+                                       select number).FirstOrDefault();
 
-        //runningList.Remove(runningNum);
-        //runningNum.numberSaved++;
-        //order.Id = (int)runningNum.numberSaved;
-        //runningList.Add(runningNum);
+        runningList.Remove(runningNum);
+        runningNum.numberSaved++;
+        order.Id = (int)runningNum.numberSaved;
+        runningList.Add(runningNum);
 
 
         listOrders.Add(order);
 
-        //XMLTools.SaveListToXMLSerializer(runningList, configPath);
+        XMLTools.SaveListToXMLSerializer(runningList, configPath);
         XMLTools.SaveListToXMLSerializer(listOrders, o_orders);
 
         return order.Id;
 
-        //var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(o_orders);
-
-        //if (listOrders.Exists(order1 => ((DO.Order)order1!).Id == order.Id))
-        //    throw new DuplicateIdExceptions("no place in List to add");
-
-        //listOrders.Add(order);
-
-        //XMLTools.SaveListToXMLSerializer(listOrders, o_orders);
-
-        //return order.Id;
     }
 
 

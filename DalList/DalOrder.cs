@@ -1,6 +1,7 @@
 ﻿
 using DalApi;
 using DO;
+using static Dal.DataSource;
 
 namespace Dal;
 
@@ -17,8 +18,10 @@ internal class DalOrder:IOrder
     {
         if (_dstaSource1.OrderList.Exists(x => x?.Id == order1.Id))
             throw new DuplicateIdExceptions("no place in List to add");
+        order1.Id = Config.OrderLastId;
         _dstaSource1.OrderList.Add(order1);
         return order1.Id;
+
     }
 
     /// <summary>

@@ -60,7 +60,7 @@ public partial class ProductItemWindow : Window
 
         }
         Close();
-        //new CatalogProductsWindow().Show();
+        new CatalogProductsWindow().Show();
     }
 
     private void RemoveItemButton_Click(object sender, RoutedEventArgs e)

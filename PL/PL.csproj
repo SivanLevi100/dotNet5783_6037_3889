@@ -19,6 +19,12 @@
     <None Remove="Order\ordered.jpg" />
     <None Remove="Order\tracking.jpg" />
     <None Remove="Order\תודה שקניתם אצלנו.jpg" />
+    <None Remove="טפט-עם-טקסטורה %281%29.jpg" />
+    <None Remove="טפט-עם-טקסטורה.jpg" />
+    <None Remove="מוצרי חשמל רקע.jpg" />
+    <None Remove="מוצרי חשמל!.png" />
+    <None Remove="מוצרי חשמל4.jpg" />
+    <None Remove="מכונת-כביסה.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +38,12 @@
     <Resource Include="Order\ordered.jpg" />
     <Resource Include="Order\tracking.jpg" />
     <Resource Include="Order\תודה שקניתם אצלנו.jpg" />
+    <Resource Include="טפט-עם-טקסטורה (1).jpg" />
+    <Resource Include="טפט-עם-טקסטורה.jpg" />
+    <Resource Include="מוצרי חשמל רקע.jpg" />
+    <Resource Include="מוצרי חשמל!.png" />
+    <Resource Include="מוצרי חשמל4.jpg" />
+    <Resource Include="מכונת-כביסה.jpg" />
   </ItemGroup>
 
 </Project>

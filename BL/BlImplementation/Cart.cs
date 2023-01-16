@@ -144,6 +144,7 @@ internal class Cart : BlApi.ICart
             if (orderItem.AmountInOrder > Dal?.Product.Get(orderItem.ProductId).Value.InStock) //Not enough in stock
                 throw new BO.IncorrectDataExceptions("This product is out of stock");
         }
+
         DO.Order doOrder = new DO.Order
         {
             Id = 0,
@@ -158,9 +159,7 @@ internal class Cart : BlApi.ICart
         try
         {
             numberOrder = Dal?.Order.Add(doOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");  //Add an order to the data layer
-            //doOrder.Id= numberOrder;
         }
-
         catch (DO.DuplicateIdExceptions str)
         {
             throw new BO.NotExiestsExceptions("Failed to add order to data tier", str);

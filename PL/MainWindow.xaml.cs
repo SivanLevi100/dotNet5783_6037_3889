@@ -87,7 +87,11 @@ public partial class MainWindow : Window
 
     private void CustomerButton_Click(object sender, RoutedEventArgs e)
     {
-        
+        NewOrder.Visibility = Visibility;
+        Track.Visibility = Visibility;
+        NumberOfOrder.Visibility = Visibility;
+        txtnumber.Visibility = Visibility;
+
     }
 
     private void txtnumber_TextChanged(object sender, TextChangedEventArgs e)

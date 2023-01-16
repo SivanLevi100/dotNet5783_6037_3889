@@ -31,19 +31,19 @@
     </Window.Resources>
 
     <Grid>
-        <!--<Button Content="Enter" HorizontalAlignment="Left" Margin="368,167,0,0" VerticalAlignment="Top" Click="ShowProductButton_Click"/>-->
-        <Button x:Name="Admin" Content="Admin"  Height="90" Width="180" HorizontalAlignment="Left" Margin="108,107,0,0" VerticalAlignment="Top" Click="AdminButton_Click" />
-        <Button Content="New Order" HorizontalAlignment="Left" Margin="612,235,0,0" VerticalAlignment="Top" Click="NewOrderButton_Click"/>
-        <Label Content="Number Of Order:" FontSize="16" HorizontalAlignment="Left" Margin="298,277,0,0" VerticalAlignment="Top" Height="37" Width="142"/>
-        <Button x:Name="Track" Content="Track"  HorizontalAlignment="Left" Margin="369,326,0,0" VerticalAlignment="Top" Click="TrackButton_Click"/>
-        <Button x:Name="OrderList" Content="List of Orders" Visibility="Hidden"  HorizontalAlignment="Left" Margin="30,217,0,0" VerticalAlignment="Top" Click="OrderList_Click"/>
+
+        <Image HorizontalAlignment="Center" Height="415" VerticalAlignment="Center" Width="780" Source="/מוצרי חשמל רקע.jpg" Stretch="Fill"/>
+        <Image HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" VerticalAlignment="Top" Width="203" Source="/Logo store.jpg" Stretch="Fill"/>
+
+        <Button x:Name="Admin" Content="Admin"  Height="90" Width="180" HorizontalAlignment="Left" Margin="82,80,0,0" VerticalAlignment="Top" Click="AdminButton_Click" />
+        <Button x:Name="NewOrder" Content="New Order" Visibility="Hidden" HorizontalAlignment="Left" Margin="606,248,0,0" VerticalAlignment="Top" Click="NewOrderButton_Click"/>
+        <Label x:Name="NumberOfOrder" Content="Number Of Order:" Visibility="Hidden" FontSize="16" HorizontalAlignment="Left" Margin="346,206,0,0" VerticalAlignment="Top" Height="37" Width="142"/>
+        <Button x:Name="Track" Visibility="Hidden" Content="Track"  HorizontalAlignment="Left" Margin="405,248,0,0" VerticalAlignment="Top" Click="TrackButton_Click"/>
+        <Button x:Name="OrderList" Content="List of Orders" Visibility="Hidden"  HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Click="OrderList_Click"/>
         <Button x:Name="ProductList" Content="List of Products" Visibility="Hidden" HorizontalAlignment="Left" 
-                Margin="225,217,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>
-        <Button Content="Customer" Height="90" Width="180"  HorizontalAlignment="Left" Margin="504,111,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="CustomerButton_Click" />
-        <TextBox x:Name="txtnumber" Text="{Binding idOrder,Mode=TwoWay}" HorizontalAlignment="Left" Margin="440,282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136" Height="27" TextChanged="txtnumber_TextChanged"/>
-        <Image HorizontalAlignment="Center" Height="100" Margin="0,3,0,0" VerticalAlignment="Top" Width="302" Source="/Logo store.jpg"/>
-
-
+                Margin="196,204,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>
+        <Button Content="Customer" Height="90" Width="180"  HorizontalAlignment="Left" Margin="508,89,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="CustomerButton_Click" />
+        <TextBox x:Name="txtnumber" Visibility="Hidden" Text="{Binding idOrder, Mode=TwoWay}" HorizontalAlignment="Left" Margin="488,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Height="29" TextChanged="txtnumber_TextChanged"/>
 
     </Grid>
 

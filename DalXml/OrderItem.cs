@@ -13,6 +13,8 @@ internal class OrderItem : IOrderItem
 {
     const string o_orderItems = "orderItems"; //XML Serializer
 
+    private readonly string configPath = "Config.xml";
+
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? filter = null)
     {
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(o_orderItems)!;
@@ -32,11 +34,26 @@ internal class OrderItem : IOrderItem
         if (listOrderItems.Exists(orderItem1 => ((DO.OrderItem)orderItem1!).Id == orderItem.Id))
             throw new DuplicateIdExceptions("no place in List to add");
 
+
+        List<ImportentNumbers> runningList = XMLTools.LoadListFromXMLSerializer1<ImportentNumbers>(configPath);
+
+        ImportentNumbers runningNum = (from number in runningList
+                                       where (number.typeOfnumber == "Number Runing OrderItem")
+                                       select number).FirstOrDefault();
+
+        runningList.Remove(runningNum);
+        runningNum.numberSaved++;
+        orderItem.Id = (int)runningNum.numberSaved;
+        runningList.Add(runningNum);
+
+
         listOrderItems.Add(orderItem);
 
+        XMLTools.SaveListToXMLSerializer(runningList, configPath);
         XMLTools.SaveListToXMLSerializer(listOrderItems, o_orderItems);
 
         return orderItem.Id;
+
     }
 
 
