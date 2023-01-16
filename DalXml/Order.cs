@@ -61,7 +61,7 @@ internal class Order : IOrder
 
     }
 
-
+    //
     public void Delete(int id)
     {
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(o_orders);
