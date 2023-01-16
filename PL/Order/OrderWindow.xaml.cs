@@ -64,7 +64,12 @@ public partial class OrderWindow : Window
 
     private void AddProductForOrderButton_Click(object sender, RoutedEventArgs e)
     {
+        
         new OrderItemWindow(Order.Id).Show();
+        Close();
+
+        //Order = bl.Order.GetOrderDetails(Order.Id);
+
 
     }
 
@@ -104,7 +109,19 @@ public partial class OrderWindow : Window
 
     private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        //DataGrid DataGrid = sender as DataGrid;
+        //BO.OrderItem OrderItem = new BO.OrderItem();
+        //OrderItem = DataGrid.SelectedItem as BO.OrderItem;
+
+        //new OrderItemWindow(OrderItem.ProductId, Order.Id).Show();
+
         new OrderItemWindow(Order.Id).Show();
-       // Close();////////////
+        Close();////////////
+    }
+
+    private void BackButton_Click(object sender, RoutedEventArgs e)
+    {
+        new OrderListWindow().Show();
+        Close();
     }
 }

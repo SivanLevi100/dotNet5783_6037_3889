@@ -25,8 +25,8 @@ public partial class OrderItemWindow : Window
 
     public static readonly DependencyProperty Order1Dependency = DependencyProperty.Register(nameof(Order1), typeof(BO.Order), typeof(Window));
     public BO.Order? Order1 { get => (BO.Order)GetValue(Order1Dependency); private set => SetValue(Order1Dependency, value); }
-   
-    
+
+
     public static readonly DependencyProperty idProductDependency = DependencyProperty.Register(nameof(idProduct), typeof(int), typeof(Window));
     public int idProduct { get => (int)GetValue(idProductDependency); private set => SetValue(idProductDependency, value); }
 
@@ -41,8 +41,20 @@ public partial class OrderItemWindow : Window
     }
     public OrderItemWindow(int idOrder)
     {
+
+
         Order1 = bl.Order.GetOrderDetails(idOrder);//ההזממה שאליה נוסיף מוצר
         InitializeComponent();
+    }
+    public OrderItemWindow(int idProduct100,int idOrder)
+    {
+        if (bl.Product.GetProductList().FirstOrDefault(o4 => o4.IdProduct == idProduct100) != null)//tאם זה ת.ז של מוצר
+        {
+
+            Order1 = bl.Order.GetOrderDetails(idOrder);
+            idProduct = idProduct100;
+            Order1 = bl.Order.AddItemForOrder(Order1, idProduct, Amount);
+        }
     }
 
     private void AddItemForOrderButton_Click(object sender, RoutedEventArgs e)
@@ -50,15 +62,16 @@ public partial class OrderItemWindow : Window
         try
         {
             Order1 = bl.Order.AddItemForOrder(Order1, idProduct, Amount);
-            Order1= bl.Order.GetOrderDetails(Order1.Id);
+            Order1 = bl.Order.GetOrderDetails(Order1.Id);
             MessageBox.Show("The Product added");
-           // new OrderWindow().Show();///////////***
 
         }
         catch (BO.NotExiestsExceptions str)
         {
             MessageBox.Show(str.Message, "The Product is not exiests", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
         }
+        Close();
+        new OrderWindow(Order1.Id).Show();
+
     }
 }

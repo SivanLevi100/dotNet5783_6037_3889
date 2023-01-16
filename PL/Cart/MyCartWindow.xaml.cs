@@ -59,9 +59,9 @@ public partial class MyCartWindow : Window
         TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
     }
 
-    private void ExitButton_Click(object sender, RoutedEventArgs e)
+    private void HomeButton_Click(object sender, RoutedEventArgs e)
     {
-        new CatalogProductsWindow().Show();
+        new MainWindow().Show();
         Close();
     }
 
@@ -122,4 +122,9 @@ public partial class MyCartWindow : Window
 
     }
 
+    private void BackButton_Click(object sender, RoutedEventArgs e)
+    {
+        new CatalogProductsWindow().Show();
+        Close();
+    }
 }

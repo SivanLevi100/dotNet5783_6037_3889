@@ -81,7 +81,7 @@
         </Grid.ColumnDefinitions>
         <Button Content="Delete the basket" Style="{StaticResource mybutton}"  Margin="400,0,0,0" Grid.Row="2" Click="DeleteTheBasketButton_Click" Height="40" Width="166" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Button Content="Order Confirmation"  Margin="605,0,0,0" Style="{StaticResource mybutton}"  Grid.Row="2" Click="OrderConfirmationButton_Click" Height="40" Width="164" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Label Content="My Cart" FontSize="18" HorizontalAlignment="Left" Margin="306,-7,0,0" VerticalAlignment="Top" Width="122" Height="34"/>
+        <Label Content="My Cart" FontStyle="Italic" Background="AliceBlue" Foreground="BlueViolet"  FontSize="18" HorizontalAlignment="Left" Margin="341,-7,0,0" VerticalAlignment="Top" Width="87" Height="34"/>
         <TextBox HorizontalAlignment="Left" Margin="172,16,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding TotalPrice}" VerticalAlignment="Top" Width="85" Height="19" />
 
         <TextBlock Text="The price of all items:" FontSize="15" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="23,0,0,0" Grid.Row="2" Height="27" Width="144">
@@ -99,7 +99,16 @@
         </TextBlock>
 
 
-        <Button Content="X" Foreground="Red" Background="White" BorderBrush="White"  FontSize="27" HorizontalAlignment="Left" Margin="730,-7,0,0" VerticalAlignment="Top" Height="37" Width="39" Click="ExitButton_Click"/>
+        <Button Background="White" BorderBrush="White"  FontSize="27" HorizontalAlignment="Left" Margin="23,-4,0,0" VerticalAlignment="Top" Height="37" Width="39" Click="HomeButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="41" Source="/Cart/בית.png"
+                          Height="34" RenderTransformOrigin="-0.056,0.514" />
+                    <TextBlock Text="My Cart" Height="24" Width="81" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
+
         <ListView ItemsSource="{Binding OrdertItemsOfCart}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,31,0" >
             <ListView.View>
                 <GridView>
@@ -170,6 +179,16 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <Button HorizontalAlignment="Left" Background="White" Margin="715,0,0,0" VerticalAlignment="Top" Height="39" Width="54" Grid.RowSpan="2" Click="BackButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="54" 
+                          Height="34" RenderTransformOrigin="-0.056,0.514" Source="/Cart/חזרה אחורה.jpg" Stretch="Fill" />
+                    <TextBlock Text="My Cart" Height="24" Width="81" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
 
 
     </Grid>

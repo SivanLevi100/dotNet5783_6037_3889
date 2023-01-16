@@ -38,7 +38,7 @@
 
     </Window.Resources>
     <Grid>
-        <TextBox HorizontalAlignment="Left" Margin="199,114,0,0" TextWrapping="Wrap" Text="{Binding idProduct}" VerticalAlignment="Top" Width="123" Height="26"/>
+        <TextBox x:Name="IDProduct" HorizontalAlignment="Left" Margin="199,114,0,0" TextWrapping="Wrap" Text="{Binding idProduct}" VerticalAlignment="Top" Width="123" Height="26"/>
         <Label Content="ID of product:" HorizontalAlignment="Left" Margin="71,114,0,0" VerticalAlignment="Top"/>
         <Label Content="Amount of Product:" Margin="65,165,0,0" Height="40" Width="134"/>
         <TextBox Margin="199,165,0,0" TextWrapping="Wrap" Text="{Binding Amount}" Width="123" Height="28"/>

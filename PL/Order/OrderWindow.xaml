@@ -24,7 +24,7 @@
             <Setter Property="FontSize" Value="13" />
             <Setter Property="FontStyle" Value="Italic" />
         </Style>
-        
+
         <Style TargetType="TextBox">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Top" />
@@ -40,7 +40,7 @@
                 </Style>
             </Style.Resources>
         </Style>
-        
+
         <Style TargetType="Button">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Background" Value="Violet" />
@@ -54,6 +54,13 @@
             </Style.Resources>
         </Style>
 
+        <Style x:Key="bake" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Width" Value="140" />
+            <Setter Property="Height" Value="35"/>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -99,6 +106,16 @@
         <Button Content="Update Shiping date" Margin="179,2,0,0" Grid.Row="8" Grid.Column="3" Click="UpdateShipingButton_Click"  />
         <Button Content="Add Product for order" Margin="97,4,0,0" Grid.Row="7" Grid.Column="3" Click="AddProductForOrderButton_Click" />
 
-        
+        <Button Grid.Column="3" Style="{StaticResource bake}" Margin="276,0,0,0" Grid.RowSpan="2" Width="43" Height="43" Click="BackButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal" Width="36">
+                    <Image Width="46" 
+                          Height="51" RenderTransformOrigin="-0.056,0.514" Source="/Order/חזרה אחורה.jpg" Stretch="Fill" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
+
+
+
     </Grid>
 </Window>

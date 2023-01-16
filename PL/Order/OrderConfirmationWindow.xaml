@@ -106,7 +106,8 @@
                 </TextBlock.Style>
             </TextBlock>
         </StackPanel>
-        <Image HorizontalAlignment="Left" Height="65" VerticalAlignment="Top" Width="155" Source="/Order/Logo store.jpg" Grid.RowSpan="2"/>
+        <Image HorizontalAlignment="Left" Height="65" VerticalAlignment="Top" Width="155" Source="/Order/Logo store.jpg" Grid.RowSpan="2"/>
+        <MediaElement Grid.Column="2" HorizontalAlignment="Left" Height="71" VerticalAlignment="Center" Width="72" Margin="132,0,0,0"/>
 
     </Grid>
 </Window>

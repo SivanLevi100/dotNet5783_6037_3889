@@ -64,6 +64,7 @@ internal class Product : IProduct
     public DO.Product GetF(Func<DO.Product?, bool>? filter)////////לשאול?
     {
         throw new NotFoundExceptions("The product");
+
        // return (DO.Product)getProduct(XMLTools.LoadListFromXMLElement(p_products)?.Elements()
        //.FirstOrDefault(st => st.ToIntNullable("Id") == id);
     }

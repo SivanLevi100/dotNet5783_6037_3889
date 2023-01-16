@@ -8,8 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 using BlApi;
+using BO;
 //using BO;
 using DalApi;
+using DO;
 
 namespace BlImplementation;
 
@@ -228,11 +230,14 @@ internal class Order : BlApi.IOrder
         };
     }
 
-
+    //A function that adds a product to an already existing order
     //וגם הוספת פריט או הורדת פריט,פונקציה המוסיפה מוצר להזמנה שכבר קיימת
     //Amount = כמה רוצה להוסיף או להוריד
     public BO.Order AddItemForOrder(BO.Order order, int idProduct, int Amount)
     {
+        if(order.ShipDate!=null && order.DeliveryDate!=null) //לא ניתן להוסיף מוצרים למשלוח שיצא לדרך או הגיע ללקוח
+            throw new BO.NotExiestsExceptions("Products cannot be added to orders that have been sent or arrived at the customer");
+
         DO.Product doProduct;
         DO.Order doOrder;
         try
@@ -248,57 +253,52 @@ internal class Order : BlApi.IOrder
             throw new BO.NotExiestsExceptions("The Product is not exiexts in inStock");
 
         BO.OrderItem orderItemBo;
+        int numberOrderItem;
         orderItemBo = order.OrdersItemsList.FirstOrDefault(orderItem => orderItem.ProductId == idProduct);//המוצר כבר קיים ברשימה אז נשנה את הכמות
         if (orderItemBo == null)//אם המוצר לא קיים
         {
-            BO.OrderItem orderItem = new BO.OrderItem
+            DO.OrderItem doOrderItem = new DO.OrderItem
             {
-                Id = 0, // Dal.OrderItem.GetF(item=>item.Value.ProductId==doProduct.Id).Id, //////// 
-                ProductId = doProduct.Id,
-                NameProduct = doProduct.Name,
+                Id = 0,
+                OrderId = order.Id,
+                ProductId = idProduct,
                 Price = doProduct.Price,
-                AmountInOrder = Amount,
-                TotalPriceOfItem = doProduct.Price,
+                Amount = Amount
             };
-            order.OrdersItemsList.Add(orderItem);
+            try
+            {
+                numberOrderItem = Dal.OrderItem.Add(doOrderItem);
+            }
+            catch (DO.DuplicateIdExceptions str)
+            {
+                throw new BO.NotExiestsExceptions("Failed to add orderItem to data tier", str);
+            }
+            BO.OrderItem BOnewOrderItem = new BO.OrderItem
+            {
+                Id = numberOrderItem,
+                ProductId = idProduct,
+                NameProduct =doProduct.Name,
+                Price = doProduct.Price,
+                AmountInOrder =Amount,
+                TotalPriceOfItem=Amount* doProduct.Price
+            };
+            order.OrdersItemsList.Add(BOnewOrderItem);
             order.TotalPrice += doProduct.Price * Amount;
             doProduct.InStock = doProduct.InStock - Amount;
+            Dal.Product.Update(doProduct);
+           
         }
         else //פריט בהזמנה נמצא ורוצים להוסיף עוד ממנו
         {
             orderItemBo.AmountInOrder += Amount;
             doProduct.InStock = Amount > 0 ? doProduct.InStock - Amount : doProduct.InStock + (-1 * Amount);
             order.TotalPrice += orderItemBo.Price * Amount;
+            Dal.Product.Update(doProduct);
 
         }
-
-        //if (order.OrdersItemsList.Any(orderItem => orderItem.ProductId==idProduct)) //אם המוצר כבר קיים ברשימה אז נשנה את הכמות
-        //{
-        //    BO.OrderItem orderitembo = order.OrdersItemsList.Find(orderItem => orderItem.ProductId == idProduct);
-        //    orderitembo.AmountInOrder += Amount;
-        //    doProduct.InStock = Amount > 0 ? doProduct.InStock - Amount : doProduct.InStock + (-1 * Amount);
-        //    order.TotalPrice += orderitembo.Price;
-        //}
-        //else  //להוסיף מוצר חדש שאינו נמצא ברשימת פריטי הזמנה
-        //{
-        //    BO.OrderItem orderItem = new BO.OrderItem
-        //    {
-        //        Id = 0, // Dal.OrderItem.GetF(item=>item.Value.ProductId==doProduct.Id).Id, //////// 
-        //        ProductId = doProduct.Id,
-        //        NameProduct = doProduct.Name,
-        //        Price = doProduct.Price,
-        //        AmountInOrder = Amount,
-        //        TotalPriceOfItem = doProduct.Price,
-        //    };
-        //    order.OrdersItemsList.Add(orderItem);
-        //    order.TotalPrice += doProduct.Price;
-        //}
         return order;
 
-
     }
-
-
 
 
 
