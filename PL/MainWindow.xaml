@@ -33,7 +33,7 @@
     <Grid>
 
         <Image HorizontalAlignment="Center" Height="415" VerticalAlignment="Center" Width="780" Source="/מוצרי חשמל רקע.jpg" Stretch="Fill"/>
-        <Image HorizontalAlignment="Left" Height="50" Margin="10,10,0,0" VerticalAlignment="Top" Width="203" Source="/Logo store.jpg" Stretch="Fill"/>
+        <Image HorizontalAlignment="Left" Height="65" Margin="182,0,0,0" VerticalAlignment="Top" Width="416" Source="/Logo store.jpg" Stretch="Fill"/>
 
         <Button x:Name="Admin" Content="Admin"  Height="90" Width="180" HorizontalAlignment="Left" Margin="82,80,0,0" VerticalAlignment="Top" Click="AdminButton_Click" />
         <Button x:Name="NewOrder" Content="New Order" Visibility="Hidden" HorizontalAlignment="Left" Margin="606,248,0,0" VerticalAlignment="Top" Click="NewOrderButton_Click"/>
