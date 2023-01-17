@@ -85,6 +85,6 @@ internal class Order : IOrder
         throw new NotFoundExceptions("The order id is not exist in List");
     }
 
-    //8/8m////////
+    ////
 
 }
