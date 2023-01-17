@@ -24,6 +24,7 @@ internal class Product : BlApi.IProduct
             return from item in Dal?.Product.GetAll()
                    where item != null
                    let product = ((DO.Product)item)!
+                   orderby product.Id
                    select new BO.ProductForList
                    {
                        IdProduct = product.Id,

@@ -26,7 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BL\BL.csproj" />
+	  <ProjectReference Include="..\BL\BL.csproj" >
+		  <PrivateAssets>All</PrivateAssets>
+	  </ProjectReference>
+	  
   </ItemGroup>
 
   <ItemGroup>

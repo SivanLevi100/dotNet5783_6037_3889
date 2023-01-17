@@ -59,12 +59,13 @@ public partial class MainWindow : Window
     private void TrackButton_Click(object sender, RoutedEventArgs e)
     {
         int idOrder = int.Parse(txtnumber.Text);
-        BO.OrderForList order= bl.Order.GetOrderList().FirstOrDefault(o => o.OrderId == idOrder);
-        if(order==null)
+        BO.OrderForList order = bl.Order.GetOrderList().FirstOrDefault(o => o.OrderId == idOrder);
+        if (order == null)
             MessageBox.Show("The number of order is not exiests");
         else
             new OrderTrackingWindow(idOrder).Show();
 
+        //new OrderTrackingWindow().Show();
     }
 
     private void OrderList_Click(object sender, RoutedEventArgs e)

@@ -13,7 +13,7 @@ internal class OrderItem : IOrderItem
 {
     const string o_orderItems = "orderItems"; //XML Serializer
 
-    private readonly string configPath = "Config.xml";
+    private readonly string configPath = "Config";
 
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? filter = null)
     {

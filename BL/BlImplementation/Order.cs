@@ -33,8 +33,7 @@ internal class Order : BlApi.IOrder
                    {
                        OrderId = order.Id,
                        CustomerName = order.CustomerName,
-                       AmountItems = /*(from orderitem in listOrderItems select orderitem).Count(),*/
-                       (from orderitem in listOrderItems select orderitem).Sum(or => or.Amount),
+                       AmountItems = (from orderitem in listOrderItems select orderitem).Sum(or => or.Amount),
                        TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
                        Status = statusFromDate(order)
                    };
@@ -108,7 +107,7 @@ internal class Order : BlApi.IOrder
         //               DeliveryDate = order.DeliveryDate,
         //               Status = statusFromDate(order),
         //               TotalPrice = listOrderItems.Sum(orderItem => orderItem.Amount * orderItem.Price),
-        //               OrdersItemsList = getBOlistOfOrderItem(order.Id)
+        //               OrdersItemsList = getBOlistOfOrderItem()
         //           };
         //}
         //catch (DO.NotFoundExceptions str)
@@ -313,8 +312,7 @@ internal class Order : BlApi.IOrder
             listBo.Add(new BO.OrderItem
             {
                 Id = doOrderItem.Id,
-                //NameProduct = Dal?.Product?.Get(((DO.OrderItem)doOrderItem!).ProductId).Name,
-                NameProduct = Dal?.Product?.Get(doOrderItem.ProductId).Value.Name,
+               NameProduct = Dal?.Product?.Get(doOrderItem.ProductId).Value.Name,/////////////
                 ProductId = doOrderItem.ProductId,
                 Price = doOrderItem.Price,
                 AmountInOrder = doOrderItem.Amount,

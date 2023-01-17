@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-        <!--DataContext="{Binding Product,RelativeSource={RelativeSource Self},Mode=TwoWay}">-->
+    <!--DataContext="{Binding Product,RelativeSource={RelativeSource Self},Mode=TwoWay}">-->
 
 
 
@@ -43,6 +43,7 @@
         <TextBox x:Name="txtInStock" Text="{Binding Product.InStock,Mode=TwoWay}" HorizontalAlignment="Left" Margin="204,181,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" PreviewKeyDown="TextBox_OnlyNumbers_PreviewKeyDown"/>
         <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="124,231,0,0" VerticalAlignment="Top"  Click="AddButton_Click" Height="24" Width="99"/>
         <Button x:Name="UpdateButton"  Content="Update" Margin="113,282,0,0" VerticalAlignment="Top"  Click="UpdateButton_Click" Height="29" Width="110" HorizontalAlignment="Left"/>
+        <Button x:Name="DeleteProduct" Content="Delete" HorizontalAlignment="Left" Margin="228,285,0,0" VerticalAlignment="Top" Height="26" Width="113" Click="DeleteProduct_Click"/>
 
 
     </Grid>

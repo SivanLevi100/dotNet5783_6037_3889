@@ -19,7 +19,7 @@ public struct ImportentNumbers
 internal class Order : IOrder
 {
     const string o_orders = "orders"; //XML Serializer
-    private readonly string configPath = "Config.xml";
+    private readonly string configPath = "Config";
 
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? filter = null)
     {

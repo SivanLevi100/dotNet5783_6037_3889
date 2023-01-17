@@ -1,22 +1,7 @@
-﻿using BO;
-using DO;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL.Product;
 
@@ -45,6 +30,7 @@ public partial class ProductWindow : Window
         //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category)); /////////////
         AddButton.Visibility = Visibility.Visible; ////////////////
         UpdateButton.Visibility = Visibility.Hidden; //////////////
+        DeleteProduct.Visibility = Visibility.Hidden;
     }
 
     //Constructor for the product update window
@@ -58,6 +44,7 @@ public partial class ProductWindow : Window
             //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
             AddButton.Visibility = Visibility.Hidden;
             UpdateButton.Visibility = Visibility.Visible;
+            DeleteProduct.Visibility = Visibility.Visible;
             txtId.IsEnabled = false;//This field cannot be changed
 
         }
@@ -146,6 +133,42 @@ public partial class ProductWindow : Window
 
     }
 
+    private void DeleteProduct_Click(object sender, RoutedEventArgs e)
+    {
+        BO.Product? product = new BO.Product();
+        product.Id = int.Parse(txtId.Text);
+        //product.Name = txtName.Text;
+        //product.Price = double.Parse(txtPrice.Text);
+        //product.InStock = int.Parse(txtInStock.Text);
+        //product.Category = (BO.Category)ComboBoxCategory.SelectedItem;
+        if (MessageBox.Show("Are you sure you want to remove the product from the order?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+        {
+            try
+            {
+                bl.Product.Delete(product.Id);
+            }
+            catch (BO.NotExiestsExceptions str)
+            {
+                MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                Close();
+                return;
+            }
+
+        }
+        else
+        {
+            MessageBox.Show("The item has not been removed from the cart", "Item not removed");
+
+        }
+        Close();
+        MessageBox.Show("The product has been deleted");
+        new ProductListWindow().Show();
+
+
+    }
+
+
+
     //Function to check input only numbers
     private void TextBox_OnlyNumbers_PreviewKeyDown(object sender, KeyEventArgs e)//הכנסת רק מספרים לתיבת הטקסט
     {
@@ -171,6 +194,5 @@ public partial class ProductWindow : Window
         e.Handled = true; //ignore this key. mark event as handled, will not be routed to other
         return;
     }
-
 
 }

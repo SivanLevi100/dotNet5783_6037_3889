@@ -9,8 +9,9 @@ using System.Xml.Serialization;
 namespace Dal;
 static class XMLTools
 {
+    static string? s_dir = Directory.GetParent(System.IO.Directory.GetCurrentDirectory())?.FullName + @"\xml\";
 
-    const string s_dir = @"..\xml\";
+    //const string s_dir = @"..\xml\";
     static XMLTools()
     {
         if (!Directory.Exists(s_dir))

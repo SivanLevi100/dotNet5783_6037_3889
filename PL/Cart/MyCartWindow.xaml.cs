@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using BO;
-using DO;
 using PL.Order;
 using System;
 using System.Collections.Generic;
@@ -77,7 +76,7 @@ public partial class MyCartWindow : Window
             TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
 
 
-            MessageBox.Show("The Product added to cart");
+           // MessageBox.Show("The Product added to cart");
         }
         catch (BO.NotExiestsExceptions ex)
         {
@@ -96,7 +95,7 @@ public partial class MyCartWindow : Window
             
             TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
 
-            MessageBox.Show("The Item removed from cart");
+            //MessageBox.Show("The Item removed from cart");
         }
         catch (BO.NotExiestsExceptions ex)
         {
@@ -110,7 +109,7 @@ public partial class MyCartWindow : Window
         {
             BO.OrderItem orderItem = (BO.OrderItem)((sender as Button)!.DataContext!);
             CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, orderItem.ProductId, (orderItem.AmountInOrder)*(-1));
-            MessageBox.Show("The Product removed from cart");
+           // MessageBox.Show("The Product removed from cart");
         }
         catch (BO.NotExiestsExceptions ex)
         {

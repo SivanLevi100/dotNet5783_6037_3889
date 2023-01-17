@@ -82,7 +82,7 @@ public partial class CatalogProductsWindow : Window
             myCart = bl.Cart.AddProduct(myCart, productItem.IdProduct);
             var temp = bl.Product.GetProductItemList(myCart);
             ProductItems = temp == null ? new() : new(temp);
-            MessageBox.Show("The Product added to cart");
+            //MessageBox.Show("The Product added to cart");
         }
         catch (BO.NotExiestsExceptions ex)
         {
