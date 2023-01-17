@@ -101,7 +101,9 @@
         <TextBox Text="{Binding Path=Order.DeliveryDate}" Grid.Row="7" Grid.Column="1" />
         <TextBox Text="{Binding Path=Order.Status}" Grid.Row="1" Grid.Column="3"/>
         <TextBox Text="{Binding Path=Order.TotalPrice}" Grid.Row="2" Grid.Column="3"/>
-        <DataGrid Grid.Column="3" Grid.Row="3" ItemsSource="{Binding Path=Order.OrdersItemsList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="14,0,34,10" Grid.RowSpan="3" SelectionChanged="DataGrid_SelectionChanged"/>
+        
+        <!--<DataGrid Grid.Column="3" Grid.Row="3" ItemsSource="{Binding Path=Order.OrdersItemsList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="14,0,34,10" Grid.RowSpan="3" SelectionChanged="DataGrid_SelectionChanged"/>-->
+        
         <Button Content="Update Delivery date" Grid.Row="8" Grid.Column="3" Click="UpdateDelivery_Click" Margin="14,3,0,0"/>
         <Button Content="Update Shiping date" Margin="179,2,0,0" Grid.Row="8" Grid.Column="3" Click="UpdateShipingButton_Click"  />
         <Button Content="Add Product for order" Margin="97,4,0,0" Grid.Row="7" Grid.Column="3" Click="AddProductForOrderButton_Click" />
@@ -114,6 +116,55 @@
                 </StackPanel>
             </Button.Content>
         </Button>
+        <ListView Grid.Column="3" Grid.Row="3" ItemsSource="{Binding Path=Order.OrdersItemsList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,10,10" Grid.RowSpan="3" MouseDoubleClick="ListView_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="Auto" Header="Id">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding Id}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Id Product">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding ProductId}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Name Product">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding NameProduct}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding Price}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Amount">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding AmountInOrder}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Total Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding TotalPriceOfItem}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                   
+                </GridView>
+            </ListView.View>
+        </ListView>
 
 
 

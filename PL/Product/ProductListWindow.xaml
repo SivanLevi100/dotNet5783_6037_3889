@@ -7,6 +7,25 @@
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Width" Value="110" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="Background" Value="LightPink" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="17" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+    </Window.Resources>
+
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -23,7 +42,7 @@
             <ComboBox Name="CatgegorySelector" Text="{Binding Category}"  SelectedItem="{Binding Category}" ItemsSource="{Binding Categories}" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1"  SelectionChanged="CatgegorySelector_SelectionChanged"/>
 
         </Grid>
-        <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="ButtonAddNewProduct_Click"/>
+        <Button Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="0,5,5,0" Padding="5" Click="ButtonAddNewProduct_Click" Height="45" Width="144"/>
         <ListView x:Name="ProductListview" ItemsSource="{Binding ProductList}" MouseDoubleClick="ListView_DoubleClick" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>

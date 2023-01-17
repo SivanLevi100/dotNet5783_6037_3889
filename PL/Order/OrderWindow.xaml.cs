@@ -1,4 +1,6 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
+using PL.Cart;
 using PL.Product;
 using System;
 using System.Collections.Generic;
@@ -121,6 +123,18 @@ public partial class OrderWindow : Window
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
         new OrderListWindow().Show();
+        Close();
+    }
+
+    private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        ListView listView = sender as ListView;
+        BO.OrderItem orderItem = new BO.OrderItem();
+        orderItem = listView.SelectedItem as BO.OrderItem;
+        new OrderItemWindow(orderItem.ProductId).Show();
+
+        //Order = bl?.Order.GetOrderDetails(Order.Id);
+
         Close();
     }
 }

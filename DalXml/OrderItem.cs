@@ -13,7 +13,9 @@ internal class OrderItem : IOrderItem
 {
     const string o_orderItems = "orderItems"; //XML Serializer
 
-    private readonly string configPath = "Config";
+    // private readonly string configPath = "Config";
+     string configPath = "Config";
+
 
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? filter = null)
     {
@@ -49,7 +51,7 @@ internal class OrderItem : IOrderItem
 
         listOrderItems.Add(orderItem);
 
-        XMLTools.SaveListToXMLSerializer(runningList, configPath);
+        XMLTools.SaveListToXMLSerializer1(runningList, configPath);
         XMLTools.SaveListToXMLSerializer(listOrderItems, o_orderItems);
 
         return orderItem.Id;

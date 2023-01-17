@@ -160,8 +160,8 @@ public partial class ProductWindow : Window
             MessageBox.Show("The item has not been removed from the cart", "Item not removed");
 
         }
-        Close();
         MessageBox.Show("The product has been deleted");
+        Close();
         new ProductListWindow().Show();
 
 

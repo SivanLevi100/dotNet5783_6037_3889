@@ -88,7 +88,7 @@ static class XMLTools
             throw new Exception($"fail to create xml file: {filePath}", ex);
         }
     }
-    public static void SaveListToXMLSerializer<T>(List<T> list, string entity) where T : struct
+    public static void SaveListToXMLSerializer1<T>(List<T> list, string entity) where T : struct
     {
         string filePath = $"{s_dir + entity}.xml";
         try
@@ -96,7 +96,7 @@ static class XMLTools
             using FileStream file = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
             //using XmlWriter writer = XmlWriter.Create(file, new XmlWriterSettings() { Indent = true });
 
-            XmlSerializer serializer = new(typeof(List<T?>));
+            XmlSerializer serializer = new(typeof(List<T>));
             //if (s_writing)
             //    serializer.Serialize(writer, list);
             //else

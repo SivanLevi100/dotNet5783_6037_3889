@@ -9,9 +9,6 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <!--DataContext="{Binding Product,RelativeSource={RelativeSource Self},Mode=TwoWay}">-->
 
-
-
-
     <Window.Resources>
         <Style TargetType="local:ProductWindow">
             <Setter Property="Background" Value="AliceBlue" />
@@ -28,6 +25,7 @@
                 </Style>
             </Style.Resources>
         </Style>
+        
     </Window.Resources>
 
     <Grid>

@@ -19,7 +19,8 @@ public struct ImportentNumbers
 internal class Order : IOrder
 {
     const string o_orders = "orders"; //XML Serializer
-    private readonly string configPath = "Config";
+    //private readonly string configPath = "Config";
+     string configPath = "Config";
 
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? filter = null)
     {
@@ -54,10 +55,11 @@ internal class Order : IOrder
 
         listOrders.Add(order);
 
-        XMLTools.SaveListToXMLSerializer(runningList, configPath);
+        XMLTools.SaveListToXMLSerializer1(runningList, configPath);
         XMLTools.SaveListToXMLSerializer(listOrders, o_orders);
 
         return order.Id;
+        //return (int)runningNum.numberSaved;
 
     }
 

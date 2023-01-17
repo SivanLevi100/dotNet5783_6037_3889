@@ -81,8 +81,10 @@ internal class Product : IProduct
             Price = (double)product.Element("Price")!,
             InStock = (int)product.Element("InStock")!
         };
-    }
 
+        //(double)product.Element("Price")!,
+       // double.Parse(product.Element("Price").Value),
+    }
     static IEnumerable<XElement> createProductElement(DO.Product product)
     {
         yield return new XElement("Id", product.Id);
@@ -91,6 +93,10 @@ internal class Product : IProduct
             yield return new XElement("Name", product.Name);
         if (product.Category is not null)
             yield return new XElement("Category", product.Category);
+      
+        yield return new XElement("Price", product.Price);
+        yield return new XElement("InStock", product.InStock);
+
         //if (product.Price is not null)
         //    yield return new XElement("Price", product.Price);
         //if (product.InStock is not null)
