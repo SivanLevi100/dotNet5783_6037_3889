@@ -8,8 +8,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalList", "DalList\DalList.csproj", "{81D59A82-2756-4BD0-AAA7-4DAC93FC6A6F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.csproj", "{10F01F02-1345-4FEE-80DF-ADA6DD307188}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CE5C193A-AA0A-451F-AC4C-67DD01B4D24C} = {CE5C193A-AA0A-451F-AC4C-67DD01B4D24C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{6B3CBB4C-C97E-496A-B2D2-B6BC9469885A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CE5C193A-AA0A-451F-AC4C-67DD01B4D24C} = {CE5C193A-AA0A-451F-AC4C-67DD01B4D24C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "BlTest\BlTest.csproj", "{F7D107FF-4DA3-4FD0-B173-EC1F786E2BDD}"
 EndProject
