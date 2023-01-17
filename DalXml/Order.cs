@@ -80,12 +80,11 @@ internal class Order : IOrder
         Add(order);
     }
 
-
     public DO.Order GetF(Func<DO.Order?, bool>? filter)///////////////////???
     {
         throw new NotFoundExceptions("The order id is not exist in List");
     }
 
-
+    //8/8m///
 
 }
