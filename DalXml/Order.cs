@@ -20,7 +20,7 @@ internal class Order : IOrder
 {
     const string o_orders = "orders"; //XML Serializer
     //private readonly string configPath = "Config";
-     string configPath = "Config";
+     string configPath = "config";
 
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? filter = null)
     {
@@ -79,6 +79,19 @@ internal class Order : IOrder
     public void Update(DO.Order order) 
     {
         Delete(order.Id);
+
+        List<ImportentNumbers> runningList = XMLTools.LoadListFromXMLSerializer1<ImportentNumbers>(configPath);
+
+        ImportentNumbers runningNum = (from number in runningList
+                                       where (number.typeOfnumber == "Number Runing Order")
+                                       select number).FirstOrDefault();
+        runningList.Remove(runningNum);
+
+        runningNum.numberSaved--;
+        runningList.Add(runningNum);
+
+        XMLTools.SaveListToXMLSerializer1(runningList, configPath);
+
         Add(order);
     }
 
