@@ -8,13 +8,6 @@
     <InStock>34</InStock>
   </Product>
   <Product>
-    <Id>253276</Id>
-    <Name>TADIRAN Air-Conditioner </Name>
-    <Category>Cooling</Category>
-    <Price>3200</Price>
-    <InStock>34</InStock>
-  </Product>
-  <Product>
     <Id>253558</Id>
     <Name>Electra Washing machine</Name>
     <Category>Cooling</Category>
@@ -27,13 +20,6 @@
     <Category>Computer</Category>
     <Price>3000</Price>
     <InStock>41</InStock>
-  </Product>
-  <Product>
-    <Id>253478</Id>
-    <Name>Bosch Dryer</Name>
-    <Category>Cleaning</Category>
-    <Price>2560</Price>
-    <InStock>29</InStock>
   </Product>
   <Product>
     <Id>123456</Id>
@@ -50,13 +36,6 @@
     <InStock>24</InStock>
   </Product>
   <Product>
-    <Id>194468</Id>
-    <Name>kenwood mixer</Name>
-    <Category>Kitchen</Category>
-    <Price>2560</Price>
-    <InStock>28</InStock>
-  </Product>
-  <Product>
     <Id>123457</Id>
     <Name>FUJICOM freezer</Name>
     <Category>Refrigerator</Category>
@@ -64,10 +43,31 @@
     <InStock>14</InStock>
   </Product>
   <Product>
+    <Id>253478</Id>
+    <Name>Bosch Dryer</Name>
+    <Category>Cleaning</Category>
+    <Price>2560</Price>
+    <InStock>28</InStock>
+  </Product>
+  <Product>
+    <Id>253276</Id>
+    <Name>TADIRAN Air-Conditioner </Name>
+    <Category>Cooling</Category>
+    <Price>3200</Price>
+    <InStock>33</InStock>
+  </Product>
+  <Product>
+    <Id>194468</Id>
+    <Name>kenwood mixer</Name>
+    <Category>Kitchen</Category>
+    <Price>2560</Price>
+    <InStock>27</InStock>
+  </Product>
+  <Product>
     <Id>123468</Id>
     <Name>Blomberg oven</Name>
     <Category>Kitchen</Category>
     <Price>3285</Price>
-    <InStock>32</InStock>
+    <InStock>30</InStock>
   </Product>
 </products>
