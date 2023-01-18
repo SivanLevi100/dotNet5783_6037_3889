@@ -15,20 +15,6 @@
     <InStock>34</InStock>
   </Product>
   <Product>
-    <Id>123457</Id>
-    <Name>FUJICOM freezer</Name>
-    <Category>Refrigerator</Category>
-    <Price>2500</Price>
-    <InStock>16</InStock>
-  </Product>
-  <Product>
-    <Id>123468</Id>
-    <Name>Blomberg oven</Name>
-    <Category>Kitchen</Category>
-    <Price>3285</Price>
-    <InStock>34</InStock>
-  </Product>
-  <Product>
     <Id>253558</Id>
     <Name>Electra Washing machine</Name>
     <Category>Cooling</Category>
@@ -69,5 +55,19 @@
     <Category>Kitchen</Category>
     <Price>2560</Price>
     <InStock>28</InStock>
+  </Product>
+  <Product>
+    <Id>123457</Id>
+    <Name>FUJICOM freezer</Name>
+    <Category>Refrigerator</Category>
+    <Price>2500</Price>
+    <InStock>14</InStock>
+  </Product>
+  <Product>
+    <Id>123468</Id>
+    <Name>Blomberg oven</Name>
+    <Category>Kitchen</Category>
+    <Price>3285</Price>
+    <InStock>32</InStock>
   </Product>
 </products>

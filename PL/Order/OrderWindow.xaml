@@ -94,7 +94,7 @@
         <Label Content="OrdersItem List:" Grid.Row="3" Grid.Column="2" Height="26" Width="110" Grid.ColumnSpan="2" />
         <TextBox x:Name="idtextttt" Text="{Binding Path=Order.Id}" Grid.Row="1" Grid.Column="1" />
         <TextBox Text="{Binding Path=Order.CustomerName}" Grid.Row="2" Grid.Column="1" />
-        <TextBox Text="{Binding Path=Order.CustomerEmail}" Grid.Row="3" Grid.Column="1"  />
+        <TextBox Text="{Binding Path=Order.CustomerEmail}" Grid.Row="3" Grid.Column="1" Margin="5,5,0,0" Width="143"  />
         <TextBox Text="{Binding Path=Order.CustomerAdress}" Grid.Row="4" Grid.Column="1" />
         <TextBox Text="{Binding Path=Order.OrderDate}" Grid.Row="5" Grid.Column="1" />
         <TextBox Text="{Binding Path=Order.ShipDate}" Grid.Row="6" Grid.Column="1" />

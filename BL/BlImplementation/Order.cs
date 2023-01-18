@@ -230,8 +230,7 @@ internal class Order : BlApi.IOrder
     }
 
     //A function that adds a product to an already existing order
-    //וגם הוספת פריט או הורדת פריט,פונקציה המוסיפה מוצר להזמנה שכבר קיימת
-    //Amount = כמה רוצה להוסיף או להוריד
+    //Amount = How much do you want to add or remove
     public BO.Order AddItemForOrder(BO.Order order, int idProduct, int Amount)
     {
         if(order.ShipDate!=null && order.DeliveryDate!=null) //לא ניתן להוסיף מוצרים למשלוח שיצא לדרך או הגיע ללקוח
@@ -254,7 +253,7 @@ internal class Order : BlApi.IOrder
         BO.OrderItem orderItemBo;
         int numberOrderItem;
         orderItemBo = order.OrdersItemsList.FirstOrDefault(orderItem => orderItem.ProductId == idProduct);//המוצר כבר קיים ברשימה אז נשנה את הכמות
-        if (orderItemBo == null)//אם המוצר לא קיים
+        if (orderItemBo == null) // אם המוצר לא קיים בהזמנה
         {
             DO.OrderItem doOrderItem = new DO.OrderItem
             {
@@ -289,10 +288,14 @@ internal class Order : BlApi.IOrder
         }
         else //פריט בהזמנה נמצא ורוצים להוסיף עוד ממנו
         {
+            DO.OrderItem item = Dal?.OrderItem.Get(orderItemBo.Id)?? throw new BO.NotExiestsExceptions("OrderIte is null");
+
             orderItemBo.AmountInOrder += Amount;
             doProduct.InStock = Amount > 0 ? doProduct.InStock - Amount : doProduct.InStock + (-1 * Amount);
             order.TotalPrice += orderItemBo.Price * Amount;
             Dal.Product.Update(doProduct);
+
+            Dal.OrderItem.Update(item);
 
         }
         return order;
