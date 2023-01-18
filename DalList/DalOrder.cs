@@ -36,7 +36,7 @@ internal class DalOrder:IOrder
           ?? throw new NotFoundExceptions("The order id is not exist in List");
     }
 
-    public Order GetF(Func<Order?, bool>? filter)
+    public Order? GetF(Func<Order?, bool>? filter)
     {
         return _dstaSource1.OrderList?.FirstOrDefault(order => filter(order))
           ?? throw new NotFoundExceptions("The order id is not exist in List");

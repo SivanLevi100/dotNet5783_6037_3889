@@ -61,9 +61,14 @@ internal class Product : IProduct
     }
 
 
-    public DO.Product GetF(Func<DO.Product?, bool>? filter)////////לשאול?
+    public DO.Product? GetF(Func<DO.Product?, bool>? filter)
     {
-        throw new NotFoundExceptions("The product");
+        var productsList = XMLTools.LoadListFromXMLSerializer<DO.Product>(p_products)!;
+        if (productsList.FirstOrDefault(filter) == null)
+        {
+            throw new Exception("The Product not Exsits");
+        }
+        return productsList.FirstOrDefault(filter);
 
        // return (DO.Product)getProduct(XMLTools.LoadListFromXMLElement(p_products)?.Elements()
        //.FirstOrDefault(st => st.ToIntNullable("Id") == id);
@@ -97,10 +102,6 @@ internal class Product : IProduct
         yield return new XElement("Price", product.Price);
         yield return new XElement("InStock", product.InStock);
 
-        //if (product.Price is not null)
-        //    yield return new XElement("Price", product.Price);
-        //if (product.InStock is not null)
-        //    yield return new XElement("InStock", product.InStock);
     }
 
 

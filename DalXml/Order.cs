@@ -95,11 +95,17 @@ internal class Order : IOrder
         Add(order);
     }
 
-    public DO.Order GetF(Func<DO.Order?, bool>? filter)///////////////////???
+    public DO.Order? GetF(Func<DO.Order?, bool>? filter)
     {
-        throw new NotFoundExceptions("The order id is not exist in List");
+        var ordersList = XMLTools.LoadListFromXMLSerializer<DO.Order>(o_orders)!;
+        if (ordersList.FirstOrDefault(filter) == null)
+        {
+            throw new Exception("The order id is not exist in List");
+        }
+        return ordersList.FirstOrDefault(filter);
+
+
     }
 
-    ////
 
 }

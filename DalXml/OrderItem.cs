@@ -75,9 +75,14 @@ internal class OrderItem : IOrderItem
     }
 
 
-    public DO.OrderItem GetF(Func<DO.OrderItem?, bool>? filter)///////////////////???
+    public DO.OrderItem? GetF(Func<DO.OrderItem?, bool>? filter)
     {
-        throw new NotFoundExceptions("The orderItem id is not exist in List");
+        var orderItemsList = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(o_orderItems)!;
+        if (orderItemsList.FirstOrDefault(filter) == null)
+        {
+            throw new Exception("The orderItem id is not exist in List");
+        }
+        return orderItemsList.FirstOrDefault(filter);
     }
 
 

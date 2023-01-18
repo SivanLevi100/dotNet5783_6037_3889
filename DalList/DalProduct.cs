@@ -35,7 +35,7 @@ internal class DalProduct : IProduct
             ?? throw new NotFoundExceptions("The product id is not exist in List");
     }
 
-    public Product GetF(Func<Product?, bool>? filter)
+    public Product? GetF(Func<Product?, bool>? filter)
     {
         return ds.ProductList?.FirstOrDefault(product => filter(product))
            ?? throw new NotFoundExceptions("The product id is not exist in List");
