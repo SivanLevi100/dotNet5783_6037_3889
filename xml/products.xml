@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <products>
   <Product>
-    <Id>258876</Id>
-    <Name>Dishwasher Bosch</Name>
-    <Category>Cleaning</Category>
-    <Price>3200</Price>
-    <InStock>34</InStock>
-  </Product>
-  <Product>
     <Id>253558</Id>
     <Name>Electra Washing machine</Name>
     <Category>Cooling</Category>
@@ -69,5 +62,12 @@
     <Category>Kitchen</Category>
     <Price>3285</Price>
     <InStock>30</InStock>
+  </Product>
+  <Product>
+    <Id>258876</Id>
+    <Name>Dishwasher Bosch</Name>
+    <Category>Cleaning</Category>
+    <Price>3200</Price>
+    <InStock>33</InStock>
   </Product>
 </products>
