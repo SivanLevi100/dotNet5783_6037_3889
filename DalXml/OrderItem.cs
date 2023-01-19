@@ -70,8 +70,15 @@ internal class OrderItem : IOrderItem
 
     public void Update(DO.OrderItem orderItem)
     {
+        int id = orderItem.Id;
         Delete(orderItem.Id);
-        Add(orderItem);
+        orderItem.Id = id;
+        var orderItemList = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(o_orderItems);
+        if (orderItemList.Exists(item => item.Value.Id == orderItem.Id))
+            throw new Exception("ID already exist");
+        orderItemList.Add(orderItem);
+        XMLTools.SaveListToXMLSerializer(orderItemList, o_orderItems);
+
     }
 
 

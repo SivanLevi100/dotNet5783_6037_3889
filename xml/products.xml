@@ -1,73 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <products>
   <Product>
+    <Id>193568</Id>
+    <Name>Samsung TV 75</Name>
+    <Category>Computer</Category>
+    <Price>3800</Price>
+    <InStock>70</InStock>
+  </Product>
+  <Product>
     <Id>253558</Id>
     <Name>Electra Washing machine</Name>
     <Category>Cooling</Category>
     <Price>2560</Price>
-    <InStock>28</InStock>
-  </Product>
-  <Product>
-    <Id>173558</Id>
-    <Name>Hp Computer Touch</Name>
-    <Category>Computer</Category>
-    <Price>3000</Price>
-    <InStock>41</InStock>
-  </Product>
-  <Product>
-    <Id>123456</Id>
-    <Name>SHARP refrigerator </Name>
-    <Category>Refrigerator</Category>
-    <Price>2000</Price>
     <InStock>0</InStock>
-  </Product>
-  <Product>
-    <Id>253478</Id>
-    <Name>Bosch Dryer</Name>
-    <Category>Cleaning</Category>
-    <Price>2560</Price>
-    <InStock>28</InStock>
   </Product>
   <Product>
     <Id>253276</Id>
     <Name>TADIRAN Air-Conditioner </Name>
     <Category>Cooling</Category>
     <Price>3200</Price>
-    <InStock>33</InStock>
-  </Product>
-  <Product>
-    <Id>258876</Id>
-    <Name>Dishwasher Bosch</Name>
-    <Category>Cleaning</Category>
-    <Price>3200</Price>
-    <InStock>33</InStock>
-  </Product>
-  <Product>
-    <Id>194468</Id>
-    <Name>kenwood mixer</Name>
-    <Category>Kitchen</Category>
-    <Price>2560</Price>
-    <InStock>26</InStock>
-  </Product>
-  <Product>
-    <Id>193568</Id>
-    <Name>Samsung TV 75</Name>
-    <Category>Computer</Category>
-    <Price>3800</Price>
-    <InStock>20</InStock>
+    <InStock>96</InStock>
   </Product>
   <Product>
     <Id>123457</Id>
     <Name>FUJICOM freezer</Name>
     <Category>Refrigerator</Category>
     <Price>2500</Price>
-    <InStock>12</InStock>
+    <InStock>77</InStock>
+  </Product>
+  <Product>
+    <Id>194468</Id>
+    <Name>kenwood mixer</Name>
+    <Category>Kitchen</Category>
+    <Price>2560</Price>
+    <InStock>48</InStock>
   </Product>
   <Product>
     <Id>123468</Id>
     <Name>Blomberg oven</Name>
     <Category>Kitchen</Category>
     <Price>3285</Price>
-    <InStock>31</InStock>
+    <InStock>57</InStock>
+  </Product>
+  <Product>
+    <Id>173558</Id>
+    <Name>Hp Computer Touch</Name>
+    <Category>Computer</Category>
+    <Price>3000</Price>
+    <InStock>57</InStock>
+  </Product>
+  <Product>
+    <Id>258876</Id>
+    <Name>Dishwasher Bosch</Name>
+    <Category>Cleaning</Category>
+    <Price>3200</Price>
+    <InStock>61</InStock>
+  </Product>
+  <Product>
+    <Id>253478</Id>
+    <Name>Bosch Dryer</Name>
+    <Category>Cleaning</Category>
+    <Price>2560</Price>
+    <InStock>70</InStock>
+  </Product>
+  <Product>
+    <Id>123456</Id>
+    <Name>SHARP refrigerator </Name>
+    <Category>Refrigerator</Category>
+    <Price>2000</Price>
+    <InStock>52</InStock>
   </Product>
 </products>

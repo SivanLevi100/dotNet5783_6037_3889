@@ -28,14 +28,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{80E21F30-9F9
 	ProjectSection(SolutionItems) = preProject
 		xml\config.xml = xml\config.xml
 		xml\dal-config.xml = xml\dal-config.xml
-		xml\orderItems.xml = xml\orderItems.xml
-		xml\orders.xml = xml\orders.xml
 		xml\products.xml = xml\products.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{CE5C193A-AA0A-451F-AC4C-67DD01B4D24C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{965A8C06-91CC-4BF2-A34F-A1FB5B104247}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simulator", "Simulator\Simulator.csproj", "{965A8C06-91CC-4BF2-A34F-A1FB5B104247}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

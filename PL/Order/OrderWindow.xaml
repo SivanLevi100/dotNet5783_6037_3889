@@ -132,7 +132,7 @@
                 </StackPanel>
             </Button.Content>
         </Button>
-        <ListView Grid.Column="3" Grid.Row="3" ItemsSource="{Binding Path=Order.OrdersItemsList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,10,10" Grid.RowSpan="3" MouseDoubleClick="ListView_MouseDoubleClick">
+        <ListView Grid.Column="3" Grid.Row="3" ItemsSource="{Binding Path=Order.OrdersItemsList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,10,10" Grid.RowSpan="3">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="Auto" Header="Id">
@@ -180,14 +180,14 @@
                     <GridViewColumn Width="Auto" Header="Add">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="+" Style="{StaticResource AddAndRemoveStyle}" Click="AddItemButton_Click"/>
+                                <Button Content="+" Style="{StaticResource AddAndRemoveStyle}" Click="AddItemInListViewButton_Click"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="Auto" Header="Remove">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="-" Style="{StaticResource AddAndRemoveStyle}" Click="RemoveItemButton_Click" />
+                                <Button Content="-" Style="{StaticResource AddAndRemoveStyle}" Click="RemoveItemInListViewButton_Click" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

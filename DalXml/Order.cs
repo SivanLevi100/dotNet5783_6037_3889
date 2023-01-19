@@ -76,23 +76,17 @@ internal class Order : IOrder
         XMLTools.SaveListToXMLSerializer(listOrders, o_orders);
     }
 
-    public void Update(DO.Order order) 
+    public void Update(DO.Order order)
     {
+        int id=order.Id;
         Delete(order.Id);
+        order.Id = id;
+        var orderList = XMLTools.LoadListFromXMLSerializer<DO.Order>(o_orders);
+        if (orderList.Exists(item => item.Value.Id == order.Id))
+            throw new Exception("ID already exist");
+        orderList.Add(order);
+        XMLTools.SaveListToXMLSerializer(orderList, o_orders);
 
-        List<ImportentNumbers> runningList = XMLTools.LoadListFromXMLSerializer1<ImportentNumbers>(configPath);
-
-        ImportentNumbers runningNum = (from number in runningList
-                                       where (number.typeOfnumber == "Number Runing Order")
-                                       select number).FirstOrDefault();
-        runningList.Remove(runningNum);
-
-        runningNum.numberSaved--;
-        runningList.Add(runningNum);
-
-        XMLTools.SaveListToXMLSerializer1(runningList, configPath);
-
-        Add(order);
     }
 
     public DO.Order? GetF(Func<DO.Order?, bool>? filter)
