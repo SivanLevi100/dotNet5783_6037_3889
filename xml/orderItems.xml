@@ -36,13 +36,6 @@
     <Amount>1</Amount>
   </OrderItem>
   <OrderItem>
-    <Id>100006</Id>
-    <ProductId>123457</ProductId>
-    <OrderId>100002</OrderId>
-    <Price>2500</Price>
-    <Amount>2</Amount>
-  </OrderItem>
-  <OrderItem>
     <Id>100008</Id>
     <ProductId>123468</ProductId>
     <OrderId>100004</OrderId>
@@ -78,34 +71,6 @@
     <Amount>1</Amount>
   </OrderItem>
   <OrderItem>
-    <Id>100013</Id>
-    <ProductId>193568</ProductId>
-    <OrderId>100006</OrderId>
-    <Price>3800</Price>
-    <Amount>1</Amount>
-  </OrderItem>
-  <OrderItem>
-    <Id>100014</Id>
-    <ProductId>194468</ProductId>
-    <OrderId>100006</OrderId>
-    <Price>2560</Price>
-    <Amount>1</Amount>
-  </OrderItem>
-  <OrderItem>
-    <Id>100015</Id>
-    <ProductId>123457</ProductId>
-    <OrderId>100003</OrderId>
-    <Price>2500</Price>
-    <Amount>1</Amount>
-  </OrderItem>
-  <OrderItem>
-    <Id>100016</Id>
-    <ProductId>123468</ProductId>
-    <OrderId>100003</OrderId>
-    <Price>3285</Price>
-    <Amount>2</Amount>
-  </OrderItem>
-  <OrderItem>
     <Id>100017</Id>
     <ProductId>253478</ProductId>
     <OrderId>100007</OrderId>
@@ -138,6 +103,41 @@
     <ProductId>258876</ProductId>
     <OrderId>100003</OrderId>
     <Price>3200</Price>
+    <Amount>1</Amount>
+  </OrderItem>
+  <OrderItem>
+    <Id>100023</Id>
+    <ProductId>123457</ProductId>
+    <OrderId>100002</OrderId>
+    <Price>2500</Price>
+    <Amount>3</Amount>
+  </OrderItem>
+  <OrderItem>
+    <Id>100024</Id>
+    <ProductId>194468</ProductId>
+    <OrderId>100006</OrderId>
+    <Price>2560</Price>
+    <Amount>2</Amount>
+  </OrderItem>
+  <OrderItem>
+    <Id>100026</Id>
+    <ProductId>193568</ProductId>
+    <OrderId>100006</OrderId>
+    <Price>3800</Price>
+    <Amount>3</Amount>
+  </OrderItem>
+  <OrderItem>
+    <Id>100027</Id>
+    <ProductId>123457</ProductId>
+    <OrderId>100003</OrderId>
+    <Price>2500</Price>
+    <Amount>2</Amount>
+  </OrderItem>
+  <OrderItem>
+    <Id>100028</Id>
+    <ProductId>123468</ProductId>
+    <OrderId>100003</OrderId>
+    <Price>3285</Price>
     <Amount>1</Amount>
   </OrderItem>
 </ArrayOfOrderItem>

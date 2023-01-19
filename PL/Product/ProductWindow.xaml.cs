@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -195,4 +196,9 @@ public partial class ProductWindow : Window
         return;
     }
 
+    private void BackButton_Click(object sender, RoutedEventArgs e)
+    {
+        new ProductListWindow().Show();
+        Close();
+    }
 }

@@ -46,35 +46,35 @@
         <ListView x:Name="ProductListview" ItemsSource="{Binding ProductList}" MouseDoubleClick="ListView_DoubleClick" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn>
-                        <!--Width="Auto" Header="ID">
+                    <GridViewColumn Width="Auto" Header="Id">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="29,-1" Text="{Binding ID}" TextAlignment="Right" Padding="2"/>
+                                <TextBlock Margin="-5,-1" Text="{Binding IdProduct}" TextAlignment="Center" Padding="5"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Width="Auto" Header="Name">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Margin="20,-1" Text="{Binding Name}" TextAlignment="Center" Padding="2"/>
+                                <TextBlock Margin="-5,-1" Text="{Binding Name}" TextAlignment="Center" Padding="5"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Category">
+                    <GridViewColumn Width="Auto" Header="Catgeory">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="10,-1" Text="{Binding Category}" HorizontalContentAlignment="Center" Padding="2"/>
+                                <TextBlock Margin="-5,-1" Text="{Binding Category}" TextAlignment="Center" Padding="5"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="100" Header="Price">
+                    <GridViewColumn Width="Auto" Header="Price">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Margin="29,-1" Text="{Binding Price}" HorizontalContentAlignment="Center" Padding="2"/>
+                                <TextBlock Margin="-5,-1" Text="{Binding Price}" TextAlignment="Center" Padding="5"/>
                             </DataTemplate>
-                        </GridViewColumn.CellTemplate>-->
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                   
                 </GridView>
             </ListView.View>
         </ListView>

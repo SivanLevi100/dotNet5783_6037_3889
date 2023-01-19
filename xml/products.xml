@@ -22,20 +22,6 @@
     <InStock>0</InStock>
   </Product>
   <Product>
-    <Id>193568</Id>
-    <Name>Samsung TV 75</Name>
-    <Category>Computer</Category>
-    <Price>3800</Price>
-    <InStock>24</InStock>
-  </Product>
-  <Product>
-    <Id>123457</Id>
-    <Name>FUJICOM freezer</Name>
-    <Category>Refrigerator</Category>
-    <Price>2500</Price>
-    <InStock>14</InStock>
-  </Product>
-  <Product>
     <Id>253478</Id>
     <Name>Bosch Dryer</Name>
     <Category>Cleaning</Category>
@@ -50,24 +36,38 @@
     <InStock>33</InStock>
   </Product>
   <Product>
+    <Id>258876</Id>
+    <Name>Dishwasher Bosch</Name>
+    <Category>Cleaning</Category>
+    <Price>3200</Price>
+    <InStock>33</InStock>
+  </Product>
+  <Product>
     <Id>194468</Id>
     <Name>kenwood mixer</Name>
     <Category>Kitchen</Category>
     <Price>2560</Price>
-    <InStock>27</InStock>
+    <InStock>26</InStock>
+  </Product>
+  <Product>
+    <Id>193568</Id>
+    <Name>Samsung TV 75</Name>
+    <Category>Computer</Category>
+    <Price>3800</Price>
+    <InStock>20</InStock>
+  </Product>
+  <Product>
+    <Id>123457</Id>
+    <Name>FUJICOM freezer</Name>
+    <Category>Refrigerator</Category>
+    <Price>2500</Price>
+    <InStock>12</InStock>
   </Product>
   <Product>
     <Id>123468</Id>
     <Name>Blomberg oven</Name>
     <Category>Kitchen</Category>
     <Price>3285</Price>
-    <InStock>30</InStock>
-  </Product>
-  <Product>
-    <Id>258876</Id>
-    <Name>Dishwasher Bosch</Name>
-    <Category>Cleaning</Category>
-    <Price>3200</Price>
-    <InStock>33</InStock>
+    <InStock>31</InStock>
   </Product>
 </products>

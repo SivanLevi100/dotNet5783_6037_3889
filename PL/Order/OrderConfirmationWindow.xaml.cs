@@ -71,4 +71,10 @@ public partial class OrderConfirmationWindow : Window
         Close();
 
     }
+
+    private void BackButton_Click(object sender, RoutedEventArgs e)
+    {
+        new MyCartWindow().Show();
+        Close();
+    }
 }

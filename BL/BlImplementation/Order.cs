@@ -222,13 +222,13 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.NotExiestsExceptions("The Product is not exiests in the list of product", str);
         }
-        if (doProduct.InStock < Amount) //אין מספיק כמות במלאי של מוצר זה
+        if (doProduct.InStock < Amount) //There is not enough stock for this product
             throw new BO.NotExiestsExceptions("The Product is not exiexts in inStock");
 
         BO.OrderItem orderItemBo;
         int numberOrderItem;
-        orderItemBo = order.OrdersItemsList.FirstOrDefault(orderItem => orderItem.ProductId == idProduct);//המוצר כבר קיים ברשימה אז נשנה את הכמות
-        if (orderItemBo == null) // אם המוצר לא קיים בהזמנה
+        orderItemBo = order.OrdersItemsList.FirstOrDefault(orderItem => orderItem.ProductId == idProduct);//Checking whether the product is available in the order
+        if (orderItemBo == null) // If the product does not exist in the order
         {
             DO.OrderItem doOrderItem = new DO.OrderItem
             {
@@ -261,9 +261,10 @@ internal class Order : BlApi.IOrder
             Dal.Product.Update(doProduct);
            
         }
-        else //פריט בהזמנה נמצא ורוצים להוסיף עוד ממנו
+        else //Order item is on order and want to add more
         {
             DO.OrderItem item = Dal?.OrderItem.Get(orderItemBo.Id)?? throw new BO.NotExiestsExceptions("OrderIte is null");
+            item.Amount += Amount;
 
             orderItemBo.AmountInOrder += Amount;
             doProduct.InStock = Amount > 0 ? doProduct.InStock - Amount : doProduct.InStock + (-1 * Amount);

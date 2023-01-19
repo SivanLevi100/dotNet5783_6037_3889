@@ -25,7 +25,15 @@
                 </Style>
             </Style.Resources>
         </Style>
-        
+        <Style x:Key="back" TargetType="Button" >
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="Background" Value="AliceBlue" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="50" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -43,6 +51,17 @@
         <Button x:Name="UpdateButton"  Content="Update" Margin="113,282,0,0" VerticalAlignment="Top"  Click="UpdateButton_Click" Height="29" Width="110" HorizontalAlignment="Left"/>
         <Button x:Name="DeleteProduct" Content="Delete" HorizontalAlignment="Left" Margin="228,285,0,0" VerticalAlignment="Top" Height="26" Width="113" Click="DeleteProduct_Click"/>
 
+        <Button  HorizontalAlignment="Left" Style="{StaticResource back}" Margin="706,32,0,0" Click="BackButton_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="38" 
+                          Height="34" RenderTransformOrigin="-0.056,0.514" Source="/Cart/חזרה אחורה.jpg" Stretch="Fill" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
+
+
+      
 
     </Grid>
 </Window>

@@ -46,6 +46,15 @@
             </Style.Resources>
         </Style>
 
+        <Style x:Key="back" TargetType="Button" >
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="Background" Value="AliceBlue" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="50" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
 
 
     </Window.Resources>
@@ -67,6 +76,8 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions >
 
+        <Image Grid.Column="2" HorizontalAlignment="Left" Height="142" Grid.RowSpan="4" Grid.Row="1" VerticalAlignment="Top" Width="313" Source="/Order/תודה שקניתם אצלנו.jpg" Margin="70,48,0,0"/>
+
         <Label Content="Customer Name:" Grid.Row="1" Grid.Column="0" Margin="24,12,23,10"/>
         <Label Content="Customer Email:" Grid.Row="2" Grid.Column="0" Margin="24,12,23,10" />
         <Label Content="Customer Adress:" Grid.Row="3"  Grid.Column="0" Margin="24,12,23,10"/>
@@ -76,10 +87,10 @@
         <Button x:Name="OrderConfirmation" Grid.Column="2" Content="Order Confirmation"  Margin="122,38,0,0" Grid.Row="6" Click="OrderConfirmationButton_Click" Height="47" Width="154"/>
         <TextBlock Grid.Column="2" FontSize="25" HorizontalAlignment="Left" Margin="160,25,0,0" Grid.Row="5" TextWrapping="Wrap"  VerticalAlignment="Top" Height="47" Width="95" Grid.RowSpan="2">
             <TextBlock.Style>
-                <Style TargetType="TextBlock">
+                <Style TargetType="{x:Type TextBlock}">
                     <Setter Property="Text" Value=" " />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=OrderConfirmation, Path=IsMouseOver}" Value="True">
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=OrderConfirmation}" Value="True">
                             <Setter Property="Text" Value="Thanks"/>
                             <Setter Property="Foreground" Value="CadetBlue" />
                         </DataTrigger>
@@ -88,10 +99,8 @@
             </TextBlock.Style>
         </TextBlock>
 
-        <Image Grid.Column="2" HorizontalAlignment="Left" Height="142" Grid.RowSpan="4" Grid.Row="1" VerticalAlignment="Top" Width="313" Source="/Order/תודה שקניתם אצלנו.jpg" Margin="70,48,0,0"/>
-
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,18,0,0" Grid.Row="6" Height="88" Width="457" Grid.ColumnSpan="3">
-            <CheckBox Name="cbSample" Content="Click here after filling in the details" Width="225" Height="22" />
+            <CheckBox x:Name="cbSample" Content="Click here after filling in the details" Width="225" Height="22" />
             <TextBlock FontSize="18" Height="60" Width="293">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
@@ -107,7 +116,14 @@
             </TextBlock>
         </StackPanel>
         <Image HorizontalAlignment="Left" Height="65" VerticalAlignment="Top" Width="155" Source="/Order/Logo store.jpg" Grid.RowSpan="2"/>
-        <MediaElement Grid.Column="2" HorizontalAlignment="Left" Height="71" VerticalAlignment="Center" Width="72" Margin="132,0,0,0"/>
+        <MediaElement Grid.Column="2" HorizontalAlignment="Left" Height="71" VerticalAlignment="Center" Width="72" Margin="132,0,0,0"/>
+        <Button Grid.Column="2" Margin="284,24,0,0" Style="{StaticResource back}" Grid.RowSpan="2" Click="BackButton_Click">            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="38" 
+                          Height="34" RenderTransformOrigin="-0.056,0.514" Source="/Cart/חזרה אחורה.jpg" Stretch="Fill" />
+                </StackPanel>
+            </Button.Content>        </Button>
+
 
     </Grid>
 </Window>

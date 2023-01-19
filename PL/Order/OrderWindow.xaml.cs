@@ -137,4 +137,34 @@ public partial class OrderWindow : Window
 
         Close();
     }
+
+    private void AddItemButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            OrderItem OrderItem = (OrderItem)((sender as Button)!.DataContext!);
+            Order = bl?.Order.AddItemForOrder(Order, OrderItem.ProductId, 1);
+            Order = bl.Order.GetOrderDetails(Order.Id);
+
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "The product is out of stock");
+        }
+    }
+
+    private void RemoveItemButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            OrderItem OrderItem = (OrderItem)((sender as Button)!.DataContext!);
+            Order = bl?.Order.AddItemForOrder(Order, OrderItem.ProductId, -1);
+            Order = bl.Order.GetOrderDetails(Order.Id);
+
+        }
+        catch (BO.NotExiestsExceptions ex)
+        {
+            MessageBox.Show(ex.Message, "The product is out of stock");
+        }
+    }
 }
