@@ -39,4 +39,6 @@ public partial class SimulatorWindow : Window
     {
         Close();
     }
+
+    //////
 }
