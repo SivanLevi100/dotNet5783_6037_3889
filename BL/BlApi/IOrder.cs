@@ -42,6 +42,20 @@ public interface IOrder
     /// <returns></returns>
     public BO.OrderTracking Tracking(int idOrder);
 
+    /// <summary>
+    /// A function that adds a product to an already existing order
+    /// </summary>
+    /// <param name="order"></param>
+    /// <param name="idProduct"></param>
+    /// <param name="Amount"></param>
+    /// <returns></returns>
     public BO.Order AddItemForOrder(BO.Order order, int idProduct, int Amount);
+
+
+    /// <summary>
+    /// The method of selecting the next order to handle
+    /// </summary>
+    /// <returns></returns>
+    public int? GetNextOrder();
 
 }

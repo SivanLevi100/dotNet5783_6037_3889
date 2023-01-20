@@ -95,19 +95,10 @@ public partial class MainWindow : Window
 
     }
 
-    private void txtnumber_TextChanged(object sender, TextChangedEventArgs e)
+    private void SimulatorButton_Click(object sender, RoutedEventArgs e)
     {
+        new SimulatorWindow().Show();
 
     }
 }
-/// <summary>
-/// ///////////
-/// </summary>
-//internal class Categories5 
-//{
-//    //static readonly IEnumerator s_enumerator = Enum.GetValues(typeof(BO.Category)).GetEnumerator();
-//    //public IEnumerator GetEnumerator() => s_enumerator;
 
-//    public Array Categories { get; set; } = Enum.GetValues(typeof(BO.Category));
-
-//}

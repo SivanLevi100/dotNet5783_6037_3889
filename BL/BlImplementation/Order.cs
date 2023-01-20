@@ -278,6 +278,19 @@ internal class Order : BlApi.IOrder
 
     }
 
+    //The method of selecting the next order to handle
+    public int? GetNextOrder()
+    {
+
+        //????
+
+
+        throw new BO.NotExiestsExceptions("");
+    }
+
+
+
+
 
 
     //Helper function to return a list of order details

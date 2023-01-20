@@ -28,6 +28,22 @@
             </Style.Resources>
         </Style>
 
+        <Style x:Key="simulatorStyle" TargetType="Button" >
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Foreground" Value="Navy" />
+            <Setter Property="Background" Value="AliceBlue" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Height" Value="47" />
+            <Setter Property="Width" Value="132" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="18" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+
     </Window.Resources>
 
     <Grid>
@@ -43,7 +59,8 @@
         <Button x:Name="ProductList" Content="List of Products" Visibility="Hidden" HorizontalAlignment="Left" 
                 Margin="196,204,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>
         <Button Content="Customer" Height="90" Width="180"  HorizontalAlignment="Left" Margin="508,89,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="CustomerButton_Click" />
-        <TextBox x:Name="txtnumber" Visibility="Hidden" Text="{Binding idOrder, Mode=TwoWay}" HorizontalAlignment="Left" Margin="488,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Height="29" TextChanged="txtnumber_TextChanged"/>
+        <TextBox x:Name="txtnumber" Visibility="Hidden" Text="{Binding idOrder, Mode=TwoWay}" HorizontalAlignment="Left" Margin="488,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Height="29"/>
+        <Button Content="Simulator" Style="{StaticResource simulatorStyle}" Margin="40,356,0,0" Click="SimulatorButton_Click"/>
 
     </Grid>
 
