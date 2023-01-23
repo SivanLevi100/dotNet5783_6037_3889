@@ -74,10 +74,7 @@
             <RowDefinition Height="Auto" MinHeight="48.04"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <!--<ColumnDefinition Width="267*"/>-->
-            <!--<ColumnDefinition Width="500*"/>-->
             <ColumnDefinition Width="*"/>
-
         </Grid.ColumnDefinitions>
         <Button Content="Delete the basket" Style="{StaticResource mybutton}"  Margin="400,0,0,0" Grid.Row="2" Click="DeleteTheBasketButton_Click" Height="40" Width="166" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Button Content="Order Confirmation"  Margin="605,0,0,0" Style="{StaticResource mybutton}"  Grid.Row="2" Click="OrderConfirmationButton_Click" Height="40" Width="164" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -112,7 +109,6 @@
         <ListView ItemsSource="{Binding OrdertItemsOfCart}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,31,0" >
             <ListView.View>
                 <GridView>
-                    <!--<GridViewColumn/>-->
                     <GridViewColumn Width="Auto" Header="Id">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

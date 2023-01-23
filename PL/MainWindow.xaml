@@ -52,9 +52,9 @@
         <Image HorizontalAlignment="Left" Height="54" Margin="242,0,0,0" VerticalAlignment="Top" Width="308" Source="/Logo store.jpg" Stretch="Fill"/>
 
         <Button x:Name="Admin" Content="Admin"  Height="90" Width="180" HorizontalAlignment="Left" Margin="82,80,0,0" VerticalAlignment="Top" Click="AdminButton_Click" />
-        <Button x:Name="NewOrder" Content="New Order" Visibility="Hidden" HorizontalAlignment="Left" Margin="606,248,0,0" VerticalAlignment="Top" Click="NewOrderButton_Click"/>
-        <Label x:Name="NumberOfOrder" Content="Number Of Order:" Visibility="Hidden" FontSize="16" HorizontalAlignment="Left" Margin="346,206,0,0" VerticalAlignment="Top" Height="37" Width="142"/>
-        <Button x:Name="Track" Visibility="Hidden" Content="Track"  HorizontalAlignment="Left" Margin="405,248,0,0" VerticalAlignment="Top" Click="TrackButton_Click"/>
+        <Button x:Name="NewOrder" Content="New Order" Visibility="Hidden" HorizontalAlignment="Left" Margin="626,248,0,0" VerticalAlignment="Top" Click="NewOrderButton_Click"/>
+        <Label x:Name="NumberOfOrder" FontWeight="Black" Content="Number Of Order:" Foreground="Blue" Visibility="Hidden" FontSize="16" HorizontalAlignment="Left" Margin="456,179,0,0" VerticalAlignment="Top" Height="37" Width="162"/>
+        <Button x:Name="Track" Visibility="Hidden" Content="Track"  HorizontalAlignment="Left" Margin="453,248,0,0" VerticalAlignment="Top" Click="TrackButton_Click"/>
         <Button x:Name="OrderList" Content="List of Orders" Visibility="Hidden"  HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Click="OrderList_Click"/>
         <Button x:Name="ProductList" Content="List of Products" Visibility="Hidden" HorizontalAlignment="Left" 
                 Margin="196,204,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>

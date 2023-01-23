@@ -35,14 +35,49 @@
                 </Style>
             </Style.Resources>
         </Style>
+        <Style x:Key="Tanks" TargetType="Button">
+            <!--Set to true to not get any properties from the themes.-->
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Height="35" Margin="1,0,-1,0">
+                            <Ellipse Fill="AntiqueWhite" Margin="-180,-8,138,-9" RenderTransformOrigin="0.595,1.03"/>
+                            <ContentPresenter HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="FontStyle" Value="Italic" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Width" Value="90" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Foreground" Value="BlueViolet" />
+            <Setter Property="Background" Value="Azure" />
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="17" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
 
     </Window.Resources>
     <Grid>
-        <TextBox x:Name="IDProduct" HorizontalAlignment="Left" Margin="199,114,0,0" TextWrapping="Wrap" Text="{Binding idProduct}" VerticalAlignment="Top" Width="123" Height="26"/>
+        <TextBox HorizontalAlignment="Left" Margin="199,114,0,0" TextWrapping="Wrap" Text="{Binding idProduct}" VerticalAlignment="Top" Width="123" Height="26"/>
         <Label Content="ID of product:" HorizontalAlignment="Left" Margin="71,114,0,0" VerticalAlignment="Top"/>
         <Label Content="Amount of Product:" Margin="65,165,0,0" Height="40" Width="134"/>
         <TextBox Margin="199,165,0,0" TextWrapping="Wrap" Text="{Binding Amount}" Width="123" Height="28"/>
-        <Button Content="Add item for order" HorizontalAlignment="Left" Margin="210,235,0,0" VerticalAlignment="Top" Click="AddItemForOrderButton_Click"/>
+        <Button Content="Add item for order" HorizontalAlignment="Left" Margin="105,265,0,0" VerticalAlignment="Top" Click="AddItemForOrderButton_Click" Width="139" Height="40"/>
+        <Button Style="{StaticResource Tanks}" HorizontalAlignment="Left" Margin="645,364,0,0" VerticalAlignment="Top" Height="44" Width="92"/>
+
+        <TextBox Margin="500,372,0,0" BorderBrush="AntiqueWhite" FontSize="23" Text="Tanks" Foreground="BlueViolet" Background="AntiqueWhite" Width="78" Height="28"/>
 
     </Grid>
 </Window>

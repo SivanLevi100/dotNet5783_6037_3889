@@ -30,16 +30,16 @@
             <RowDefinition Height="179*"/>
             <RowDefinition Height="Auto" MinHeight="44.04"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
+        <Grid  Height="auto" Grid.Row="0" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
 
         </Grid>
-        <Label x:Name="Category" Content="Category"  Grid.Column="0" HorizontalAlignment="Left" Margin="76,0,0,0" Width="116"/>
-        <ComboBox x:Name="CatgegorySelector" ItemsSource="{Binding Categories1}" Text="{Binding Category1}" SelectedItem="{Binding Category1}" Margin="543,0,55,0" SelectionChanged="CatgegorySelector_SelectionChanged"/>
-        <ListView x:Name="ProductItemListView" ItemsSource="{Binding ProductItems}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="ProductItemListView_MouseDoubleClick" >
+        <Label Content="Category"  Grid.Column="0" HorizontalAlignment="Left" Margin="76,0,0,0" Width="116"/>
+        <ComboBox ItemsSource="{Binding Categories1}" Text="{Binding Category1}" SelectedItem="{Binding Category1}" Margin="543,0,55,0" SelectionChanged="CatgegorySelector_SelectionChanged"/>
+        <ListView ItemsSource="{Binding ProductItems}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="ProductItemListView_MouseDoubleClick" >
             <ListView.View>
                 <GridView>
                     <!--<GridViewColumn/>-->
