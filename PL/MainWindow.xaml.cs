@@ -69,6 +69,7 @@ public partial class MainWindow : Window
             else
                 new OrderTrackingWindow(idOrder).Show();
         }
+        txtnumber.Text = null;
     }
 
     private void OrderList_Click(object sender, RoutedEventArgs e)

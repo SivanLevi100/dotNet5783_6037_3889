@@ -36,31 +36,10 @@ public partial class OrderTrackingWindow : Window
         }
         InitializeComponent();
     }
-    //public OrderTrackingWindow()
-    //{
-    //    try
-    //    {
-    //        OrderTracking = bl.Order.Tracking(OrderTracking.OrderId);
-    //    }
-    //    catch (BO.NotExiestsExceptions str)
-    //    {
-    //        MessageBox.Show(str.Message, "This order does not exist", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-    //    }
-    //    InitializeComponent();
-    //}
+   
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        //try
-        //{
-        //    OrderTracking = bl.Order.Tracking(OrderTracking.OrderId);
-        //}
-        //catch (BO.NotExiestsExceptions str)
-        //{
-        //    MessageBox.Show(str.Message, "This order does not exist", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-        //}
         MessageBox.Show("Exit the page");
         Close();
     }

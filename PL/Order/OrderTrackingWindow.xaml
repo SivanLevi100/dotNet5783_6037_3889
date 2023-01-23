@@ -12,6 +12,11 @@
             <Setter Property="Background" Value="AliceBlue" />
         </Style>
 
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontStyle" Value="Italic" />
+        </Style>
+
         <Style TargetType="TextBox">
             <Setter Property="FontSize" Value="15" />
             <Setter Property="FontStyle" Value="Italic" />
@@ -80,9 +85,9 @@
 
             <ColumnDefinition/>
         </Grid.ColumnDefinitions >
-        <Label Content="ID Order" Grid.Row="1" Grid.Column="0" Margin="16,12,15,12"/>
-        <Label Content="Status" Grid.Row="2" Grid.Column="0" Margin="16,12,15,12"/>
-        <Label Content="Tracking" Grid.Row="3" Grid.Column="0" Margin="20,10,11,94"/>
+        <Label Content="ID Order:" Grid.Row="1" Grid.Column="0" Margin="31,10,0,0"/>
+        <Label Content="Status:" Grid.Row="2" Grid.Column="0" Margin="31,8,10,10"/>
+        <Label Content="Tracking:" Grid.Row="3" Grid.Column="0" Margin="31,10,0,89"/>
         <TextBox Text="{Binding Path=OrderId, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="40,10,121,10"/>
         <TextBox Text="{Binding Path=Status}" Grid.Row="2" Grid.Column="1" Margin="40,8,121,12"/>
 
