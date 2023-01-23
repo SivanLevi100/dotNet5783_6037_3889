@@ -57,6 +57,6 @@ public partial class OrderItemWindow : Window
         }
         Close();
         new OrderWindow(Order1.Id).Show();
-
+       
     }
 }
