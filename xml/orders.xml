@@ -127,15 +127,6 @@
     <DeliveryDate xsi:nil="true" />
   </Order>
   <Order>
-    <Id>100015</Id>
-    <CustomerName>Yohanan</CustomerName>
-    <CustomerEmail>Yohanan567@gmail.com</CustomerEmail>
-    <CustomerAdress>Tel-aviv</CustomerAdress>
-    <OrderDate>2023-01-23T21:43:51.9218011+02:00</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
-  </Order>
-  <Order>
     <Id>100016</Id>
     <CustomerName>Talya</CustomerName>
     <CustomerEmail>Talya6575@gmail.com</CustomerEmail>
@@ -160,6 +151,24 @@
     <CustomerAdress>Ashdod</CustomerAdress>
     <OrderDate>2023-01-24T11:00:26.1461499+02:00</OrderDate>
     <ShipDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+  </Order>
+  <Order>
+    <Id>100019</Id>
+    <CustomerName>Michal </CustomerName>
+    <CustomerEmail>Michal78@gmail.com</CustomerEmail>
+    <CustomerAdress>Eilat</CustomerAdress>
+    <OrderDate>2023-01-24T12:27:26.5487191+02:00</OrderDate>
+    <ShipDate>2023-01-24T12:27:32.5467825+02:00</ShipDate>
+    <DeliveryDate>2023-01-24T12:27:44.6934564+02:00</DeliveryDate>
+  </Order>
+  <Order>
+    <Id>100015</Id>
+    <CustomerName>Yohanan</CustomerName>
+    <CustomerEmail>Yohanan567@gmail.com</CustomerEmail>
+    <CustomerAdress>Tel-aviv</CustomerAdress>
+    <OrderDate>2023-01-23T21:43:51.9218011+02:00</OrderDate>
+    <ShipDate>2023-01-24T12:27:50.8007273+02:00</ShipDate>
     <DeliveryDate xsi:nil="true" />
   </Order>
 </ArrayOfOrder>

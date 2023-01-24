@@ -13,10 +13,15 @@ sealed internal class DalXml : IDal
 {
     private static IDal instance = new DalXml();
     public static IDal Instance { get { return instance; } }
-    private DalXml() { }
+    private DalXml() 
+    {
+        Product= new Dal.Product();
+        Order =new Dal.Order();
+        OrderItem = new Dal.OrderItem();
+    }
 
-    public IProduct Product => new Dal.Product();
-    public IOrder Order => new Dal.Order();
-    public IOrderItem OrderItem => new Dal.OrderItem();
+    public IProduct Product { get; }
+    public IOrder Order { get; }
+    public IOrderItem OrderItem { get; }
 
 }

@@ -15,20 +15,6 @@
     <InStock>48</InStock>
   </Product>
   <Product>
-    <Id>253276</Id>
-    <Name>TADIRAN Air-Conditioner </Name>
-    <Category>Cooling</Category>
-    <Price>3200</Price>
-    <InStock>95</InStock>
-  </Product>
-  <Product>
-    <Id>253478</Id>
-    <Name>Bosch Dryer</Name>
-    <Category>Cleaning</Category>
-    <Price>2560</Price>
-    <InStock>69</InStock>
-  </Product>
-  <Product>
     <Id>123468</Id>
     <Name>Blomberg oven</Name>
     <Category>Kitchen</Category>
@@ -69,5 +55,19 @@
     <Category>Computer</Category>
     <Price>3800</Price>
     <InStock>65</InStock>
+  </Product>
+  <Product>
+    <Id>253478</Id>
+    <Name>Bosch Dryer</Name>
+    <Category>Cleaning</Category>
+    <Price>2560</Price>
+    <InStock>68</InStock>
+  </Product>
+  <Product>
+    <Id>253276</Id>
+    <Name>TADIRAN Air-Conditioner </Name>
+    <Category>Cooling</Category>
+    <Price>3200</Price>
+    <InStock>94</InStock>
   </Product>
 </products>
