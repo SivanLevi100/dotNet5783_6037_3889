@@ -10,6 +10,7 @@
 //using BlApi;
 //using BO;
 using DalApi;
+using System.Reflection.Emit;
 
 namespace BlImplementation;
 
@@ -89,6 +90,7 @@ internal class Product : BlApi.IProduct
             throw new BO.IncorrectDataExceptions("Product request failed", str);
         }
     }
+
 
 
     public BO.ProductItem GetProductDetailsBuyer(int id, BO.Cart cart)

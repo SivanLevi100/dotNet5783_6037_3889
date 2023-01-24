@@ -50,11 +50,7 @@ public partial class OrderListWindow : Window
         new OrderWindow(order1.OrderId).Show();
         Close();
 
-        //ListBox listBox = sender as ListBox;
-        //BO.OrderForList order = new BO.OrderForList();
-        //order = listBox.SelectedItem as BO.OrderForList;
-        //new OrderWindow(order.OrderId).Show();
-        //Close();
+      
     }
 
     private void OrderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

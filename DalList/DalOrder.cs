@@ -1,14 +1,16 @@
 ﻿
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 using static Dal.DataSource;
 
 namespace Dal;
 
 internal class DalOrder:IOrder
 {
-   DataSource _dstaSource1 = DataSource.S_instance;
+    DataSource _dstaSource1 = DataSource.S_instance;
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// An add object method that accepts an order object and returns the ID number of the added order
     /// </summary>
@@ -24,6 +26,7 @@ internal class DalOrder:IOrder
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// A request/call method of a single object that receives an order ID number and returns the appropriate order
     /// </summary>
@@ -36,13 +39,15 @@ internal class DalOrder:IOrder
           ?? throw new NotFoundExceptions("The order id is not exist in List");
     }
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order? GetF(Func<Order?, bool>? filter)
     {
         return _dstaSource1.OrderList?.FirstOrDefault(order => filter(order))
           ?? throw new NotFoundExceptions("The order id is not exist in List");
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// Request/read method of the list of all objects of an order
     /// </summary>
@@ -53,6 +58,8 @@ internal class DalOrder:IOrder
         ?? throw new DoesNotExistException("Missing order"))
         ?? throw new DataCorruptionException("Missing order list");
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     /// <summary>
     /// A method to delete an order object that receives an order ID number
@@ -65,7 +72,7 @@ internal class DalOrder:IOrder
     }
 
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// An object update method that will receive a new order
     /// </summary>

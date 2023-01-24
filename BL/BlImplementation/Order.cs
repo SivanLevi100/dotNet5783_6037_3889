@@ -281,15 +281,32 @@ internal class Order : BlApi.IOrder
     //The method of selecting the next order to handle
     public int? GetNextOrder()
     {
+        DO.Order ordrDo=new DO.Order();
+        IEnumerable<DO.Order?> orderList = Dal.Order.GetAll(item => item.Value.DeliveryDate == null);
+        if(orderList!=null)//יש הזמנות שלא סופקו
+        {
+            DO.Order? orderDateMin = orderList.MinBy(item => ((DO.Order)item!).OrderDate);
+            DO.Order? shipDateMin = orderList.MinBy(item => ((DO.Order)item!).ShipDate);
+            if(orderDateMin != null) 
+            {
+                if (orderDateMin.Value.ShipDate < shipDateMin.Value.ShipDate)
+                    return orderDateMin.Value.Id;
+                else
+                    return shipDateMin.Value.Id;
+            }
+            else 
+            {
+                if (orderDateMin.Value.OrderDate< shipDateMin.Value.ShipDate)
+                    return orderDateMin.Value.Id;
+                else
+                    return shipDateMin.Value.Id;
+            }
 
-        //????
+        }
+        else
+            throw new BO.NotExiestsExceptions("List of Order list is empty");
 
-
-        throw new BO.NotExiestsExceptions("");
     }
-
-
-
 
 
 

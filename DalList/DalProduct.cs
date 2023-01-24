@@ -1,6 +1,7 @@
 ﻿
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
@@ -9,6 +10,7 @@ internal class DalProduct : IProduct
 {
     DataSource ds = DataSource.S_instance;
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// An add object method that receives a product object and returns the ID number of the added product
     /// </summary>
@@ -23,6 +25,7 @@ internal class DalProduct : IProduct
         return product1.Id;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// A request/call method of a single object that receives a product ID number and returns the appropriate product
     /// </summary>
@@ -35,13 +38,14 @@ internal class DalProduct : IProduct
             ?? throw new NotFoundExceptions("The product id is not exist in List");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product? GetF(Func<Product?, bool>? filter)
     {
         return ds.ProductList?.FirstOrDefault(product => filter(product))
            ?? throw new NotFoundExceptions("The product id is not exist in List");
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// Request/read method of the list of all objects of a product
     /// </summary>
@@ -53,6 +57,7 @@ internal class DalProduct : IProduct
         ?? throw new DoesNotExistException("Missing product list");
 
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// A method to delete a product object that receives a product ID number
     /// </summary>
@@ -63,7 +68,7 @@ internal class DalProduct : IProduct
             throw new NotFoundExceptions("The product is not exist in the List");
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// An object update method that will receive a new product
     /// </summary>

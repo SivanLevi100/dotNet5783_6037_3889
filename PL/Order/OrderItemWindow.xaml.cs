@@ -31,16 +31,7 @@ public partial class OrderItemWindow : Window
         Order1 = bl.Order.GetOrderDetails(idOrder);//ההזממה שאליה נוסיף מוצר
         InitializeComponent();
     }
-    //public OrderItemWindow(int idProduct100,int idOrder)
-    //{
-    //    if (bl.Product.GetProductList().FirstOrDefault(o4 => o4.IdProduct == idProduct100) != null)//tאם זה ת.ז של מוצר
-    //    {
-
-    //        Order1 = bl.Order.GetOrderDetails(idOrder);
-    //        idProduct = idProduct100;
-    //        Order1 = bl.Order.AddItemForOrder(Order1, idProduct, Amount);
-    //    }
-    //}
+    
 
     private void AddItemForOrderButton_Click(object sender, RoutedEventArgs e)
     {

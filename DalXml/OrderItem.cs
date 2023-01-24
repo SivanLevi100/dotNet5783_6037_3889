@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 using DalApi;
@@ -15,7 +16,7 @@ internal class OrderItem : IOrderItem
 
      string configPath = "config";
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? filter = null)
     {
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(o_orderItems)!;
@@ -23,11 +24,13 @@ internal class OrderItem : IOrderItem
                               : listOrderItems.Where(filter).OrderBy(orderItem => ((DO.OrderItem)orderItem!).Id);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.OrderItem? Get(int id) =>
     XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(o_orderItems).FirstOrDefault(orderItem => orderItem?.Id == id)
     ?? throw new NotFoundExceptions("The orderItem id is not exist in List");
 
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.OrderItem orderItem)
     {
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(o_orderItems);
@@ -57,7 +60,7 @@ internal class OrderItem : IOrderItem
 
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(o_orderItems);
@@ -68,6 +71,8 @@ internal class OrderItem : IOrderItem
         XMLTools.SaveListToXMLSerializer(listOrderItems, o_orderItems);
     }
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.OrderItem orderItem)
     {
         int id = orderItem.Id;
@@ -81,7 +86,7 @@ internal class OrderItem : IOrderItem
 
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.OrderItem? GetF(Func<DO.OrderItem?, bool>? filter)
     {
         var orderItemsList = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(o_orderItems)!;

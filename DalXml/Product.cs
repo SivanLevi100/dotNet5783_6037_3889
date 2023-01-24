@@ -8,6 +8,7 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 
@@ -17,17 +18,21 @@ internal class Product : IProduct
 {
     const string p_products = "products"; //Linq to XML
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? filter = null) =>
        filter is null
        ? XMLTools.LoadListFromXMLElement(p_products).Elements().Select(s => getProduct(s))
        : XMLTools.LoadListFromXMLElement(p_products).Elements().Select(s => getProduct(s)).Where(filter);
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product? Get(int id) =>
        (DO.Product)getProduct(XMLTools.LoadListFromXMLElement(p_products)?.Elements()
        .FirstOrDefault(st => st.ToIntNullable("Id") == id)
        ?? throw new NotFoundExceptions("The product id is not exist in List"))!;
 
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product product)
     {
         XElement productsRootElem = XMLTools.LoadListFromXMLElement(p_products);
@@ -42,7 +47,7 @@ internal class Product : IProduct
         return product.Id;
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement productsRootElem = XMLTools.LoadListFromXMLElement(p_products);
@@ -54,13 +59,15 @@ internal class Product : IProduct
         XMLTools.SaveListToXMLElement(productsRootElem, p_products);
     }
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product doProduct)
     {
         Delete(doProduct.Id);
         Add(doProduct);
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product? GetF(Func<DO.Product?, bool>? filter)
     {
         var productsList = XMLTools.LoadListFromXMLSerializer<DO.Product>(p_products)!;
@@ -75,7 +82,7 @@ internal class Product : IProduct
     }
 
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     static DO.Product? getProduct(XElement product)
     {
         return product.ToIntNullable("Id") is null ? null : new DO.Product()
@@ -87,9 +94,9 @@ internal class Product : IProduct
             InStock = (int)product.Element("InStock")!
         };
 
-        //(double)product.Element("Price")!,
-       // double.Parse(product.Element("Price").Value),
     }
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     static IEnumerable<XElement> createProductElement(DO.Product product)
     {
         yield return new XElement("Id", product.Id);

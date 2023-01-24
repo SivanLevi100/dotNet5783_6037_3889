@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Dal;
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 
 public struct ImportentNumbers
 {
@@ -22,6 +23,7 @@ internal class Order : IOrder
     //private readonly string configPath = "Config";
      string configPath = "config";
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? filter = null)
     {
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(o_orders)!;
@@ -29,11 +31,15 @@ internal class Order : IOrder
                               : listOrders.Where(filter).OrderBy(order => ((DO.Order)order!).Id);
     }
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order? Get(int id) =>
         XMLTools.LoadListFromXMLSerializer<DO.Order>(o_orders).FirstOrDefault(order => order?.Id == id)
         ?? throw new NotFoundExceptions("The order id is not exist in List");
 
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Order order)
     {
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(o_orders);
@@ -59,13 +65,11 @@ internal class Order : IOrder
         XMLTools.SaveListToXMLSerializer(listOrders, o_orders);
 
         return order.Id;
-        //return (int)runningNum.numberSaved;
 
     }
 
 
-    //
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(o_orders);
@@ -76,6 +80,8 @@ internal class Order : IOrder
         XMLTools.SaveListToXMLSerializer(listOrders, o_orders);
     }
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Order order)
     {
         int id=order.Id;
@@ -89,6 +95,8 @@ internal class Order : IOrder
 
     }
 
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order? GetF(Func<DO.Order?, bool>? filter)
     {
         var ordersList = XMLTools.LoadListFromXMLSerializer<DO.Order>(o_orders)!;
@@ -97,7 +105,6 @@ internal class Order : IOrder
             throw new Exception("The order id is not exist in List");
         }
         return ordersList.FirstOrDefault(filter);
-
 
     }
 

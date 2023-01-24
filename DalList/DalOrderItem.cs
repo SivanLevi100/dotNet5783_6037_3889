@@ -1,6 +1,7 @@
 ﻿
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 using static Dal.DataSource;
 //using System.Collections.Generic;
 //using System.Diagnostics;
@@ -13,6 +14,7 @@ internal class DalOrderItem : IOrderItem
 
     DataSource _dstaSource = DataSource.S_instance;
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// An add object method that receives an object of an order item and returns the ID number of the added order item
     /// </summary>
@@ -27,6 +29,7 @@ internal class DalOrderItem : IOrderItem
         return orderItem1.Id;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// A request/call method of a single object that receives an order item ID number and returns the appropriate order item
     /// </summary>
@@ -39,13 +42,14 @@ internal class DalOrderItem : IOrderItem
               ?? throw new NotFoundExceptions("The orderItem id is not exist in List");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem? GetF(Func<OrderItem?, bool>? filter)
     {
         return _dstaSource.OrderItemList?.FirstOrDefault(orderItem => filter(orderItem))
           ?? throw new NotFoundExceptions("The orderItem id is not exist in List");
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// A request/read method of the list of all order item objects
     /// </summary>
@@ -57,7 +61,7 @@ internal class DalOrderItem : IOrderItem
         ?? throw new DataCorruptionException("Missing ordritem list");
 
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// A method to delete an order items object that receives an order item ID number
     /// </summary>
@@ -69,7 +73,7 @@ internal class DalOrderItem : IOrderItem
     }
 
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     /// <summary>
     /// An object update method that will receive a new order item
     /// </summary>

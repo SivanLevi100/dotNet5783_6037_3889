@@ -43,20 +43,6 @@
     <InStock>72</InStock>
   </Product>
   <Product>
-    <Id>258876</Id>
-    <Name>Dishwasher Bosch</Name>
-    <Category>Cleaning</Category>
-    <Price>3200</Price>
-    <InStock>60</InStock>
-  </Product>
-  <Product>
-    <Id>193568</Id>
-    <Name>Samsung TV 75</Name>
-    <Category>Computer</Category>
-    <Price>3800</Price>
-    <InStock>66</InStock>
-  </Product>
-  <Product>
     <Id>123456</Id>
     <Name>SHARP refrigerator </Name>
     <Category>Refrigerator</Category>
@@ -69,5 +55,19 @@
     <Category>Computer</Category>
     <Price>3000</Price>
     <InStock>49</InStock>
+  </Product>
+  <Product>
+    <Id>258876</Id>
+    <Name>Dishwasher Bosch</Name>
+    <Category>Cleaning</Category>
+    <Price>3200</Price>
+    <InStock>59</InStock>
+  </Product>
+  <Product>
+    <Id>193568</Id>
+    <Name>Samsung TV 75</Name>
+    <Category>Computer</Category>
+    <Price>3800</Price>
+    <InStock>65</InStock>
   </Product>
 </products>
