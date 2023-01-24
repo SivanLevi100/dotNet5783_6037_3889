@@ -43,31 +43,31 @@
     <InStock>94</InStock>
   </Product>
   <Product>
-    <Id>194468</Id>
-    <Name>kenwood mixer</Name>
-    <Category>Kitchen</Category>
-    <Price>2560</Price>
-    <InStock>46</InStock>
-  </Product>
-  <Product>
     <Id>258876</Id>
     <Name>Dishwasher Bosch</Name>
     <Category>Cleaning</Category>
     <Price>3200</Price>
-    <InStock>58</InStock>
+    <InStock>57</InStock>
   </Product>
   <Product>
-    <Id>123457</Id>
-    <Name>FUJICOM freezer</Name>
-    <Category>Refrigerator</Category>
-    <Price>2500</Price>
-    <InStock>23</InStock>
+    <Id>194468</Id>
+    <Name>kenwood mixer</Name>
+    <Category>Kitchen</Category>
+    <Price>2560</Price>
+    <InStock>45</InStock>
   </Product>
   <Product>
     <Id>173558</Id>
     <Name>Hp Computer Touch</Name>
     <Category>Computer</Category>
     <Price>3000</Price>
-    <InStock>48</InStock>
+    <InStock>46</InStock>
+  </Product>
+  <Product>
+    <Id>123457</Id>
+    <Name>FUJICOM freezer</Name>
+    <Category>Refrigerator</Category>
+    <Price>2500</Price>
+    <InStock>21</InStock>
   </Product>
 </products>

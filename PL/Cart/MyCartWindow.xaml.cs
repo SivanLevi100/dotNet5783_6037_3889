@@ -44,8 +44,15 @@ public partial class MyCartWindow : Window
 
     private void OrderConfirmationButton_Click(object sender, RoutedEventArgs e)
     {
-        new OrderConfirmationWindow().Show();
-        Close();
+        if(CatalogProductsWindow.myCart.OrdersItemsList.FirstOrDefault(x=>x.TotalPriceOfItem==0)!=null)
+        {
+            new OrderConfirmationWindow().Show();
+            Close();
+        }
+        else
+            MessageBox.Show("The Cart is empty");
+
+
     }
 
     private void DeleteTheBasketButton_Click(object sender, RoutedEventArgs e)

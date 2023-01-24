@@ -208,7 +208,10 @@ internal class Order : BlApi.IOrder
     //Amount = How much do you want to add or remove
     public BO.Order AddItemForOrder(BO.Order order, int idProduct, int Amount)
     {
-        if(order.ShipDate!=null && order.DeliveryDate!=null) //לא ניתן להוסיף מוצרים למשלוח שיצא לדרך או הגיע ללקוח
+        if (order.ShipDate != null) //לא ניתן להוסיף מוצרים למשלוח שיצא לדרך או הגיע ללקוח
+            throw new BO.NotExiestsExceptions("Products cannot be added to orders that have been sent or arrived at the customer");
+
+        if (order.ShipDate!=null && order.DeliveryDate!=null) //לא ניתן להוסיף מוצרים למשלוח שיצא לדרך או הגיע ללקוח
             throw new BO.NotExiestsExceptions("Products cannot be added to orders that have been sent or arrived at the customer");
 
         DO.Product doProduct;

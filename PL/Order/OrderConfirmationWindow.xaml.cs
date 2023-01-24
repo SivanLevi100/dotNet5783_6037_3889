@@ -41,6 +41,9 @@ public partial class OrderConfirmationWindow : Window
 
     public OrderConfirmationWindow()
     {
+        //if (cbSample.IsChecked == true)
+        //    OrderConfirmation.IsEnabled = true;
+        //OrderConfirmation.IsEnabled = false;
         InitializeComponent();
     }
 

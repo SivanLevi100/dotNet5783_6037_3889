@@ -65,9 +65,13 @@ public partial class OrderWindow : Window
 
     private void AddProductForOrderButton_Click(object sender, RoutedEventArgs e)
     {
-        
-        new OrderItemWindow(Order.Id).Show();
-        Close();
+        if(Order.ShipDate==null)
+        {
+            new OrderItemWindow(Order.Id).Show();
+            Close();
+        }
+       else
+            MessageBox.Show("A product cannot be added to a shipped or Delivered order");
 
         //new OrderItemWindow(Order.Id).Show();
         //Order = bl.Order.GetOrderDetails(Order.Id);

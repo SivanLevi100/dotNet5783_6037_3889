@@ -84,7 +84,18 @@
         <TextBox Text="{Binding CustomerName, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="10,10,52,10" />
         <TextBox Text="{Binding CustomerEmail, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="10,10,52,10"  />
         <TextBox Text="{Binding CustomerAdress, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Margin="10,8,52,12" />
-        <Button x:Name="OrderConfirmation" Grid.Column="2" Content="Order Confirmation"  Margin="122,38,0,0" Grid.Row="6" Click="OrderConfirmationButton_Click" Height="47" Width="154"/>
+        <Button x:Name="OrderConfirmation"  Grid.Column="2" Content="Order Confirmation"  Margin="122,38,0,0" Grid.Row="6" Click="OrderConfirmationButton_Click" Height="47" Width="154">
+            <!--<Button.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=cbSample}" Value="True">
+                            <Setter Property="IsEnabled" Value="True" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>-->
+        </Button>
+
         <TextBlock Grid.Column="2" FontSize="25" HorizontalAlignment="Left" Margin="160,25,0,0" Grid.Row="5" TextWrapping="Wrap"  VerticalAlignment="Top" Height="47" Width="95" Grid.RowSpan="2">
             <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">
@@ -100,7 +111,8 @@
         </TextBlock>
 
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,18,0,0" Grid.Row="6" Height="88" Width="457" Grid.ColumnSpan="3">
-            <CheckBox x:Name="cbSample" Content="Click here after filling in the details" Width="225" Height="22" />
+            <CheckBox x:Name="cbSample" Content="Click here after filling in the details" Width="225" Height="22"/>
+
             <TextBlock FontSize="18" Height="60" Width="293">
                 <TextBlock.Style>
                     <Style TargetType="{x:Type TextBlock}">
