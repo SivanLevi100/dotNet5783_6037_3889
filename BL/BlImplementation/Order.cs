@@ -227,7 +227,7 @@ internal class Order : BlApi.IOrder
 
         BO.OrderItem orderItemBo;
         int numberOrderItem;
-        orderItemBo = order.OrdersItemsList.FirstOrDefault(orderItem => orderItem.ProductId == idProduct);//Checking whether the product is available in the order
+        orderItemBo = order.OrdersItemsList?.FirstOrDefault(orderItem => orderItem?.ProductId == idProduct)!;//Checking whether the product is available in the order
         if (orderItemBo == null) // If the product does not exist in the order
         {
             DO.OrderItem doOrderItem = new DO.OrderItem
@@ -255,7 +255,7 @@ internal class Order : BlApi.IOrder
                 AmountInOrder =Amount,
                 TotalPriceOfItem=Amount* doProduct.Price
             };
-            order.OrdersItemsList.Add(BOnewOrderItem);
+            order.OrdersItemsList?.Add(BOnewOrderItem);
             order.TotalPrice += doProduct.Price * Amount;
             doProduct.InStock = doProduct.InStock - Amount;
             Dal.Product.Update(doProduct);

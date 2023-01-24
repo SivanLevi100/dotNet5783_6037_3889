@@ -8,13 +8,6 @@
     <InStock>0</InStock>
   </Product>
   <Product>
-    <Id>194468</Id>
-    <Name>kenwood mixer</Name>
-    <Category>Kitchen</Category>
-    <Price>2560</Price>
-    <InStock>48</InStock>
-  </Product>
-  <Product>
     <Id>123468</Id>
     <Name>Blomberg oven</Name>
     <Category>Kitchen</Category>
@@ -22,32 +15,11 @@
     <InStock>55</InStock>
   </Product>
   <Product>
-    <Id>123457</Id>
-    <Name>FUJICOM freezer</Name>
-    <Category>Refrigerator</Category>
-    <Price>2500</Price>
-    <InStock>72</InStock>
-  </Product>
-  <Product>
     <Id>123456</Id>
     <Name>SHARP refrigerator </Name>
     <Category>Refrigerator</Category>
     <Price>2000</Price>
     <InStock>42</InStock>
-  </Product>
-  <Product>
-    <Id>173558</Id>
-    <Name>Hp Computer Touch</Name>
-    <Category>Computer</Category>
-    <Price>3000</Price>
-    <InStock>49</InStock>
-  </Product>
-  <Product>
-    <Id>258876</Id>
-    <Name>Dishwasher Bosch</Name>
-    <Category>Cleaning</Category>
-    <Price>3200</Price>
-    <InStock>59</InStock>
   </Product>
   <Product>
     <Id>193568</Id>
@@ -69,5 +41,33 @@
     <Category>Cooling</Category>
     <Price>3200</Price>
     <InStock>94</InStock>
+  </Product>
+  <Product>
+    <Id>194468</Id>
+    <Name>kenwood mixer</Name>
+    <Category>Kitchen</Category>
+    <Price>2560</Price>
+    <InStock>46</InStock>
+  </Product>
+  <Product>
+    <Id>258876</Id>
+    <Name>Dishwasher Bosch</Name>
+    <Category>Cleaning</Category>
+    <Price>3200</Price>
+    <InStock>58</InStock>
+  </Product>
+  <Product>
+    <Id>123457</Id>
+    <Name>FUJICOM freezer</Name>
+    <Category>Refrigerator</Category>
+    <Price>2500</Price>
+    <InStock>23</InStock>
+  </Product>
+  <Product>
+    <Id>173558</Id>
+    <Name>Hp Computer Touch</Name>
+    <Category>Computer</Category>
+    <Price>3000</Price>
+    <InStock>48</InStock>
   </Product>
 </products>
