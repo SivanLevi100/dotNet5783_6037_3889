@@ -12,6 +12,10 @@ namespace BO;
 
 
 //}
+
+/// <summary>
+/// Throws exceptions of type nonexistent instance
+/// </summary>
 public class NotExiestsExceptions : Exception
 {
     public NotExiestsExceptions()
@@ -35,7 +39,9 @@ public class NotExiestsExceptions : Exception
 
 }
 
-// נתון לא תקין
+/// <summary>
+/// Exception class for an invalid data type
+/// </summary>
 public class IncorrectDataExceptions : Exception
 {
     public IncorrectDataExceptions()

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DO;
 
+/// <summary>
+/// Throws exceptions of type nonexistent instance
+/// </summary>
 [Serializable]
 public class DoesNotExistException : Exception
 {
@@ -27,6 +30,9 @@ public class DoesNotExistException : Exception
     }
 }
 
+/// <summary>
+/// Data corruption exception class
+/// </summary>
 [Serializable]
 public class DataCorruptionException : Exception
 {
@@ -46,6 +52,10 @@ public class DataCorruptionException : Exception
     {
     }
 }
+
+/// <summary>
+/// Exception class of type not found
+/// </summary>
 [Serializable]
 public class NotFoundExceptions: Exception
 {
@@ -66,6 +76,10 @@ public class NotFoundExceptions: Exception
 
     }
 }
+
+/// <summary>
+/// Exception class of double identification type
+/// </summary>
 public class DuplicateIdExceptions: Exception
 {
     public DuplicateIdExceptions()
@@ -86,6 +100,9 @@ public class DuplicateIdExceptions: Exception
     }
 }
 
+/// <summary>
+/// Exception class of type DalConfig
+/// </summary>
 [Serializable]
 public class DalConfigException : Exception
 {

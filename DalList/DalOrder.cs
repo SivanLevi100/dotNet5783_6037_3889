@@ -6,6 +6,9 @@ using static Dal.DataSource;
 
 namespace Dal;
 
+/// <summary>
+/// Implementation of ICRUD functions for order
+/// </summary>
 internal class DalOrder:IOrder
 {
     DataSource _dstaSource1 = DataSource.S_instance;

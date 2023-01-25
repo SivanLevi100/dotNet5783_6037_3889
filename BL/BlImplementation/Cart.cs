@@ -18,6 +18,14 @@ internal class Cart : BlApi.ICart
 {
     private DalApi.IDal? Dal = DalApi.Factory.Get();
 
+    /// <summary>
+    /// Method of adding a product to the cart
+    /// </summary>
+    /// <param name="cart1"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public BO.Cart AddProduct(BO.Cart cart1, int id)
     {
         if (id <= 0)
@@ -70,7 +78,15 @@ internal class Cart : BlApi.ICart
     }
 
 
-
+    /// <summary>
+    /// A method that updates the amount of a product in the basket
+    /// </summary>
+    /// <param name="cart1"></param>
+    /// <param name="id"></param>
+    /// <param name="newAmount"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
     public BO.Cart UpdateAmountOfProduct(BO.Cart cart1, int id, int newAmount)
     {
         DO.Product doProduct;
@@ -119,7 +135,12 @@ internal class Cart : BlApi.ICart
     }
 
 
-
+    /// <summary>
+    /// Order confirmation method
+    /// </summary>
+    /// <param name="cart1"></param>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public void Confirm(BO.Cart cart1)
     {
         if (string.IsNullOrWhiteSpace(cart1?.CustomerName) && string.IsNullOrWhiteSpace(cart1?.CustomerAdress)) //An empty and invalid string

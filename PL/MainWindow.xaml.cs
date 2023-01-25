@@ -63,9 +63,13 @@ public partial class MainWindow : Window
         else
         {
             int idOrder = int.Parse(txtnumber.Text);
+            
             BO.OrderForList order = bl.Order.GetOrderList().FirstOrDefault(o => o.OrderId == idOrder);
-            if (order == null)
+            if (idOrder < 100000)
+                MessageBox.Show("The number of order is too short");
+            else if (order == null)
                 MessageBox.Show("The number of order is not exiests");
+            
             else
                 new OrderTrackingWindow(idOrder).Show();
         }

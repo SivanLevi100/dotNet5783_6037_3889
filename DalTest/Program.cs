@@ -1,6 +1,7 @@
 ﻿//namespace DalApi;
 ///namespace Dal; 
 
+//A program whose purpose is to test the functions of the data layer
 using DalApi;
 
 using Dal;

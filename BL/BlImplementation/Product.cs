@@ -18,10 +18,18 @@ internal class Product : BlApi.IProduct
 {
     private DalApi.IDal? Dal = DalApi.Factory.Get();
 
+    /// <summary>
+    /// get method of product list
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         try
         {
+            //Going through all the items in the product list in DAL
+            //and returning a product according to a supplier ID
             return from item in Dal?.Product.GetAll()
                    where item != null
                    let product = ((DO.Product)item)!
@@ -41,10 +49,19 @@ internal class Product : BlApi.IProduct
 
     }
 
+    /// <summary>
+    /// get method of product item list
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
     public IEnumerable<BO.ProductItem?> GetProductItemList(BO.Cart cart)
     {
         try
         {
+            //Going through all the items in the product list in DAL
+            //and returning a product item according to a supplier ID
             return from item in Dal?.Product.GetAll()
                    where item != null
                    let product = ((DO.Product)item)!
@@ -67,7 +84,13 @@ internal class Product : BlApi.IProduct
 
     }
 
-
+    /// <summary>
+    /// A method that receives a product ID number and returns the product's details as requested by the manager
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public BO.Product GetProductDetailsManager(int id)
     {
         if (id < 0) throw new BO.IncorrectDataExceptions("id order is invalid");
@@ -75,6 +98,7 @@ internal class Product : BlApi.IProduct
         try
         {
             DO.Product productOfDo = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
+            //Creating an instance of a product with the features of the product with the received ID number           
             BO.Product product = new BO.Product
             {
                 Id = productOfDo.Id,
@@ -91,8 +115,15 @@ internal class Product : BlApi.IProduct
         }
     }
 
-
-
+    /// <summary>
+    /// A method that receives a product's ID number and a cart
+    /// and returns the product's details as requested by the buyer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cart"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public BO.ProductItem GetProductDetailsBuyer(int id, BO.Cart cart)
     {
         if (id < 0) throw new BO.IncorrectDataExceptions("id order is invalid");
@@ -100,6 +131,8 @@ internal class Product : BlApi.IProduct
         try
         {
             DO.Product productOfDO = Dal?.Product.Get(id) ?? throw new BO.NotExiestsExceptions("The Product is not exiests");
+            //Creating an instance of a product item with the features of the product with the received ID number           
+
             BO.ProductItem productItem = new BO.ProductItem
             {
                 IdProduct = productOfDO.Id,
@@ -118,7 +151,11 @@ internal class Product : BlApi.IProduct
         }
     }
 
-
+    /// <summary>
+    /// Method of adding a product to the product's list in the catalog
+    /// </summary>
+    /// <param name="product1"></param>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
     public void Add(BO.Product product1)
     {
         if (product1.Id > 0 && !string.IsNullOrWhiteSpace(product1.Name) && product1.Price > 0 && product1.InStock >= 0)
@@ -144,13 +181,19 @@ internal class Product : BlApi.IProduct
             throw new BO.IncorrectDataExceptions("The product data received is incorrect");//The incorrectness of the data received as a parameter
     }
 
+    /// <summary>
+    /// A method of deleting a product from the product's list in the catalog
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public void Delete(int id)
     {
         try
         {
             foreach (DO.Order? order in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests"))//Loop through all orders 
             {
-                if (Dal.OrderItem.GetAll(OrderItem => ((DO.OrderItem)OrderItem!).OrderId == order?.Id).Any(orderItem => ((DO.OrderItem)orderItem!).ProductId != id))//If the product is not in the list of order details in the basket
+                //If the product is not in the list of order details in the basket
+                if (Dal.OrderItem.GetAll(OrderItem => ((DO.OrderItem)OrderItem!).OrderId == order?.Id).Any(orderItem => ((DO.OrderItem)orderItem!).ProductId != id))
                 {
                     Dal?.Product.Delete(id);
                     return;
@@ -202,10 +245,16 @@ internal class Product : BlApi.IProduct
 
     }
 
-
+    /// <summary>
+    /// A method of updating a product from the product's list in the catalog
+    /// </summary>
+    /// <param name="product1"></param>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
     public void Update(BO.Product product1)
     {
-
+        //If the product is not negative or 0, the name is not null,
+        //the product's price is not negative or 0 and it's amount in stock is not negative
         if (product1.Id > 0 && !string.IsNullOrWhiteSpace(product1.Name) && product1.Price > 0 && product1.InStock >= 0)
         {
             try

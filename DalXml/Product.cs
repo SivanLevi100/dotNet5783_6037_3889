@@ -14,6 +14,9 @@ using System.Xml.Linq;
 
 //implement IStudent with linq to XML
 
+/// <summary>
+/// 
+/// </summary>
 internal class Product : IProduct
 {
     const string p_products = "products"; //Linq to XML

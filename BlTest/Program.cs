@@ -1,5 +1,8 @@
 ﻿namespace BlTest;
 
+/// <summary>
+/// Software whose purpose is to test the functions of the logical layer
+/// </summary>
 class Program  /*internal*/
 {
     static BlApi.IBl? bl = BlApi.Factory.Get();
@@ -34,6 +37,10 @@ class Program  /*internal*/
         }
     }
 
+    /// <summary>
+    /// method for each product sub-menu
+    /// </summary>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public static void SubMenuProduct()
     {
         int id;
@@ -151,7 +158,10 @@ class Program  /*internal*/
         }
     }
 
-
+    /// <summary>
+    /// method for each order sub-menu
+    /// </summary>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public static void SubMenuOrder()
     {
         int id;
@@ -217,6 +227,10 @@ class Program  /*internal*/
         }
     }
 
+    /// <summary>
+    /// method for each cart sub-menu
+    /// </summary>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public static void SubMenuCart()
     {
         BO.Cart myCart = new BO.Cart()

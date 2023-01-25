@@ -9,6 +9,9 @@ using static Dal.DataSource;
 
 namespace Dal;
 
+/// <summary>
+/// Implementation of ICRUD functions for orderItem
+/// </summary>
 internal class DalOrderItem : IOrderItem
 {
 

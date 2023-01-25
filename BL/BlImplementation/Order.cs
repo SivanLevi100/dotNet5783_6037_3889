@@ -19,12 +19,18 @@ internal class Order : BlApi.IOrder
 {
     private DalApi.IDal? Dal = DalApi.Factory.Get();
 
-
+    /// <summary>
+    /// get method of order list
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
 
         try
         {
+            //Going through all the items in the order list in DAL
+            //and returning an order according to a supplier ID
             return from item in Dal?.Order.GetAll()
                    where item != null
                    let order = ((DO.Order)item)!
@@ -46,6 +52,12 @@ internal class Order : BlApi.IOrder
 
     }
 
+    /// <summary>
+    /// A method that receives an order ID number and returns the order's details
+    /// </summary>
+    /// <param name="idOrder"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public BO.Order GetOrderDetails(int idOrder)
     {
         try
@@ -55,12 +67,14 @@ internal class Order : BlApi.IOrder
                 DO.Order orderDO = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
                 BO.OrderStatus status1 = statusFromDate(orderDO);
                 double sumOfPrices = 0;
+                //Creating an instance of order items based on the order ID received
                 IEnumerable<DO.OrderItem?>? orderItemListDo = Dal.OrderItem.GetAll(orderitem => ((DO.OrderItem)orderitem!).OrderId == idOrder);
+                //Going over the list of order items and calculating the price of all items
                 foreach (DO.OrderItem orderItem in orderItemListDo)
                 {
                     sumOfPrices += orderItem.Price * orderItem.Amount;
                 }
-
+                //Create an instance of an order with the new values
                 BO.Order order = new BO.Order
                 {
                     Id = orderDO.Id,
@@ -90,18 +104,26 @@ internal class Order : BlApi.IOrder
         }
 
     }
-
-    public BO.Order UpdateDelivery(int idOrder)//Order delivery update
+    /// <summary>
+    /// A method that updates the order delivery date
+    /// </summary>
+    /// <param name="idOrder"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
+    public BO.Order UpdateDelivery(int idOrder)
     {
         DO.Order orderDO;
         if (idOrder <= 0) throw new BO.IncorrectDataExceptions("Order id is incorrect");
         try
         {
             orderDO = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
-            if (orderDO.OrderDate != null && orderDO.DeliveryDate == null && orderDO.ShipDate != null) //The order was not delivered
+            //if the order was not delivered
+            if (orderDO.OrderDate != null && orderDO.DeliveryDate == null && orderDO.ShipDate != null) 
             {
                 orderDO.DeliveryDate = DateTime.Now;
                 Dal.Order.Update(orderDO); //Update in the data layer
+                //Create an instance of an order with the new values
                 BO.Order orderBO = new BO.Order
                 {
                     Id = orderDO.Id,
@@ -127,7 +149,13 @@ internal class Order : BlApi.IOrder
         }
     }
 
-
+    /// <summary>
+    /// A method that updates the order shipping date
+    /// </summary>
+    /// <param name="idOrder"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public BO.Order UpdateShipping(int idOrder)//Order shipping update
     {
         DO.Order orderDO;
@@ -136,10 +164,12 @@ internal class Order : BlApi.IOrder
         try
         {
             orderDO = Dal?.Order.Get(idOrder) ?? throw new BO.NotExiestsExceptions("The Order is not exiests");
+            //if the order was not sent
             if (orderDO.OrderDate != null && orderDO.ShipDate == null && orderDO.DeliveryDate == null)//The order was not sent
             {
                 orderDO.ShipDate = DateTime.Now;
                 Dal?.Order.Update(orderDO); //Update in the data layer
+                //Create an instance of an order with the new values
                 BO.Order orderBO = new BO.Order
                 {
                     Id = orderDO.Id,
@@ -168,11 +198,19 @@ internal class Order : BlApi.IOrder
        
     }
 
+    /// <summary>
+    /// A method that returns the status of the order and the dates of the steps performed so far
+    /// </summary>
+    /// <param name="idOrder"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.IncorrectDataExceptions"></exception>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public BO.OrderTracking Tracking(int idOrder) //Order Tracking
     {
         if (idOrder <= 0)
             throw new BO.IncorrectDataExceptions("Order id is incorrect");
-
+        if(idOrder<100000)
+            throw new BO.IncorrectDataExceptions("Order id is too short");
         DO.Order order = new DO.Order();
         try
         {
@@ -204,14 +242,24 @@ internal class Order : BlApi.IOrder
         };
     }
 
-    //A function that adds a product to an already existing order
-    //Amount = How much do you want to add or remove
+    /// <summary>
+    /// A function that adds a product to an already existing order 
+    /// Amount = How much do you want to add or remove
+    /// </summary>
+    /// <param name="order"></param>
+    /// <param name="idProduct"></param>
+    /// <param name="Amount"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
+
     public BO.Order AddItemForOrder(BO.Order order, int idProduct, int Amount)
     {
-        if (order.ShipDate != null) //לא ניתן להוסיף מוצרים למשלוח שיצא לדרך או הגיע ללקוח
+        //It is not possible to add products to a shipment that has left or arrived at the customer
+        if (order.ShipDate != null)
             throw new BO.NotExiestsExceptions("Products cannot be added to orders that have been sent or arrived at the customer");
 
-        if (order.ShipDate!=null && order.DeliveryDate!=null) //לא ניתן להוסיף מוצרים למשלוח שיצא לדרך או הגיע ללקוח
+        //It is not possible to add products to a shipment that has left or arrived at the customer
+        if (order.ShipDate!=null && order.DeliveryDate!=null)
             throw new BO.NotExiestsExceptions("Products cannot be added to orders that have been sent or arrived at the customer");
 
         DO.Product doProduct;
@@ -225,7 +273,8 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.NotExiestsExceptions("The Product is not exiests in the list of product", str);
         }
-        if (doProduct.InStock < Amount) //There is not enough stock for this product
+        //There is not enough stock for this product
+        if (doProduct.InStock < Amount)
             throw new BO.NotExiestsExceptions("The Product is not exiexts in inStock");
 
         BO.OrderItem orderItemBo;
@@ -281,12 +330,16 @@ internal class Order : BlApi.IOrder
 
     }
 
-    //The method of selecting the next order to handle
+    /// <summary>
+    /// The method of selecting the next order to handle
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BO.NotExiestsExceptions"></exception>
     public int? GetNextOrder()
     {
         DO.Order ordrDo=new DO.Order();
         IEnumerable<DO.Order?> orderList = Dal.Order.GetAll(item => item.Value.DeliveryDate == null);
-        if(orderList!=null)//יש הזמנות שלא סופקו
+        if(orderList!=null)//There are orders that have not been delivered
         {
             DO.Order? orderDateMin = orderList.MinBy(item => ((DO.Order)item!).OrderDate);
             DO.Order? shipDateMin = orderList.MinBy(item => ((DO.Order)item!).ShipDate);
@@ -335,6 +388,11 @@ internal class Order : BlApi.IOrder
         return listBo;
     }
 
+    /// <summary>
+    /// Helper function that returns the status of the order
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns></returns>
     private BO.OrderStatus statusFromDate(DO.Order order)
     {
 

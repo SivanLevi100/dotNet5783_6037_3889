@@ -5,7 +5,9 @@ using System.Runtime.CompilerServices;
 
 namespace Dal;
 
-
+/// <summary>
+/// Implementation of ICRUD functions for product
+/// </summary>
 internal class DalProduct : IProduct
 {
     DataSource ds = DataSource.S_instance;

@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BO;
-
+/// <summary>
+/// class of Cart
+/// </summary>
 public class Cart
 {
     public string? CustomerName { get; set; }
