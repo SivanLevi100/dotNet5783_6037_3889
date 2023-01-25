@@ -377,7 +377,7 @@ internal class Order : BlApi.IOrder
             listBo.Add(new BO.OrderItem
             {
                 Id = doOrderItem.Id,
-               NameProduct = Dal?.Product?.Get(doOrderItem.ProductId).Value.Name,/////////////
+                NameProduct = Dal?.Product?.Get(doOrderItem.ProductId).Value.Name,/////////////
                 ProductId = doOrderItem.ProductId,
                 Price = doOrderItem.Price,
                 AmountInOrder = doOrderItem.Amount,

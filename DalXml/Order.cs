@@ -20,9 +20,13 @@ public struct ImportentNumbers
 internal class Order : IOrder
 {
     const string o_orders = "orders"; //XML Serializer
-    //private readonly string configPath = "Config";
-     string configPath = "config";
+    string configPath = "config";
 
+    /// <summary>
+    /// Request/read method of the list of all objects of an order
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? filter = null)
     {
@@ -31,7 +35,12 @@ internal class Order : IOrder
                               : listOrders.Where(filter).OrderBy(order => ((DO.Order)order!).Id);
     }
 
-
+    /// <summary>
+    /// A request/call method of a single object that receives an order ID number and returns the appropriate order
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundExceptions"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order? Get(int id) =>
         XMLTools.LoadListFromXMLSerializer<DO.Order>(o_orders).FirstOrDefault(order => order?.Id == id)
@@ -39,6 +48,13 @@ internal class Order : IOrder
 
 
 
+    /// <summary>
+    ///  An add object method that accepts an order object and returns the ID number of the added order
+    /// </summary>
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns></returns>
+    /// <exception cref="DuplicateIdExceptions"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Order order)
     {
@@ -68,7 +84,11 @@ internal class Order : IOrder
 
     }
 
-
+    /// <summary>
+    /// A method to delete an order object that receives an order ID number
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="NotFoundExceptions"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
@@ -80,7 +100,11 @@ internal class Order : IOrder
         XMLTools.SaveListToXMLSerializer(listOrders, o_orders);
     }
 
-
+    /// <summary>
+    /// An object update method that will receive a new order
+    /// </summary>
+    /// <param name="order"></param>
+    /// <exception cref="Exception"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Order order)
     {

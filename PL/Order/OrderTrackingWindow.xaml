@@ -31,7 +31,6 @@
         </Style>
 
         <Style TargetType="Button">
-            <Setter Property="FontSize" Value="15" />
             <Setter Property="FontStyle" Value="Italic" />
             <Setter Property="Height" Value="40" />
             <Setter Property="Width" Value="110" />
@@ -91,7 +90,7 @@
         <TextBox Text="{Binding Path=OrderId, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="40,10,121,10"/>
         <TextBox Text="{Binding Path=Status}" Grid.Row="2" Grid.Column="1" Margin="40,8,121,12"/>
 
-        <Button Content="confirmation" Grid.Column="2" Margin="112,46,0,0" Grid.Row="4" Click="Button_Click" Height="40" Width="110"/>
+        <Button Content="Exit" Grid.Column="2" FontSize="22" Margin="112,46,0,0" Grid.Row="4" Click="Button_Click" Height="40" Width="110"/>
 
         <ListView ItemsSource="{Binding Path=Tracking}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="1" Margin="10,0,10,0" Grid.Row="3" RenderTransformOrigin="0.443,-0.971" Height="110" VerticalAlignment="Center">
             <ListView.View>

@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
@@ -21,7 +22,7 @@ public partial class CatalogProductsWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
 
-    public static BO.Cart myCart = new() { OrdersItemsList=new List<BO.OrderItem?>()};
+    public static BO.Cart myCart = new() { OrdersItemsList = new List<BO.OrderItem?>() };
 
     public static readonly DependencyProperty ProductItemDependency = DependencyProperty.Register(nameof(ProductItems), typeof(ObservableCollection<BO.ProductItem?>), typeof(Window));
     public ObservableCollection<BO.ProductItem?> ProductItems
@@ -44,7 +45,7 @@ public partial class CatalogProductsWindow : Window
         var temp = bl?.Product.GetProductItemList(myCart);
         ProductItems = temp == null ? new() : new(temp);
 
-        
+
     }
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -56,7 +57,7 @@ public partial class CatalogProductsWindow : Window
 
     private void ProductItemListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        ListView listView= sender as ListView;
+        ListView listView = sender as ListView;
         BO.ProductItem productItem = new BO.ProductItem();
         productItem = listView.SelectedItem as BO.ProductItem;
         new ProductItemWindow(productItem.IdProduct).Show();
@@ -69,7 +70,7 @@ public partial class CatalogProductsWindow : Window
 
     private void MyCartButton_Click(object sender, RoutedEventArgs e)
     {
-        
+
         new MyCartWindow().Show();
         Close();
     }
@@ -92,6 +93,9 @@ public partial class CatalogProductsWindow : Window
 
     private void GroupingButton_Click(object sender, RoutedEventArgs e)
     {
-
+        //var result = from d in ProductItems
+        //             group d by new { d.Category } into pg
+        //             select new { Catgeory = pg.Key, Items = pg };
+        //listview34.DataContext= result;
     }
 }

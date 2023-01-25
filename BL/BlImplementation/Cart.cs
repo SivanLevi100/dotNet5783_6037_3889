@@ -99,10 +99,7 @@ internal class Cart : BlApi.ICart
         {
             throw new BO.NotExiestsExceptions("Product request failed", str);
         }
-        //if(cart1?.OrdersItemsList?.Count() == 0|| cart1?.OrdersItemsList==null|| cart1.OrdersItemsList.Exists(item => item?.ProductId != id))
-        //    throw new BO.NotExiestsExceptions("This item cannot be found because it is not in the basket");
-        //else
-        //    orderItem = cart1?.OrdersItemsList.Find(item => item?.ProductId == id)??throw new BO.NotExiestsExceptions("The product does not exist");
+
         orderItem = cart1?.OrdersItemsList?.Find(item => item?.ProductId == id)??throw new BO.NotExiestsExceptions("The product does not exist");
 
         if (newAmount + orderItem?.AmountInOrder == 0)//If the amount = 0
@@ -149,8 +146,6 @@ internal class Cart : BlApi.ICart
         if (!new EmailAddressAttribute().IsValid(cart1?.CustomerEmail))//Invalid email address
             throw new BO.IncorrectDataExceptions("Email address in invalid format");
 
-        //if (cart1.OrdersItemsList.Any(orderItem => orderItem.ProductId != Dal.Product.Get(orderItem.ProductId).Id))//מוצר לא קיים
-        //    throw new BO.NotExiestsExceptions("The product does not exist");
 
         if (cart1?.OrdersItemsList == null)
             throw new BO.NotExiestsExceptions("The shopping cart is empty");

@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace PL.Order;
 
@@ -20,6 +22,9 @@ public partial class OrderItemWindow : Window
     public static readonly DependencyProperty AmountDependency = DependencyProperty.Register(nameof(Amount), typeof(int), typeof(Window));
     public int Amount { get => (int)GetValue(AmountDependency); private set => SetValue(AmountDependency, value); }
 
+   // public int numbersProduct { get; set; } = 
+
+
 
 
     public OrderItemWindow()
@@ -28,7 +33,7 @@ public partial class OrderItemWindow : Window
     }
     public OrderItemWindow(int idOrder)
     {
-        Order1 = bl.Order.GetOrderDetails(idOrder);//ההזממה שאליה נוסיף מוצר
+        Order1 = bl.Order.GetOrderDetails(idOrder);//ההזמנה שאליה נוסיף מוצר
         InitializeComponent();
     }
     

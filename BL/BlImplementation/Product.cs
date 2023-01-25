@@ -207,41 +207,6 @@ internal class Product : BlApi.IProduct
             throw new BO.NotExiestsExceptions("No such product exists at all", str);
         }
 
-        //try
-        //{
-        //    var orderItemD = (from item in Dal?.Order.GetAll() ?? throw new BO.NotExiestsExceptions("The List Of Product is not exiests")
-        //                      let order = ((DO.Order)item)!
-        //                      from item1 in Dal.OrderItem.GetAll()
-        //                      let orderItem = ((DO.OrderItem)item1)!
-        //                      where order.Id == orderItem.OrderId && orderItem.ProductId != id
-        //                      select orderItem).FirstOrDefault();
-        //    Dal.Product.Delete(orderItemD.ProductId);
-        //}
-        //catch (DO.NotFoundExceptions str)
-        //{
-        //    throw new BO.NotExiestsExceptions("No such product exists at all", str);
-        //}
-
-
-        //try
-        //{
-        //    foreach (DO.Order? order in Dal?.Order.GetAll())
-        //    {
-        //        DO.OrderItem item = Dal.OrderItem.GetAll().FirstOrDefault(orderItem => orderItem.Value.OrderId == order.Value.Id); //פריט בהזמנה שנמצא בהזמנה כלשהי
-        //    }
-        //    if (item == null)//מוצר זה לא נמצא באף הזמנה
-        //    {
-        //        Dal?.Product.Delete(id);
-        //    }
-        //    else
-        //        throw new BO.NotExiestsExceptions("This product appears on orders");
-        //}
-        //catch (DO.NotFoundExceptions str)
-        //{
-        //    throw new BO.NotExiestsExceptions("No such product exists at all", str);
-        //}
-
-
 
     }
 
@@ -277,6 +242,18 @@ internal class Product : BlApi.IProduct
         }
         else
             throw new BO.IncorrectDataExceptions("The product data received is incorrect");//The incorrectness of the data received as a parameter
+    }
+
+    ////פונקציה במחזירה את הid של כל המוצרים
+    public List<int> getids()
+    {
+        List<int> ids = new();
+        foreach(var item in Dal.Product.GetAll())
+        {
+            ids.Add(item.Value.Id);
+        }
+        return ids;
+    
     }
 
 

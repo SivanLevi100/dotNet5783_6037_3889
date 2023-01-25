@@ -5,8 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="SimulatorWindow" Height="453" Width="793" Closing="Window_Closing"
-         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+        Title="SimulatorWindow" Height="453" Width="793" 
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Grid>
+        <ListView x:Name="listViewOrders" ItemsSource="{Binding ordersForList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,28,301,94" MouseDoubleClick="ListView_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="Auto" Header="Id">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding OrderId}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Customer Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding CustomerName}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Status">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding Status}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Amount Items">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding AmountItems}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="Auto" Header="Total Price">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="-5,-1" Text="{Binding TotalPrice}" TextAlignment="Center" Padding="5"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="StartTracking" Content="Start Tracking" HorizontalAlignment="Left" Margin="611,81,0,0" VerticalAlignment="Top" Height="59" Width="82" Click="StartTracking_Click"/>
+        <Button x:Name="StopTracking" Content="Stop Tracking" HorizontalAlignment="Left" Margin="574,260,0,0" VerticalAlignment="Top" Height="41" Width="156" Click="StopTracking_Click"/>
+        <Button x:Name="StartTracking_Copy"  Content="" HorizontalAlignment="Left" Margin="540,343,0,0" VerticalAlignment="Top" Height="44" Width="74" Click="cart_Click"/>
+
+
+    </Grid>
+
+
+
+
+</Window>
+
+
+
+<!--DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="15" />
@@ -58,47 +115,6 @@
         <TextBox HorizontalAlignment="Left" Margin="511,161,0,0" TextWrapping="Wrap" Text="Estimated" VerticalAlignment="Top" Width="120"/>
         <Label Content="Clock running:" HorizontalAlignment="Left" Margin="244,279,0,0" VerticalAlignment="Top"/>
 
-        <!--<ListView ItemsSource="{Binding OrdertList}" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,28,301,94" MouseDoubleClick="ListView_MouseDoubleClick">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="Auto" Header="Id">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-5,-1" Text="{Binding OrderId}" TextAlignment="Center" Padding="5"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Customer Name">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-5,-1" Text="{Binding CustomerName}" TextAlignment="Center" Padding="5"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Status">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-5,-1" Text="{Binding Status}" TextAlignment="Center" Padding="5"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Amount Items">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-5,-1" Text="{Binding AmountItems}" TextAlignment="Center" Padding="5"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Width="Auto" Header="Total Price">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="-5,-1" Text="{Binding TotalPrice}" TextAlignment="Center" Padding="5"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>-->
 
     </Grid>
-</Window>
+</Window>-->
