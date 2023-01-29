@@ -5,6 +5,7 @@ namespace Simulator;
 
 public static class Simulator
 {
+
     //static readonly BlApi.IBl bl = BlApi.Factory.Get();
     ////Func<> report;
     //private volatile bool Active;
