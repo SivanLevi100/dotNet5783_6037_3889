@@ -32,12 +32,6 @@ public partial class CatalogProductsWindow : Window
     public BO.Category Category1 { get; set; } = BO.Category.Unavailable;
     public Array Categories1 { get; set; } = Enum.GetValues(typeof(BO.Category));
 
-    //public static readonly DependencyProperty ProductItem1Dependency = DependencyProperty.Register(nameof(ProductItem), typeof(BO.ProductItem), typeof(Window));
-    //public BO.ProductItem ProductItem { get => (BO.ProductItem)GetValue(ProductItem1Dependency); private set => SetValue(ProductItem1Dependency, value); }
-
-
-
-
     public CatalogProductsWindow()
     {
         InitializeComponent();
@@ -46,19 +40,30 @@ public partial class CatalogProductsWindow : Window
 
         
     }
+
+    /// <summary>
+    /// A function for the combo box with all categories
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CatgegorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var temp = Category1 == BO.Category.Unavailable ?
-        bl?.Product.GetProductItemList(myCart) : bl?.Product.GetProductItemList(myCart).Where(item => item.Category == Category1);
+        bl?.Product.GetProductItemList(myCart) : bl?.Product.GetProductItemList(myCart).Where(item => item?.Category == Category1); //Filter by category
         ProductItems = temp == null ? new() : new(temp);
 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ProductItemListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        ListView listView= sender as ListView;
-        BO.ProductItem productItem = new BO.ProductItem();
-        productItem = listView.SelectedItem as BO.ProductItem;
+        ListView? listView= sender as ListView;
+        BO.ProductItem? productItem = new BO.ProductItem();
+        productItem = listView?.SelectedItem as BO.ProductItem;
         new ProductItemWindow(productItem.IdProduct).Show();
 
         var temp = bl?.Product?.GetProductItemList(myCart);
