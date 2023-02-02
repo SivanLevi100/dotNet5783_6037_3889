@@ -41,9 +41,6 @@ public partial class ProductListWindow : Window
         var temp = bl?.Product?.GetProductList();
         ProductList = temp == null ? new() : new(temp);
 
-        //InitializeComponent();
-        //ProductListview.ItemsSource = bl?.Product.GetProductList();
-        //CatgegorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
 
     //A function that implements filtering a list of products by category
@@ -53,18 +50,12 @@ public partial class ProductListWindow : Window
             bl?.Product.GetProductList() : bl?.Product.GetProductList().Where(item => item.Category == Category);
         ProductList = temp == null ? new() : new(temp);
 
-        //var listProducts = (BO.Category?)CatgegorySelector.SelectedItem == BO.Category.Unavailable ? bl?.Product.GetProductList()
-        // : bl?.Product.GetProductList().Where(product => product?.Category == (BO.Category?)CatgegorySelector.SelectedItem);
-        //ProductListview.ItemsSource = listProducts;
     }
 
     //A function that implements a click on the "Add New Product" button
     private void ButtonAddNewProduct_Click(object sender, RoutedEventArgs e)
     {
         new ProductWindow().Show();
-        //var temp = bl?.Product?.GetProductList(); //////////////
-        //ProductList = temp == null ? new() : new(temp);
-
         Close();
     }
 

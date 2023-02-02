@@ -50,7 +50,6 @@ public partial class OrderWindow : Window
         {
             MessageBox.Show(ex.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             Close();
-            //new OrderListWindow().ShowDialog();
             new OrderListWindow().Show();
         }
         //catch (BO.NotExiestsExceptions ex)
@@ -104,8 +103,7 @@ public partial class OrderWindow : Window
         catch (BO.NotExiestsExceptions ex)
         {
             MessageBox.Show(ex.Message, "Shipping date cannot be updated", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            //Close();
-            //new OrderListWindow().Show();
+       
         }
 
     }
@@ -126,19 +124,27 @@ public partial class OrderWindow : Window
         catch (BO.NotExiestsExceptions ex)
         {
             MessageBox.Show(ex.Message, "Delivery date cannot be updated", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            //Close();
-            //new OrderListWindow().Show();
         }
 
 
     }
 
+    /// <summary>
+    /// Back button to order list window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
         new OrderListWindow().Show();
         Close();
     }
 
+    /// <summary>
+    /// Adding a product to an existing order
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddItemInListViewButton_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -154,6 +160,11 @@ public partial class OrderWindow : Window
         }
     }
 
+    /// <summary>
+    /// Removing a product for an existing order
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void RemoveItemInListViewButton_Click(object sender, RoutedEventArgs e)
     {
         try

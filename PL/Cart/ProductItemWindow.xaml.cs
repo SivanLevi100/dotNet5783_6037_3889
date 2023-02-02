@@ -28,8 +28,6 @@ public partial class ProductItemWindow : Window
     public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(ProductItem), typeof(BO.ProductItem), typeof(Window));
     public BO.ProductItem? ProductItem { get => (BO.ProductItem)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
 
-    //public static readonly DependencyProperty CartDependency = DependencyProperty.Register(nameof(MyCart), typeof(BO.Cart), typeof(Window));
-    //public BO.Cart MyCart { get => (BO.Cart)GetValue(CartDependency); private set => SetValue(CartDependency, value); }
 
 
     public ProductItemWindow(int id = 0)

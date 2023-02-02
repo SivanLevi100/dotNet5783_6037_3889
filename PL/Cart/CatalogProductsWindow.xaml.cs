@@ -56,7 +56,7 @@ public partial class CatalogProductsWindow : Window
     }
 
     /// <summary>
-    /// 
+    /// Double clicking on a product in the catalog opens a window for the product
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -73,6 +73,11 @@ public partial class CatalogProductsWindow : Window
         Close();
     }
 
+    /// <summary>
+    /// Double clicking on the My Cart button opens the shopping Cart window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void MyCartButton_Click(object sender, RoutedEventArgs e)
     {
 
@@ -80,6 +85,11 @@ public partial class CatalogProductsWindow : Window
         Close();
     }
 
+    /// <summary>
+    /// Click on the add product to cart button - adds the product to the shopping cart
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddItemButton_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -88,7 +98,6 @@ public partial class CatalogProductsWindow : Window
             myCart = bl.Cart.AddProduct(myCart, productItem.IdProduct);
             var temp = bl.Product.GetProductItemList(myCart);
             ProductItems = temp == null ? new() : new(temp);
-            //MessageBox.Show("The Product added to cart");
         }
         catch (BO.NotExiestsExceptions ex)
         {

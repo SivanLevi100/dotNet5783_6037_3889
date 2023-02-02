@@ -16,10 +16,6 @@ public partial class ProductWindow : Window
     public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(Product), typeof(BO.Product), typeof(Window));
     public BO.Product? Product { get => (BO.Product)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
 
-    //public BO.Category Category { get; set; } = BO.Category.Unavailable;
-
-    //public Array Categories1 { get { return Enum.GetValues(typeof(BO.Category)); } }
-    // public Array Categories { get; set; } = Enum.GetValues(typeof(BO.Category));
    public Array Categories2 { get; set; } = Enum.GetValues(typeof(BO.Category));
 
 
@@ -28,7 +24,6 @@ public partial class ProductWindow : Window
     public ProductWindow()
     {
         InitializeComponent();
-        //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category)); /////////////
         AddButton.Visibility = Visibility.Visible; 
         UpdateButton.Visibility = Visibility.Hidden;
         DeleteProduct.Visibility = Visibility.Hidden;
@@ -42,7 +37,6 @@ public partial class ProductWindow : Window
         {
             Product = id == 0 ? new() { Category = BO.Category.Unavailable} : bl.Product.GetProductDetailsManager(id);
             InitializeComponent();
-            //ComboBoxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
             AddButton.Visibility = Visibility.Hidden;
             UpdateButton.Visibility = Visibility.Visible;
             DeleteProduct.Visibility = Visibility.Visible;
@@ -62,18 +56,6 @@ public partial class ProductWindow : Window
     //A function that implements an Add button click event
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
-        //try
-        //{
-        //    bl?.Product.Add(Product);
-        //    MessageBox.Show("The Product added");
-        //    Close();
-        //    new ProductListWindow().Show();
-        //}
-        //catch (BO.IncorrectDataExceptions str)
-        //{
-        //    MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-        //    Close();
-        //}
 
         while (string.IsNullOrEmpty(txtId.Text) || string.IsNullOrEmpty(txtName.Text) || string.IsNullOrEmpty(txtPrice.Text) || string.IsNullOrEmpty(txtInStock.Text) || ComboBoxCategory.SelectedItem == null || txtPrice.Text == "0" || txtInStock.Text == "0" || txtId.Text == "000000000" || txtName.Text == "Name")
         {
@@ -94,8 +76,6 @@ public partial class ProductWindow : Window
         {
             MessageBox.Show(str.Message, "Failure getting entity", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             Close();
-            //new ProductListWindow().Show();
-            //return;
         }
         MessageBox.Show("The Product added");
         Close();
@@ -138,10 +118,6 @@ public partial class ProductWindow : Window
     {
         BO.Product? product = new BO.Product();
         product.Id = int.Parse(txtId.Text);
-        //product.Name = txtName.Text;
-        //product.Price = double.Parse(txtPrice.Text);
-        //product.InStock = int.Parse(txtInStock.Text);
-        //product.Category = (BO.Category)ComboBoxCategory.SelectedItem;
         if (MessageBox.Show("Are you sure you want to remove the product from the order?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
         {
             try

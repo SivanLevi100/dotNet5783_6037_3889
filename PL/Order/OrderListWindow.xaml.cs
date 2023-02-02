@@ -60,15 +60,6 @@ public partial class OrderListWindow : Window
       
     }
 
-    private void OrderDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        //DataGrid listBox = sender as DataGrid;
-        //BO.OrderForList order = new BO.OrderForList();
-        //order = DataGrid as BO.OrderForList;
-        //new OrderWindow(order.OrderId).Show();
-        //Close();
-    }
-
     //A function for the combo box with all order statuses 
     private void orderStatusSelected_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {

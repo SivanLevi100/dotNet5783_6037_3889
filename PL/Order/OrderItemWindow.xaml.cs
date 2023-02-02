@@ -23,7 +23,6 @@ public partial class OrderItemWindow : Window
     public static readonly DependencyProperty AmountDependency = DependencyProperty.Register(nameof(Amount), typeof(int), typeof(Window));
     public int Amount { get => (int)GetValue(AmountDependency); private set => SetValue(AmountDependency, value); }
 
-   // public int numbersProduct { get; set; } = 
 
 
 
