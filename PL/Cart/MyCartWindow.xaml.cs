@@ -18,6 +18,9 @@ using System.Windows.Shapes;
 
 namespace PL.Cart;
 
+/// <summary>
+/// The back window containing all the functions for the cart window
+/// </summary>
 public partial class MyCartWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
@@ -42,10 +45,16 @@ public partial class MyCartWindow : Window
         TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
     }
 
+    /// <summary>
+    /// Function for the "order confirmation" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OrderConfirmationButton_Click(object sender, RoutedEventArgs e)
     {
-        if(CatalogProductsWindow.myCart.OrdersItemsList.FirstOrDefault(x=>x.TotalPriceOfItem==0)!=null)
+        if(CatalogProductsWindow.myCart.OrdersItemsList?.FirstOrDefault(x=>x?.TotalPriceOfItem==0)!=null)
         {
+            //Opens the order confirmation window and closes the cart window
             new OrderConfirmationWindow().Show();
             Close();
         }
@@ -55,26 +64,45 @@ public partial class MyCartWindow : Window
 
     }
 
+    /// <summary>
+    /// Function for the "delete the basket" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void DeleteTheBasketButton_Click(object sender, RoutedEventArgs e)
     {
+        //Resetting the general price and deleting the products in the back window
         CatalogProductsWindow.myCart.OrdersItemsList = null;
         CatalogProductsWindow.myCart.TotalPrice = 0;
 
+        //Updating the values ​​in the cart window
         var temp = CatalogProductsWindow.myCart.OrdersItemsList;
         OrdertItemsOfCart = temp == null ? new() : new(temp);
         TotalPrice = CatalogProductsWindow.myCart.TotalPrice;
     }
 
+    /// <summary>
+    /// Function for the "back to home window" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void HomeButton_Click(object sender, RoutedEventArgs e)
     {
+        //Opening the home window and closing the current window
         new MainWindow().Show();
         Close();
     }
 
+    /// <summary>
+    /// Function for the "add" button in the cart window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
         try
         {
+            //Add quantity to an existing product in the basket window
             BO.OrderItem orderItem= (BO.OrderItem)((sender as Button)!.DataContext!);
             CatalogProductsWindow.myCart = bl.Cart.AddProduct(CatalogProductsWindow.myCart, orderItem.ProductId);
             var temp = CatalogProductsWindow.myCart.OrdersItemsList;
@@ -91,10 +119,16 @@ public partial class MyCartWindow : Window
         }
     }
 
+    /// <summary>
+    /// Function for the "remove" button in the cart window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void RemoveButton_Click(object sender, RoutedEventArgs e)
     {
         try
         {
+            //reduction in quantity to an existing product in the basket window
             BO.OrderItem orderItem = (BO.OrderItem)((sender as Button)!.DataContext!);
             CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, orderItem.ProductId, orderItem.AmountInOrder - 1);
             var temp = CatalogProductsWindow.myCart.OrdersItemsList;
@@ -110,10 +144,16 @@ public partial class MyCartWindow : Window
         }
     }
 
+    /// <summary>
+    /// Function for the "remove product" button in the cart window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void RemoveProductButton_Click(object sender, RoutedEventArgs e)
     {
         try
         {
+            //Removing a product from the cart
             BO.OrderItem orderItem = (BO.OrderItem)((sender as Button)!.DataContext!);
             CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, orderItem.ProductId, (orderItem.AmountInOrder)*(-1));
            // MessageBox.Show("The Product removed from cart");
@@ -128,8 +168,14 @@ public partial class MyCartWindow : Window
 
     }
 
+    /// <summary>
+    /// Function for the "back to previous window" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
+        //Opening the catalog window and closing the current window
         new CatalogProductsWindow().Show();
         Close();
     }

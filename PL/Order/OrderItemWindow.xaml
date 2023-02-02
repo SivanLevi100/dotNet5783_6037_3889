@@ -78,6 +78,7 @@
         <Button Style="{StaticResource Tanks}" HorizontalAlignment="Left" Margin="645,364,0,0" VerticalAlignment="Top" Height="44" Width="92"/>
 
         <TextBox Margin="500,372,0,0" BorderBrush="AntiqueWhite" FontSize="23" Text="Tanks" Foreground="BlueViolet" Background="AntiqueWhite" Width="78" Height="28"/>
+        <ComboBox x:Name="idsproducts" HorizontalAlignment="Left" Margin="400,114,0,0" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

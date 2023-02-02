@@ -15,6 +15,9 @@ using System.Windows.Shapes;
 
 namespace PL.Order;
 
+/// <summary>
+/// The back window containing all the functions for the Order Tracking window
+/// </summary>
 public partial class OrderTrackingWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
@@ -36,8 +39,12 @@ public partial class OrderTrackingWindow : Window
         }
         InitializeComponent();
     }
-   
 
+    /// <summary>
+    /// function for the "exit" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         MessageBox.Show("Exit the page");

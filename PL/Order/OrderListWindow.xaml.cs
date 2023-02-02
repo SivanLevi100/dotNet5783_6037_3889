@@ -19,6 +19,7 @@ namespace PL.Order;
 
 /// <summary>
 /// Interaction logic for OrderListWindow.xaml
+/// The back window containing all the functions for the Order List window
 /// </summary>
 public partial class OrderListWindow : Window
 {
@@ -42,8 +43,14 @@ public partial class OrderListWindow : Window
 
     }
 
+    /// <summary>
+    /// Function for double-clicking an order from the order list
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OrdertListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
+        //Opening a window with the order details
         ListView listview = sender as ListView;
         BO.OrderForList order1 = new BO.OrderForList();
         order1 = listview.SelectedItem as BO.OrderForList;
@@ -62,9 +69,10 @@ public partial class OrderListWindow : Window
         //Close();
     }
 
-    //סינון לפי סטטוס הזמנה ComboBox
+    //A function for the combo box with all order statuses 
     private void orderStatusSelected_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        //Filter by order status
         var temp = OrderStatus == BO.OrderStatus.Unknown ? bl?.Order.GetOrderList() 
             : bl?.Order.GetOrderList().Where(item => item.Status == OrderStatus);
         OrdertList = temp == null ? new() : new(temp);

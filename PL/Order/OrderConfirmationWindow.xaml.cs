@@ -19,6 +19,7 @@ namespace PL.Order;
 
 /// <summary>
 /// Interaction logic for OrderConfirmationWindow.xaml
+/// The back window containing all the functions for the Order Confirmation window
 /// </summary>
 public partial class OrderConfirmationWindow : Window
 {
@@ -47,15 +48,22 @@ public partial class OrderConfirmationWindow : Window
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Function for button "confirm order
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OrderConfirmationButton_Click(object sender, RoutedEventArgs e)
     {
 
         try
         {
+            //Entering customer information
             CatalogProductsWindow.myCart.CustomerName = CustomerName;
             CatalogProductsWindow.myCart.CustomerEmail = CustomerEmail;
             CatalogProductsWindow.myCart.CustomerAdress = CustomerAdress;
 
+            //Checking that all order details and customer details are correct
             bl?.Cart.Confirm(CatalogProductsWindow.myCart);
             //CatalogProductsWindow.myCart = null;
             CatalogProductsWindow.myCart=new() { OrdersItemsList = new List<BO.OrderItem?>() };
@@ -75,8 +83,14 @@ public partial class OrderConfirmationWindow : Window
 
     }
 
+    /// <summary>
+    /// Function for the "back to previous window" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BackButton_Click(object sender, RoutedEventArgs e)
     {
+        //Opening the cart window and closing the current window
         new MyCartWindow().Show();
         Close();
     }

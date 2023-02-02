@@ -51,4 +51,6 @@ public interface IProduct
 
     public IEnumerable<BO.ProductItem?> GetProductItemList(BO.Cart cart);
 
+    public List<int> getids();
+
 }

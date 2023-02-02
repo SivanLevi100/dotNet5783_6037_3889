@@ -21,7 +21,9 @@ using System.Xml.Linq;
 
 namespace PL.Order;
 
-
+/// <summary>
+/// The back window containing all the functions for the Order window
+/// </summary>
 public partial class OrderWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
@@ -63,10 +65,17 @@ public partial class OrderWindow : Window
 
     }
 
+    /// <summary>
+    /// Function for the "Add Product For Order" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddProductForOrderButton_Click(object sender, RoutedEventArgs e)
     {
-        if(Order.ShipDate==null)
+        //Checking if the order has not yet been sent
+        if (Order.ShipDate==null)
         {
+            //Opening the order window and closing the current window
             new OrderItemWindow(Order.Id).Show();
             Close();
         }
@@ -79,12 +88,17 @@ public partial class OrderWindow : Window
 
     }
 
-
+    /// <summary>
+    /// Function for the "Update Shiping" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void UpdateShipingButton_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            Order=bl?.Order.UpdateShipping(Order.Id);
+            //Update the shipping date
+            Order = bl?.Order.UpdateShipping(Order.Id);
 
         }
         catch (BO.NotExiestsExceptions ex)
@@ -96,11 +110,17 @@ public partial class OrderWindow : Window
 
     }
 
+    /// <summary>
+    /// Function for the "Update Delivery" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void UpdateDelivery_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-           Order= bl?.Order.UpdateDelivery(Order.Id);
+            //Update the delivery date
+            Order = bl?.Order.UpdateDelivery(Order.Id);
 
         }
         catch (BO.NotExiestsExceptions ex)

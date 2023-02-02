@@ -21,13 +21,24 @@ internal class Product : IProduct
 {
     const string p_products = "products"; //Linq to XML
 
+
+    /// <summary>
+    /// Request/read method of the list of all objects of a product
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? filter = null) =>
        filter is null
        ? XMLTools.LoadListFromXMLElement(p_products).Elements().Select(s => getProduct(s))
        : XMLTools.LoadListFromXMLElement(p_products).Elements().Select(s => getProduct(s)).Where(filter);
 
-
+    /// <summary>
+    /// A request/call method of a single object that receives a product ID number and returns the appropriate product
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundExceptions"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product? Get(int id) =>
        (DO.Product)getProduct(XMLTools.LoadListFromXMLElement(p_products)?.Elements()
@@ -35,6 +46,12 @@ internal class Product : IProduct
        ?? throw new NotFoundExceptions("The product id is not exist in List"))!;
 
 
+    /// <summary>
+    ///  An add object method that receives a product object and returns the ID number of the added product
+    /// </summary>
+    /// <param name="product"></param>
+    /// <returns></returns>
+    /// <exception cref="DuplicateIdExceptions"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product product)
     {
@@ -50,6 +67,11 @@ internal class Product : IProduct
         return product.Id;
     }
 
+    /// <summary>
+    /// A method to delete a product object that receives a product ID number
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="NotFoundExceptions"></exception>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
@@ -63,6 +85,10 @@ internal class Product : IProduct
     }
 
 
+    /// <summary>
+    /// An object update method that will receive a new product
+    /// </summary>
+    /// <param name="doProduct"></param>
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product doProduct)
     {

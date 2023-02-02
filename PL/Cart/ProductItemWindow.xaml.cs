@@ -17,6 +17,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace PL.Cart;
+
+/// <summary>
+/// The back window containing all the functions for the product details window
+/// </summary>
 public partial class ProductItemWindow : Window
 {
     private BlApi.IBl? bl = BlApi.Factory.Get();
@@ -45,11 +49,17 @@ public partial class ProductItemWindow : Window
         }
     }
 
+    /// <summary>
+    /// function for the "add" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddItemButton_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            CatalogProductsWindow.myCart = bl?.Cart.AddProduct(CatalogProductsWindow.myCart, ProductItem.IdProduct);
+            //Adding the product to the basket
+            CatalogProductsWindow.myCart = bl.Cart.AddProduct(CatalogProductsWindow.myCart, ProductItem.IdProduct);
             ProductItem = bl?.Product.GetProductDetailsBuyer(ProductItem.IdProduct, CatalogProductsWindow.myCart);
             MessageBox.Show("The Product added to cart");
         }
@@ -59,16 +69,24 @@ public partial class ProductItemWindow : Window
            
 
         }
+        //Closing the current window and opening the "Catalog" window
         Close();
         new CatalogProductsWindow().Show();
     }
 
+    /// <summary>
+    /// function for the "remove item" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void RemoveItemButton_Click(object sender, RoutedEventArgs e)
     {
+        //Removing the product from the basket
         if (MessageBox.Show("Are you sure you want to remove the item from the cart?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
         {
             try
             {
+                //Updating the product quantity in the basket
                 CatalogProductsWindow.myCart = bl.Cart.UpdateAmountOfProduct(CatalogProductsWindow.myCart, ProductItem.IdProduct, ProductItem.AmountInCart - 1);
                 ProductItem = bl?.Product.GetProductDetailsBuyer(ProductItem.IdProduct, CatalogProductsWindow.myCart);
                 MessageBox.Show("The Product removed from cart");

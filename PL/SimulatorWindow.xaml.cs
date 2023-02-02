@@ -1,4 +1,5 @@
 ﻿using BO;
+using PL.Cart;
 using PL.Order;
 using System;
 using System.Collections.Generic;
@@ -29,12 +30,13 @@ public partial class SimulatorWindow : Window
     DateTime nowTime = DateTime.Now;//save current time 
     bool inAddingProcess = false;
 
-    public static readonly DependencyProperty OrderListDependency = DependencyProperty.Register(nameof(OrdertList), typeof(ObservableCollection<OrderForList?>), typeof(Window));
-    public ObservableCollection<OrderForList?> OrdertList
-    {
-        get => (ObservableCollection<OrderForList?>)GetValue(OrderListDependency);
-        private set => SetValue(OrderListDependency, value);
-    }
+    //public static readonly DependencyProperty OrderListDependency = DependencyProperty.Register(nameof(OrdertList), typeof(ObservableCollection<OrderForList?>), typeof(Window));
+    //public ObservableCollection<OrderForList?> OrdertList
+    //{
+    //    get => (ObservableCollection<OrderForList?>)GetValue(OrderListDependency);
+    //    private set => SetValue(OrderListDependency, value);
+    //}
+
 
 
 
@@ -51,7 +53,7 @@ public partial class SimulatorWindow : Window
         //stopWatch.Rstart();
 
     }
-    private void Worker_DoWork(object sender, DoWorkEventArgs e) 
+    private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
 
     }
@@ -67,6 +69,10 @@ public partial class SimulatorWindow : Window
 
     }
 
+
+   // xaml -   Closing="Window_Closing"
+
+
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
         e.Cancel = true;
@@ -80,7 +86,7 @@ public partial class SimulatorWindow : Window
     //protected override void OnClosing(CancelEventArgs e)
     //{
     //    e.Cancel=cancel
-            
+
     //}
     private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
@@ -89,6 +95,24 @@ public partial class SimulatorWindow : Window
         order1 = listview.SelectedItem as BO.OrderForList;
         new OrderWindow(order1.OrderId).Show();
     }
+   
 
-    //////
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -18,6 +18,7 @@ namespace PL.Product;
 
 /// <summary>
 /// Interaction logic for ProductListWindow.xaml
+/// The back window containing all the functions for the Product List window
 /// </summary>
 public partial class ProductListWindow : Window
 {
