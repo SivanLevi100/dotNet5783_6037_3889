@@ -60,7 +60,7 @@
                 Margin="196,204,0,0" VerticalAlignment="Top" Click="ProductList_Click"/>
         <Button Content="Customer" Height="90" Width="180"  HorizontalAlignment="Left" Margin="508,89,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Click="CustomerButton_Click" />
         <TextBox x:Name="txtnumber" Visibility="Hidden" Text="{Binding idOrder, Mode=TwoWay}" HorizontalAlignment="Left" Margin="488,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Height="29"/>
-        <Button Content="Simulator" Style="{StaticResource simulatorStyle}" Margin="40,356,0,0" Click="SimulatorButton_Click"/>
+        <!--<Button Content="Simulator" Style="{StaticResource simulatorStyle}" Margin="40,356,0,0" Click="SimulatorButton_Click"/>-->
 
     </Grid>
 
