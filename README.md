@@ -12,9 +12,13 @@ The project was carried out using the layer model method, using work methods wit
 3. The display layer
 ### Use of Design Patterns
  Observer
+ 
  Design by Contract
+ 
  Factory Method
+ 
  Singleton
+ 
 ### The WPF library
 Building a graphical user interface (GUI)
 ### Data binding
