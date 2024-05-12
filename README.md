@@ -11,12 +11,9 @@ The project was carried out using the layer model method, using work methods wit
 2. The logic layer
 3. The display layer
 ### Use of Design Patterns
- Observer
- 
- Design by Contract
- 
- Factory Method
- 
+ Observer<br>
+ Design by Contract<br>
+ Factory Method<br>
  Singleton
  
 ### The WPF library
